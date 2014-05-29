@@ -3,7 +3,7 @@
  */
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/viberapp');
+mongoose.connect('mongodb://viberdbuser:viberdbuser@ds033569.mongolab.com:33569/viberapp');
 var studentSchema = require('../models/studentmodel');
 var Students = mongoose.model('Student',studentSchema);
 
