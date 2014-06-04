@@ -3,15 +3,21 @@
  */
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://viberdbuser:viberdbuser@ds033569.mongolab.com:33569/viberapp');
+//mongoose.connect('mongodb://viberdbuser:viberdbuser@ds033569.mongolab.com:33569/viberapp');
+mongoose.connect('mongodb://viber:viber@ds041218.mongolab.com:41218/viber');
+
 var studentSchema = require('../models/studentmodel');
-var Students = mongoose.model('Student',studentSchema);
+//var Students = mongoose.model('Student',studentSchema);
+
+
+console.log(studentSchema.student);
+
 
 
 
 exports.list = function(req, res){
     Students.find({}, function(err,Students){
-       console.log('sending student d')
+       console.log('sending student d');
        res.send(JSON.stringify(Students));
 
     });

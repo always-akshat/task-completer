@@ -5,13 +5,52 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
-var studentSchema= new Schema({
-    name: String,
-    email: String,
-    facebookid: String,
-    collegeid : Number,
-    createdOn: {type: Date, 'default': Date.now},
-    updatedOn : {type : Date, 'default':Date.now}
+
+var user_task_schema = new Schema({
+    task_id : ObjectId,
+    points : Number,
+    completed : Number,
+    fields : [Schema.Types.Mixed]
 });
 
-module.exports = mongoose.model('Student', studentSchema);
+var studentSchema = new Schema({
+    name: String,
+    email: String,
+    mobile : Number,
+    facebookid: String,
+    twitterid : Number,
+    collegeid : Number,
+    createdOn: {type: Date, 'default': Date.now},
+    updatedOn : {type : Date, 'default':Date.now},
+    gender : String,
+    dob : Date,
+    college : {
+        id: Number,
+        name : String
+    },
+    facebook : {
+        authorized : Number,
+        friends : [Number],
+        authcode :String
+    },
+    twitter :{
+        authorized : Number,
+        authcode : String
+    },
+    points : Number,
+    stages : [Number],
+    tasks  : [
+               { stage: Number,
+                values : [Number]
+               }
+             ],
+    user_tasks :[user_task_schema],
+    created : Date,
+    updated : Date,
+    type : Number
+})
+
+exports.student = mongoose.model('Student', studentSchema);
+
+
+
