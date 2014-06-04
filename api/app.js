@@ -14,8 +14,6 @@ var http = require('http');
 var path = require('path');
 
 
-
-
 var students = require("./routes/students");
 var app = express();
 
