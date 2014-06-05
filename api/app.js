@@ -46,8 +46,12 @@ app.use(express.static('../app'));
 
 app.get('/', routes.index);
 app.get('/students', students.list);
+app.get('/students/:fbid',students.info);
+app.get('/students/friends/:fbid',students.getfacebookfriends);
+app.put('/students/friends/:facebookid',students.putfacebookfriends);
+app.get('/students/type/:usertypeid',students.allusersoftype);
 app.post('/signup',students.signup);
-app.post('/validate', students.validate);
+
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));

@@ -9,26 +9,15 @@ var tasksSchema= new Schema({
     name: String,
     description : String,
     points : Number,
-    parentTaskId : ObjectId,
-    startDate : Date,
-    endDate : Date,
-    createdBy : String,
-    createdOn: {type: Date, 'default': Date.now},
-    updatedOn : {type : Date, 'default':Date.now}
+    parenttaskid : ObjectId,
+    startdate : Date,
+    enddate : Date,
+    createdby : String,
+    createdon: {type: Date, 'default': Date.now},
+    updatedon : {type : Date, 'default':Date.now},
+    managerapproved : Number,
+    fields :[Schema.Types.Mixed]
 });
 
-module.exports = mongoose.model('Tasks', tasksSchema);
+exports.tasks = mongoose.model('Tasks', tasksSchema);
 
-var campaignSchema = new Schema({
-
-    name : String,
-    description : String,
-    stages : [{ stageId : ObjectId }],
-    startDate : Date,
-    endDate : Date,
-    createdBy : String,
-    createdOn: {type: Date, 'default': Date.now},
-    updatedOn : {type : Date, 'default':Date.now}
-
-
-});

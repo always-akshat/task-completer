@@ -35,9 +35,7 @@ console.log(JSON.stringify(dummyuser));
 
 exports.list = function (req, res) {
     Students.find({}, function (err, Students) {
-        console.log('sending student d');
         res.send(JSON.stringify(Students));
-
     });
 };
 
@@ -46,7 +44,10 @@ exports.signup = function (req, res) {
 
     validateSignUp(req, function (error, data) {
         console.log('returnValidate');
-        if (error)res.send(400, error.message)
+        if (error)
+        {
+            res.send(400, error.message)
+        }
         else {
             res.send(JSON.stringify(data));
             console.log('Sending data back to the client');
@@ -55,6 +56,79 @@ exports.signup = function (req, res) {
 
 };
 
+exports.info = function(req,res){
+
+    return Students.findOne({ 'facebookid': req.params.fbid}, function (err, student) {
+        if (!err) {
+
+           if(student === null){
+               console.log('not found');
+               return res.send('no record found');
+           }
+           else
+           {
+               return res.send(student);
+           }
+        } else {
+            return res.send(err);
+        }
+    });
+
+}
+
+exports.allusersoftype = function(req,res) {
+    return Students.find({ 'type.id': req.params.usertypeid}, function (err, users) {
+        if (!err) {
+
+            if(users === null){
+                return res.send('0 users of this type');
+            }
+            else
+            {
+                return res.send(users);
+            }
+        } else {
+            return res.send(err);
+        }
+    });
+
+
+}
+
+exports.getfacebookfriends = function(req,res) {
+    return Students.find({ 'facebookid': req.params.fbid},'facebook.friends', function (err, friends) {
+        if (!err) {
+
+            if(friends === null){
+                return res.send('0 friends ');
+            }
+            else
+            {
+                return res.send(friends);
+            }
+        } else {
+            return res.send(err);
+        }
+    });
+}
+
+exports.putfacebookfriends = function(req,res) {
+    console.log(req.params.facebookid + ' --- ' +req.body.friends);
+    Students.update({facebookid: req.params.facebookid},
+                        {$addToSet:
+                            {'facebook.friends':
+                                {$each : [99,100,201]}
+                            }
+
+                        },function(err){
+        if(err){
+            console.log(err);
+        }else{
+            console.log("Successfully added");
+        }
+    });
+}
+
 
 
 
@@ -62,14 +136,17 @@ function validateSignUp(req, callback) {
 
     Students.count({'facebookid': req.body.facebookid}, function (err, count) {
         var data = req.body;
-
-        if (err) callback(err.message, null);
+        console.log(count);
+        if (err) {
+            callback(err.message, null);
+                 }
         else {
             if (0 == count) {
 
                 objstudent = new Students(data);
-
+                console.log(objstudent);
                 objstudent.save();
+
                 return callback(objstudent, 'User Registered');
             }
             else {
@@ -82,12 +159,5 @@ function validateSignUp(req, callback) {
 
 }
 
-exports.validate = function student_sanitizor(req,callback){
-    data = req.body;
-    student = new Students(data);
 
-    console.log(validator);
-    //student.email = validator.escape(student.email);
-    //console.log(student.email);
-}
 
