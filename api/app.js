@@ -7,7 +7,7 @@
  */
 
 var express = require('express'),
-    mongoose = require('mongoose');
+mongoose = require('mongoose');
 var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
@@ -15,6 +15,10 @@ var path = require('path');
 
 
 var students = require("./routes/students");
+var campaigns = require("./routes/campaigns");
+var stages = require("./routes/stages");
+var tasks = require("./routes/tasks");
+
 var app = express();
 
 // all environments
@@ -46,11 +50,23 @@ app.use(express.static('../app'));
 
 app.get('/', routes.index);
 app.get('/students', students.list);
+app.post('/students',students.signup);
 app.get('/students/:fbid',students.info);
 app.get('/students/friends/:fbid',students.getfacebookfriends);
 app.put('/students/friends/:facebookid',students.putfacebookfriends);
 app.get('/students/type/:usertypeid',students.allusersoftype);
-app.post('/signup',students.signup);
+
+
+app.post('/campaigns',campaigns.addcampaign);
+app.get('/campaigns',campaigns.list);
+
+app.post('/stages',stages.addstage);
+app.get('/stages',stages.list);
+
+app.post('/tasks',tasks.addtask);
+app.get('/tasks',tasks.list);
+
+
 
 
 http.createServer(app).listen(app.get('port'), function(){

@@ -10,6 +10,7 @@ var tasksSchema= new Schema({
     description : String,
     points : Number,
     parenttaskid : ObjectId,
+    stage : ObjectId,
     startdate : Date,
     enddate : Date,
     createdby : String,

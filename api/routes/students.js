@@ -2,11 +2,7 @@
  * Created by Ankit on 5/16/2014.
  */
 
-var mongoose = require('mongoose');
-var validator = require('node-validator');
-//mongoose.connect('mongodb://viberdbuser:viberdbuser@ds033569.mongolab.com:33569/viberapp');
-mongoose.connect('mongodb://viber:viber@ds041218.mongolab.com:41218/viber');
-
+require('../config.js');
 
 var studentSchema = require('../models/studentmodel');
 
@@ -30,7 +26,7 @@ dummyuser.stages = [1,0,0,0,0];
 dummyuser.tasks = [ {stage :1 ,value :[1,0,0,0] }];
 dummyuser.type.id = 1;
 dummyuser.type.name = 'Student';
-console.log(JSON.stringify(dummyuser));
+//console.log(JSON.stringify(dummyuser));
 
 
 exports.list = function (req, res) {

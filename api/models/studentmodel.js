@@ -10,6 +10,7 @@ var user_task_schema = new Schema({
     task_id : ObjectId,
     points : Number,
     completed : Number,
+    managerapproved : Number,
     fields : [Schema.Types.Mixed]
 });
 
