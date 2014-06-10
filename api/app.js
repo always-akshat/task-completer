@@ -55,17 +55,23 @@ app.get('/students/:fbid',students.info);
 app.get('/students/friends/:fbid',students.getfacebookfriends);
 app.put('/students/friends/:facebookid',students.putfacebookfriends);
 app.get('/students/type/:usertypeid',students.allusersoftype);
-
+app.post('/students/:fbid/tasks/:taskid',students.submittask);
+app.put('/students/:fbid/tasks/:taskid',students.updatetask);
 
 app.post('/campaigns',campaigns.addcampaign);
 app.get('/campaigns',campaigns.list);
+app.get('/campaigns/:oid',campaigns.info);
+
 
 app.post('/stages',stages.addstage);
 app.get('/stages',stages.list);
+app.get('/stages/:oid',stages.info);
+
 
 app.post('/tasks',tasks.addtask);
 app.get('/tasks',tasks.list);
-
+app.get('/tasks/:oid',tasks.info);
+//app.get('/tasks/:taskid/children',tasks.children);
 
 
 

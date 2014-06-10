@@ -4,9 +4,15 @@
 
 require('../config.js');
 
+
 var studentSchema = require('../models/studentmodel');
+var taskSchema = require('../models/tasksmodel');
+var task_functions = require('../routes/tasks.js');
 
 Students = studentSchema.student;
+student_task  = studentSchema.student_task;
+tasks = taskSchema.tasks;
+
 
 dummyuser = new Students;
 dummyuser.name ='Test User';
@@ -109,7 +115,7 @@ exports.getfacebookfriends = function(req,res) {
 }
 
 exports.putfacebookfriends = function(req,res) {
-    console.log(req.params.facebookid + ' --- ' +req.body.friends);
+
     Students.update({facebookid: req.params.facebookid},
                         {$addToSet:
                             {'facebook.friends':
@@ -126,6 +132,48 @@ exports.putfacebookfriends = function(req,res) {
 }
 
 
+exports.availabletasks = function(req,res){
+    return Students.find({ 'facebookid': req.params.fbid},'stages tasks', function (err, opentasks) {
+        if (!err) {
+
+            if(friends === null){
+                return res.send(-1);
+            }
+            else
+            {
+                return res.send(opentasks);
+            }
+        } else {
+            return res.send(err);
+        }
+    });
+}  // not implemented yet
+
+exports.submittask = function(req,res){
+
+
+    var facebookid = req.params.fbid;
+    var taskid = req.params.taskid;
+
+    addTaskToUser(facebookid,taskid);
+
+
+}
+
+exports.updatetask = function(req,res){
+
+    console.log('a');
+    var facebookid = req.params.fbid;
+    var taskid = req.params.taskid;
+    var verb = req.body.verb;
+
+    console.log (verb + ' ---- ' + facebookid + ' ---- ' + taskid);
+    switch(verb){
+        case 'updateAnswers' : updateAnswers(facebookid,taskid,req.body.answers);break;
+        case 'completeTask' : completeTask(facebookid,taskid);break;
+        }
+
+}
 
 
 function validateSignUp(req, callback) {
@@ -155,5 +203,91 @@ function validateSignUp(req, callback) {
 
 }
 
+function updateAnswers(facebookid,taskid,answers){
+
+    Students.update({'facebookid':facebookid,'user_tasks.task_id':taskid},
+        {$set : { 'user_tasks.$.answers' : answers } }
+        ,function(err){
+            if(err){
+                console.log(err);
+            }else{
+                console.log("Successfully added");
+            }
+        });
+
+};
+
+function completeTask(facebookid,taskid){
+    var newtasks;
+   return  Students.update({'facebookid':facebookid,'user_tasks.task_id':taskid},
+        {$set : { 'user_tasks.$.completed' : 1 } }
+        ,function(err){
+            if(err){
+                console.log(err);
+            }else{
+                console.log("Successfully completed");
+               task_functions.getchildren(taskid,function(new_tasks){
+
+                  var unlockedtasks = new_tasks;
+                  console.log('student');
+                   unlockedtasks.forEach(function(entry) {
+                       addTaskToUser(facebookid,entry._id);
+                   });
+
+               });
 
 
+            }
+        });
+}
+
+
+function addTaskToUser(facebookid,taskid){
+    return tasks.findOne({ '_id': taskid}, function (err, task) {
+        if (!err) {
+
+            if(task === null){
+                return ('no record found');
+            }
+            else
+            {
+                student_task = new studentSchema.student_task;
+                student_task.task_id = taskid;
+                student_task.points = task.points;
+                student_task.completed = 0;
+                student_task.approvalrequired = task.approvalrequired;
+                student_task.managerapproved = 0;
+                student_task.fields = task.fields;
+                student_task.condition = task.condition;
+                student_task.type = task.type;
+                console.log(student_task);
+
+                if(!student_task){
+                    return ('student task could not be added');
+                }else {
+
+                    switch (student_task.type.id){
+                        case (1) : {student_task.completed  = 0;break;}  //social
+                        case (2) : {student_task.completed  = 1;break;}  //photos
+                        case (3) : {student_task.completed  = 2;break;}  //survey
+                        case (4) : {student_task.completed  = 1;break;}  //phone_no
+                    }
+
+
+                    Students.update({'facebookid' : facebookid},{$addToSet:{user_tasks:student_task}},
+                        function(err,added_task){
+
+                            if (err) {
+                                return ({"error": err});
+                            }
+                           return ({"updated": added_task});
+                        })
+                }
+
+
+            }
+        } else {
+            return res.send(err);
+        }
+    });
+}

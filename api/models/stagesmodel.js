@@ -8,6 +8,7 @@ var ObjectId = Schema.ObjectId;
 
 var stagesSchema = new Schema({
     name : String,
+    description : String,
     campaignid : ObjectId,
     tasks : [{ stageid : ObjectId }],
     startdate : Date,

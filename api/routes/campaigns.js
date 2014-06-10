@@ -43,6 +43,24 @@ exports.addcampaign = function (req, res) {
 
 };
 
+exports.info = function(req,res){
+    console.log(req.params.oid);
+    return Campaigns.findOne({ '_id': req.params.oid}, function (err, campaign) {
+        if (!err) {
+
+            if(campaign === null){
+                return res.send('no record found');
+            }
+            else
+            {
+                return res.send(campaign);
+            }
+        } else {
+            return res.send(err);
+        }
+    });
+
+}
 
 
 function validateSignUp(req, callback) {

@@ -16,6 +16,7 @@ stages = stageSchema.stages;
 
 var dummystage= {
     name: 'Test stage',
+    description :'Test stage description',
     campaignid :new ObjectId,
     tasks: [],
     startdate : Date.now(),
@@ -50,7 +51,24 @@ exports.addstage = function (req, res) {
 
 };
 
+exports.info = function(req,res){
+    console.log(req.params.oid);
+    return stages.findOne({ '_id': req.params.oid}, function (err, stage) {
+        if (!err) {
 
+            if(stage === null){
+                return res.send('no record found');
+            }
+            else
+            {
+                return res.send(stage);
+            }
+        } else {
+            return res.send(err);
+        }
+    });
+
+}
 
 function validateSignUp(req, callback) {
 
@@ -78,4 +96,6 @@ function validateSignUp(req, callback) {
 
 
 }
+
+
 

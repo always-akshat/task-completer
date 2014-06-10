@@ -7,11 +7,15 @@ var ObjectId = Schema.ObjectId;
 
 
 var user_task_schema = new Schema({
-    task_id : ObjectId,
+    task_id : String,
+    type : {id : Number, name : String},
     points : Number,
     completed : Number,
+    approvalrequired : Number,
     managerapproved : Number,
-    fields : [Schema.Types.Mixed]
+    fields : [Schema.Types.Mixed],
+    answers : [Schema.Types.Mixed],
+    condition :[Schema.Types.Mixed]
 });
 
 var studentSchema = new Schema({
@@ -38,10 +42,10 @@ var studentSchema = new Schema({
         authcode : String
     },
     points : Number,
-    stages : [Number],
+    stages : [ObjectId],      //changed from number to objectid
     tasks  : [
-               { stage: Number,
-                value : [Number]
+               { stage: ObjectId,   //changed from number to objectid
+                value : [ObjectId]  //changed from number to objectid
                }
              ],
     user_tasks :[user_task_schema],
@@ -51,6 +55,7 @@ var studentSchema = new Schema({
     { collection: 'students' })
 
 exports.student = mongoose.model('Student', studentSchema);
+exports.student_task = mongoose.model('Student_task',user_task_schema);
 
 
 

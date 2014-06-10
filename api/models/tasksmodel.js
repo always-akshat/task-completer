@@ -8,6 +8,7 @@ var ObjectId = Schema.ObjectId;
 var tasksSchema= new Schema({
     name: String,
     description : String,
+    type : {id : Number, name : String},
     points : Number,
     parenttaskid : ObjectId,
     stage : ObjectId,
@@ -16,9 +17,10 @@ var tasksSchema= new Schema({
     createdby : String,
     createdon: {type: Date, 'default': Date.now},
     updatedon : {type : Date, 'default':Date.now},
-    managerapproved : Number,
-    fields :[Schema.Types.Mixed]
-});
+    approvalrequired : Number,
+    fields :[Schema.Types.Mixed],
+    condition :[Schema.Types.Mixed]
+},{ collection: 'tasks' });
 
 exports.tasks = mongoose.model('Tasks', tasksSchema);
 

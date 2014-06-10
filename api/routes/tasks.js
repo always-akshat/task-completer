@@ -55,7 +55,45 @@ exports.addtask = function (req, res) {
 
 };
 
+exports.info = function(req,res){
+    console.log(req.params.oid);
+    return tasks.findOne({ '_id': req.params.oid}, function (err, task) {
+        if (!err) {
 
+            if(task === null){
+                return res.send('no record found');
+            }
+            else
+            {
+                return res.send(task);
+            }
+        } else {
+            return res.send(err);
+        }
+    });
+
+}
+
+exports.getchildren = function(taskid,cb){
+     return tasks.find({ 'parenttaskid': taskid},'_id', function (err, childrentasks) {
+        if (!err) {
+
+            if(childrentasks === null){
+                console.log(0);
+                cb(0);
+            }
+            else
+            {
+                console.log('success');
+                cb(childrentasks);
+
+            }
+        } else {
+            console.log(err);
+            cb(err);
+        }
+    });
+}
 
 function validateSignUp(req, callback) {
 
