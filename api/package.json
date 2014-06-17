@@ -9,6 +9,6 @@
     "express": "3.4.8",
     "jade": "*",
     "mongoose": "^3.8.11",
-    "node-validator": "~0.1.8"
+    "validator": "~3.16.0"
   }
 }

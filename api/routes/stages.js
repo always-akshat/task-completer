@@ -26,7 +26,7 @@ var dummystage= {
     updatedon : Date.now()
 };
 
-console.log(JSON.stringify(dummystage));
+
 
 
 exports.list = function (req, res) {

@@ -12,7 +12,8 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
-
+var passport = require('passport');
+var flash 	 = require('connect-flash');
 
 var students = require("./routes/students");
 var campaigns = require("./routes/campaigns");
@@ -28,9 +29,18 @@ app.set('port', process.env.PORT || 3001);
 //app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
-app.use(express.bodyParser());
+app.use(express.cookieParser());    // to read cookies
+app.use(express.bodyParser());      // to get information from html forms.
 app.use(express.urlencoded());
-app.use(express.json());
+
+
+// required for passport
+app.use(express.session({ secret: 'manchesterunitedistherealteam' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+
 
 //app.use(express.methodOverride());
 app.use(app.router);
@@ -57,6 +67,7 @@ app.put('/students/friends/:facebookid',students.putfacebookfriends);
 app.get('/students/type/:usertypeid',students.allusersoftype);
 app.post('/students/:fbid/tasks/:taskid',students.submittask);
 app.put('/students/:fbid/tasks/:taskid',students.updatetask);
+
 
 app.post('/campaigns',campaigns.addcampaign);
 app.get('/campaigns',campaigns.list);

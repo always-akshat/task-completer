@@ -2,8 +2,7 @@
  * Created by Ankit on 5/16/2014.
  */
 
-require('../config.js');
-
+var config = require('../config.js');
 
 var studentSchema = require('../models/studentmodel');
 var taskSchema = require('../models/tasksmodel');
@@ -22,17 +21,17 @@ dummyuser.facebookid = 0000230232738;
 dummyuser.createdon = Date.now();
 dummyuser.updatedon = Date.now();
 dummyuser.gender = 'male';
-dummyuser.dob = '21/4/1990';
+dummyuser.dob = '21/4/1990'; // has to be an ISO date after casting
 dummyuser.college.id = 989;
 dummyuser.college.name = 'Testing College';
+dummyuser.location.id = 1401;
+dummyuser.location.name = 'Random city';
 dummyuser.facebook.authorized = 1;
 dummyuser.facebook.authcode = 'ashdwhh23232hshdghsgbdjabd334343434hjbdhsbjdbjwbd';
 dummyuser.points = 0;
-dummyuser.stages = [1,0,0,0,0];
-dummyuser.tasks = [ {stage :1 ,value :[1,0,0,0] }];
 dummyuser.type.id = 1;
 dummyuser.type.name = 'Student';
-//console.log(JSON.stringify(dummyuser));
+console.log(JSON.stringify(dummyuser));
 
 
 exports.list = function (req, res) {
@@ -119,7 +118,7 @@ exports.putfacebookfriends = function(req,res) {
     Students.update({facebookid: req.params.facebookid},
                         {$addToSet:
                             {'facebook.friends':
-                                {$each : [99,100,201]}
+                                {$each : req.body.friends}
                             }
 
                         },function(err){
@@ -150,13 +149,9 @@ exports.availabletasks = function(req,res){
 }  // not implemented yet
 
 exports.submittask = function(req,res){
-
-
     var facebookid = req.params.fbid;
     var taskid = req.params.taskid;
-
     addTaskToUser(facebookid,taskid);
-
 
 }
 
@@ -178,6 +173,7 @@ exports.updatetask = function(req,res){
 
 function validateSignUp(req, callback) {
 
+
     Students.count({'facebookid': req.body.facebookid}, function (err, count) {
         var data = req.body;
         console.log(count);
@@ -188,10 +184,24 @@ function validateSignUp(req, callback) {
             if (0 == count) {
 
                 objstudent = new Students(data);
-                console.log(objstudent);
-                objstudent.save();
 
-                return callback(objstudent, 'User Registered');
+                 config.utils.objectvalidator('student',objstudent,function(validated_object){
+
+                    var new_student = validated_object;
+     console.log('got something');
+
+                     if(validated_object !== 0){
+                         console.log(validated_object);
+                         objstudent.save();
+                         return callback(validated_object, 'User Registered');
+                     }else{
+                         console.log('there was an error');
+                         return callback(null, 'there was an error');
+                     }
+                });
+
+
+
             }
             else {
                 return callback(null, 'facebookid exists');
@@ -227,7 +237,6 @@ function completeTask(facebookid,taskid){
             }else{
                 console.log("Successfully completed");
                task_functions.getchildren(taskid,function(new_tasks){
-
                   var unlockedtasks = new_tasks;
                   console.log('student');
                    unlockedtasks.forEach(function(entry) {

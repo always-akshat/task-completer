@@ -32,6 +32,10 @@ var studentSchema = new Schema({
         id: Number,
         name : String
     },
+    location : {
+        id: Number,
+        name : String
+        },
     facebook : {
         authorized : Number,
         friends : [Number],
