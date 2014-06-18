@@ -11,7 +11,21 @@ var http = require('http');
 var path = require('path');
 var flash = require('connect-flash');
 var config = require('./config.js');
-var social_oath = require('./socialauth.js');
+var passport  = require('passport');
+var Student = require('./models/studentmodel.js');
+var auth = require('./socialpassport.js')
+
+
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+passport.deserializeUser(function(obj, done) {
+    done(null, obj);
+});
+
+
+
+
 var app = express();
 
 
@@ -39,31 +53,30 @@ app.use(express.urlencoded());
 
 // required for passport
 app.use(express.session({ secret: 'gloryglorymanchesterunited' })); // session secret
-config.passport.initialize();
-config.passport.session(); // persistent login sessions
+
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-
-
-//app.use(express.methodOverride());
-//app.use(app.router);
-//require('../app/routes.js')(app, passport);
-//app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
-//app.set("view options", {layout: false});
-//app.use(express.static('../app'));
-
 
 
 
 app.get('/', routes.index);
-app.get('/auth/facebook',auth.facebookauth)
-app.get('/auth/facebook/callback',auth.facebookcallback);
+
+app.get('/auth/facebook',
+    passport.authenticate('facebook'),
+    function(req, res){
+    });
+app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', { failureRedirect: '' }),
+    function(req, res) {
+        res.redirect('/account');
+    });
+
 
 app.get('/students', students.list);
 app.post('/students',students.signup);
