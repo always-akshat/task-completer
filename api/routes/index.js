@@ -5,5 +5,5 @@
 var path = require('path');
 
 exports.index = function(req, res){
-    res.sendfile(path.resolve('../app/index.html'));
+    res.sendfile(path.resolve('../app/views/index.html'));
 };

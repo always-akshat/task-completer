@@ -31,7 +31,7 @@ dummyuser.facebook.authcode = 'ashdwhh23232hshdghsgbdjabd334343434hjbdhsbjdbjwbd
 dummyuser.points = 0;
 dummyuser.type.id = 1;
 dummyuser.type.name = 'Student';
-console.log(JSON.stringify(dummyuser));
+//console.log(JSON.stringify(dummyuser));
 
 
 exports.list = function (req, res) {
