@@ -6,30 +6,25 @@
 
 var express = require('express'),mongoose = require('mongoose');
 var routes = require('./routes');
-var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 var flash = require('connect-flash');
 var config = require('./config.js');
 var passport  = require('passport');
-var Student = require('./models/studentmodel.js');
-var auth = require('./socialpassport.js')
 
-
+/*
 passport.serializeUser(function(user, done) {
     done(null, user);
 });
 passport.deserializeUser(function(obj, done) {
     done(null, obj);
 });
+*/
 
 
 
 
-var app = express();
-
-
-var auth = require("./routes/auth");
+var authroutes = require("./routes/auth");
 var students = require("./routes/students");
 var campaigns = require("./routes/campaigns");
 var stages = require("./routes/stages");
@@ -37,6 +32,7 @@ var tasks = require("./routes/tasks");
 var config_passport = require("./socialpassport");
 
 
+var app = express();
 
 
 
@@ -48,13 +44,19 @@ app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.cookieParser());    // to read cookies
 app.use(express.bodyParser());      // to get information from html forms.
+app.use(express.session({ secret: 'gloryglorymanchesterunited' })); // session secret
 app.use(express.urlencoded());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(app.router);
 
 
 // required for passport
-app.use(express.session({ secret: 'gloryglorymanchesterunited' })); // session secret
 
 app.use(flash()); // use connect-flash for flash messages stored in session
+
+
+
 
 
 // development only
@@ -66,15 +68,16 @@ if ('development' == app.get('env')) {
 
 
 app.get('/', routes.index);
+app.get('/auth/facebook', passport.authenticate('facebook'),function(req, res){
 
-app.get('/auth/facebook',
-    passport.authenticate('facebook'),
-    function(req, res){
-    });
+});
+
 app.get('/auth/facebook/callback',
-    passport.authenticate('facebook', { failureRedirect: '' }),
+        passport.authenticate('facebook', {failureRedirect: '/' }),
     function(req, res) {
-        res.redirect('/account');
+
+        req.session.student = req.user;
+        res.send(req.session.student);
     });
 
 

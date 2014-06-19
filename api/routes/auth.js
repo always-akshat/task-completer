@@ -2,15 +2,20 @@
  * Created by akshat on 17/6/14.
  */
 
+var flash = require('connect-flash');
 var config = require('../config.js');
-var passport = config.passport;
+var passport  = require('passport');
+var config_passport = require("../socialpassport");
 
 
-exports.facebookauth = function(){
-    passport.authenticate('facebook');
+
+module.exports.facebookauth = function(){
+    passport.authenticate('facebook'),function(req, res){
+            console.log('trying to contact to facebook');
+        }
 }
 
-exports.facebookcallback = function(passport){
+module.exports.facebookcallback = function(){
     passport.authenticate('facebook', {
         successRedirect : '/profile',
         failureRedirect : '/'
