@@ -130,6 +130,21 @@ exports.putfacebookfriends = function(req,res) {
     });
 }
 
+exports.addpoints = function(req,res) {
+
+    Students.update({facebookid: req.params.facebookid},
+        {$inc: {
+                 points: req.body.points
+               }
+        },function(err){
+            if(err){
+                console.log(err);
+            }else{
+                console.log("Successfully added");
+            }
+        });
+}
+
 
 exports.availabletasks = function(req,res){
     return Students.find({ 'facebookid': req.params.fbid},'stages tasks', function (err, opentasks) {

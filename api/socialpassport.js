@@ -6,18 +6,13 @@
 
 var passport = require('passport')
 var FacebookStrategy = require('passport-facebook').Strategy;
+var TwitterStrategy = require('passport-twitter').Strategy;
 var studentSchema = require('./models/studentmodel');
 var socialauth = require('./socialauth.js');
 
 Student = studentSchema.student;
 
-passport.serializeUser(function(user, done) {
-    done(null, user);
-});
 
-passport.deserializeUser(function(obj, done) {
-    done(null, obj);
-});
 
 module.exports = passport.use(new FacebookStrategy({
         clientID: socialauth.facebook.clientID,
@@ -58,3 +53,31 @@ module.exports = passport.use(new FacebookStrategy({
         });
     }
 ));
+
+passport.use(new TwitterStrategy({
+        consumerKey: socialauth.twitter.consumerKey,
+        consumerSecret: socialauth.twitter.consumerSecret,
+        callbackURL: socialauth.twitter.callbackURL
+    },
+    function(accessToken, refreshToken, profile, done) {
+        process.nextTick(function () {
+
+            //console.log(profile);
+            twit_profile  = new Object();
+            twit_profile.id = profile.id;
+            twit_profile.name = profile.displayName;
+            twit_profile.username = profile.username;
+            console.log(twit_profile);
+            console.log('hi');
+            return done(null, twit_profile);
+        });
+    }
+));
+
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+    done(null, obj);
+});

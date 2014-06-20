@@ -68,6 +68,7 @@ if ('development' == app.get('env')) {
 
 
 app.get('/', routes.index);
+
 app.get('/auth/facebook', passport.authenticate('facebook'),function(req, res){
 
 });
@@ -80,6 +81,17 @@ app.get('/auth/facebook/callback',
         res.send(req.session.student);
     });
 
+app.get('/auth/twitter',
+    passport.authenticate('twitter'),
+    function(req, res){
+    });
+
+app.get('/auth/twitter/callback',
+    passport.authenticate('twitter', { failureRedirect: '/' }),
+    function(req, res) {
+        req.session.twit = req.user;
+        res.send(req.session.twit);
+    });
 
 app.get('/students', students.list);
 app.post('/students',students.signup);
@@ -89,6 +101,7 @@ app.put('/students/friends/:facebookid',students.putfacebookfriends);
 app.get('/students/type/:usertypeid',students.allusersoftype);
 app.post('/students/:fbid/tasks/:taskid',students.submittask);
 app.put('/students/:fbid/tasks/:taskid',students.updatetask);
+app.put('/students/points/:facebookid',students.addpoints);
 
 
 app.post('/campaigns',campaigns.addcampaign);
