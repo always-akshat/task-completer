@@ -20,13 +20,14 @@ module.exports = passport.use(new FacebookStrategy({
         callbackURL: socialauth.facebook.callbackURL
     },
     function(accessToken, refreshToken, profile, done) {
-        Students.findOne({ facebookid: profile.id }, function(err, user) {
+        Students.findOne({ facebookid: profile.id }, function(err, student) {
             if(err) { console.log(err); }
-            if (!err && user != null) {
-                done(null, user);
+            if (!err && student != null) {
+                student.facebook.authcode = accessToken;
+                 done(null, student);
             }
             else {
-                console.log(profile);
+
                 var student = new  Student;
                 student.name =profile.displayName;
                 student.email = profile.emails;
@@ -35,7 +36,7 @@ module.exports = passport.use(new FacebookStrategy({
                 student.updatedon = Date.now();
                 student.gender = profile.gender;
                 student.facebook.authorized = 1;
-                //student.facebook.authcode = 'ashdwhh23232hshdghsgbdjabd334343434hjbdhsbjdbjwbd';
+                student.facebook.authcode = accessToken;
                 student.points = 0;
                 student.type.id = 1;
                 student.type.name = 'Student';

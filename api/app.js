@@ -12,16 +12,6 @@ var flash = require('connect-flash');
 var config = require('./config.js');
 var passport  = require('passport');
 
-/*
-passport.serializeUser(function(user, done) {
-    done(null, user);
-});
-passport.deserializeUser(function(obj, done) {
-    done(null, obj);
-});
-*/
-
-
 
 
 var authroutes = require("./routes/auth");
@@ -29,6 +19,7 @@ var students = require("./routes/students");
 var campaigns = require("./routes/campaigns");
 var stages = require("./routes/stages");
 var tasks = require("./routes/tasks");
+var sharer = require("./routes/sharer");
 var config_passport = require("./socialpassport");
 
 
@@ -68,17 +59,18 @@ if ('development' == app.get('env')) {
 
 
 app.get('/', routes.index);
+app.get('/share', sharer.feed_post);
 
-app.get('/auth/facebook', passport.authenticate('facebook'),function(req, res){
+app.get('/auth/facebook', passport.authenticate('facebook',{ scope: 'publish_actions' }),function(req, res){
 
 });
 
 app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {failureRedirect: '/' }),
     function(req, res) {
-
         req.session.student = req.user;
         res.send(req.session.student);
+        console.log(req.session.student);
     });
 
 app.get('/auth/twitter',
