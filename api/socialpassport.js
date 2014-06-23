@@ -20,6 +20,7 @@ module.exports = passport.use(new FacebookStrategy({
         callbackURL: socialauth.facebook.callbackURL
     },
     function(accessToken, refreshToken, profile, done) {
+        console.log('return frm FB ' + JSON.stringify(profile));
         Students.findOne({ facebookid: profile.id }, function(err, student) {
             if(err) { console.log(err); }
             if (!err && student != null) {

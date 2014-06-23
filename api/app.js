@@ -25,7 +25,7 @@ var config_passport = require("./socialpassport");
 
 var app = express();
 
-
+app.use("/app", express.static(__dirname + '/../app/'));
 
 // all environments
 app.set('port', process.env.PORT || 3001);
@@ -68,8 +68,10 @@ app.get('/auth/facebook', passport.authenticate('facebook',{ scope: 'publish_act
 app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {failureRedirect: '/' }),
     function(req, res) {
+
         req.session.student = req.user;
-        res.send(req.session.student);
+        //res.send(req.session.student);
+        res.redirect('/app/');
         console.log(req.session.student);
     });
 
@@ -78,12 +80,16 @@ app.get('/auth/twitter',
     function(req, res){
     });
 
+app.get('/getstudentdata', students.getstudentdata); // to initially set the student data
+
+
 app.get('/auth/twitter/callback',
     passport.authenticate('twitter', { failureRedirect: '/' }),
     function(req, res) {
         req.session.twit = req.user;
         res.send(req.session.twit);
     });
+
 
 app.get('/students', students.list);
 app.post('/students',students.signup);

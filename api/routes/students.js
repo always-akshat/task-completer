@@ -35,10 +35,31 @@ dummyuser.type.name = 'Student';
 
 
 exports.list = function (req, res) {
+
+
     Students.find({}, function (err, Students) {
         res.send(JSON.stringify(Students));
     });
+
+
 };
+
+exports.getstudentdata = function(req,res){
+
+    if(req.session.student  !== null) // check if the user is logged in
+    {
+        Students.find({_id:req.session.student._id}, function (err, Student) {
+            res.send(JSON.stringify(Student));
+            console.log('student data');
+            console.log(JSON.stringify(Student));
+        });
+
+    }
+    else res.send('Unauthorized');
+
+
+}
+
 
 
 exports.signup = function (req, res) {
