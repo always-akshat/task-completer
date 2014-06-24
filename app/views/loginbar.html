@@ -1,0 +1,40 @@
+<div class="vi-login-box">
+    <div class="avatar-box"><a href="my-settings.html">
+
+     <img ng-src="http://graph.facebook.com/{{identity.currentUser.facebookid}}/picture?type=square" class="img-circle img-responsive"></a></div>
+    <div class="avatar-info">
+        <h3>{{identity.currentUser.name}}
+            <small>4,560 vibes</small>
+        </h3>
+        <h4>Level 2: 50%</h4>
+
+        <div class="row">
+            <div class="col-xs-8"></div>
+            <div class="col-xs-8"></div>
+            <div class="col-xs-8" style="border: 0px;"></div>
+            <div class="progress-bar" style="width: 60%;"></div>
+        </div>
+    </div>
+    <div class="user-nav">
+        <a href="dashboard.html" class="link-icon-home active">Home</a>
+        <a href="rewords.html" class="link-icon-rewords">Rewards</a>
+        <a href="leaderboard.html" class="link-icon-leaderboard">Leaderboard</a>
+        <a href="my-settings.html" class="link-icon-setting">Settings</a>
+    </div>
+</div>
+
+<ul class="term-list">
+    <li>
+        <div class="btn-group">
+            <button type="button" class="btn btn-link">Terms</button>
+            <button type="button" class="btn btn-link">Privacy</button>
+            <button type="button" class="btn btn-link">About</button>
+        </div>
+    </li>
+    <li class="clearfix">
+        <div class="champ-powered-by">
+            <img src="images/champ-power-by.png" alt="" class="pull-left"/>
+            Campaign powered by:<br>Letsintern
+        </div>
+    </li>
+</ul>
