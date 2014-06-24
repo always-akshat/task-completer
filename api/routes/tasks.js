@@ -33,13 +33,13 @@ var dummytask= {
 
 
 
-exports.list = function (req, res) {
+function list(req, res) {
     tasks.find({}, function (err, tasks) {
         res.send(JSON.stringify(tasks));
     });
 };
 
-exports.addtask = function (req, res) {
+function addtask(req, res) {
 
     validateSignUp(req, function (error, data) {
         console.log('returnValidate');
@@ -55,7 +55,7 @@ exports.addtask = function (req, res) {
 
 };
 
-exports.info = function(req,res){
+ function info(req,res){
     console.log(req.params.oid);
     return tasks.findOne({ '_id': req.params.oid}, function (err, task) {
         if (!err) {
@@ -74,7 +74,7 @@ exports.info = function(req,res){
 
 }
 
-exports.getchildren = function(taskid,cb){
+ function getchildren(taskid,cb){
      return tasks.find({ 'parenttaskid': taskid},'_id', function (err, childrentasks) {
         if (!err) {
 
@@ -99,7 +99,6 @@ function validateSignUp(req, callback) {
 
     tasks.count({'name': req.body.name}, function (err, count) {
         var data = req.body;
-        console.log(count);
         if (err) {
             callback(err.message, null);
         }
@@ -122,3 +121,9 @@ function validateSignUp(req, callback) {
 
 }
 
+module.exports = {
+    list :list,
+    addtask : addtask,
+    getchildren :getchildren,
+    info:info
+    }

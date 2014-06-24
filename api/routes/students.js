@@ -7,12 +7,13 @@ var config = require('../config.js');
 var studentSchema = require('../models/studentmodel');
 var taskSchema = require('../models/tasksmodel');
 var task_functions = require('../routes/tasks.js');
+var stages_function = require('../routes/stages.js');
 
 Students = studentSchema.student;
 student_task  = studentSchema.student_task;
 tasks = taskSchema.tasks;
 
-
+/*
 dummyuser = new Students;
 dummyuser.name ='Test User';
 dummyuser.email = 'testing@viberapp.com';
@@ -32,7 +33,7 @@ dummyuser.points = 0;
 dummyuser.type.id = 1;
 dummyuser.type.name = 'Student';
 //console.log(JSON.stringify(dummyuser));
-
+*/
 
 exports.list = function (req, res) {
 
@@ -60,9 +61,9 @@ exports.getstudentdata = function(req,res){
 
 }
 
-
-
 exports.signup = function (req, res) {
+
+
 
     validateSignUp(req, function (error, data) {
         console.log('returnValidate');
@@ -71,6 +72,20 @@ exports.signup = function (req, res) {
             res.send(400, error.message)
         }
         else {
+            stages_function.getStageInfo(data.facebookid,function(err,stage){
+                if(!err){
+
+                    if(stage && stage.tasks){
+                        var user_tasks = stage.tasks;
+                        user_tasks.forEach(function(user_tasks) {
+                            console.log(user_tasks);
+                            addTaskToUser('10152198497022499',user_tasks.stageid.toString());
+                        });
+                    }
+
+
+                }
+            });
             res.send(JSON.stringify(data));
             console.log('Sending data back to the client');
         }
@@ -168,10 +183,7 @@ exports.addpoints = function(req,res) {
 
 exports.leaderboard  = function(req,res){
     console.log('a');
-    /*Students.find({},function (err, Students) {
-        res.send(Students);
-    });*/
-    Students.find().sort({points:-1}).select('name points facebookid location.name').exec(function (err, posts){
+    Students.find().sort({points:-1}).limit(10).select('name points facebookid location.name').exec(function (err, posts){
     res.send(posts);
     });
 }
@@ -297,6 +309,9 @@ function completeTask(facebookid,taskid){
 
 
 function addTaskToUser(facebookid,taskid){
+
+        taskid = config.ObjectId(taskid);
+
     return tasks.findOne({ '_id': taskid}, function (err, task) {
         if (!err) {
 
@@ -341,7 +356,8 @@ function addTaskToUser(facebookid,taskid){
 
             }
         } else {
-            return res.send(err);
+            return console.log(err);
         }
     });
 }
+
