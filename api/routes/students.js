@@ -166,6 +166,15 @@ exports.addpoints = function(req,res) {
         });
 }
 
+exports.leaderboard  = function(req,res){
+    console.log('a');
+    /*Students.find({},function (err, Students) {
+        res.send(Students);
+    });*/
+    Students.find().sort({points:-1}).select('name points facebookid location.name').exec(function (err, posts){
+    res.send(posts);
+    });
+}
 
 exports.availabletasks = function(req,res){
     return Students.find({ 'facebookid': req.params.fbid},'stages tasks', function (err, opentasks) {

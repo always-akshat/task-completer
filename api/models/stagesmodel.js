@@ -19,6 +19,4 @@ var stagesSchema = new Schema({
 });
 
 exports.stages = mongoose.model('Stages', stagesSchema);
-/**
- * Created by akshat on 5/6/14.
- */
+

@@ -22,7 +22,7 @@ var studentSchema = new Schema({
     name: String,
     email: String,
     mobile : Number,
-    facebookid: Number,
+    facebookid: String,
     twitterid : Number,
     createdon: {type: Date, 'default': Date.now},
     updatedon : {type : Date, 'default':Date.now},

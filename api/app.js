@@ -3,7 +3,6 @@
  */
 
 
-
 var express = require('express'),mongoose = require('mongoose');
 var routes = require('./routes');
 var http = require('http');
@@ -12,6 +11,8 @@ var flash = require('connect-flash');
 var config = require('./config.js');
 var passport  = require('passport');
 
+var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
 
 
 var authroutes = require("./routes/auth");
@@ -20,6 +21,7 @@ var campaigns = require("./routes/campaigns");
 var stages = require("./routes/stages");
 var tasks = require("./routes/tasks");
 var sharer = require("./routes/sharer");
+var utility_routes = require("./routes/utilities");
 var config_passport = require("./socialpassport");
 
 
@@ -35,7 +37,14 @@ app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.cookieParser());    // to read cookies
 app.use(express.bodyParser());      // to get information from html forms.
-app.use(express.session({ secret: 'gloryglorymanchesterunited' })); // session secret
+app.use(express.session({
+    store: new RedisStore({
+        host: '54.254.100.71',
+        port: 6379,
+        db: 9
+    }),
+    secret: 'manchester_united'
+}));
 app.use(express.urlencoded());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -72,7 +81,7 @@ app.get('/auth/facebook/callback',
         req.session.student = req.user;
         //res.send(req.session.student);
         res.redirect('/app/');
-        console.log(req.session.student);
+        //console.log(req.session.student);
     });
 
 app.get('/auth/twitter',
@@ -80,7 +89,7 @@ app.get('/auth/twitter',
     function(req, res){
     });
 
-app.get('/getstudentdata', students.getstudentdata); // to initially set the student data
+
 
 
 app.get('/auth/twitter/callback',
@@ -100,6 +109,7 @@ app.get('/students/type/:usertypeid',students.allusersoftype);
 app.post('/students/:fbid/tasks/:taskid',students.submittask);
 app.put('/students/:fbid/tasks/:taskid',students.updatetask);
 app.put('/students/points/:facebookid',students.addpoints);
+app.get('/students/leaderboard/points',students.leaderboard);
 
 
 app.post('/campaigns',campaigns.addcampaign);
@@ -117,7 +127,11 @@ app.get('/tasks',tasks.list);
 app.get('/tasks/:oid',tasks.info);
 //app.get('/tasks/:taskid/children',tasks.children);
 
+app.get('/locations',utility_routes.locationlist);
+app.get('/colleges',utility_routes.collegelsist);
 
+
+app.get('/getstudentdata', students.getstudentdata); // to initially set the student data
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
