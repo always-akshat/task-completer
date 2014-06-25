@@ -54,7 +54,11 @@ var studentSchema = new Schema({
              ],
     user_tasks :[user_task_schema],
     type : {id : Number,
-            name : String}
+            name : String},
+    verified : Number,
+    auth : Number,
+    visitcount :Number,
+    referred_by: Number
 },
     { collection: 'students' })
 

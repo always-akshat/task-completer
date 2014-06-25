@@ -7,3 +7,4 @@ mongoose.connect('mongodb://viber:viber@ds041218.mongolab.com:41218/viber');
 
 exports.utils = require('../api/utils.js');
 
+exports.ObjectId =  mongoose.Types.ObjectId;

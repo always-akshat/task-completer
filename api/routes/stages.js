@@ -29,13 +29,13 @@ var dummystage= {
 
 
 
-exports.list = function (req, res) {
+function list(req, res) {
     stages.find({}, function (err, stages) {
         res.send(JSON.stringify(stages));
     });
 };
 
-exports.addstage = function (req, res) {
+function addstage(req, res) {
 
     validateSignUp(req, function (error, data) {
         console.log('returnValidate');
@@ -51,23 +51,17 @@ exports.addstage = function (req, res) {
 
 };
 
-exports.info = function(req,res){
-    console.log(req.params.oid);
-    return stages.findOne({ '_id': req.params.oid}, function (err, stage) {
-        if (!err) {
 
-            if(stage === null){
-                return res.send('no record found');
-            }
-            else
-            {
-                return res.send(stage);
-            }
-        } else {
-            return res.send(err);
-        }
+function info(req,res){
+    stageid = req.params.oid;
+    getStageInfo(stageid,function(err,stage){
+        if(!err){
+        console.log('no e');
+           res.send(stage);
+       }else{
+           console.log(err);
+       }
     });
-
 }
 
 function validateSignUp(req, callback) {
@@ -95,6 +89,31 @@ function validateSignUp(req, callback) {
     });
 
 
+}
+
+function getStageInfo  (stageid, callback){
+    stages.findOne({ '_id': stageid }, function (err, stage) {
+        if (!err) {
+
+            if(stage === null){
+                return callback(null,0);
+            }
+            else
+            {
+                console.log('a');
+                return callback(null,stage);
+            }
+        } else {
+            callback(null,err.message);
+        }
+    });
+}
+
+module.exports = {
+        getStageInfo : getStageInfo,
+        list :list,
+        addstage :addstage,
+        info :info
 }
 
 

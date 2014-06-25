@@ -10,7 +10,7 @@ var stagesSchema = new Schema({
     name : String,
     description : String,
     campaignid : ObjectId,
-    tasks : [{ stageid : ObjectId }],
+    tasks : [{ stageid : String }],
     startdate : Date,
     enddate : Date,
     createddy : String,
