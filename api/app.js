@@ -70,6 +70,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/share', sharer.feed_post);
 
+
 app.get('/auth/facebook', passport.authenticate('facebook',{ scope: 'publish_actions' }),function(req, res){
 
 });
@@ -133,6 +134,9 @@ app.get('/colleges',utility_routes.collegelsist);
 
 
 app.get('/getstudentdata', students.getstudentdata); // to initially set the student data
+
+
+app.post('/sharefblink',sharer.feed_sharelink);
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));

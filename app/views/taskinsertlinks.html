@@ -11,7 +11,7 @@
             <p><strong>Task description:</strong></p>
             Hey, so this is your first task in your journey of being the Viber #goodvibes ambassador. Have a look at the video below and share it on your facebook, twitter and google plus timelines.
             <p><br/><br/> <video width="100%" height="100%" controls style="margin-bottom: 20px;">
-                <source src="https://www.youtube.com/watch?v=rORTVmdQzpc" type="video/ogg">
+                <source src="audio/test.mp4" type="video/ogg">
                 Your browser does not support the video tag.
             </video>
 
@@ -27,12 +27,12 @@
                 <div class="tab-pane fade in active" id="add-social-link">
                     <div class="form-group">
                         <input type="text" class="form-control data_field" name="data_field"
-                               placeholder="www.kickstarter.com/letsinternviber" value="https://www.youtube.com/watch?v=rORTVmdQzpc">
+                               placeholder="video url" value="https://www.youtube.com/watch?v=rORTVmdQzpc" ng-model="link">
                         <span class="icon_clear icon-close-circle"></span>
                     </div>
                     <div class="form-group">
                         <textarea name="" id="" cols="30" rows="5" class="form-control"
-                                  placeholder="#goodvibes your message"></textarea>
+                                  placeholder="#goodvibes your message" ng-model="message"></textarea>
                     </div>
                     <div class="form-group">
                         <div class="pull-right">
@@ -48,7 +48,7 @@
                             <label for="post-g">
                                 <span class="circle-icon-g"></span>
                             </label>
-                            <button type="submit" class="btn btn-success">submit</button>
+                            <button type="submit" class="btn btn-success" ng-click="sharelink()">submit</button>
                         </div>
 
                     </div>

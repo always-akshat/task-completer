@@ -3,163 +3,44 @@
 var viberApp = angular
   .module('viberApp', ['ngRoute']);
 
+// angular routes configuration
+
+
+viberApp.config(['$routeProvider',
+    function($routeProvider) {
+        console.log('rp');
+        $routeProvider.
+            when('/', {
+                templateUrl: 'views/dashboard.html',
+                controller: 'dashboardCtrl'
+            }).
+            when('/signup', {
+                templateUrl: 'views/signup.html',
+                controller: 'signupCntrl'
+            }).
+            when('/leaderboard',{
+
+                templateUrl:'views/leaderboard.html',
+                controller:'lbCntrl'
+
+            }).when('/mysettings',{
+
+                templateUrl:'my-settings.html'
+
+            }).
+            when('/mysettings',{
+
+                templateUrl:'views/mysettings.html',
+                controller:'lbMySettingsCntrl'
+
+            }).
+            otherwise({
+                redirectTo: '/'
+            });
+    }]);
+
 
 viberApp.controller('vbNavBarCtrl',function($scope,$http){
-
-
-});
-
-viberApp.directive('navBar', function(){
-
-    return{
-
-        restrict : 'E',
-        templateUrl : 'views/navbar.html',
-        controller : 'vbNavBarCtrl'
-
-    }
-
-
-});
-
-viberApp.directive('loginBar', function(){
-
-    return{
-
-        restrict : 'E',
-        templateUrl : 'views/loginbar.html',
-        controller : 'vbLoginBarCtrl'
-
-    }
-
-
-});
-
-
-viberApp.directive('taskUploadPhotos', function(){
-
-    return{
-
-        restrict : 'E',
-        templateUrl : 'views/taskuploadphotos.html',
-        controller : 'vbUploadPhotosCtrl'
-
-    }
-
-
-});
-
-viberApp.directive('taskInsertLinks', function(){
-
-    return{
-
-        restrict : 'E',
-        templateUrl : 'views/taskinsertlinks.html',
-        controller : 'vbInsertLinksCtrl'
-
-    }
-
-
-});
-
-viberApp.directive('taskInsertMobile', function(){
-
-    return{
-
-        restrict : 'E',
-        templateUrl : 'views/taskinsertmobile.html',
-        controller : 'vbInsertMobileCtrl'
-
-    }
-
-
-});
-
-viberApp.directive('taskSurvey', function(){
-
-    return{
-
-        restrict : 'E',
-        templateUrl : 'views/tasksurvey.html',
-        controller : 'vbSurveyCtrl'
-
-    }
-
-
-});
-
-viberApp.directive('miniLeaderboard', function(){
-
-    return{
-
-        restrict : 'E',
-        templateUrl : 'views/minileaderboard.html',
-        controller : 'vbMiniLeaderBoardCtrl'
-
-    }
-
-
-});
-
-viberApp.directive('socialConnect', function(){
-
-    return{
-
-        restrict : 'E',
-        templateUrl : 'views/socialconnect.html',
-        controller : 'vbSocialConnectCtrl'
-
-    }
-
-
-});
-
-viberApp.directive('cheatBox', function(){
-
-    return{
-
-        restrict : 'E',
-        templateUrl : 'views/cheatbox.html',
-        controller : 'vbCheatBoxCtrl'
-
-    }
-
-
-});
-
-viberApp.controller('vbCheatBoxCtrl',function($scope){
-
-
-});
-
-
-viberApp.controller('vbSocialConnectCtrl',function($scope){
-
-
-});
-
-viberApp.controller('vbMiniLeaderBoardCtrl',function($scope){
-
-
-});
-
-viberApp.controller('vbSurveyCtrl',function($scope){
-
-
-});
-
-viberApp.controller('vbInsertMobileCtrl',function($scope){
-
-
-});
-
-viberApp.controller('vbUploadPhotosCtrl',function($scope){
-
-
-});
-
-
-viberApp.controller('vbInsertLinksCtrl',function($scope){
 
 
 });
@@ -223,36 +104,3 @@ function($rootScope) {
     return sharedService;
 });
 
-
-viberApp.config(['$routeProvider',
-    function($routeProvider) {
-        console.log('rp');
-        $routeProvider.
-            when('/', {
-                templateUrl: 'views/dashboard.html',
-                controller: 'dashboardCtrl'
-            }).
-            when('/signup', {
-                templateUrl: 'views/signup.html',
-                controller: 'signupCntrl'
-            }).
-            when('/leaderboard',{
-
-                templateUrl:'views/leaderboard.html',
-                controller:'lbCntrl'
-
-            }).when('/mysettings',{
-
-                templateUrl:'my-settings.html'
-
-            }).
-            when('/mysettings',{
-
-                templateUrl:'views/mysettings.html',
-                controller:'lbMySettingsCntrl'
-
-            }).
-            otherwise({
-                redirectTo: '/'
-            });
-    }]);
