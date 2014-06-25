@@ -2,7 +2,8 @@
   "name": "viberapp",
   "version": "0.0.0",
   "dependencies": {
-
+    "passport-strategy": "^1.0.0",
+    "validator": "^3.16.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

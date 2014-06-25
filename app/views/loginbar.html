@@ -16,10 +16,10 @@
         </div>
     </div>
     <div class="user-nav">
-        <a href="dashboard.html" class="link-icon-home active">Home</a>
-        <a href="#rewards" class="link-icon-rewords">Rewards</a>
-        <a href="#leaderboard" class="link-icon-leaderboard">Leaderboard</a>
-        <a href="#mysettings" class="link-icon-setting">Settings</a>
+        <a href="#dashboard.html" class="link-icon-home" ng-class="{'active':currentPage.home == 1}">Home</a>
+        <a href="#rewards" class="link-icon-rewords" ng-class="{'active' : currentPage.rewards == 1}">Rewards</a>
+        <a href="#leaderboard" class="link-icon-leaderboard" ng-class="{'active' : currentPage.lb == 1}">Leaderboard</a>
+        <a href="#mysettings" class="link-icon-setting" ng-class="{'active' : currentPage.mysettings == 1}">Settings</a>
     </div>
 </div>
 

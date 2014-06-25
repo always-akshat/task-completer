@@ -179,6 +179,8 @@ viberApp.controller('vbLoginBarCtrl',function($scope,vbAuth,vbIdentity){
 
     });
 
+    $scope.currentPage = {home:1,rewards:0,lb:0, mysettings:0};
+    console.log($scope.currentPage.home);
 
 });
 
@@ -187,7 +189,7 @@ viberApp.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
             when('/', {
-                templateUrl: 'views/main.html',
+                templateUrl: 'views/dashboard.html',
                 controller: 'MainCtrl'
             }).
             when('/signup', {
@@ -197,6 +199,12 @@ viberApp.config(['$routeProvider',
             when('/leaderboard',{
 
                 templateUrl:'views/leaderboard.html',
+                controller:'lbCntrl'
+
+            }).
+            when('/mysettings',{
+
+                templateUrl:'views/mysettings.html',
                 controller:'lbCntrl'
 
             }).
