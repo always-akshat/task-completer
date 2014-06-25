@@ -187,6 +187,7 @@ viberApp.controller('vbLoginBarCtrl',function($scope,vbAuth,vbIdentity){
 
 viberApp.config(['$routeProvider',
     function($routeProvider) {
+        console.log('rp');
         $routeProvider.
             when('/', {
                 templateUrl: 'views/dashboard.html',
@@ -200,6 +201,10 @@ viberApp.config(['$routeProvider',
 
                 templateUrl:'views/leaderboard.html',
                 controller:'lbCntrl'
+
+            }).when('/mysettings',{
+
+                templateUrl:'my-settings.html'
 
             }).
             when('/mysettings',{
