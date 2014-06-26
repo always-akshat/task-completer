@@ -64,13 +64,12 @@ passport.use(new TwitterStrategy({
     function(accessToken, refreshToken, profile, done) {
         process.nextTick(function () {
 
-            //console.log(profile);
+
             twit_profile  = new Object();
             twit_profile.id = profile.id;
             twit_profile.name = profile.displayName;
             twit_profile.username = profile.username;
-            console.log(twit_profile);
-            console.log('hi');
+            twit_profile.authcode = accessToken;
             return done(null, twit_profile);
         });
     }

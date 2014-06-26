@@ -42,8 +42,9 @@ var studentSchema = new Schema({
         authcode :String
     },
     twitter :{
-        authorized : Number,
-        authcode : String
+        authorized : String,
+        authcode : String,
+        twitter_name : String
     },
     points : Number,
     stages : [ObjectId],      //changed from number to objectid

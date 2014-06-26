@@ -394,6 +394,33 @@ function addTaskToUser(facebookid,taskid){
 }
 
 
+function addTwitter(req,res){
+    console.log('student facebookid ' + req.session.student.facebookid)
+    console.log('student twit data ' + JSON.stringify(req.session.twit));
+
+    /*return  Students.update({'facebookid':'10152198497022499','twitter.authorized':0},
+        {$set : {"twitter.$.authorized" : 1, "twitter.$.authcode": "abcd"} }
+        ,function(err){
+            if(err){
+                console.log(err);
+            }else{
+
+            }
+        }); */
+    return Student.findOne({ facebookid: req.session.student.facebookid }, function (err, doc){
+
+        if(!err){
+        doc.twitter.authorized = 1;
+        doc.twitterid = req.session.twit.id
+        doc.twitter.name = req.session.twit.name;
+        doc.twitter.username = req.session.twit.username;
+        doc.twitter.authcode = req.session.twit.authcode;
+        doc.save();
+        res.send('done');}
+        else{console.log(err)};
+    });
+}
+
 module.exports ={list :list,
     stage_add_to_all : stage_add_to_all,
     getstudentdata :getstudentdata,
@@ -410,6 +437,7 @@ module.exports ={list :list,
     validateSignUp :validateSignUp,
     updateAnswers :updateAnswers,
     completeTask : completeTask,
-    addTaskToUser :addTaskToUser
+    addTaskToUser :addTaskToUser,
+    addTwitter : addTwitter
 }
 
