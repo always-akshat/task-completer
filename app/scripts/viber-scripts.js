@@ -9,6 +9,7 @@ if (typeof jQuery === 'undefined') {
 
     $(document).ready(function () {
         //popover alert
+
         $("#popAlert").popover({
             container: '#popAlert',
             trigger: 'click',

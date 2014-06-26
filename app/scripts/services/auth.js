@@ -13,12 +13,13 @@ viberApp.factory('vbAuth', function($http,vbIdentity,$q){
             $http.get('/getstudentdata').success(function (data) {
 
 
-                if (data.length > 0) {
-                    vbIdentity.currentUser = data[0];
+                if (angular.isObject(data)) {
+                    vbIdentity.currentUser = data;
                     dfd.resolve(true);
 
                 }
                 else {
+                    console.log(data);
                     dfd.resolve(false);
                 }
 
