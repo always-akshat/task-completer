@@ -4,4 +4,8 @@ dist
 .sass-cache
 app/bower_components
 .idea
+<<<<<<< HEAD
+=======
+.idea/workspace.xml
+>>>>>>> 454764d8514985036c8b771925f1110ff5007c12
 api/socialauth.js

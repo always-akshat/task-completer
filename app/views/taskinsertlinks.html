@@ -1,37 +1,38 @@
 <div class="panel panel-default">
-    <div class="panel-heading collapsed" data-toggle="collapse" data-target="#collapseTwo">
+    <div class="panel-heading" data-toggle="collapse" data-target="#collapseTwo">
         <h4 class="panel-title pull-left">
-            Insert Social Links
+            Share Viber #goodvibes Video
         </h4>
-                        <span class="pull-right"><strong>80</strong> vibes
+                        <span class="pull-right"><strong>300</strong> vibes
                         </span>
     </div>
-    <div id="collapseTwo" class="panel-collapse collapse">
+    <div id="collapseTwo" class="panel-collapse collapse in">
         <div class="panel-body">
             <p><strong>Task description:</strong></p>
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-            squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa
-            nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-            single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft
-            beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice
-            lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you
-            probably haven't heard of them accusamus labore sustainable VHS.
+            Hey, so this is your first task in your journey of being the Viber #goodvibes ambassador. Have a look at the video below and share it on your facebook, twitter and google plus timelines.
+            <p><br/><br/> <video width="100%" height="100%" controls style="margin-bottom: 20px;">
+                <source src="audio/test.mp4" type="video/ogg">
+                Your browser does not support the video tag.
+            </video>
+
+            </p>
+
         </div>
         <div class="panel-body">
             <ul class="add-link-tab">
                 <li class="active"><a href="#add-social-link" data-toggle="tab">Add Social link</a></li>
-                <li><a href="#show-social-links" data-toggle="tab">45 social links shared</a></li>
+                <!--<li><a href="#show-social-links" data-toggle="tab">45 social links shared</a></li>-->
             </ul>
             <div class="tab-content custom-form">
                 <div class="tab-pane fade in active" id="add-social-link">
                     <div class="form-group">
                         <input type="text" class="form-control data_field" name="data_field"
-                               placeholder="www.kickstarter.com/letsinternviber">
+                               placeholder="video url" value="https://www.youtube.com/watch?v=rORTVmdQzpc" ng-model="link">
                         <span class="icon_clear icon-close-circle"></span>
                     </div>
                     <div class="form-group">
                         <textarea name="" id="" cols="30" rows="5" class="form-control"
-                                  placeholder="#goodvibes your message"></textarea>
+                                  placeholder="#goodvibes your message" ng-model="message"></textarea>
                     </div>
                     <div class="form-group">
                         <div class="pull-right">
@@ -47,7 +48,7 @@
                             <label for="post-g">
                                 <span class="circle-icon-g"></span>
                             </label>
-                            <button type="submit" class="btn btn-success">submit</button>
+                            <button type="submit" class="btn btn-success" ng-click="sharelink()">submit</button>
                         </div>
 
                     </div>

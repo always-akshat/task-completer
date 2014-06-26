@@ -15,15 +15,12 @@ viberApp.factory('vbAuth', function($http,vbIdentity,$q){
 
                 if (data.length > 0) {
                     vbIdentity.currentUser = data[0];
-
                     dfd.resolve(true);
 
                 }
                 else {
                     dfd.resolve(false);
                 }
-
-
 
             });
 
