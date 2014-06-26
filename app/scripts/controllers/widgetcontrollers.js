@@ -18,4 +18,8 @@ viberApp.controller('vbSocialConnectCtrl',function($scope){
 viberApp.controller('vbMiniLeaderBoardCtrl',function($scope){
 
 
+
+
+
+
 });

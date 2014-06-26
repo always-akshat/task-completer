@@ -22,16 +22,30 @@ viberApp.controller('vbUploadPhotosCtrl',function($scope){
 });
 
 
-viberApp.controller('vbInsertLinksCtrl',function($scope,$http){
+viberApp.controller('vbInsertLinksCtrl',function($scope,$http,toaster,$q,postfblink){
 
-    console.log('sending data');
-    var data = {link: $scope.link, message : $scope.message };
-    console.log(data);
-    $scope.sharelink = function(){
 
-        console.log('sending data');
-        $http.post('/sharefblink',{'link':$scope.link,'message':$scope.message});
+    $scope.submitForm = function(isValid){
+        console.log(isValid);
+        if(isValid) {
 
+
+            postfblink.postlink($scope.link,$scope.message).then(function(success){
+
+                if(success){
+                    toaster.pop('success',"Facebook Post","Your Message has been posted successfully");
+                }
+                else{
+
+                    toaster.pop('failure',"Facebook Post","There was an error in publishing your post");
+
+                }
+
+
+            });
+
+
+        }
 
     }
 

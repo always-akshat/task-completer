@@ -5,8 +5,125 @@
         </div>
         <div class="pull-right nav-header-pills">
             <button type="button" class="btn btn-link">Logout</button>
-            <a href="#." class="font-icon icon-viber-alert" id="popAlert"><span class="badge">7</span></a>
-            <a href="#." class="font-icon icon-viber-inbox" id="inboxAlert"><span class="badge">99</span></a>
+            <a href="#." class="font-icon icon-viber-alert" id="popAlert"><span class="badge">0</span></a>
+            <a href="#." class="font-icon icon-viber-inbox" id="inboxAlert"><span class="badge">0</span></a>
         </div>
     </div>
 </header>
+
+
+<div id="alertContent" style="display: none;">
+    <div class="alert-content">
+        <h2>Alerts
+            <small>0</small>
+        </h2>
+        <!--<div class="scroll-pane">
+            <ul class="list-alert">
+                <li class="list-unread">
+                    <p>12 June 2014</p>
+
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum aliquam.</p>
+                </li>
+
+            </ul>
+        </div>-->
+    </div>
+</div>
+<div id="inboxContent" style="display: none;">
+    <div class="alert-content">
+        <h2>Inbox
+            <small>0</small>
+        </h2>
+        <!--<div class="scroll-pane">
+            <ul class="list-alert">
+                <li class="list-unread">
+                    <p>12 June 2014</p>
+
+                    <p>message here</p>
+                </li>
+
+            </ul>
+        </div>-->
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<script>
++function ($) {
+'use strict';
+
+$(document).ready(function () {
+//popover alert
+
+$("#popAlert").popover({
+container: '#popAlert',
+trigger: 'click',
+html: true,
+placement: 'bottom',
+content: $('#alertContent').html()
+})
+$('#popAlert').on('show.bs.popover', function () {
+$('#inboxAlert').popover('hide');
+})
+//popover inbox
+$("#inboxAlert").popover({
+container: '#inboxAlert',
+trigger: 'click',
+html: true,
+placement: 'bottom',
+content: $('#inboxContent').html()
+})
+$('#inboxAlert').on('show.bs.popover', function () {
+$('#popAlert').popover('hide');
+})
+
+$('#popAlert,#inboxAlert').on('shown.bs.popover', function () {
+//scroll bars for all scroll-pane
+$(".scroll-pane").enscroll({
+verticalTrackClass: "track",
+verticalHandleClass: "handle",
+showOnHover: false
+});
+})
+$('[class*="ios-switch"]').click(function(){
+if($(this).is(':checked')){
+$(this).parent().parent().parent().find('.col-sm-14').addClass('social-active')
+}else{
+$(this).parent().parent().parent().find('.col-sm-14').removeClass('social-active')
+}
+})
+// text box cross icon
+$(document).on('propertychange keyup input paste', 'input.data_field', function(){
+var io = $(this).val().length ? 1 : 0 ;
+$(this).next('.icon_clear').stop().fadeTo(200,io);
+}).on('click', '.icon_clear', function() {
+$(this).delay(200).fadeTo(200,0).prev('input').val('');
+});
+// icon check
+$('.icon-checked').on('click',function(){
+if($(this).is(':checked')){
+$(this).next().children('span').addClass('social-active')
+}else{
+$(this).next().children('span').removeClass('social-active')
+}
+})
+$('#add-more-mobiles').click(function(){
+var addme = $('#add-me').clone()
+addme.find('input').val('')
+addme.removeAttr('id');
+addme.insertAfter('#add-me')
+})
+
+});
+
+}(jQuery);
+</script>

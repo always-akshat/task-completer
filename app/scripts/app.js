@@ -1,7 +1,7 @@
 'use strict';
 
 var viberApp = angular
-  .module('viberApp', ['ngRoute']);
+  .module('viberApp', ['ngRoute','toaster']);
 
 // angular routes configuration
 
