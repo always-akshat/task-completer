@@ -9,6 +9,7 @@ var taskSchema = require('../models/tasksmodel');
 var task_functions = require('../routes/tasks.js');
 var stages_function = require('../routes/stages.js');
 
+
 Students = studentSchema.student;
 student_task  = studentSchema.student_task;
 tasks = taskSchema.tasks;
@@ -35,25 +36,48 @@ dummyuser.type.name = 'Student';
 //console.log(JSON.stringify(dummyuser));
 */
 
-exports.list = function (req, res) {
-
-
+function list(req, res) {
     Students.find({}, function (err, Students) {
         res.send(JSON.stringify(Students));
     });
-
-
 };
 
-exports.getstudentdata = function(req,res){
+function stage_add_to_all(req,res){
+
+    console.log('hello');
+    Students.find().exists('user_tasks',false).limit(5000).exec(function (err, students){
+
+       students.forEach(function(instance){
+            console.log(instance.facebookid +' -- ' + instance.name);
+            var stageid = '5390521624349ecc0c108c10';
+            stages_function.getStageInfo(stageid,function(err,stage){
+                if(!err){
+
+                    if(stage && stage.tasks){
+                        var user_tasks = stage.tasks;
+                        user_tasks.forEach(function(user_tasks) {
+                            addTaskToUser(instance.facebookid,user_tasks.stageid.toString());
+                        });
+                    }
+                }
+            });
+
+        });
+
+        res.send('done');
+    });
+
+
+}
+
+function getstudentdata(req,res){
 
     if(req.session.student  !== null) // check if the user is logged in
     {
-        Students.find({_id:req.session.student._id}, function (err, Student) {
-            res.send(JSON.stringify(Student));
-            console.log('student data');
-            console.log(JSON.stringify(Student));
-        });
+        res.send(req.session.student);
+        console.log('student data');
+        console.log(JSON.stringify(Student));
+
 
     }
     else res.send('Unauthorized');
@@ -61,7 +85,7 @@ exports.getstudentdata = function(req,res){
 
 }
 
-exports.signup = function (req, res) {
+function signup(req, res) {
 
 
 
@@ -72,7 +96,8 @@ exports.signup = function (req, res) {
             res.send(400, error.message)
         }
         else {
-            stages_function.getStageInfo(data.facebookid,function(err,stage){
+           var stageid = '[stageid]';
+            stages_function.getStageInfo(stageid,function(err,stage){
                 if(!err){
 
                     if(stage && stage.tasks){
@@ -93,7 +118,8 @@ exports.signup = function (req, res) {
 
 };
 
-exports.info = function(req,res){
+
+  function info(req,res){
 
     return Students.findOne({ 'facebookid': req.params.fbid}, function (err, student) {
         if (!err) {
@@ -113,7 +139,7 @@ exports.info = function(req,res){
 
 }
 
-exports.allusersoftype = function(req,res) {
+ function allusersoftype(req,res) {
     return Students.find({ 'type.id': req.params.usertypeid}, function (err, users) {
         if (!err) {
 
@@ -132,7 +158,7 @@ exports.allusersoftype = function(req,res) {
 
 }
 
-exports.getfacebookfriends = function(req,res) {
+function getfacebookfriends(req,res) {
     return Students.find({ 'facebookid': req.params.fbid},'facebook.friends', function (err, friends) {
         if (!err) {
 
@@ -149,7 +175,7 @@ exports.getfacebookfriends = function(req,res) {
     });
 }
 
-exports.putfacebookfriends = function(req,res) {
+ function putfacebookfriends(req,res) {
 
     Students.update({facebookid: req.params.facebookid},
                         {$addToSet:
@@ -166,7 +192,11 @@ exports.putfacebookfriends = function(req,res) {
     });
 }
 
-exports.addpoints = function(req,res) {
+
+
+
+
+function addpoints(req,res) {
 
     Students.update({facebookid: req.params.facebookid},
         {$inc: {
@@ -181,14 +211,15 @@ exports.addpoints = function(req,res) {
         });
 }
 
-exports.leaderboard  = function(req,res){
-    console.log('a');
+function leaderboard(req,res){
+
     Students.find().sort({points:-1}).limit(10).select('name points facebookid location.name').exec(function (err, posts){
     res.send(posts);
     });
 }
 
-exports.availabletasks = function(req,res){
+
+function availabletasks(req,res){
     return Students.find({ 'facebookid': req.params.fbid},'stages tasks', function (err, opentasks) {
         if (!err) {
 
@@ -205,14 +236,14 @@ exports.availabletasks = function(req,res){
     });
 }  // not implemented yet
 
-exports.submittask = function(req,res){
+function submittask(req,res){
     var facebookid = req.params.fbid;
     var taskid = req.params.taskid;
     addTaskToUser(facebookid,taskid);
 
 }
 
-exports.updatetask = function(req,res){
+function updatetask(req,res){
 
     console.log('a');
     var facebookid = req.params.fbid;
@@ -226,7 +257,6 @@ exports.updatetask = function(req,res){
         }
 
 }
-
 
 function validateSignUp(req, callback) {
 
@@ -316,10 +346,12 @@ function addTaskToUser(facebookid,taskid){
         if (!err) {
 
             if(task === null){
+                console.log(taskid + ' not there ?')
                 return ('no record found');
             }
             else
             {
+
                 student_task = new studentSchema.student_task;
                 student_task.task_id = taskid;
                 student_task.points = task.points;
@@ -329,7 +361,7 @@ function addTaskToUser(facebookid,taskid){
                 student_task.fields = task.fields;
                 student_task.condition = task.condition;
                 student_task.type = task.type;
-                console.log(student_task);
+
 
                 if(!student_task){
                     return ('student task could not be added');
@@ -359,5 +391,25 @@ function addTaskToUser(facebookid,taskid){
             return console.log(err);
         }
     });
+}
+
+
+module.exports ={list :list,
+    stage_add_to_all : stage_add_to_all,
+    getstudentdata :getstudentdata,
+    signup :signup,
+    info :info,
+    allusersoftype :allusersoftype,
+    getfacebookfriends :getfacebookfriends,
+    putfacebookfriends : putfacebookfriends,
+    addpoints :addpoints,
+    leaderboard : leaderboard,
+    availabletasks : availabletasks,
+    submittask : submittask,
+    updatetask : updatetask,
+    validateSignUp :validateSignUp,
+    updateAnswers :updateAnswers,
+    completeTask : completeTask,
+    addTaskToUser :addTaskToUser
 }
 

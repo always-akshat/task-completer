@@ -21,7 +21,7 @@ var user_task_schema = new Schema({
 var studentSchema = new Schema({
     name: String,
     email: String,
-    mobile : Number,
+    mobile : String,
     facebookid: String,
     twitterid : Number,
     createdon: {type: Date, 'default': Date.now},
@@ -37,8 +37,8 @@ var studentSchema = new Schema({
         name : String
         },
     facebook : {
-        authorized : Number,
-        friends : [Number],
+        authorized : String,
+        friends : [String],
         authcode :String
     },
     twitter :{

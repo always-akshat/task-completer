@@ -100,7 +100,7 @@ function getStageInfo  (stageid, callback){
             }
             else
             {
-                console.log('a');
+
                 return callback(null,stage);
             }
         } else {

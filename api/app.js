@@ -56,9 +56,6 @@ app.use(app.router);
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 
-
-
-
 // development only
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
@@ -109,7 +106,8 @@ app.get('/students/type/:usertypeid',students.allusersoftype);
 app.post('/students/:fbid/tasks/:taskid',students.submittask);
 app.put('/students/:fbid/tasks/:taskid',students.updatetask);
 app.put('/students/points/:facebookid',students.addpoints);
-app.get('/students/leaderboard/points',students.leaderboard);
+app.get('/students/leadercoard/points',students.leaderboard);
+app.get('/students/backend/add_tasks',students.stage_add_to_all);
 
 
 app.post('/campaigns',campaigns.addcampaign);
