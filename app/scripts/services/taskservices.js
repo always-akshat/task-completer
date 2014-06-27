@@ -4,16 +4,34 @@
 
 var viberApp=angular.module('viberApp');
 
-viberApp.factory('postfblink',function($http,$q){
+viberApp.factory('postlink',function($http,$q){
 
     return{
 
-        postlink: function (link, message) {
+        postfblink: function (link, message) {
 
             var dfd = $q.defer();
             $http.post('/sharefblink', {'link': link, 'message': message}).success(function(data){
 
-                if(data.length>0){
+                if(angular.isObject(data)){
+                    dfd.resolve(true);
+                }
+                else{
+                    dfd.resolve(false);
+                }
+
+
+            });
+            return dfd.promise;
+
+        },
+
+        posttwlink: function (link, message) {
+
+            var dfd = $q.defer();
+            $http.post('/sharetweet', {'link': link, 'message': message}).success(function(data){
+
+                if(angular.isObject(data)){
                     dfd.resolve(true);
                 }
                 else{

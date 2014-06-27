@@ -5,7 +5,9 @@
 
 require('../config.js');
 
+
 var FB = require('fb');
+var TW = require('../node_modules/twit/lib/twitter.js');
 
 exports.feed_post = function(req,res){
     console.log(req.session.student.facebook.authcode);
@@ -38,4 +40,22 @@ exports.feed_sharelink = function(req,res){
             }
             console.log('Post Id: ' + res.id);
         });
+}
+
+exports.sharetweet = function(req,res){
+
+        var bot = new TW({
+            consumer_key: 'LrZ3vwBNjaE8jkJNi4od4ntdX'
+            , consumer_secret:      'vx84F0lXUygTou3idnl2oHfkfcVDQyfblBAAnZFgn4TR1sZKOQ'
+            , access_token:         req.session.student.twitter.authcode
+            , access_token_secret:  req.session.student.twitter.secret
+        });
+
+    bot.post('statuses/update', { status: req.body.message }, function(err, data, response) {
+        console.log(data);
+        res.send(data);
+    })
+
+
+
 }
