@@ -61,10 +61,10 @@ viberApp.controller('lbMySettingsCntrl',function($scope,vbIdentity,vbSharedServi
 
 });
 
-viberApp.controller('vbLoginBarCtrl',function($scope,vbAuth,vbIdentity,vbSharedService){
+viberApp.controller('vbLoginBarCtrl',function($scope,vbAuth,vbIdentity,vbSharedService,$rootScope){
 
-    $scope.identity = vbIdentity;
-
+    //$scope.identity = vbIdentity;
+    $rootScope.identity = vbIdentity;
 
     vbAuth.authenticateUser().then(function(success){
 
