@@ -396,8 +396,8 @@ function addTaskToUser(facebookid,taskid){
 
 
 function addTwitter(req,res){
-    console.log('student facebookid ' + req.session.student.facebookid)
-    console.log('student twit data ' + JSON.stringify(req.session.twit));
+    //console.log('student facebookid ' + req.session.student.facebookid)
+    //console.log('student twit data ' + JSON.stringify(req.session.twit));
 
     /*return  Students.update({'facebookid':'10152198497022499','twitter.authorized':0},
         {$set : {"twitter.$.authorized" : 1, "twitter.$.authcode": "abcd"} }
@@ -408,15 +408,19 @@ function addTwitter(req,res){
 
             }
         }); */
-    return Student.findOne({ facebookid: req.session.student.facebookid }, function (err, doc){
+    return Students.findOne({ facebookid: req.session.student.facebookid }, function (err, doc){
     if(!err){
+
         doc.twitter.authorized = 1;
         doc.twitterid = req.session.twit.id
         doc.twitter.name = req.session.twit.name;
         doc.twitter.username = req.session.twit.username;
         doc.twitter.authcode = req.session.twit.authcode;
+        doc.twitter.secret = req.session.twit.secret;
+            console.log(req.session.twit);
         doc.save();
         res.send('done');}
+
         else{console.log(err)};
     });
 }

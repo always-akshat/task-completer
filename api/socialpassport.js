@@ -61,15 +61,16 @@ passport.use(new TwitterStrategy({
         consumerSecret: socialauth.twitter.consumerSecret,
         callbackURL: socialauth.twitter.callbackURL
     },
-    function(accessToken, refreshToken, profile, done) {
+    function(accessToken, tokenSecret, profile, done) {
         process.nextTick(function () {
-
 
             twit_profile  = new Object();
             twit_profile.id = profile.id;
             twit_profile.name = profile.displayName;
             twit_profile.username = profile.username;
             twit_profile.authcode = accessToken;
+            twit_profile.secret = tokenSecret;
+
             return done(null, twit_profile);
         });
     }
