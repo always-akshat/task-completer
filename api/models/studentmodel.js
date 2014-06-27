@@ -13,9 +13,9 @@ var user_task_schema = new Schema({
     completed : Number,
     approvalrequired : Number,
     managerapproved : Number,
-    fields : [Schema.Types.Mixed],
-    answers : [Schema.Types.Mixed],
-    condition :[Schema.Types.Mixed]
+    fields : {},
+    answers : {},
+    condition :{}
 });
 
 var vibes_transaction_schema = new Schema({

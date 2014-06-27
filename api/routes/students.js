@@ -120,7 +120,7 @@ function signup(req, res) {
 };
 
 
-  function info(req,res){
+function info(req,res){
 
     return Students.findOne({ 'facebookid': req.params.fbid}, function (err, student) {
         if (!err) {
@@ -194,9 +194,6 @@ function getfacebookfriends(req,res) {
 }
 
 
-
-
-
 function addpoints(req,res) {
 
     Students.update({facebookid: req.params.facebookid},
@@ -246,12 +243,10 @@ function submittask(req,res){
 
 function updatetask(req,res){
 
-    console.log('a');
     var facebookid = req.params.fbid;
     var taskid = req.params.taskid;
     var verb = req.body.verb;
 
-    console.log (verb + ' ---- ' + facebookid + ' ---- ' + taskid);
     switch(verb){
         case 'updateAnswers' : updateAnswers(facebookid,taskid,req.body.answers);break;
         case 'completeTask' : completeTask(facebookid,taskid);break;
@@ -316,7 +311,7 @@ function updateAnswers(facebookid,taskid,answers){
 };
 
 function completeTask(facebookid,taskid){
-    var newtasks;
+
    return  Students.update({'facebookid':facebookid,'user_tasks.task_id':taskid},
         {$set : { 'user_tasks.$.completed' : 1 } }
         ,function(err){
@@ -396,8 +391,8 @@ function addTaskToUser(facebookid,taskid){
 
 
 function addTwitter(req,res){
-    //console.log('student facebookid ' + req.session.student.facebookid)
-    //console.log('student twit data ' + JSON.stringify(req.session.twit));
+    console.log('student facebookid ' + req.session.student.facebookid)
+    console.log('student twit data ' + JSON.stringify(req.session.twit));
 
     /*return  Students.update({'facebookid':'10152198497022499','twitter.authorized':0},
         {$set : {"twitter.$.authorized" : 1, "twitter.$.authcode": "abcd"} }
@@ -411,17 +406,19 @@ function addTwitter(req,res){
     return Students.findOne({ facebookid: req.session.student.facebookid }, function (err, doc){
     if(!err){
 
+
         doc.twitter.authorized = 1;
-        doc.twitterid = req.session.twit.id
-        doc.twitter.name = req.session.twit.name;
-        doc.twitter.username = req.session.twit.username;
-        doc.twitter.authcode = req.session.twit.authcode;
-        doc.twitter.secret = req.session.twit.secret;
-            console.log(req.session.twit);
+        doc.twitterid = req.session.twit['id']
+        doc.twitter.name = req.session.twit['name'];
+        doc.twitter.username = req.session.twit['username'];
+        doc.twitter.authcode = req.session.twit['authcode'];
+        doc.twitter.secret = req.session.twit['secret'];
+
         doc.save();
         res.send('done');}
 
-        else{console.log(err)};
+        else{console.log(err)}
+        ;
     });
 }
 

@@ -18,8 +18,8 @@ var tasksSchema= new Schema({
     createdon: {type: Date, 'default': Date.now},
     updatedon : {type : Date, 'default':Date.now},
     approvalrequired : Number,
-    fields :[Schema.Types.Mixed],
-    condition :[Schema.Types.Mixed]
+    fields :{},
+    condition :{}
 },{ collection: 'tasks' });
 
 exports.tasks = mongoose.model('Tasks', tasksSchema);
