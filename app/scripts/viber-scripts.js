@@ -9,7 +9,6 @@ if (typeof jQuery === 'undefined') {
 
     $(document).ready(function () {
         //popover alert
-
         $("#popAlert").popover({
             container: '#popAlert',
             trigger: 'click',
@@ -68,6 +67,10 @@ if (typeof jQuery === 'undefined') {
             addme.removeAttr('id');
             addme.insertAfter('#add-me')
         })
+        $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+            event.preventDefault();
+            $(this).ekkoLightbox();
+        });
 
     });
 

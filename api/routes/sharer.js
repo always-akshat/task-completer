@@ -26,10 +26,11 @@ exports.feed_post = function(req,res){
 }
 
 exports.feed_sharelink = function(req,res){
-    //console.log(req.session.student.facebook.authcode);
+
     console.log(req.body);
     FB.setAccessToken(req.session.student.facebook.authcode);
     var body = req.body.message;
+    var APIres;
     FB.api('me/feed', 'post', { message: req.body.message,
             link :req.body.link
         }
@@ -38,8 +39,11 @@ exports.feed_sharelink = function(req,res){
                 console.log(!res ? 'error occurred' : res.error);
                 return;
             }
+            APIres = res;
             console.log('Post Id: ' + res.id);
+
         });
+    res.send(APIres);
 }
 
 exports.sharetweet = function(req,res){
