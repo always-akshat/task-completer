@@ -12,6 +12,7 @@ var stages_function = require('../routes/stages.js');
 
 Students = studentSchema.student;
 student_task  = studentSchema.student_task;
+vibes_transaction = studentSchema.vibes_transaction;
 tasks = taskSchema.tasks;
 
 /*
@@ -408,8 +409,7 @@ function addTwitter(req,res){
             }
         }); */
     return Student.findOne({ facebookid: req.session.student.facebookid }, function (err, doc){
-
-        if(!err){
+    if(!err){
         doc.twitter.authorized = 1;
         doc.twitterid = req.session.twit.id
         doc.twitter.name = req.session.twit.name;
@@ -419,6 +419,30 @@ function addTwitter(req,res){
         res.send('done');}
         else{console.log(err)};
     });
+}
+
+function VibesTransaction(fbid,transaction){
+    var facebookid = '10152198497022499';
+    transaction_skeleton = new studentSchema.vibes_transaction;
+    transaction_skeleton = transaction;
+
+
+    Students.update({'facebookid' : fbid},{$addToSet:{vibes_transaction:transaction_skeleton}},
+        function(err,added_task){
+
+            if (err) {
+                console.log({"error": err});
+            }else {
+                console.log("success ");
+            }
+        })
+
+    //console.log(mystudent);
+}
+
+function logout(req,res){
+    req.session.destroy;
+    res.redirect('/');
 }
 
 module.exports ={list :list,
@@ -438,6 +462,8 @@ module.exports ={list :list,
     updateAnswers :updateAnswers,
     completeTask : completeTask,
     addTaskToUser :addTaskToUser,
-    addTwitter : addTwitter
+    addTwitter : addTwitter,
+    VibesTransaction : VibesTransaction,
+    logout :logout
 }
 

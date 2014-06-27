@@ -18,6 +18,13 @@ var user_task_schema = new Schema({
     condition :[Schema.Types.Mixed]
 });
 
+var vibes_transaction_schema = new Schema({
+    "vibes" : Number,
+    "type": String,
+    "sign" : Number,
+    "message" : String
+});
+
 var studentSchema = new Schema({
     name: String,
     email: String,
@@ -54,6 +61,7 @@ var studentSchema = new Schema({
                }
              ],
     user_tasks :[user_task_schema],
+    vibes_transaction : [vibes_transaction_schema],
     type : {id : Number,
             name : String},
     verified : Number,
@@ -65,6 +73,5 @@ var studentSchema = new Schema({
 
 exports.student = mongoose.model('Student', studentSchema);
 exports.student_task = mongoose.model('Student_task',user_task_schema);
-
-
+exports.vibes_transaction = mongoose.model('vibes_transaction',vibes_transaction_schema);
 

@@ -109,8 +109,9 @@ app.post('/students/:fbid/tasks/:taskid',students.submittask);
 app.put('/students/:fbid/tasks/:taskid',students.updatetask);
 app.put('/students/points/:facebookid',students.addpoints);
 app.get('/students/leaderboard/points',students.leaderboard);
+app.get('/logout',students.logout);
 app.get('/students/backend/add_tasks',students.stage_add_to_all);
-
+app.get('/students/backend/transaction',students.VibesTransaction);
 
 app.post('/campaigns',campaigns.addcampaign);
 app.get('/campaigns',campaigns.list);
