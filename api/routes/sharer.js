@@ -26,7 +26,7 @@ exports.feed_post = function(req,res){
 }
 
 exports.feed_sharelink = function(req,res){
-
+    //console.log(req.session.student.facebook.authcode);
     console.log(req.body);
 
     var answers = {};//req.body.answers;
@@ -34,22 +34,13 @@ exports.feed_sharelink = function(req,res){
     answers.link ='';
     var taskid = '53a9515ae4b041d6a3190435';//req.body.taskid;
     FB.setAccessToken(req.session.student.facebook.authcode);
-<<<<<<< HEAD
 
     FB.api('me/feed', 'post', { message: answers.facebook_post_message,
             link :answers.link
         }, function (res,cb) {
-=======
-    var body = req.body.message;
-    var APIres;
-    FB.api('me/feed', 'post', { message: req.body.message,
-            link :req.body.link
-        }
-        , function (res) {
->>>>>>> 20178f35da5a72bcaeb456e8a2389fc95fc4f860
             if(!res || res.error) {
                 console.log(!res ? 'error occurred' : res.error);
-                
+
             }else {
                 answers.facebook_post_id = res.id;
                 return students.updateAnswers(req.session.student.facebookid,taskid,answers,function(added_answers){
@@ -74,18 +65,10 @@ exports.feed_sharelink = function(req,res){
                 });
 
             }
-<<<<<<< HEAD
 
 
         });
 
-=======
-            APIres = res;
-            console.log('Post Id: ' + res.id);
-
-        });
-    res.send(APIres);
->>>>>>> 20178f35da5a72bcaeb456e8a2389fc95fc4f860
 }
 
 exports.sharetweet = function(req,res){
