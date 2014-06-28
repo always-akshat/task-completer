@@ -21,9 +21,16 @@ viberApp.config(['$routeProvider',
             when('/leaderboard',{
 
                 templateUrl:'views/leaderboard.html',
-                controller:'lbCntrl'
+                controller:'leaderboardCtrl'
 
-            }).when('/mysettings',{
+            }).
+            when('/rewards',{
+
+                templateUrl:'views/rewards.html',
+                controller:'lbRewardsCtrl'
+
+            })
+            .when('/mysettings',{
 
                 templateUrl:'my-settings.html'
 
@@ -40,18 +47,65 @@ viberApp.config(['$routeProvider',
     }]);
 
 
-viberApp.controller('vbNavBarCtrl',function($scope,$http){
+viberApp.controller('vbNavBarCtrl',function($scope,vbIdentity,vbSharedService,vbAuth,$rootScope){
+
+
+    var currentPage = {home:1,rewards:0,lb:0, mysettings:0};
+    vbSharedService.prepForBroadcast(currentPage);
+
+
+
+    vbAuth.authenticateUser().then(function(success){
+
+        if(success){ console.log(' Login Successfull');
+
+        $rootScope.identity = vbIdentity;
+
+        }
+        else console.log('Login Not Successful');
+
+
+    });
 
 
 });
 
-viberApp.controller('dashboardCtrl',function($scope,vbIdentity,vbSharedService){
+viberApp.controller('dashboardCtrl',function($scope,vbSharedService){
+
 
     var currentPage = {home:1,rewards:0,lb:0, mysettings:0};
     vbSharedService.prepForBroadcast(currentPage);
 
 
 });
+
+viberApp.controller('leaderboardCtrl',function($scope,vbSharedService,$http){
+
+    var currentPage = {home:0,rewards:0,lb:1, mysettings:0};
+    vbSharedService.prepForBroadcast(currentPage);
+
+    $http.get('/students/leaderboard/points').success(function (data) {
+
+
+        if (angular.isObject(data)) {
+            $scope.lbstudents = data;
+
+            console.log('coming back from server');
+
+        }
+        else {
+            //console.log(data);
+
+        }
+
+    });
+
+
+
+
+
+});
+
 
 viberApp.controller('lbMySettingsCntrl',function($scope,vbIdentity,vbSharedService){
 
@@ -61,27 +115,27 @@ viberApp.controller('lbMySettingsCntrl',function($scope,vbIdentity,vbSharedServi
 
 });
 
-viberApp.controller('vbLoginBarCtrl',function($scope,vbAuth,vbIdentity,vbSharedService,$rootScope){
 
-    //$scope.identity = vbIdentity;
-    $rootScope.identity = vbIdentity;
 
-    vbAuth.authenticateUser().then(function(success){
+viberApp.controller('lbRewardsCtrl',function(vbSharedService){
 
-        if(success) console.log('Successfully');
-        else console.log('Not Successful');
-        $scope.currentPage = {home:1,rewards:0,lb:0, mysettings:0} ;
+    var currentPage = {home:0,rewards:1,lb:0, mysettings:0};
+    vbSharedService.prepForBroadcast(currentPage);
 
-    });
 
-    //handling change of page event to add the active class
+});
+
+
+viberApp.controller('vbLoginBarCtrl',function($scope,vbSharedService){
+
+
 
     $scope.$on('handlePageChange', function() {
         console.log('event received');
         $scope.currentPage = vbSharedService.currentPage;
     });
 
-    console.log($scope.identity);
+
 
 });
 

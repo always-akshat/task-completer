@@ -16,6 +16,7 @@ viberApp.factory('vbAuth', function($http,vbIdentity,$q){
                 if (angular.isObject(data)) {
                     vbIdentity.currentUser = data;
                     dfd.resolve(true);
+                    console.log('coming back from server');
 
                 }
                 else {

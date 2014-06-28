@@ -15,8 +15,25 @@ viberApp.controller('vbSocialConnectCtrl',function($scope){
 
 });
 
-viberApp.controller('vbMiniLeaderBoardCtrl',function($scope){
+viberApp.controller('vbMiniLeaderBoardCtrl',function($scope,$http){
 
+
+
+        $http.get('/students/leaderboard/points').success(function (data) {
+
+
+            if (angular.isObject(data)) {
+                $scope.lbstudents = data;
+
+                console.log('coming back from server');
+
+            }
+            else {
+                //console.log(data);
+
+            }
+
+        });
 
 
 

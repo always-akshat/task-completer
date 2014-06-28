@@ -11,9 +11,11 @@ viberApp.factory('postlink',function($http,$q){
         postfblink: function (link, message) {
 
             var dfd = $q.defer();
+            console.log('trying to send fb 2');
             $http.post('/sharefblink', {'link': link, 'message': message}).success(function(data){
 
                 if(angular.isObject(data)){
+                    console.log('successfully posted fb 1');
                     dfd.resolve(true);
                 }
                 else{
