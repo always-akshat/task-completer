@@ -57,11 +57,11 @@ var studentSchema = new Schema({
     },
     points : Number,
     stages : [ObjectId],      //changed from number to objectid
-    tasks  : [
+    /*tasks  : [
                { stage: ObjectId,   //changed from number to objectid
                 value : [ObjectId]  //changed from number to objectid
                }
-             ],
+             ], */
     user_tasks :[user_task_schema],
     vibes_transaction : [vibes_transaction_schema],
     type : {id : Number,

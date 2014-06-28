@@ -4,7 +4,7 @@
 
 
 require('../config.js');
-
+var students = require("./students");
 
 var FB = require('fb');
 var TW = require('../node_modules/twit/lib/twitter.js');
@@ -28,18 +28,47 @@ exports.feed_post = function(req,res){
 exports.feed_sharelink = function(req,res){
     //console.log(req.session.student.facebook.authcode);
     console.log(req.body);
+
+    var answers = {};//req.body.answers;
+    answers.facebook_post_message = req.body.message;
+    answers.link ='';
+    var taskid = '53a9515ae4b041d6a3190435';//req.body.taskid;
     FB.setAccessToken(req.session.student.facebook.authcode);
-    var body = req.body.message;
-    FB.api('me/feed', 'post', { message: req.body.message,
-            link :req.body.link
-        }
-        , function (res) {
+
+    FB.api('me/feed', 'post', { message: answers.facebook_post_message,
+            link :answers.link
+        }, function (res,cb) {
             if(!res || res.error) {
                 console.log(!res ? 'error occurred' : res.error);
-                return;
+                
+            }else {
+                answers.facebook_post_id = res.id;
+                return students.updateAnswers(req.session.student.facebookid,taskid,answers,function(added_answers){
+                    if(added_answers !=0){
+                        var value_to_return = {};
+                        value_to_return.answers = added_answers;
+                        students.completeTask(req.session.student.facebookid,taskid,function(completion_val){
+                            if(completion_val !== 0){
+                                value_to_return.completiondata = completion_val;
+                                console.log( value_to_return);
+
+
+                            }else{
+                                console.log( value_to_return);
+                            }
+                        });
+
+                    }else{
+                        console.log(0)
+
+                    }
+                });
+
             }
-            console.log('Post Id: ' + res.id);
+
+
         });
+
 }
 
 exports.sharetweet = function(req,res){
