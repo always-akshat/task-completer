@@ -59,7 +59,7 @@ exports.feed_sharelink = function(req,res){
                         });
 
                     }else{
-                        console.log(0)
+                        console.log(0);
 
                     }
                 });
