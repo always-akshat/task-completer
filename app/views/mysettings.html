@@ -2,23 +2,23 @@
     <h1>Settings</h1>
     <div class="list-box">
         <h2 class="box-title">Profile</h2>
-        <form class="form-horizontal form-profile" role="form">
-            <div class="form-group">
+        <form class="form-horizontal form-profile" role="form" name="settingsForm" ng-submit="submitForm(settingsForm.$valid)">
+         <!--   <div class="form-group">
                 <label for="inputFN" class="col-sm-4 control-label">First Name</label>
                 <div class="col-sm-20">
                     <input type="email" class="form-control" id="inputFN" placeholder="First Name">
                 </div>
-            </div>
+            </div>-->
             <div class="form-group">
-                <label for="inputLN" class="col-sm-4 control-label">Last Name</label>
+                <label for="inputLN" class="col-sm-4 control-label">Name</label>
                 <div class="col-sm-20">
-                    <input type="email" class="form-control" id="inputLN" placeholder="Last Name">
+                    <input type="text" class="form-control" id="inputLN" placeholder="Name" ng-model="user.name">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label">Sex</label>
                 <div class="col-sm-20">
-                    <input type="checkbox" id="male" value="option1" class="custom">
+                    <input type="checkbox" id="male" value="option1" class="custom" ng-model="user.gender">
                     <label for="male">Male</label>
                     <input type="checkbox" id="female" value="option2" class="custom">
                     <label for="female">
@@ -29,19 +29,19 @@
             <div class="form-group">
                 <label for="inputM" class="col-sm-4 control-label">Mobile</label>
                 <div class="col-sm-20">
-                    <input type="email" class="form-control" id="inputM" placeholder="Mobile">
+                    <input type="text" ng-model="user.mobile" class="form-control" id="inputM" placeholder="Mobile">
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputE" class="col-sm-4 control-label">Email</label>
                 <div class="col-sm-20">
-                    <input type="email" class="form-control" id="inputE" placeholder="Email">
+                    <input type="email" class="form-control" id="inputE" placeholder="Email" ng-model="user.email">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label">City</label>
                 <div class="col-sm-20">
-                    <select class="form-control">
+                    <select class="form-control" ng-model="user.city">
                         <option>Select City</option>
                         <option>2</option>
                         <option>3</option>
@@ -53,7 +53,7 @@
             <div class="form-group">
                 <label class="col-sm-4 control-label">College</label>
                 <div class="col-sm-20">
-                    <select class="form-control">
+                    <select class="form-control" ng-model="user.college">
                         <option>Select College</option>
                         <option>2</option>
                         <option>3</option>
@@ -88,15 +88,15 @@
                 <div class="col-sm-14 circle-icon-tw">Connect to win 200 vibes</div>
                 <div class="col-sm-10"><label><input type="checkbox" class="ios-switch bigswitch" /><div><div></div></div></label></div>
             </li>
-            <li class="row">
+            <!--<li class="row">
                 <div class="col-sm-14 circle-icon-g">Connect to win 200 vibes</div>
                 <div class="col-sm-10"><label><input type="checkbox" class="ios-switch bigswitch" /><div><div></div></div></label></div>
-            </li>
+            </li>-->
         </ul>
     </div>
     <div class="list-box">
         <h2 class="box-title">My Vibes</h2>
-        <em style="font-size: 11px;">A record of all Vibes you earned since joining, in descending order.Greyed our Vibes are undergoing approval.</em>
+        <em style="font-size: 11px;">A record of all Vibes you earned since joining, in descending order.Greyed out Vibes are undergoing approval.</em>
         <table cellpadding="0"  cellspacing="0" class="table table-responsive my-vibes-table" width="100%">
             <thead>
             <tr>

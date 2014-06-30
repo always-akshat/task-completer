@@ -7,13 +7,13 @@
         <h3>{{identity.currentUser.name}}
             <small>{{identity.currentUser.points}} vibes</small>
         </h3>
-        <h4>Level 1: 10%</h4>
+        <h4>Level 1: {{completion}}%</h4>
 
         <div class="row">
             <div class="col-xs-8"></div>
             <div class="col-xs-8"></div>
             <div class="col-xs-8" style="border: 0px;"></div>
-            <div class="progress-bar" style="width: 10%;"></div>
+            <div class="progress-bar" style="width:{{completion}}%;"></div>
         </div>
     </div>
     <div class="user-nav">

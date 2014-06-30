@@ -3,7 +3,7 @@
  */
 var viberApp = angular.module('viberApp');
 
-viberApp.factory('vbAuth', function($http,vbIdentity,$q){
+viberApp.factory('vbAuth', function($http,vbIdentity,$q,$rootScope){
 
     return{
         authenticateUser: function()
@@ -15,8 +15,11 @@ viberApp.factory('vbAuth', function($http,vbIdentity,$q){
 
                 if (angular.isObject(data)) {
                     vbIdentity.currentUser = data;
+
+                    $rootScope.identity = vbIdentity;
+                    $rootScope.completion = 10;
                     dfd.resolve(true);
-                    console.log('coming back from server');
+
 
                 }
                 else {
@@ -27,6 +30,11 @@ viberApp.factory('vbAuth', function($http,vbIdentity,$q){
             });
 
             return dfd.promise;
+        },
+        isAuthenticated : function(){
+
+            return angular.isObject($rootScope.identity);
+
         }
     }
 

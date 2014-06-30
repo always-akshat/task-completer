@@ -10,27 +10,31 @@
         <div class="panel-body">
             <p><strong>Task description:</strong></p>
             Hey, so this is your first task in your journey of being the Viber #goodvibes ambassador. Have a look at the video below and share it on your facebook, twitter and google plus timelines.
-            <p><br/><br/> <video width="100%" height="100%" controls style="margin-bottom: 20px;">
+            <p><br/><br/>
+
+                <iframe width="100%" height="315px" src="//www.youtube.com/embed/EOl4e8wsvHU" frameborder="0" allowfullscreen></iframe>
+
+                <!--<video width="100%" height="100%" controls style="margin-bottom: 20px;">
                 <source src="audio/test.mp4" type="video/ogg">
                 Your browser does not support the video tag.
-            </video>
+            </video>-->
 
             </p>
 
         </div>
         <div class="panel-body">
             <ul class="add-link-tab">
-                <li class="active"><a href="#add-social-link" data-toggle="tab">Add Social link</a></li>
-                <li><a href="#show-social-links" data-toggle="tab">45 social links shared</a></li>
+                <li class="active"><a href="#add-social-link" target="_self" data-toggle="tab">Add Social link</a></li>
+                <li ng-model="answers" ng-show="answers.length > 0"><a href="#show-social-links" target="_self" data-toggle="tab">{{answers.length}} social link/s shared</a></li>
             </ul>
             <div class="tab-content custom-form">
                 <div class="tab-pane fade in active" id="add-social-link">
                   <form name="taskForm" ng-submit="submitForm(taskForm.$valid)" novalidate>
-                  <!--  <div class="form-group">
+                   <div class="form-group">
                         <input type="text" class="form-control data_field" name="data_field"
-                               placeholder="video url" value="https://www.youtube.com/watch?v=rORTVmdQzpc" ng-model="link">
+                               placeholder="video url" value="https://www.youtube.com/watch?v=EOl4e8wsvHU" ng-model="link" ng-readonly="true">
                         <span class="icon_clear icon-close-circle"></span>
-                    </div>-->
+                    </div>
                     <div class="form-group">
                         <textarea name="message" id="" cols="30" rows="5" class="form-control"
                                   placeholder="#goodvibes your message" ng-model="message" required ng-maxlength="120"></textarea>
@@ -58,98 +62,24 @@
                 </div>
                 <div class="tab-pane fade" id="show-social-links">
                     <ul class="list-group social-link-list">
-                        <li class="list-group-item">
-                            <p><a href="#.">www.kickstarter.com/letsinternviber</a></p>
+                        <li class="list-group-item" ng-model="answers" ng-repeat="answer in answers">
+                            <p><a href="#.">{{answer.link}}</a></p>
 
                             <div class="row">
                                 <div class="col-sm-18">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum aliquam vel
-                                    tortor at malesuada. Nulla eleifend eleifend accumsan. Aliquam iaculis ante eget
-                                    lectus consectetur rutrum....
+                                    {{answer.message}}
                                 </div>
                                 <div class="col-sm-6">
                                     <ul class="view-share">
-                                        <li class="circle-icon-fb"></li>
-                                        <li class="circle-icon-tw"></li>
-                                        <li class="circle-icon-g"></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <p><a href="#.">www.kickstarter.com/letsinternviber</a></p>
-
-                            <div class="row">
-                                <div class="col-sm-18">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum aliquam vel
-                                    tortor at malesuada. Nulla eleifend eleifend accumsan. Aliquam iaculis ante eget
-                                    lectus consectetur rutrum....
-                                </div>
-                                <div class="col-sm-6">
-                                    <ul class="view-share">
-                                        <li class="circle-icon-fb"></li>
-                                        <li class="circle-icon-tw"></li>
-                                        <li class="circle-icon-g"></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <p><a href="#.">www.kickstarter.com/letsinternviber</a></p>
-
-                            <div class="row">
-                                <div class="col-sm-18">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum aliquam vel
-                                    tortor at malesuada. Nulla eleifend eleifend accumsan. Aliquam iaculis ante eget
-                                    lectus consectetur rutrum....
-                                </div>
-                                <div class="col-sm-6">
-                                    <ul class="view-share">
-                                        <li class="circle-icon-fb"></li>
-                                        <li class="circle-icon-tw"></li>
-                                        <li class="circle-icon-g"></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <p><a href="#.">www.kickstarter.com/letsinternviber</a></p>
-
-                            <div class="row">
-                                <div class="col-sm-18">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum aliquam vel
-                                    tortor at malesuada. Nulla eleifend eleifend accumsan. Aliquam iaculis ante eget
-                                    lectus consectetur rutrum....
-                                </div>
-                                <div class="col-sm-6">
-                                    <ul class="view-share">
-                                        <li class="circle-icon-fb"></li>
-                                        <li class="circle-icon-tw"></li>
-                                        <li class="circle-icon-g"></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <p><a href="#.">www.kickstarter.com/letsinternviber</a></p>
-
-                            <div class="row">
-                                <div class="col-sm-18">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum aliquam vel
-                                    tortor at malesuada. Nulla eleifend eleifend accumsan. Aliquam iaculis ante eget
-                                    lectus consectetur rutrum....
-                                </div>
-                                <div class="col-sm-6">
-                                    <ul class="view-share">
-                                        <li class="circle-icon-fb"></li>
-                                        <li class="circle-icon-tw"></li>
-                                        <li class="circle-icon-g"></li>
+                                        <li class="circle-icon-fb" ng-class="{'social-active' : answer.fb==true}"></li>
+                                        <li class="circle-icon-tw"  ng-class="{'social-active' : answer.tw==true}"></li>
+                                        <!--<li class="circle-icon-g"></li>-->
                                     </ul>
                                 </div>
                             </div>
                         </li>
                     </ul>
-                    <a href="#." class="pull-right">+ show more</a>
+                    <a href="#." target="_self" class="pull-right">+ post more</a>
                 </div>
             </div>
         </div>

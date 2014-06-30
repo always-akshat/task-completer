@@ -8,14 +8,16 @@ viberApp.factory('postlink',function($http,$q){
 
     return{
 
-        postfblink: function (link, message) {
+        postfblink: function (link, message,task) {
 
             var dfd = $q.defer();
-            console.log('trying to send fb 2');
-            $http.post('/sharefblink', {'link': link, 'message': message}).success(function(data){
 
+            $http.post('/sharefblink', {'link': link, 'message': message}).success(function(data){
+                console.log(data);
                 if(angular.isObject(data)){
-                    console.log('successfully posted fb 1');
+
+                    task.answers=data.answers;
+                    //if(angular.isObject(data.user_tasks))
                     dfd.resolve(true);
                 }
                 else{
