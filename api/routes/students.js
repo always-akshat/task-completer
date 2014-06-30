@@ -77,7 +77,7 @@ function getstudentdata(req, res) {
     {
         res.send(req.session.student);
         console.log('student data');
-        console.log(JSON.stringify(Student));
+        //console.log(JSON.stringify(Student));
 
 
     }
@@ -298,73 +298,126 @@ function updateAnswers(facebookid, taskid, answers,cb) {
             if (err) {
                 cb(0);
             } else {
-
-                if(doc.user_tasks[0].answers) {
-                    var old_answers = doc.user_tasks[0].answers;
-                    var check_criteria = (Object.keys(answers));
-                    for (var index = 0; index < check_criteria.length; index++) {
-                        prop = [check_criteria[index]].toString();
-                        console.log(prop);
-                        if (answers[prop] !== ''
-                            || (typeof answers[prop] !== 'undefined')
-                            || answers[prop] !== null) {
-                            console.log('yes');
-                            old_answers[prop] = answers[prop];
+                console.log('these are the answers \n' +JSON.stringify(doc.user_tasks[0].answers) +'\n\n');
+                old_answers = doc.user_tasks[0].answers;
+                old_answers.push(answers);
+                console.log('final answers \n' + JSON.stringify(old_answers));
+                console.log(typeof old_answers);
+                Students.update({'facebookid': facebookid, 'user_tasks.task_id': taskid},
+                    {$set: { 'user_tasks.$.answers': old_answers } }
+                    , function (err) {
+                        if (err) {
+                            cb(0);
                         } else {
-                            console.log('no');
+                            cb(old_answers);
                         }
-                    }
-
-                    Students.update({'facebookid': facebookid, 'user_tasks.task_id': taskid},
-                        {$set: { 'user_tasks.$.answers': old_answers } }
-                        , function (err) {
-                            if (err) {
-                                cb(0);
-                            } else {
-                                cb(old_answers);
-                            }
-                        });
-
-                    console.log(old_answers);
-                }else{
-                    Students.update({'facebookid': facebookid, 'user_tasks.task_id': taskid},
-                        {$set: { 'user_tasks.$.answers': answers } }
-                        , function (err) {
-                            if (err) {
-                                cb(0);
-                            } else {
-                                cb(answers);
-                            }
-                        });
+                    });
                 }
-            }
         });
+
+
+
+
+                /*Students.findOne({ 'facebookid': facebookid })
+                    .select({ 'user_tasks': { $elemMatch: {task_id: taskid}}})
+                    .exec(function (err, doc) {
+                        if (err) {
+                            cb(0);
+                        } else {
+
+
+                            if(doc.user_tasks[0].answers) {
+                                var old_answers = doc.user_tasks[0].answers;
+                                var check_criteria = (Object.keys(answers));
+                                for (var index = 0; index < check_criteria.length; index++) {
+                                    prop = [check_criteria[index]].toString();
+                                    if (answers[prop] !== ''
+                                        || (typeof answers[prop] !== 'undefined')
+                                        || answers[prop] !== null) {
+                                        old_answers[prop] = answers[prop];
+                                    } else {
+                                        console.log('no');
+                                    }
+                                }
+
+
+                                Students.update({'facebookid': facebookid, 'user_tasks.task_id': taskid},
+                                    {$set: { 'user_tasks.$.answers': old_answers } }
+                                    , function (err) {
+                                        if (err) {
+                                            cb(0);
+                                        } else {
+                                            cb(old_answers);
+                                        }
+                                    });
+
+                                console.log(old_answers);
+                            }else{
+                                Students.update({'facebookid': facebookid, 'user_tasks.task_id': taskid},
+                                    {$set: { 'user_tasks.$.answers': answers } }
+                                    , function (err) {
+                                        if (err) {
+                                            cb(0);
+                                        } else {
+                                            cb(answers);
+                                        }
+                                    });
+                            }
+                        }
+                    }); */
 
 };
 
 function completeTask(facebookid, taskid,cb) {
 
-console.log('reached complete task');
+
     Students.findOne({ 'facebookid': facebookid })
         .select({ 'user_tasks': { $elemMatch: {task_id: taskid}}})
         .exec(function (err, doc) {
             var condition = doc.user_tasks[0].condition;
             var answers = doc.user_tasks[0].answers;
-            var points =  doc.user_tasks[0].points;
+            var points = doc.user_tasks[0].points;
 
 
             var check_criteria = (Object.keys(condition));
-            var completion = 1;
+
+
+                var check_object = {};
+            for (var index = 0; index < check_criteria.length; index++) {
+                prop = [check_criteria[index]].toString();
+                    check_object[prop] =0;
+            }
+
+
+            answers.forEach(function (instance)
+            {
+                console.log(instance);
             for (var index = 0; index < check_criteria.length; index++) {
                 prop = [check_criteria[index]].toString();
 
-                if (!answers.hasOwnProperty(prop)
-                    || answers[prop] === ''
-                    || (typeof answers[prop] === 'undefined')
-                    || answers[prop] === null) {
+                if (instance.hasOwnProperty(prop)
+                    && instance[prop] !== ''
+                    && (typeof instance[prop] !== 'undefined')
+                    && instance[prop] !== null) {
+                    check_object[prop]= 1;
+                }else{
+                    console.log('no');
+                }
+            }
+        });
+
+            var completion = 1;
+            for(var index in check_object)
+            {
+
+                if(check_object[index] == 1){
+
+                }else{
+                    console.log(0)
                     completion = 0;
                 }
             }
+
             console.log('completion :' + completion);
             if (completion == 1) {
                 var completion_value = {};

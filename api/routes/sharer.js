@@ -32,6 +32,7 @@ exports.feed_sharelink = function(req,res){
     var answers = {};//req.body.answers;
     answers.facebook_post_message = req.body.message;
     answers.facebook_link ='';
+
     var taskid = '53a9515ae4b041d6a3190435';//req.body.taskid;
     var facebookid = req.session.student.facebookid;
     FB.setAccessToken(req.session.student.facebook.authcode);
