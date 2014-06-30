@@ -4,8 +4,8 @@
 
 
 require('../config.js');
-var students = require("./students");
 
+var utilities = require("./utilities");
 var FB = require('fb');
 var TW = require('../node_modules/twit/lib/twitter.js');
 
@@ -33,45 +33,43 @@ exports.feed_sharelink = function(req,res){
     answers.facebook_post_message = req.body.message;
     answers.link ='';
     var taskid = '53a9515ae4b041d6a3190435';//req.body.taskid;
+    var facebookid = req.session.student.facebookid;
     FB.setAccessToken(req.session.student.facebook.authcode);
+
 
     FB.api('me/feed', 'post', { message: answers.facebook_post_message,
             link :answers.link
-        }, function (res,cb) {
-            if(!res || res.error) {
-                console.log(!res ? 'error occurred' : res.error);
-
-            }else {
+        }, function (fb_res) {
+            if(!fb_res || fb_res.error) {
+                console.log(!fb_res ? 'error occurred' : res.error);
+            }else{
                 answers.facebook_post_id = res.id;
-                return students.updateAnswers(req.session.student.facebookid,taskid,answers,function(added_answers){
-                    if(added_answers !=0){
-                        var value_to_return = {};
-                        value_to_return.answers = added_answers;
-                        students.completeTask(req.session.student.facebookid,taskid,function(completion_val){
-                            if(completion_val !== 0){
-                                value_to_return.completiondata = completion_val;
-                                console.log( value_to_return);
-
-
-                            }else{
-                                console.log( value_to_return);
-                            }
-                        });
-
+                utilities.handle_task_Request(facebookid,taskid,answers,function(task_data){
+                    if(task_data !== 0){
+                        console.log('data returned from utilities ' + JSON.stringify(task_data))
+                        res.send(task_data);
                     }else{
-                        console.log(0);
-
+                        res.send(0);
                     }
                 });
+
 
             }
 
 
         });
 
+
 }
 
 exports.sharetweet = function(req,res){
+
+
+    var answers = {};//req.body.answers;
+    answers.twitter_post_message = req.body.message;
+    answers.link ='';
+    var taskid = '53a9515ae4b041d6a3190435';//req.body.taskid;
+    var facebookid = req.session.student.facebookid;
 
         var bot = new TW({
             consumer_key: 'LrZ3vwBNjaE8jkJNi4od4ntdX'
@@ -80,9 +78,20 @@ exports.sharetweet = function(req,res){
             , access_token_secret:  req.session.student.twitter.secret
         });
 
-    bot.post('statuses/update', { status: req.body.message }, function(err, data, response) {
-        console.log(data);
-        res.send(data);
+    bot.post('statuses/update', { status: answers.twitter_post_message }, function(err, data, response) {
+        answers.twitter_post_id = data.id_str;
+
+        utilities.handle_task_Request(facebookid,taskid,answers,function(err,task_data){
+            console.log(task_data);
+            if(task_data !== 0){
+                console.log('data returned from utilities ' + JSON.stringify(task_data))
+                res.send(task_data);
+            }else{
+
+                res.send(0);
+            }
+        })
+
     })
 
 

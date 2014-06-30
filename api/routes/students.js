@@ -310,7 +310,6 @@ console.log('reached complete task');
     Students.findOne({ 'facebookid': facebookid })
         .select({ 'user_tasks': { $elemMatch: {task_id: taskid}}})
         .exec(function (err, doc) {
-
             var condition = doc.user_tasks[0].condition;
             var answers = doc.user_tasks[0].answers;
             var points =  doc.user_tasks[0].points;
@@ -328,7 +327,7 @@ console.log('reached complete task');
                     completion = 0;
                 }
             }
-            //console.log('completion :' + completion);
+            console.log('completion :' + completion);
             if (completion == 1) {
                 var completion_value = {};
                 completion_value.user_task = doc.user_tasks[0];
@@ -349,11 +348,13 @@ console.log('reached complete task');
                                     transaction.type = 'task';
                                     transaction.sign = 1;
                                     transaction.message = 'Task completion';
+                                    console.log('added points');
                                     VibesTransaction(facebookid,transaction,function(v_transaction){
                                         console.log(v_transaction);
                                         if(v_transaction !== 0){
                                             completion_value.transaction = v_transaction;
                                             cb(completion_value);
+                                            console.log('added transactiontion');
                                         }else{
                                             cb(0)
                                         }
