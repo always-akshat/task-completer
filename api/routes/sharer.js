@@ -31,7 +31,7 @@ exports.feed_sharelink = function(req,res){
 
     var answers = {};//req.body.answers;
     answers.facebook_post_message = req.body.message;
-    answers.link ='';
+    answers.facebook_link ='';
     var taskid = '53a9515ae4b041d6a3190435';//req.body.taskid;
     var facebookid = req.session.student.facebookid;
     FB.setAccessToken(req.session.student.facebook.authcode);
@@ -43,7 +43,8 @@ exports.feed_sharelink = function(req,res){
             if(!fb_res || fb_res.error) {
                 console.log(!fb_res ? 'error occurred' : res.error);
             }else{
-                answers.facebook_post_id = res.id;
+
+                answers.facebook_post_id = fb_res.id;
                 utilities.handle_task_Request(facebookid,taskid,answers,function(task_data){
                     if(task_data !== 0){
                         console.log('data returned from utilities ' + JSON.stringify(task_data))
@@ -67,7 +68,7 @@ exports.sharetweet = function(req,res){
 
     var answers = {};//req.body.answers;
     answers.twitter_post_message = req.body.message;
-    answers.link ='';
+    answers.twitter_link ='';
     var taskid = '53a9515ae4b041d6a3190435';//req.body.taskid;
     var facebookid = req.session.student.facebookid;
 
@@ -81,13 +82,12 @@ exports.sharetweet = function(req,res){
     bot.post('statuses/update', { status: answers.twitter_post_message }, function(err, data, response) {
         answers.twitter_post_id = data.id_str;
 
-        utilities.handle_task_Request(facebookid,taskid,answers,function(err,task_data){
-            console.log(task_data);
+        utilities.handle_task_Request(facebookid,taskid,answers,function(task_data){
+            console.log('sharer task data' + task_data);
             if(task_data !== 0){
                 console.log('data returned from utilities ' + JSON.stringify(task_data))
                 res.send(task_data);
             }else{
-
                 res.send(0);
             }
         })

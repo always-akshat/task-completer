@@ -291,14 +291,52 @@ function validateSignUp(req, callback) {
 }
 
 function updateAnswers(facebookid, taskid, answers,cb) {
-    console.log('reached update answers');
-    Students.update({'facebookid': facebookid, 'user_tasks.task_id': taskid},
-        {$set: { 'user_tasks.$.answers': answers } }
-        , function (err) {
+
+    Students.findOne({ 'facebookid': facebookid })
+        .select({ 'user_tasks': { $elemMatch: {task_id: taskid}}})
+        .exec(function (err, doc) {
             if (err) {
                 cb(0);
             } else {
-                cb(answers);
+
+                if(doc.user_tasks[0].answers) {
+                    var old_answers = doc.user_tasks[0].answers;
+                    var check_criteria = (Object.keys(answers));
+                    for (var index = 0; index < check_criteria.length; index++) {
+                        prop = [check_criteria[index]].toString();
+                        console.log(prop);
+                        if (answers[prop] !== ''
+                            || (typeof answers[prop] !== 'undefined')
+                            || answers[prop] !== null) {
+                            console.log('yes');
+                            old_answers[prop] = answers[prop];
+                        } else {
+                            console.log('no');
+                        }
+                    }
+
+                    Students.update({'facebookid': facebookid, 'user_tasks.task_id': taskid},
+                        {$set: { 'user_tasks.$.answers': old_answers } }
+                        , function (err) {
+                            if (err) {
+                                cb(0);
+                            } else {
+                                cb(old_answers);
+                            }
+                        });
+
+                    console.log(old_answers);
+                }else{
+                    Students.update({'facebookid': facebookid, 'user_tasks.task_id': taskid},
+                        {$set: { 'user_tasks.$.answers': answers } }
+                        , function (err) {
+                            if (err) {
+                                cb(0);
+                            } else {
+                                cb(answers);
+                            }
+                        });
+                }
             }
         });
 

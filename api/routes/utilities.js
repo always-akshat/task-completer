@@ -43,6 +43,7 @@ exports.handle_task_Request = function(facebookid,taskid,answers,cb) {
                     value_to_return.completiondata = completion_val;
                     value_to_return.completiondata.level = 33;
                 }
+                console.log('value to return' + JSON.stringify(value_to_return));
                 cb(value_to_return);
             });
         } else {
