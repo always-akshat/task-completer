@@ -2,6 +2,26 @@
  * Created by Ankit on 5/16/2014.
  */
 
+var log4js = require('log4js');
+//log the cheese logger messages to a file, and the console ones as well.
+log4js.configure({
+    appenders: [
+        {
+            type: "file",
+            filename: "'logs/badvibes.log",
+            category: [ 'cheese','console' ]
+        },
+        {
+            type: "console"
+        }
+    ],
+    replaceConsole: true
+});
+var logger = log4js.getLogger('cheese');
+logger.setLevel('ERROR');
+
+
+
 
 var express = require('express'),mongoose = require('mongoose');
 var routes = require('./routes');

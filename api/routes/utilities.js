@@ -38,7 +38,7 @@ exports.handle_task_Request = function(facebookid,taskid,answers,cb) {
             var value_to_return = {};
             value_to_return.answers = added_answers;
             students.completeTask(facebookid, taskid, function (completion_val) {
-                console.log('obtained completed_val');
+
                 if (completion_val !== 0) {
                     value_to_return.completiondata = completion_val;
                     value_to_return.completiondata.level = 33;

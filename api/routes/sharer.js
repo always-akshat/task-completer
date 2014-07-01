@@ -30,16 +30,16 @@ exports.feed_sharelink = function(req,res){
     console.log(req.body);
 
     var answers = {};//req.body.answers;
-    answers.facebook_post_message = req.body.message;
-    answers.facebook_link ='';
+    answers.facebook_post_message = req.body.answers.message;
+    answers.facebook_link =req.body.answers.message;
 
-    var taskid = '53a9515ae4b041d6a3190435';//req.body.taskid;
+    var taskid = req.body.taskid; //req.body.taskid;
     var facebookid = req.session.student.facebookid;
     FB.setAccessToken(req.session.student.facebook.authcode);
 
 
     FB.api('me/feed', 'post', { message: answers.facebook_post_message,
-            link :answers.link
+            link :answers.facebook_link
         }, function (fb_res) {
             if(!fb_res || fb_res.error) {
                 console.log(!fb_res ? 'error occurred' : res.error);
@@ -68,9 +68,9 @@ exports.sharetweet = function(req,res){
 
 
     var answers = {};//req.body.answers;
-    answers.twitter_post_message = req.body.message;
-    answers.twitter_link ='';
-    var taskid = '53a9515ae4b041d6a3190435';//req.body.taskid;
+    answers.twitter_post_message = req.body.answers.message;
+    answers.twitter_link =req.body.answers.link;
+    var taskid = req.body.taskid;//req.body.taskid;
     var facebookid = req.session.student.facebookid;
 
         var bot = new TW({
@@ -81,17 +81,24 @@ exports.sharetweet = function(req,res){
         });
 
     bot.post('statuses/update', { status: answers.twitter_post_message }, function(err, data, response) {
-        answers.twitter_post_id = data.id_str;
+        console.log('this is error' + err);
+        console.log('this is data' + data);
+        if(1) {
+            answers.twitter_post_id = data.id_str;
 
-        utilities.handle_task_Request(facebookid,taskid,answers,function(task_data){
-            console.log('sharer task data' + task_data);
-            if(task_data !== 0){
-                console.log('data returned from utilities ' + JSON.stringify(task_data))
-                res.send(task_data);
-            }else{
-                res.send(0);
-            }
-        })
+            utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
+
+                console.log('sharer task data' + task_data);
+                if (task_data !== 0) {
+                    console.log('data returned from utilities ' + JSON.stringify(task_data))
+                    res.send(task_data);
+                } else {
+                    res.send(0);
+                }
+            });
+        }else{
+            res.send(err);
+        }
 
     })
 
