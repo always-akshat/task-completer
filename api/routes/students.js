@@ -298,8 +298,11 @@ function updateAnswers(facebookid, taskid, answers,cb) {
             if (err) {
                 cb(0);
             } else {
-                console.log('these are the answers \n' +JSON.stringify(doc.user_tasks[0].answers) +'\n\n');
-                old_answers = doc.user_tasks[0].answers;
+                //console.log('these are the answers \n' +JSON.stringify(doc.user_tasks[0].answers) +'\n\n');
+                old_answers = new Array();
+                if(doc.user_tasks[0].answers) {
+                    old_answers = doc.user_tasks[0].answers;
+                }
                 old_answers.push(answers);
                 console.log('final answers \n' + JSON.stringify(old_answers));
                 console.log(typeof old_answers);
@@ -391,7 +394,7 @@ function completeTask(facebookid, taskid,cb) {
 
             answers.forEach(function (instance)
             {
-                console.log(instance);
+                //console.log(instance);
             for (var index = 0; index < check_criteria.length; index++) {
                 prop = [check_criteria[index]].toString();
 
@@ -574,7 +577,7 @@ function addTwitter(req, res) {
             doc.twitter.secret = req.session.twit['secret'];
 
             doc.save();
-            res.send('done');
+            res.send('<script>window.close()</script>');
         }
 
         else {
