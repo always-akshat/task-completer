@@ -4,18 +4,106 @@
 
 
 require('../config.js');
-
+var async = require('async');
 var utilities = require("./utilities");
 var FB = require('fb');
 var TW = require('../node_modules/twit/lib/twitter.js');
 
 
+exports.share = function(req,res){
 
-exports.get_likes = function(req,res){
+    /*req.body =  {
+                    "answers" : {
+                                "message" : "hi there this is test"+ Date.now()+ " !",
+                                "link" : "https://www.youtube.com/watch?v=EOl4e8wsvHU"
+                                },
+                    "taskid" : '53a9515ae4b041d6a3190435',
+                    "platform" : {"facebook":1,"twitter":1}
+                }; */
+
+    var facebookid = req.session.student.facebookid;
+    var answers = req.body.answers;
+    var taskid = req.body.taskid;
+    var platform = req.body.platform;
+    var auth = req.session.student.facebook.authcode;
+    var twit_token =   req.session.student.twitter.authcode;
+    var twit_secret =  req.session.student.twitter.secret
+
+
+    asyncTasks = [];
+
+    if(platform.facebook == 1){
+        asyncTasks.push(function(cb){
+            feed_sharelink(auth,answers, function(facebook_post_data){
+                console.log('hii facebook');
+                if(facebook_post_data){
+                    console.log('facebook returned' + JSON.stringify(facebook_post_data));
+                    answers.facebook ={};
+                    answers.facebook.post_id =facebook_post_data;
+                }
+                cb(null,1);
+            });
+
+        });
+    }
+
+
+    if(platform.twitter == 1){
+        asyncTasks.push(function(cb){
+            sharetweet(twit_token,twit_secret,answers,function(twitter_post_data){
+                console.log('hii twitter');
+                if(twitter_post_data){
+                    answers.twitter = {};
+                    answers.twitter.post_id =twitter_post_data;
+                    console.log('twitter returned' + JSON.stringify(twitter_post_data));
+                }
+                cb(null,1);
+            });
+
+        });
+    }
+
+
+    async.parallel(asyncTasks, function(err, results) {
+        console.log('these are the final results');
+
+        utilities.handle_task_Request(facebookid,taskid,answers,function(task_data){
+            if(task_data !== 0){
+                console.log('data returned from utilities ' + JSON.stringify(task_data))
+                res.send(task_data);
+            }else{
+                res.send(0);
+            }
+        });
+
+    });
+
+
+
+
+
+}
+
+
+function print_answers(answers){
+    console.log('this is answers function');
+    console.log(answers);
+}
+ function get_likes(req,res){
     FB.setAccessToken(req.session.student.facebook.authcode);
     var post_id = '10152198497022499_10152228426717499';
-    console.log(post_id);
-    FB.api(
+    var post_id_array= ['10152198497022499_10152228426717499','10152198497022499_10152228520742499'
+                        ,'10152198497022499_10152228521847499']
+    var batch = new Array();
+
+    post_id_array.forEach(function(instance){
+       var req_string = "{ method: 'GET', relative_url: '/"+instance+"/likes'}";
+        batch.push(req_string);
+    });
+    console.log('this is my batch\n' + batch);
+
+
+    /*FB.api(
         "/"+post_id+"/likes", {'summary' : 1},
         function (response) {
             if (response && !response.error) {
@@ -25,42 +113,32 @@ exports.get_likes = function(req,res){
                 console.log(response);
             }
         }
-    );
+    );*/
+
+    FB.api('/', 'POST', {
+        batch: [
+            { method: 'GET', relative_url: '/10152198497022499_10152228426717499/likes'},
+            { method: 'GET', relative_url: '/10152198497022499_10152228520742499/likes'},
+            { method: 'GET', relative_url: '/10152198497022499_10152228521847499/likes'}]
+    }, function (response) {
+        console.log(response);
+    });
+
 }
 
-exports.feed_sharelink = function(req,res){
-    //console.log(req.session.student.facebook.authcode);
-    console.log(req.body);
+function feed_sharelink(auth,answers,cb){
+    answers.message = answers.message;
+    answers.link = answers.link;
 
-    console.log('answers : ' + req.body.answers.message) ;
-    var answers = {};//req.body.answers;
-    answers.message = req.body.answers.message;
-    answers.facebook_link =req.body.answers.link;
-
-    var taskid = req.body.taskid;
-    var facebookid = req.session.student.facebookid;
-    console.log('facebookid ' + facebookid);
-    FB.setAccessToken(req.session.student.facebook.authcode);
-
-
+    FB.setAccessToken(auth);
     FB.api('me/feed', 'post', { message: answers.message,
-            link :answers.facebook_link
+            link :answers.link
         }, function (fb_res) {
-        console.log('inside facebook function');
             if(!fb_res || fb_res.error) {
-                console.log(!fb_res ? 'error occurred' : res.error);
+                cb(!fb_res ? 'error occurred' : fb_res.error);
             }else{
 
-                answers.facebook_post_id = fb_res.id;
-                utilities.handle_task_Request(facebookid,taskid,answers,function(task_data){
-                    if(task_data !== 0){
-                        console.log('data returned from utilities ' + JSON.stringify(task_data))
-                        res.send(task_data);
-                    }else{
-                        res.send(0);
-                    }
-                });
-
+                cb(fb_res.id);
 
             }
 
@@ -70,47 +148,28 @@ exports.feed_sharelink = function(req,res){
 
 }
 
-exports.sharetweet = function(req,res){
+function sharetweet(twit_token,twit_secret,answers,cb){
 
-
-    var answers = {};//req.body.answers;
-    answers.message = req.body.answers.message;
-
-    var taskid =req.body.taskid;
-
-
-    var taskid = req.body.taskid;//req.body.taskid;
-
-    var facebookid = req.session.student.facebookid;
-
-        var bot = new TW({
+    var bot = new TW({
             consumer_key: 'LrZ3vwBNjaE8jkJNi4od4ntdX'
             , consumer_secret:      'vx84F0lXUygTou3idnl2oHfkfcVDQyfblBAAnZFgn4TR1sZKOQ'
-            , access_token:         req.session.student.twitter.authcode
-            , access_token_secret:  req.session.student.twitter.secret
+            , access_token:         twit_token
+            , access_token_secret:  twit_secret
         });
 
     bot.post('statuses/update', { status: answers.message }, function(err, data, response) {
-
         if(!err) {
-            answers.twitter_post_id = data.id_str;
-
-            utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
-
-                console.log('sharer task data' + task_data);
-                if (task_data !== 0) {
-                    console.log('data returned from utilities ' + JSON.stringify(task_data))
-                    res.send(task_data);
-                } else {
-                    res.send(0);
-                }
-            });
+                cb(data.id_str);
         }else{
-            res.send(err);
+            cb(err);
         }
-
     })
 
 
 
 }
+
+
+
+
+
