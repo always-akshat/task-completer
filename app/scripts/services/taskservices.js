@@ -10,14 +10,26 @@ viberApp.factory('postlink',function($http,$q){
 
         postfblink: function (link, message,task) {
 
+            var reqObj = {'taskid' :task['task_id'],'answers':{message:message,link:link}};
             var dfd = $q.defer();
 
-            $http.post('/sharefblink', {'link': link, 'message': message}).success(function(data){
+            $http.post('/sharefblink',reqObj).success(function(data){
                 console.log(data);
                 if(angular.isObject(data)){
 
+                    var answers  = data.answers;
+
+//                    var fb_posts = _.pluck(answers,'facebook_posts_messages');
+//                    var tw_posts= _.pluck(answers,'twitter_posts_messages');
+//
+//                    _.each(answers,function(answer){
+//
+//
+//
+//
+//                    });
+
                     task.answers=data.answers;
-                    //if(angular.isObject(data.user_tasks))
                     dfd.resolve(true);
                 }
                 else{
@@ -30,10 +42,10 @@ viberApp.factory('postlink',function($http,$q){
 
         },
 
-        posttwlink: function (link, message) {
-
+        posttwlink: function (link, message,task) {
+            var reqObj = {'taskid' :task['task_id'],'answers':{message:message,link:link}};
             var dfd = $q.defer();
-            $http.post('/sharetweet', {'link': link, 'message': message}).success(function(data){
+            $http.post('/sharetweet',reqObj).success(function(data){
 
                 if(angular.isObject(data)){
                     dfd.resolve(true);
