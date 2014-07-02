@@ -85,7 +85,7 @@ if ('development' == app.get('env')) {
 
 
 app.get('/', routes.index);
-app.get('/share', sharer.feed_post);
+
 
 
 app.get('/auth/facebook', passport.authenticate('facebook',{ scope: 'publish_actions' }),function(req, res){

@@ -34,7 +34,7 @@ exports.feed_sharelink = function(req,res){
 
     console.log('answers : ' + req.body.answers.message) ;
     var answers = {};//req.body.answers;
-    answers.facebook_post_message = req.body.answers.message;
+    answers.message = req.body.answers.message;
     answers.facebook_link =req.body.answers.link;
 
     var taskid = req.body.taskid;
@@ -43,7 +43,7 @@ exports.feed_sharelink = function(req,res){
     FB.setAccessToken(req.session.student.facebook.authcode);
 
 
-    FB.api('me/feed', 'post', { message: answers.facebook_post_message,
+    FB.api('me/feed', 'post', { message: answers.message,
             link :answers.facebook_link
         }, function (fb_res) {
         console.log('inside facebook function');
@@ -74,11 +74,11 @@ exports.sharetweet = function(req,res){
 
 
     var answers = {};//req.body.answers;
-    answers.twitter_post_message = req.body.answers.message;
+    answers.message = req.body.answers.message;
 
     var taskid =req.body.taskid;
 
-    //answers.twitter_link =req.body.answers.link;
+
     var taskid = req.body.taskid;//req.body.taskid;
 
     var facebookid = req.session.student.facebookid;
@@ -90,10 +90,9 @@ exports.sharetweet = function(req,res){
             , access_token_secret:  req.session.student.twitter.secret
         });
 
-    bot.post('statuses/update', { status: answers.twitter_post_message }, function(err, data, response) {
-        console.log('this is error' + err);
-        console.log('this is data' + data);
-        if(1) {
+    bot.post('statuses/update', { status: answers.message }, function(err, data, response) {
+
+        if(!err) {
             answers.twitter_post_id = data.id_str;
 
             utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
