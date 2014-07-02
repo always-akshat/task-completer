@@ -4,7 +4,7 @@
 
 var log4js = require('log4js');
 //log the cheese logger messages to a file, and the console ones as well.
-log4js.configure({
+/*log4js.configure({
     appenders: [
         {
             type: "file",
@@ -19,7 +19,7 @@ log4js.configure({
 });
 var logger = log4js.getLogger('cheese');
 logger.setLevel('ERROR');
-
+*/
 
 
 

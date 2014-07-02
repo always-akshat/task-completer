@@ -32,18 +32,21 @@ exports.feed_sharelink = function(req,res){
     //console.log(req.session.student.facebook.authcode);
     console.log(req.body);
 
+    console.log('answers : ' + req.body.answers.message) ;
     var answers = {};//req.body.answers;
     answers.facebook_post_message = req.body.answers.message;
     answers.facebook_link =req.body.answers.link;
 
     var taskid = req.body.taskid;
     var facebookid = req.session.student.facebookid;
+    console.log('facebookid ' + facebookid);
     FB.setAccessToken(req.session.student.facebook.authcode);
 
 
     FB.api('me/feed', 'post', { message: answers.facebook_post_message,
             link :answers.facebook_link
         }, function (fb_res) {
+        console.log('inside facebook function');
             if(!fb_res || fb_res.error) {
                 console.log(!fb_res ? 'error occurred' : res.error);
             }else{
@@ -72,7 +75,12 @@ exports.sharetweet = function(req,res){
 
     var answers = {};//req.body.answers;
     answers.twitter_post_message = req.body.answers.message;
+
     var taskid =req.body.taskid;
+
+    //answers.twitter_link =req.body.answers.link;
+    var taskid = req.body.taskid;//req.body.taskid;
+
     var facebookid = req.session.student.facebookid;
 
         var bot = new TW({
