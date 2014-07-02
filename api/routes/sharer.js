@@ -9,20 +9,23 @@ var utilities = require("./utilities");
 var FB = require('fb');
 var TW = require('../node_modules/twit/lib/twitter.js');
 
-exports.feed_post = function(req,res){
-    console.log(req.session.student.facebook.authcode);
+
+
+exports.get_likes = function(req,res){
     FB.setAccessToken(req.session.student.facebook.authcode);
-    var body = 'My first post using facebook-node-sdk';
-    FB.api('me/photos', 'post', { message: "Photo post through node-facebook-sdk",
-                                url :'https://s3-ap-southeast-1.amazonaws.com/letsintern.com/viber/images/new_hp/image_1.jpg'
-                                       }
-                        , function (res) {
-        if(!res || res.error) {
-            console.log(!res ? 'error occurred' : res.error);
-            return;
+    var post_id = '10152198497022499_10152228426717499';
+    console.log(post_id);
+    FB.api(
+        "/"+post_id+"/likes", {'summary' : 1},
+        function (response) {
+            if (response && !response.error) {
+                console.log(response);
+                res.send(response.summary);
+            }else{
+                console.log(response);
+            }
         }
-        console.log('Post Id: ' + res.id);
-    });
+    );
 }
 
 exports.feed_sharelink = function(req,res){
@@ -31,9 +34,9 @@ exports.feed_sharelink = function(req,res){
 
     var answers = {};//req.body.answers;
     answers.facebook_post_message = req.body.answers.message;
-    answers.facebook_link =req.body.answers.message;
+    answers.facebook_link =req.body.answers.link;
 
-    var taskid = req.body.taskid; //req.body.taskid;
+    var taskid = req.body.taskid;
     var facebookid = req.session.student.facebookid;
     FB.setAccessToken(req.session.student.facebook.authcode);
 
@@ -69,8 +72,7 @@ exports.sharetweet = function(req,res){
 
     var answers = {};//req.body.answers;
     answers.twitter_post_message = req.body.answers.message;
-    answers.twitter_link =req.body.answers.link;
-    var taskid = req.body.taskid;//req.body.taskid;
+    var taskid =req.body.taskid;
     var facebookid = req.session.student.facebookid;
 
         var bot = new TW({

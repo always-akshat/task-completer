@@ -300,6 +300,7 @@ function updateAnswers(facebookid, taskid, answers,cb) {
             } else {
                 //console.log('these are the answers \n' +JSON.stringify(doc.user_tasks[0].answers) +'\n\n');
                 old_answers = new Array();
+
                 if(doc.user_tasks[0].answers) {
                     old_answers = doc.user_tasks[0].answers;
                 }
