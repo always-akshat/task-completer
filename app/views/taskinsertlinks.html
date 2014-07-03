@@ -62,6 +62,7 @@
                 </div>
                 <div class="tab-pane fade" id="show-social-links">
                     <ul class="list-group social-link-list">
+
                         <li class="list-group-item" ng-model="answers" ng-repeat="answer in answers">
                             <p><a href="#.">{{answer.link}}</a></p>
 
@@ -71,8 +72,8 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <ul class="view-share">
-                                        <li class="circle-icon-fb" ng-class="{'social-active' : answer.fb==true}"></li>
-                                        <li class="circle-icon-tw"  ng-class="{'social-active' : answer.tw==true}"></li>
+                                        <li class="circle-icon-fb" ng-class="{'social-active' : answer.fbsuccess == true}"></li>
+                                        <li class="circle-icon-tw"  ng-class="{'social-active' : answer.twsuccess == true}"></li>
                                         <!--<li class="circle-icon-g"></li>-->
                                     </ul>
                                 </div>

@@ -15,6 +15,7 @@ viberApp.factory('postlink',function($http,$q){
             $http.post('/socialshare',reqObj).success(function(data){
 
                 if(angular.isObject(data)){
+                    task.answers = data.answers;
                     dfd.resolve(true);
                 }
                 else{
