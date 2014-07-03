@@ -25,6 +25,10 @@ module.exports = passport.use(new FacebookStrategy({
             if(err) { console.log(err); }
             if (!err && student != null) {
                 student.facebook.authcode = accessToken;
+                    var tasks = student.user_tasks;
+                tasks.forEach(function(instance){
+
+                })
                  done(null, student);
             }
             else {

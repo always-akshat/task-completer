@@ -34,7 +34,7 @@ exports.handle_task_Request = function(facebookid,taskid,answers,cb) {
         '\nanswers' + JSON.stringify(answers));
     students.updateAnswers(facebookid, taskid, answers, function (added_answers) {
         if (added_answers != 0) {
-            console.log('obtained added_Answers');
+            //console.log('obtained added_Answers');
             var value_to_return = {};
             value_to_return.answers = added_answers;
             students.completeTask(facebookid, taskid, function (completion_val) {
@@ -43,7 +43,7 @@ exports.handle_task_Request = function(facebookid,taskid,answers,cb) {
                     value_to_return.completiondata = completion_val;
                     value_to_return.completiondata.level = 33;
                 }
-                console.log('value to return' + JSON.stringify(value_to_return));
+                //console.log('value to return' + JSON.stringify(value_to_return));
                 cb(value_to_return);
             });
         } else {

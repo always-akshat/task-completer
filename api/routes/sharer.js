@@ -12,14 +12,6 @@ var TW = require('../node_modules/twit/lib/twitter.js');
 
 exports.share = function(req,res){
 
-    /*req.body =  {
-                    "answers" : {
-                                "message" : "hi there this is test"+ Date.now()+ " !",
-                                "link" : "https://www.youtube.com/watch?v=EOl4e8wsvHU"
-                                },
-                    "taskid" : '53a9515ae4b041d6a3190435',
-                    "platform" : {"facebook":1,"twitter":1}
-                }; */
 
     var facebookid = req.session.student.facebookid;
     var answers = req.body.answers;
@@ -36,7 +28,7 @@ exports.share = function(req,res){
         asyncTasks.push(function(cb){
             feed_sharelink(auth,answers, function(facebook_post_data){
                 console.log('hii facebook');
-                if(facebook_post_data){
+                if(facebook_post_data && facebook_post_data !=0){
                     console.log('facebook returned' + JSON.stringify(facebook_post_data));
                     answers.facebook ={};
                     answers.facebook.post_id =facebook_post_data;
@@ -52,7 +44,7 @@ exports.share = function(req,res){
         asyncTasks.push(function(cb){
             sharetweet(twit_token,twit_secret,answers,function(twitter_post_data){
                 console.log('hii twitter');
-                if(twitter_post_data){
+                if(twitter_post_data && twitter_post_data !=0){
                     answers.twitter = {};
                     answers.twitter.post_id =twitter_post_data;
                     console.log('twitter returned' + JSON.stringify(twitter_post_data));
@@ -69,7 +61,15 @@ exports.share = function(req,res){
 
         utilities.handle_task_Request(facebookid,taskid,answers,function(task_data){
             if(task_data !== 0){
-                console.log('data returned from utilities ' + JSON.stringify(task_data))
+                //console.log('data returned from utilities ' + JSON.stringify(task_data))
+                var tasks = req.session.student.user_tasks;
+
+                tasks.forEach(function(instance){
+                   if(instance.task_id == taskid){
+                       instance.answers = task_data.answers;
+                   }
+                });
+                
                 res.send(task_data);
             }else{
                 res.send(0);
@@ -135,7 +135,7 @@ function feed_sharelink(auth,answers,cb){
             link :answers.link
         }, function (fb_res) {
             if(!fb_res || fb_res.error) {
-                cb(!fb_res ? 'error occurred' : fb_res.error);
+                cb(0);
             }else{
 
                 cb(fb_res.id);
@@ -161,7 +161,7 @@ function sharetweet(twit_token,twit_secret,answers,cb){
         if(!err) {
                 cb(data.id_str);
         }else{
-            cb(err);
+            cb(0);
         }
     })
 

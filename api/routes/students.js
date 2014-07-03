@@ -76,13 +76,8 @@ function getstudentdata(req, res) {
     if (req.session.student !== null) // check if the user is logged in
     {
         res.send(req.session.student);
-        console.log('student data');
-        //console.log(JSON.stringify(Student));
-
-
     }
     else res.send('Unauthorized');
-
 
 }
 
