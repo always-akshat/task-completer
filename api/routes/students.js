@@ -187,7 +187,7 @@ function putfacebookfriends(req, res) {
 
 
 function addpoints(facebookid,points,cb) {
-    console.log('reached add points');
+    //console.log('reached add points');
     Students.update({facebookid: facebookid},
         {$inc: {
             points: points
@@ -305,8 +305,8 @@ function updateAnswers(facebookid, taskid, answers,cb) {
                     old_answers = doc.user_tasks[0].answers;
                 }
                 old_answers.push(answers);
-                console.log('final answers \n' + JSON.stringify(old_answers));
-                console.log(typeof old_answers);
+              //  console.log('final answers \n' + JSON.stringify(old_answers));
+              //  console.log(typeof old_answers);
                 Students.update({'facebookid': facebookid, 'user_tasks.task_id': taskid},
                     {$set: { 'user_tasks.$.answers': old_answers } }
                     , function (err) {
@@ -392,10 +392,10 @@ function completeTask(facebookid, taskid,cb) {
                     check_object[prop] =0;
             }
 
-
+            //console.log('this is the check object :' + JSON.stringify(check_object));
             answers.forEach(function (instance)
             {
-                //console.log(instance);
+
             for (var index = 0; index < check_criteria.length; index++) {
                 prop = [check_criteria[index]].toString();
 
@@ -404,9 +404,12 @@ function completeTask(facebookid, taskid,cb) {
                     && (typeof instance[prop] !== 'undefined')
                     && instance[prop] !== null) {
                     check_object[prop]= 1;
+                    //console.log(prop + ' value is present');
                 }else{
-                    console.log('no');
+                    //console.log(prop + 'value is not present');
                 }
+
+
             }
         });
 
@@ -417,7 +420,6 @@ function completeTask(facebookid, taskid,cb) {
                 if(check_object[index] == 1){
 
                 }else{
-                    console.log(0)
                     completion = 0;
                 }
             }
@@ -433,7 +435,7 @@ function completeTask(facebookid, taskid,cb) {
                             cb(0);
                         } else {
                             addpoints(facebookid,points,function(points_to_add){
-                                console.log('points to add :'+ points_to_add);
+                                //console.log('points to add :'+ points_to_add);
                                 if(points_to_add == 0){
                                     cb(0)
                                 }else{
