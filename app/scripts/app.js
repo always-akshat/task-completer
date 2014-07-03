@@ -37,11 +37,6 @@ viberApp.config(['$routeProvider',
                 templateUrl:'views/rewards.html',
                 controller:'lbRewardsCtrl'
 
-            })
-            .when('/mysettings',{
-
-                templateUrl:'my-settings.html'
-
             }).
             when('/mysettings',{
 
@@ -125,7 +120,6 @@ viberApp.controller('lbMySettingsCntrl',function($scope,vbIdentity,vbSharedServi
 
     //console.log($scope.identity.currentUser);
     $scope.user = $scope.identity.currentUser;
-
     console.log($scope.user);
 
 

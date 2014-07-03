@@ -8,44 +8,11 @@ viberApp.factory('postlink',function($http,$q){
 
     return{
 
-        postfblink: function (link, message,task) {
-
-            var reqObj = {'taskid' :task['task_id'],'answers':{message:message,link:link}};
+        postsharelink: function (link,message,task,fbcheck,twcheck) {
+            var reqObj = {'taskid' :task['task_id'],'answers':{message:message,link:link},'platform':{'facebook':fbcheck, 'twitter':twcheck}};
             var dfd = $q.defer();
 
-            $http.post('/sharefblink',reqObj).success(function(data){
-                console.log(data);
-                if(angular.isObject(data)){
-
-                    var answers  = data.answers;
-
-//                    var fb_posts = _.pluck(answers,'facebook_posts_messages');
-//                    var tw_posts= _.pluck(answers,'twitter_posts_messages');
-//
-//                    _.each(answers,function(answer){
-//
-//
-//
-//
-//                    });
-
-                    task.answers=data.answers;
-                    dfd.resolve(true);
-                }
-                else{
-                    dfd.resolve(false);
-                }
-
-
-            });
-            return dfd.promise;
-
-        },
-
-        posttwlink: function (link, message,task) {
-            var reqObj = {'taskid' :task['task_id'],'answers':{message:message,link:link}};
-            var dfd = $q.defer();
-            $http.post('/sharetweet',reqObj).success(function(data){
+            $http.post('/socialshare',reqObj).success(function(data){
 
                 if(angular.isObject(data)){
                     dfd.resolve(true);
@@ -59,7 +26,6 @@ viberApp.factory('postlink',function($http,$q){
             return dfd.promise;
 
         }
-
 
     }
 
