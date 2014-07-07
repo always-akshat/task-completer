@@ -15,9 +15,10 @@ viberApp.factory('vbAuth', function($http,vbIdentity,$q,$rootScope){
 
                 if (angular.isObject(data)) {
                     vbIdentity.currentUser = data;
-
+                    //console.log("Data"+vbIdentity.currentUser.stages[0].name);
                     $rootScope.identity = vbIdentity;
-                    $rootScope.completion = 30;
+                    vbIdentity.currentUser.level = vbIdentity.currentUser.stages[0].name;
+                    vbIdentity.currentUser.complete = vbIdentity.currentUser.stages[0].completion;
                     dfd.resolve(true);
 
 
@@ -42,11 +43,12 @@ viberApp.factory('vbAuth', function($http,vbIdentity,$q,$rootScope){
 
 viberApp.factory('settingSubmit', function($http, $q){
     return{
-        settingSubmitbutton: function (form_data) {
+        settingSubmitbutton: function (form_data, fbid) {
 
             var dfd = $q.defer();
-            console.log("before put");
-            $http.put('/students/:facebookid', form_data).success(function (data) {
+            //console.log("before put");
+            //console.log($scope.identity.currentUser.facebookid);
+            $http.put('/students/'+ fbid, form_data).success(function (data) {
 
             console.log("success");
                 if (angular.isObject(data)) {
@@ -54,10 +56,7 @@ viberApp.factory('settingSubmit', function($http, $q){
 //
 //                    $rootScope.identity = vbIdentity;
 //                    $rootScope.completion = 30;
-
                     dfd.resolve(true);
-
-
                 }
                 else {
                     dfd.resolve(false);

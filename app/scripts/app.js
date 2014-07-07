@@ -116,17 +116,15 @@ viberApp.controller('lbMySettingsCntrl',function($scope,vbIdentity,vbSharedServi
     var currentPage = {home:0,rewards:0,lb:0, mysettings:1};
     vbSharedService.prepForBroadcast(currentPage);
 
-    //console.log("Current User"+$scope.identity.currentUser);
     $scope.user = $scope.identity.currentUser;
     //console.log("User"+$scope.user);
     $scope.transactions = $scope.user.vibes_transaction;
-    //console.log("Transaction"+$scope.user.vibes_transaction);
+    //console.log("Name level"+vbIdentity.currentUser.level);
 
-
-    $scope.settingData = {'name':$scope.user.name, 'mobile':$scope.user.mobile,'email':$scope.user.email,'city':$scope.user.location.id,'college':$scope.user.college.id };
+    $scope.settingData = {'name':$scope.user.name, 'mobile':$scope.user.mobile,'email':$scope.user.email,'city':$scope.user.location.id,'college':$scope.user.college.id};
     $scope.submitForm = function(isValid){
         if(isValid){
-            settingSubmit.settingSubmitbutton($scope.settingData).then(function(success){
+            settingSubmit.settingSubmitbutton($scope.settingData, $scope.user.facebookid).then(function(success){
                 if(success){
                     console.log("Success");
                 }
@@ -137,8 +135,8 @@ viberApp.controller('lbMySettingsCntrl',function($scope,vbIdentity,vbSharedServi
         }
     }
 
-
-
+//    $scope.pagination = Pagination.getNew(10);
+//    $scope.pagination.numPages = Math.ceil($scope.transactions.length/$scope.pagination.perPage);
 
 });
 
