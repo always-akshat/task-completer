@@ -117,14 +117,24 @@ viberApp.controller('lbMySettingsCntrl',function($scope,vbIdentity,vbSharedServi
     vbSharedService.prepForBroadcast(currentPage);
 
     $scope.user = $scope.identity.currentUser;
-    //console.log("User"+$scope.user);
+//    console.log("name"+$scope.identity.currentUser.name);
+//    console.log("name"+$scope.identity.currentUser.gender);
+//    console.log("name"+$scope.identity.currentUser.mobile);
+//    console.log("name"+$scope.identity.currentUser.email);
+//    console.log("name"+$scope.identity.currentUser.location.id);
     $scope.transactions = $scope.user.vibes_transaction;
     //console.log("Name level"+vbIdentity.currentUser.level);
-
-    $scope.settingData = {'name':$scope.user.name, 'mobile':$scope.user.mobile,'email':$scope.user.email,'city':$scope.user.location.id,'college':$scope.user.college.id};
+    $scope.settingData = $scope.identity.currentUser;
     $scope.submitForm = function(isValid){
         if(isValid){
-            settingSubmit.settingSubmitbutton($scope.settingData, $scope.user.facebookid).then(function(success){
+            $scope.identity.currentUser.name = $scope.user.name;
+            $scope.identity.currentUser.gender = $scope.user.gender;
+            $scope.identity.currentUser.mobile = $scope.user.mobile;
+            $scope.identity.currentUser.email = $scope.user.email;
+            $scope.identity.currentUser.college.id = $scope.user.college.id;
+            $scope.identity.currentUser.location.id = $scope.user.location.id;
+
+            settingSubmit.settingSubmitbutton($scope.identity.currentUser, $scope.user.facebookid).then(function(success){
                 if(success){
                     console.log("Success");
                 }

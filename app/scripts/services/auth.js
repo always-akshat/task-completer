@@ -48,7 +48,7 @@ viberApp.factory('settingSubmit', function($http, $q){
             var dfd = $q.defer();
             //console.log("before put");
             //console.log($scope.identity.currentUser.facebookid);
-            $http.put('/students/'+ fbid, form_data).success(function (data) {
+            $http.put('/students/'+ fbid, JSON.stringify(form_data)).success(function (data) {
 
             console.log("success");
                 if (angular.isObject(data)) {
