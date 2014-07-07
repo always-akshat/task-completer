@@ -83,7 +83,20 @@ if ('development' == app.get('env')) {
 }
 
 
-
+function IsAuthenticated(req,res,next){
+    console.log('trying authentication');
+    if(req.session.student
+       && req.session.student.facebookid
+       && req.session.student.facebookid !== null
+       && req.session.student.facebookid !== ''
+        && typeof req.session.student.facebookid !== 'undefined'){
+        next();
+    }else{
+        console.log('rand ke bacche');
+        res.redirect('/');
+        //next(new Error(401));
+    }
+}
 
 app.get('/', routes.index);
 
@@ -130,7 +143,7 @@ app.put('/students/:facebookid',students.updateSettings);
 app.post('/students/:fbid/tasks/:taskid',students.submittask);
 app.put('/students/:fbid/tasks/:taskid',students.updatetask);
 app.put('/students/points/:facebookid',students.addpoints);
-app.get('/students/leaderboard/:type/:id',students.leaderboard);
+app.get('/students/leaderboard/:type/:id?',students.leaderboard);
 app.get('/logout',students.logout);
 app.get('/students/backend/add_tasks',students.stage_add_to_all);
 app.get('/students/backend/transaction',students.VibesTransaction);
@@ -155,12 +168,9 @@ app.get('/locations',utility_routes.locationlist);
 app.get('/colleges',utility_routes.collegelsist);
 
 
-app.get('/getstudentdata', students.getstudentdata); // to initially set the student data
+app.get('/getstudentdata', IsAuthenticated,students.getstudentdata); // to initially set the student data
 
 
-//app.post('/sharefblink',sharer.feed_sharelink);
-//app.post('/sharetweet',sharer.sharetweet);
-//app.get('/getlikes',sharer.get_likes);
 
 
 app.post('/socialshare',sharer.share);

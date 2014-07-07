@@ -221,9 +221,9 @@ function leaderboard(req, res) {
     filter_id = req.params.id;
         var query ={};
     if(type === 'city'){
-        query['location.id'] = filter_id;
+        query['location.name'] = filter_id;
     }else if(type ==='college'){
-        query['college.id'] = filter_id;
+        query['college.name'] = filter_id;
     }
 
     //console.log('the query id :' + query);
