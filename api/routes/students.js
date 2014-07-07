@@ -217,8 +217,21 @@ function addpoints(facebookid,points,cb) {
 }
 
 function leaderboard(req, res) {
+    type = req.params.type;
+    filter_id = req.params.id;
+        var query ={};
+    if(type === 'city'){
+        query['location.id'] = filter_id;
+    }else if(type ==='college'){
+        query['college.id'] = filter_id;
+    }
 
-    Students.find().sort({points: -1}).limit(10).select('name points facebookid location.name').exec(function (err, posts) {
+    //console.log('the query id :' + query);
+    Students.find(query)
+        .sort({points: -1})
+        .limit(10)
+        .select('name points facebookid location.name')
+        .exec(function (err, posts) {
         res.send(posts);
     });
 }
