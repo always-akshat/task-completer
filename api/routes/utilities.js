@@ -28,10 +28,10 @@ exports.collegelsist = function(req, res){
 };
 
 exports.handle_task_Request = function(facebookid,taskid,answers,cb) {
-    console.log( '---- data from utilities:handle_task_request---' +
+    /*console.log( '---- data from utilities:handle_task_request---' +
         '\nfacebookid : ' + facebookid +
         '\ntaskid  ' + taskid +
-        '\nanswers' + JSON.stringify(answers));
+        '\nanswers' + JSON.stringify(answers));*/
     students.updateAnswers(facebookid, taskid, answers, function (added_answers) {
         if (added_answers != 0) {
             //console.log('obtained added_Answers');

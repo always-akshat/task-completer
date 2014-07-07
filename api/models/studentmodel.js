@@ -8,13 +8,15 @@ var ObjectId = Schema.ObjectId;
 
 var user_task_schema = new Schema({
     task_id : String,
+    stage :String,
+    completevalue : Number,
     type : {id : Number, name : String},
     points : Number,
     completed : Number,
     approvalrequired : Number,
     managerapproved : Number,
     fields : {},
-    answers : [Object],
+    answers : [Schema.Types.Mixed],
     condition :{}
 });
 
@@ -57,6 +59,7 @@ var studentSchema = new Schema({
     },
     points : Number,
     stages : [{stageid:String,
+                name : String,
                 completion: Number}],      //changed from number to objectid
     /*tasks  : [
                { stage: ObjectId,   //changed from number to objectid

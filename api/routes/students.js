@@ -51,20 +51,26 @@ function stage_add_to_all(req, res) {
         students.forEach(function (instance) {
             console.log(instance.facebookid + ' -- ' + instance.name);
             var stageid = '5390521624349ecc0c108c10';
+            var stage_name = 'Level 1';
+            var stage = {
+                        "name" : stage_name.toString(),
+                        "stageid" : stageid.toString(),
+                        "completion" : 0
+                        };
+            console.log(stage);
+            console.log('adding student stages now');
 
-            var stage = {"stageid" : stageid.toString(),
-                         "completion" : 0};
+            Students.update({'facebookid': instance.facebookid},
+                {$addToSet: {stages:stage}},{upsert:true},function(err){
+                if(err){
+                    console.log(err);
+                }else{
+                    console.log("Successfully added");
+                }
+            });
 
+            console.log('student stages added');
 
-            Students.find({facebookid : instance.facebookid},'stages', function(err,data){
-                console.log(data);
-            })
-
-            Students.update({facebookid: instance.facebookid},
-                {$addToSet: {'stages': stage}});
-
-
-            /*
             stages_function.getStageInfo(stageid, function (err, stage) {
                 if (!err) {
 
@@ -76,8 +82,8 @@ function stage_add_to_all(req, res) {
                     }
                 }
             });
-            */
-        });
+
+            });
 
         res.send('done');
     });
@@ -345,25 +351,40 @@ function update_settings(req, callback) {
 
 function updateAnswers(facebookid, taskid, answers,cb) {
 
+    console.log('logging new answers in updateAnswers :'  + JSON.stringify(answers));
     Students.findOne({ 'facebookid': facebookid })
         .select({ 'user_tasks': { $elemMatch: {task_id: taskid}}})
         .exec(function (err, doc) {
             if (err) {
                 cb(0);
             } else {
-                //console.log('these are the answers \n' +JSON.stringify(doc.user_tasks[0].answers) +'\n\n');
-                old_answers = new Array();
+                console.log('these are the answers \n' +JSON.stringify(doc.user_tasks[0].answers) +'\n\n');
 
-                if(doc.user_tasks[0].answers) {
+                old_answers = new Array();
+                if (old_answers instanceof Array) {
+                    console.log('old_answers  is initially Array!');
+                } else {
+                    console.log('old_answers  is initially not an  Array!');
+                }
+                if(doc.user_tasks[0].answers.length >0 ) {
                     old_answers = doc.user_tasks[0].answers;
                 }
                 old_answers.push(answers);
-              //  console.log('final answers \n' + JSON.stringify(old_answers));
-              //  console.log(typeof old_answers);
+
+                console.log('final answers \n' + JSON.stringify(old_answers));
+                console.log('final answers without stringify' + old_answers);
+                if (old_answers instanceof Array) {
+                    console.log('old_answers  is finally Array!');
+                } else {
+                    console.log('old_answers  is finally not an  Array!');
+                }
+
+
                 Students.update({'facebookid': facebookid, 'user_tasks.task_id': taskid},
                     {$set: { 'user_tasks.$.answers': old_answers } }
                     , function (err) {
                         if (err) {
+                            console.log(err);
                             cb(0);
                         } else {
                             cb(old_answers);
@@ -559,6 +580,8 @@ function addTaskToUser(facebookid, taskid) {
                 student_task.fields = task.fields;
                 student_task.condition = task.condition;
                 student_task.type = task.type;
+                student_task.stage = task.stage;
+                student_task.completevalue = task.completevalue;
 
 
                 if (!student_task) {
