@@ -361,23 +361,15 @@ function updateAnswers(facebookid, taskid, answers,cb) {
                 console.log('these are the answers \n' +JSON.stringify(doc.user_tasks[0].answers) +'\n\n');
 
                 old_answers = new Array();
-                if (old_answers instanceof Array) {
-                    console.log('old_answers  is initially Array!');
-                } else {
-                    console.log('old_answers  is initially not an  Array!');
-                }
+
                 if(doc.user_tasks[0].answers.length >0 ) {
                     old_answers = doc.user_tasks[0].answers;
                 }
                 old_answers.push(answers);
 
-                console.log('final answers \n' + JSON.stringify(old_answers));
-                console.log('final answers without stringify' + old_answers);
-                if (old_answers instanceof Array) {
-                    console.log('old_answers  is finally Array!');
-                } else {
-                    console.log('old_answers  is finally not an  Array!');
-                }
+                //console.log('final answers \n' + JSON.stringify(old_answers));
+                //console.log('final answers without stringify' + old_answers);
+
 
 
                 Students.update({'facebookid': facebookid, 'user_tasks.task_id': taskid},
@@ -455,6 +447,10 @@ function completeTask(facebookid, taskid,cb) {
             var condition = doc.user_tasks[0].condition;
             var answers = doc.user_tasks[0].answers;
             var points = doc.user_tasks[0].points;
+            var stageid = doc.user_tasks[0].stage;
+            var c_pc = doc.user_tasks[0].completevalue;
+            var already_complete = doc.user_tasks[0].completed;
+
 
 
             var check_criteria = (Object.keys(condition));
@@ -502,7 +498,7 @@ function completeTask(facebookid, taskid,cb) {
             if (completion == 1) {
                 var completion_value = {};
                 completion_value.user_task = doc.user_tasks[0];
-                Students.update({'facebookid': facebookid, 'user_tasks.task_id': taskid},
+                Students.update({'facebookid': facebookid, 'user_tasks.task_id': taskid},    //completion :1, add points, add transaction
                     {$set: { 'user_tasks.$.completed': 1 } }
                     , function (err) {
                         if (err) {
@@ -522,9 +518,22 @@ function completeTask(facebookid, taskid,cb) {
                                     console.log('added points');
                                     VibesTransaction(facebookid,transaction,function(v_transaction){
                                         console.log(v_transaction);
-                                        if(v_transaction !== 0){
+                                        if(v_transaction !== 0) {
                                             completion_value.transaction = v_transaction;
+                                            if (already_complete != 1) {
+                                                console.log('calling stage completion');
+                                                complete_user_stage(facebookid, stageid, c_pc, function (completed_percentage){
+                                                    if(completed_percentage ==0){
+                                                        cb(0)
+                                                    }else{
+                                                        completion_value.level = completed_percentage;
+                                                        cb(completion_value);
+                                                    }
+                                                })
+                                            }
+                                            else {
                                             cb(completion_value);
+                                            }
                                             console.log('added transactiontion');
                                         }else{
                                             cb(0)
@@ -549,6 +558,7 @@ function completeTask(facebookid, taskid,cb) {
 
                         }
                     });
+
             }else {
                 cb(0)
             }
@@ -689,6 +699,25 @@ function VibesTransaction(fbid, transaction,cb) {
 function logout(req, res) {
     req.session.destroy;
     res.redirect('/');
+}
+
+function complete_user_stage(facebookid,stageid,completion_value,cb) {
+    console.log('stage completion data...' + facebookid + ' -- \n' + stageid + '----\n ' + completion_value);
+
+    Students.update({'facebookid': facebookid, 'stages.stageid': stageid.toString()},
+        {$inc: { 'stages.$.completion': completion_value } }
+        , function (err,data) {
+            console.log(data);
+            if (err) {
+                console.log(err);
+                cb(0);
+            } else {
+                cb(completion_value);
+            }
+        });
+
+
+
 }
 
 module.exports = {list: list,
