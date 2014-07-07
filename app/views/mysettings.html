@@ -1,8 +1,9 @@
+<body ng-app="viberApp" ng-controller="lbMySettingsCntrl">
 <div class="col-sm-13 col-sm-offset-1">
     <h1>Settings</h1>
     <div class="list-box">
         <h2 class="box-title">Profile</h2>
-        <form class="form-horizontal form-profile" role="form" name="settingsForm" ng-submit="submitForm(settingsForm.$valid)">
+        <form class="form-horizontal form-profile" role="form" name="settingsForm" ng-submit="submitForm(settingsForm.$valid)" novalidate>
          <!--   <div class="form-group">
                 <label for="inputFN" class="col-sm-4 control-label">First Name</label>
                 <div class="col-sm-20">
@@ -12,15 +13,16 @@
             <div class="form-group">
                 <label for="inputLN" class="col-sm-4 control-label">Name</label>
                 <div class="col-sm-20">
-                    <input type="text" class="form-control" id="inputLN" placeholder="Name" ng-model="user.name">
+                    <input type="text" name="name" class="form-control" id="inputLN" placeholder="Name" ng-model="user.name" required>
+                    <p ng-show="settingsForm.name.$invalid && !settingsForm.name.$pristine" class="help-block">Your name is required.</p>
                 </div>
             </div>
-            <div class="form-group">
+           <div class="form-group">
                 <label class="col-sm-4 control-label">Sex</label>
                 <div class="col-sm-20">
-                    <input type="checkbox" id="male" value="option1" class="custom" ng-model="user.gender">
+                    <input type="radio" name="gender" id="male" value="male" class="custom" ng-model="user.gender">
                     <label for="male">Male</label>
-                    <input type="checkbox" id="female" value="option2" class="custom">
+                    <input type="radio" name="gender" id="female" value="female" class="custom" ng-model="user.gender">
                     <label for="female">
                         female
                     </label>
@@ -29,20 +31,24 @@
             <div class="form-group">
                 <label for="inputM" class="col-sm-4 control-label">Mobile</label>
                 <div class="col-sm-20">
-                    <input type="text" ng-model="user.mobile" class="form-control" id="inputM" placeholder="Mobile">
+                    <input type="text" name="mobile" ng-model="user.mobile" ng-minlength="10" ng-maxlength="10" class="form-control" id="inputM" placeholder="Mobile" required>
+                    <p ng-show="settingsForm.mobile.$error.minlength && !settingsForm.mobile.$pristine" class="help-block">Enter valid mobile number.</p>
+
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputE" class="col-sm-4 control-label">Email</label>
                 <div class="col-sm-20">
-                    <input type="email" class="form-control" id="inputE" placeholder="Email" ng-model="user.email">
+                    <input type="email" name="email" class="form-control" id="inputE" placeholder="Email" ng-model="user.email" required >
+                    <p ng-show="settingsForm.email.$invalid && !settingsForm.email.$pristine" class="help-block">Enter valid email id.</p>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label">City</label>
                 <div class="col-sm-20">
-                    <select class="form-control" ng-model="user.city">
+                    <select class="form-control" ng-model="user.location.id">
                         <option>Select City</option>
+                        <option>1</option>
                         <option>2</option>
                         <option>3</option>
                         <option>4</option>
@@ -53,8 +59,9 @@
             <div class="form-group">
                 <label class="col-sm-4 control-label">College</label>
                 <div class="col-sm-20">
-                    <select class="form-control" ng-model="user.college">
+                    <select class="form-control" ng-model="user.college.id">
                         <option>Select College</option>
+                        <option>1</option>
                         <option>2</option>
                         <option>3</option>
                         <option>4</option>
@@ -64,7 +71,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-20 text-right">
-                    <button type="submit" class="btn btn-success">save</button>
+                    <button type="submit" class="btn btn-success" ng-disabled="settingsForm.$invalid">save</button>
                 </div>
             </div>
         </form>
@@ -105,37 +112,45 @@
                 <th width="20%">Date</th>
             </tr>
             </thead>
+            <tbody ng-model="transactions" ng-repeat="transaction in transactions">
             <tr>
-                <td>40</td>
-                <td>30 new mobile numbers</td>
+                <td>{{transaction.vibes}}</td>
+                <td>{{transaction.type+'-'+transaction.message}}</td>
                 <td>3 May 2014</td>
             </tr>
-            <tr class="disabled">
-                <td>40</td>
-                <td>30 new mobile numbers</td>
-                <td>3 May 2014</td>
-            </tr>
-            <tr class="disabled">
-                <td>40</td>
-                <td>30 new mobile numbers</td>
-                <td>3 May 2014</td>
-            </tr>
-            <tr>
-                <td>40</td>
-                <td>30 new mobile numbers</td>
-                <td>3 May 2014</td>
-            </tr>
-            <tr>
-                <td>40</td>
-                <td>30 new mobile numbers</td>
-                <td>3 May 2014</td>
-            </tr>
-            <tr>
-                <td>40</td>
-                <td>30 new mobile numbers</td>
-                <td>3 May 2014</td>
-            </tr>
+            </tbody>
+            <!--<tr>-->
+                <!--<td>40</td>-->
+                <!--<td>30 new mobile numbers</td>-->
+                <!--<td>3 May 2014</td>-->
+            <!--</tr>-->
+            <!--<tr class="disabled">-->
+                <!--<td>40</td>-->
+                <!--<td>30 new mobile numbers</td>-->
+                <!--<td>3 May 2014</td>-->
+            <!--</tr>-->
+            <!--<tr class="disabled">-->
+                <!--<td>40</td>-->
+                <!--<td>30 new mobile numbers</td>-->
+                <!--<td>3 May 2014</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>40</td>-->
+                <!--<td>30 new mobile numbers</td>-->
+                <!--<td>3 May 2014</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>40</td>-->
+                <!--<td>30 new mobile numbers</td>-->
+                <!--<td>3 May 2014</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>40</td>-->
+                <!--<td>30 new mobile numbers</td>-->
+                <!--<td>3 May 2014</td>-->
+            <!--</tr>-->
         </table>
     </div>
 
 </div>
+</body>

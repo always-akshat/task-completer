@@ -30,10 +30,9 @@ viberApp.controller('vbInsertLinksCtrl',function($scope,$http,toaster,$q,postlin
     var task = _.where(user_tasks,{'task_id':'53a9515ae4b041d6a3190435'})[0];
 
     var fbsuccess=false, twsuccess=false;
-
     var bindCtrl = function () {
         $scope.answers = task.answers;
-
+        $scope.answers.reverse();
         _.each($scope.answers,function(answer){
 
             if(angular.isObject(answer.facebook)){
