@@ -17,7 +17,7 @@ viberApp.factory('vbAuth', function($http,vbIdentity,$q,$rootScope){
                     vbIdentity.currentUser = data;
 
                     $rootScope.identity = vbIdentity;
-                    $rootScope.completion = 10;
+                    $rootScope.completion = 30;
                     dfd.resolve(true);
 
 
@@ -38,4 +38,34 @@ viberApp.factory('vbAuth', function($http,vbIdentity,$q,$rootScope){
         }
     }
 
+});
+
+viberApp.factory('settingSubmit', function($http, $q){
+    return{
+        settingSubmitbutton: function (form_data) {
+
+            var dfd = $q.defer();
+            console.log("before put");
+            $http.put('/students/:facebookid', form_data).success(function (data) {
+
+            console.log("success");
+                if (angular.isObject(data)) {
+//                    vbIdentity.currentUser = data;
+//
+//                    $rootScope.identity = vbIdentity;
+//                    $rootScope.completion = 30;
+
+                    dfd.resolve(true);
+
+
+                }
+                else {
+                    dfd.resolve(false);
+                }
+
+            });
+
+            return dfd.promise;
+        }
+    }
 });

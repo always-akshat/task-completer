@@ -79,8 +79,6 @@ viberApp.controller('dashboardCtrl',function($scope,vbSharedService,vbAuth,$wind
     $window.scrollTo(0,0);
     var currentPage = {home:1,rewards:0,lb:0, mysettings:0};
     vbSharedService.prepForBroadcast(currentPage);
-
-
 });
 
 viberApp.controller('leaderboardCtrl',function($scope,vbSharedService,$http,$window){
@@ -112,15 +110,33 @@ viberApp.controller('leaderboardCtrl',function($scope,vbSharedService,$http,$win
 });
 
 
-viberApp.controller('lbMySettingsCntrl',function($scope,vbIdentity,vbSharedService,$window){
+viberApp.controller('lbMySettingsCntrl',function($scope,vbIdentity,vbSharedService,$window,settingSubmit){
 
     $window.scrollTo(0,0);
     var currentPage = {home:0,rewards:0,lb:0, mysettings:1};
     vbSharedService.prepForBroadcast(currentPage);
 
-    //console.log($scope.identity.currentUser);
+    //console.log("Current User"+$scope.identity.currentUser);
     $scope.user = $scope.identity.currentUser;
-    console.log($scope.user);
+    //console.log("User"+$scope.user);
+    $scope.transactions = $scope.user.vibes_transaction;
+    //console.log("Transaction"+$scope.user.vibes_transaction);
+
+
+    $scope.settingData = {'name':$scope.user.name, 'mobile':$scope.user.mobile,'email':$scope.user.email,'city':$scope.user.location.id,'college':$scope.user.college.id };
+    $scope.submitForm = function(isValid){
+        if(isValid){
+            settingSubmit.settingSubmitbutton($scope.settingData).then(function(success){
+                if(success){
+                    console.log("Success");
+                }
+                else{
+                    console.log("failure");
+                }
+            });
+        }
+    }
+
 
 
 
