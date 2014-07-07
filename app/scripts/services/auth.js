@@ -3,7 +3,7 @@
  */
 var viberApp = angular.module('viberApp');
 
-viberApp.factory('vbAuth', function($http,vbIdentity,$q,$rootScope){
+viberApp.factory('vbAuth', function($http,vbIdentity,$q,$rootScope,$window){
 
     return{
         authenticateUser: function()
@@ -23,8 +23,11 @@ viberApp.factory('vbAuth', function($http,vbIdentity,$q,$rootScope){
 
                 }
                 else {
-                    console.log(data);
+
+                    $window.location = '/logout';
+                    //console.log('error loggin in');
                     dfd.resolve(false);
+
                 }
 
             });

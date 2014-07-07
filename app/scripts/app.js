@@ -8,7 +8,7 @@ var viberApp = angular
 
 viberApp.config(['$routeProvider',
     function($routeProvider) {
-        console.log('rp');
+
         $routeProvider.
             when('/', {
                 templateUrl: 'views/dashboard.html',
@@ -50,26 +50,18 @@ viberApp.config(['$routeProvider',
     }]);
 
 
-viberApp.controller('vbNavBarCtrl',function($scope,vbIdentity,vbSharedService,vbAuth,$rootScope){
+viberApp.controller('vbNavBarCtrl',function($scope,$window){
 
 
-    var currentPage = {home:1,rewards:0,lb:0, mysettings:0};
-    vbSharedService.prepForBroadcast(currentPage);
+//    var currentPage = {home:1,rewards:0,lb:0, mysettings:0};
+//    vbSharedService.prepForBroadcast(currentPage);
 
+    $scope.logout = function(){
 
-//    if(!angular.isObject($scope.identity))
-//    vbAuth.authenticateUser().then(function(success){
-//
-//        if(success){ console.log(' Login Successfull');
-//
-//
-//        console.log($rootScope.identity);
-//
-//        }
-//        else console.log('Login Not Successful');
-//
-//
-//    });
+        $window.location = "/logout";
+
+    }
+
 
 
 });
