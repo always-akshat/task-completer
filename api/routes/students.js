@@ -306,45 +306,51 @@ function validateSignUp(req, callback) {
 }
 
 
+function updateSettings(req, callback,cb) {
 
+    facebookid = req.params.facebookid;
+    updated_settings= req.body;
+    objstudent = new Students();
+    objstudent.name = updated_settings.name;
+    objstudent.mobile= updated_settings.mobile;
+    objstudent.email = updated_settings.email;
+    objstudent.location.id = updated_settings.city;
+    objstudent.college.id = updated_settings.college;
 
-function update_settings(req, callback) {
+    config.utils.objectvalidator('student_update', objstudent, function (validated_object) {
 
+        var new_student = validated_object;
 
-    Students.count({'facebookid': req.body.session.facebookid}, function (err, count) {
-        var data = req.body;
+        if (validated_object !== 0) {
+            console.log(validated_object);
+            return Students.findOne({ facebookid: facebookid }, function (err, doc) {
+                if (!err) {
+                    doc.name = validated_object.name;
+                    doc.save();
+                    /*for (var key in validation_messages) {
+                        var obj = validation_messages[key];
+                        for (var prop in obj) {
+                            // important check that this is objects own property
+                            // not from prototype prop inherited
+                            if(obj.hasOwnProperty(prop)){
+                                alert(prop + " = " + obj[prop]);
+                            }
+                        }
+                    } */
+                }
 
-        if (err) {
-            callback(err.message, null);
+                else {
+                    console.log(err)
+                }
+                ;
+            });
+            //return callback(validated_object, 'User Registered');
+        } else {
+            console.log('there was an error');
+            //return callback(null, 'there was an error');
         }
-        else {
-            if (0 == count) {
-
-                objstudent = new Students(data);
-
-                config.utils.objectvalidator('student', objstudent, function (validated_object) {
-
-                    var new_student = validated_object;
-                    console.log('got something');
-
-                    if (validated_object !== 0) {
-                        console.log(validated_object);
-                        objstudent.save();
-                        return callback(validated_object, 'User Registered');
-                    } else {
-                        console.log('there was an error');
-                        return callback(null, 'there was an error');
-                    }
-                });
-
-
-            }
-            else {
-                return callback(null, 'facebookid exists');
-            }
-        }
-
     });
+
 
 
 }
@@ -655,18 +661,53 @@ function addTwitter(req, res) {
      }
      }); */
     return Students.findOne({ facebookid: req.session.student.facebookid }, function (err, doc) {
+
         if (!err) {
-
-
+            var facebookid =req.session.student.facebookid;
+            if(typeof doc.twitterid === 'undefined'){
             doc.twitter.authorized = 1;
-            doc.twitterid = req.session.twit['id']
+            doc.twitterid = req.session.twit['id'];
             doc.twitter.name = req.session.twit['name'];
             doc.twitter.username = req.session.twit['username'];
             doc.twitter.authcode = req.session.twit['authcode'];
             doc.twitter.secret = req.session.twit['secret'];
-
+            req.session.student.twitterid = req.session.twit['id'];
+            req.session.twitter = doc.twitter;
             doc.save();
-            res.send('<script>window.close()</script>');
+
+
+            var transaction = new studentSchema.vibes_transaction;
+            transaction.vibes = 400;
+            transaction.type = 'Twitter';
+            transaction.sign = 1;
+            transaction.message = 'Twitter Authentication test';
+            addpoints(facebookid,400,function(points_to_add){
+               if(points_to_add !== 0){
+                   VibesTransaction(facebookid, transaction, function (v_transaction) {
+                       console.log(v_transaction);
+                       if (v_transaction !== 0) {
+
+                           //console.log('session points are earlier: ' + req.session.student.points);
+                           req.session.student.vibes_transaction.push(v_transaction);
+                           req.session.student.points = req.session.student.points +  400;
+                           //console.log('session transactions are : ' + JSON.stringify(req.session.student.vibes_transaction));
+                           //console.log('session points are later: ' + req.session.student.points);
+                           //console.log('done');
+                           console.log('this is the session' + JSON.stringify(req.session.student));
+                           res.send('<script>window.close()</script>');
+                       } else {
+                           console.log('bhencho err');
+                           res.send('err');
+                       }
+
+                   });
+               } else{
+                   res.send('err');
+               }
+            });
+
+            }
+            else{res.send('already exists');}
         }
 
         else {
@@ -739,6 +780,8 @@ module.exports = {list: list,
     addTaskToUser: addTaskToUser,
     addTwitter: addTwitter,
     VibesTransaction: VibesTransaction,
-    logout: logout
+    logout: logout,
+    updateSettings : updateSettings
+
 }
 

@@ -126,6 +126,7 @@ app.get('/students/:fbid',students.info);
 app.get('/students/friends/:fbid',students.getfacebookfriends);
 app.put('/students/friends/:facebookid',students.putfacebookfriends);
 app.get('/students/type/:usertypeid',students.allusersoftype);
+app.put('/students/:facebookid',students.updateSettings);
 app.post('/students/:fbid/tasks/:taskid',students.submittask);
 app.put('/students/:fbid/tasks/:taskid',students.updatetask);
 app.put('/students/points/:facebookid',students.addpoints);

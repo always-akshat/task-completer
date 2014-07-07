@@ -39,13 +39,14 @@ exports.objectvalidator = function(objecttype,object,cb){
 
 
         case 'student_update' : {
+            console.log('this is a student_update');
             if(
                 validator.isEmail(object.email)
-                && validator.isNumeric(object.mobile)
+                && validator.isNumeric(parseInt(object.mobile))
                 && !validator.isNull(validator.escape(object.name))
-                && !validator.isNull(validator.escape(object.location.name))
+                // && !validator.isNull(validator.escape(object.location.name))
                 && validator.isNumeric(object.location.id)
-                && !validator.isNull(validator.escape(object.college.name))
+                // && !validator.isNull(validator.escape(object.college.name))
                 && validator.isNumeric(object.college.id)){
                 console.log('student validated');
                 cb(object);
