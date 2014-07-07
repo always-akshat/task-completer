@@ -217,8 +217,21 @@ function addpoints(facebookid,points,cb) {
 }
 
 function leaderboard(req, res) {
+    type = req.params.type;
+    filter_id = req.params.id;
+        var query ={};
+    if(type === 'city'){
+        query['location.id'] = filter_id;
+    }else if(type ==='college'){
+        query['college.id'] = filter_id;
+    }
 
-    Students.find().sort({points: -1}).limit(10).select('name points facebookid location.name').exec(function (err, posts) {
+    //console.log('the query id :' + query);
+    Students.find(query)
+        .sort({points: -1})
+        .limit(10)
+        .select('name points facebookid location.name')
+        .exec(function (err, posts) {
         res.send(posts);
     });
 }
@@ -306,45 +319,51 @@ function validateSignUp(req, callback) {
 }
 
 
+function updateSettings(req, callback,cb) {
 
+    facebookid = req.params.facebookid;
+    updated_settings= req.body;
+    objstudent = new Students();
+    objstudent.name = updated_settings.name;
+    objstudent.mobile= updated_settings.mobile;
+    objstudent.email = updated_settings.email;
+    objstudent.location.id = updated_settings.city;
+    objstudent.college.id = updated_settings.college;
 
-function update_settings(req, callback) {
+    config.utils.objectvalidator('student_update', objstudent, function (validated_object) {
 
+        var new_student = validated_object;
 
-    Students.count({'facebookid': req.body.session.facebookid}, function (err, count) {
-        var data = req.body;
+        if (validated_object !== 0) {
+            console.log(validated_object);
+            return Students.findOne({ facebookid: facebookid }, function (err, doc) {
+                if (!err) {
+                    doc.name = validated_object.name;
+                    doc.save();
+                    /*for (var key in validation_messages) {
+                        var obj = validation_messages[key];
+                        for (var prop in obj) {
+                            // important check that this is objects own property
+                            // not from prototype prop inherited
+                            if(obj.hasOwnProperty(prop)){
+                                alert(prop + " = " + obj[prop]);
+                            }
+                        }
+                    } */
+                }
 
-        if (err) {
-            callback(err.message, null);
+                else {
+                    console.log(err)
+                }
+                ;
+            });
+            //return callback(validated_object, 'User Registered');
+        } else {
+            console.log('there was an error');
+            //return callback(null, 'there was an error');
         }
-        else {
-            if (0 == count) {
-
-                objstudent = new Students(data);
-
-                config.utils.objectvalidator('student', objstudent, function (validated_object) {
-
-                    var new_student = validated_object;
-                    console.log('got something');
-
-                    if (validated_object !== 0) {
-                        console.log(validated_object);
-                        objstudent.save();
-                        return callback(validated_object, 'User Registered');
-                    } else {
-                        console.log('there was an error');
-                        return callback(null, 'there was an error');
-                    }
-                });
-
-
-            }
-            else {
-                return callback(null, 'facebookid exists');
-            }
-        }
-
     });
+
 
 
 }
@@ -361,23 +380,15 @@ function updateAnswers(facebookid, taskid, answers,cb) {
                 console.log('these are the answers \n' +JSON.stringify(doc.user_tasks[0].answers) +'\n\n');
 
                 old_answers = new Array();
-                if (old_answers instanceof Array) {
-                    console.log('old_answers  is initially Array!');
-                } else {
-                    console.log('old_answers  is initially not an  Array!');
-                }
+
                 if(doc.user_tasks[0].answers.length >0 ) {
                     old_answers = doc.user_tasks[0].answers;
                 }
                 old_answers.push(answers);
 
-                console.log('final answers \n' + JSON.stringify(old_answers));
-                console.log('final answers without stringify' + old_answers);
-                if (old_answers instanceof Array) {
-                    console.log('old_answers  is finally Array!');
-                } else {
-                    console.log('old_answers  is finally not an  Array!');
-                }
+                //console.log('final answers \n' + JSON.stringify(old_answers));
+                //console.log('final answers without stringify' + old_answers);
+
 
 
                 Students.update({'facebookid': facebookid, 'user_tasks.task_id': taskid},
@@ -455,6 +466,10 @@ function completeTask(facebookid, taskid,cb) {
             var condition = doc.user_tasks[0].condition;
             var answers = doc.user_tasks[0].answers;
             var points = doc.user_tasks[0].points;
+            var stageid = doc.user_tasks[0].stage;
+            var c_pc = doc.user_tasks[0].completevalue;
+            var already_complete = doc.user_tasks[0].completed;
+
 
 
             var check_criteria = (Object.keys(condition));
@@ -502,7 +517,7 @@ function completeTask(facebookid, taskid,cb) {
             if (completion == 1) {
                 var completion_value = {};
                 completion_value.user_task = doc.user_tasks[0];
-                Students.update({'facebookid': facebookid, 'user_tasks.task_id': taskid},
+                Students.update({'facebookid': facebookid, 'user_tasks.task_id': taskid},    //completion :1, add points, add transaction
                     {$set: { 'user_tasks.$.completed': 1 } }
                     , function (err) {
                         if (err) {
@@ -522,9 +537,22 @@ function completeTask(facebookid, taskid,cb) {
                                     console.log('added points');
                                     VibesTransaction(facebookid,transaction,function(v_transaction){
                                         console.log(v_transaction);
-                                        if(v_transaction !== 0){
+                                        if(v_transaction !== 0) {
                                             completion_value.transaction = v_transaction;
+                                            if (already_complete != 1) {
+                                                console.log('calling stage completion');
+                                                complete_user_stage(facebookid, stageid, c_pc, function (completed_percentage){
+                                                    if(completed_percentage ==0){
+                                                        cb(0)
+                                                    }else{
+                                                        completion_value.level = completed_percentage;
+                                                        cb(completion_value);
+                                                    }
+                                                })
+                                            }
+                                            else {
                                             cb(completion_value);
+                                            }
                                             console.log('added transactiontion');
                                         }else{
                                             cb(0)
@@ -549,6 +577,7 @@ function completeTask(facebookid, taskid,cb) {
 
                         }
                     });
+
             }else {
                 cb(0)
             }
@@ -645,18 +674,53 @@ function addTwitter(req, res) {
      }
      }); */
     return Students.findOne({ facebookid: req.session.student.facebookid }, function (err, doc) {
+
         if (!err) {
-
-
+            var facebookid =req.session.student.facebookid;
+            if(typeof doc.twitterid === 'undefined'){
             doc.twitter.authorized = 1;
-            doc.twitterid = req.session.twit['id']
+            doc.twitterid = req.session.twit['id'];
             doc.twitter.name = req.session.twit['name'];
             doc.twitter.username = req.session.twit['username'];
             doc.twitter.authcode = req.session.twit['authcode'];
             doc.twitter.secret = req.session.twit['secret'];
-
+            req.session.student.twitterid = req.session.twit['id'];
+            req.session.twitter = doc.twitter;
             doc.save();
-            res.send('<script>window.close()</script>');
+
+
+            var transaction = new studentSchema.vibes_transaction;
+            transaction.vibes = 400;
+            transaction.type = 'Twitter';
+            transaction.sign = 1;
+            transaction.message = 'Twitter Authentication test';
+            addpoints(facebookid,400,function(points_to_add){
+               if(points_to_add !== 0){
+                   VibesTransaction(facebookid, transaction, function (v_transaction) {
+                       console.log(v_transaction);
+                       if (v_transaction !== 0) {
+
+                           //console.log('session points are earlier: ' + req.session.student.points);
+                           req.session.student.vibes_transaction.push(v_transaction);
+                           req.session.student.points = req.session.student.points +  400;
+                           //console.log('session transactions are : ' + JSON.stringify(req.session.student.vibes_transaction));
+                           //console.log('session points are later: ' + req.session.student.points);
+                           //console.log('done');
+                           console.log('this is the session' + JSON.stringify(req.session.student));
+                           res.send('<script>window.close()</script>');
+                       } else {
+                           console.log('bhencho err');
+                           res.send('err');
+                       }
+
+                   });
+               } else{
+                   res.send('err');
+               }
+            });
+
+            }
+            else{res.send('already exists');}
         }
 
         else {
@@ -691,6 +755,25 @@ function logout(req, res) {
     res.redirect('/');
 }
 
+function complete_user_stage(facebookid,stageid,completion_value,cb) {
+    console.log('stage completion data...' + facebookid + ' -- \n' + stageid + '----\n ' + completion_value);
+
+    Students.update({'facebookid': facebookid, 'stages.stageid': stageid.toString()},
+        {$inc: { 'stages.$.completion': completion_value } }
+        , function (err,data) {
+            console.log(data);
+            if (err) {
+                console.log(err);
+                cb(0);
+            } else {
+                cb(completion_value);
+            }
+        });
+
+
+
+}
+
 module.exports = {list: list,
     stage_add_to_all: stage_add_to_all,
     getstudentdata: getstudentdata,
@@ -710,6 +793,8 @@ module.exports = {list: list,
     addTaskToUser: addTaskToUser,
     addTwitter: addTwitter,
     VibesTransaction: VibesTransaction,
-    logout: logout
+    logout: logout,
+    updateSettings : updateSettings
+
 }
 

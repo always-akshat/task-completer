@@ -16,6 +16,7 @@ viberApp.factory('postlink',function($http,$q){
 
                 if(angular.isObject(data)){
                     task.answers = data.answers;
+                    task.completiondata = data.completiondata;
                     dfd.resolve(true);
                 }
                 else{

@@ -32,6 +32,7 @@ viberApp.controller('vbInsertLinksCtrl',function($scope,$http,toaster,$q,postlin
     var fbsuccess=false, twsuccess=false;
     var bindCtrl = function () {
         $scope.answers = task.answers;
+        $scope.completiondata = task.completiondata;
         $scope.answers.reverse();
         _.each($scope.answers,function(answer){
 
@@ -74,7 +75,6 @@ viberApp.controller('vbInsertLinksCtrl',function($scope,$http,toaster,$q,postlin
                             fbsuccess=true;
 
                             bindCtrl();
-                            console.log("Tasks after share"+task.answers);
                         }
                         else {
 
@@ -88,6 +88,7 @@ viberApp.controller('vbInsertLinksCtrl',function($scope,$http,toaster,$q,postlin
                             toaster.pop('success', "Facebook Post", "Your Message has been posted successfully to Facebook");
                             fbsuccess=true;
                             bindCtrl();
+                            console.log("Completion Data"+$scope.completiondata.level);
                         }
                         else {
 
