@@ -65,6 +65,7 @@ app.use(express.session({
     }),
     secret: 'manchester_united'
 }));
+
 app.use(express.urlencoded());
 app.use(passport.initialize());
 app.use(passport.session());

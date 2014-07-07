@@ -51,6 +51,20 @@ function stage_add_to_all(req, res) {
         students.forEach(function (instance) {
             console.log(instance.facebookid + ' -- ' + instance.name);
             var stageid = '5390521624349ecc0c108c10';
+
+            var stage = {"stageid" : stageid.toString(),
+                         "completion" : 0};
+
+
+            Students.find({facebookid : instance.facebookid},'stages', function(err,data){
+                console.log(data);
+            })
+
+            Students.update({facebookid: instance.facebookid},
+                {$addToSet: {'stages': stage}});
+
+
+            /*
             stages_function.getStageInfo(stageid, function (err, stage) {
                 if (!err) {
 
@@ -62,7 +76,7 @@ function stage_add_to_all(req, res) {
                     }
                 }
             });
-
+            */
         });
 
         res.send('done');
@@ -250,6 +264,50 @@ function validateSignUp(req, callback) {
     Students.count({'facebookid': req.body.facebookid}, function (err, count) {
         var data = req.body;
         console.log(count);
+        if (err) {
+            callback(err.message, null);
+        }
+        else {
+            if (0 == count) {
+
+                objstudent = new Students(data);
+
+                config.utils.objectvalidator('student', objstudent, function (validated_object) {
+
+                    var new_student = validated_object;
+                    console.log('got something');
+
+                    if (validated_object !== 0) {
+                        console.log(validated_object);
+                        objstudent.save();
+                        return callback(validated_object, 'User Registered');
+                    } else {
+                        console.log('there was an error');
+                        return callback(null, 'there was an error');
+                    }
+                });
+
+
+            }
+            else {
+                return callback(null, 'facebookid exists');
+            }
+        }
+
+    });
+
+
+}
+
+
+
+
+function update_settings(req, callback) {
+
+
+    Students.count({'facebookid': req.body.session.facebookid}, function (err, count) {
+        var data = req.body;
+
         if (err) {
             callback(err.message, null);
         }

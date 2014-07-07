@@ -69,7 +69,7 @@ exports.share = function(req,res){
                        instance.answers = task_data.answers;
                    }
                 });
-                
+
                 res.send(task_data);
             }else{
                 res.send(0);
@@ -85,11 +85,7 @@ exports.share = function(req,res){
 }
 
 
-function print_answers(answers){
-    console.log('this is answers function');
-    console.log(answers);
-}
- function get_likes(req,res){
+function get_likes(req,res){
     FB.setAccessToken(req.session.student.facebook.authcode);
     var post_id = '10152198497022499_10152228426717499';
     var post_id_array= ['10152198497022499_10152228426717499','10152198497022499_10152228520742499'

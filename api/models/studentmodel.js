@@ -14,7 +14,7 @@ var user_task_schema = new Schema({
     approvalrequired : Number,
     managerapproved : Number,
     fields : {},
-    answers : {},
+    answers : [Object],
     condition :{}
 });
 
@@ -56,7 +56,8 @@ var studentSchema = new Schema({
         secret : String
     },
     points : Number,
-    stages : [ObjectId],      //changed from number to objectid
+    stages : [{stageid:String,
+                completion: Number}],      //changed from number to objectid
     /*tasks  : [
                { stage: ObjectId,   //changed from number to objectid
                 value : [ObjectId]  //changed from number to objectid
