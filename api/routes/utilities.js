@@ -15,14 +15,33 @@ Colleges = collegeSchema.colleges;
 var students = require("./students");
 
 exports.locationlist = function(req, res){
-    Locations.find().sort({Id :1}).select('Id CityName').exec(function (err, locations){
+
+    var query ={};
+
+    var filter= req.params.n;
+    if(filter && typeof filter !== 'undefined' && filter !== null){
+       filter = filter.toString();
+    }else{
+        filter='';
+    }
+    console.log(filter);
+    Locations.find({'CityName' : new RegExp(filter, 'i')}).sort({Id :1}).select('Id CityName').exec(function (err, locations){
         res.send(locations);
     });
 };
 
 
 exports.collegelsist = function(req, res){
-    Colleges.find().sort({CollegeName :1}).select('Id CollegeName').exec(function (err, colleges){
+    var query ={};
+
+    var filter= req.params.n;
+    if(filter && typeof filter !== 'undefined' && filter !== null){
+        filter = filter.toString();
+    }else{
+        filter='';
+    }
+    console.log(filter);
+    Colleges.find({'CollegeName' : new RegExp(filter, 'i')}).sort({Id :1}).select('Id CollegeName').exec(function (err, colleges){
         res.send(colleges);
     });
 };

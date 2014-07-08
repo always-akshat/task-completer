@@ -497,8 +497,6 @@ function completeTask(facebookid, taskid,cb) {
                 }else{
                     //console.log(prop + 'value is not present');
                 }
-
-
             }
         });
 
