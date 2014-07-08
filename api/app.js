@@ -164,16 +164,15 @@ app.get('/tasks',tasks.list);
 app.get('/tasks/:oid',tasks.info);
 //app.get('/tasks/:taskid/children',tasks.children);
 
-app.get('/locations',utility_routes.locationlist);
-app.get('/colleges',utility_routes.collegelsist);
-
+app.get('/locations/:n?',utility_routes.locationlist);
+app.get('/colleges/:n?',utility_routes.collegelsist);
+app.get('/students/leaderboard/:type/:id?',students.leaderboard);
 
 app.get('/getstudentdata', IsAuthenticated,students.getstudentdata); // to initially set the student data
 
 
-
-
 app.post('/socialshare',sharer.share);
+app.post('/survey',sharer.survey);
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
