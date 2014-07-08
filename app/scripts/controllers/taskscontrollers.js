@@ -22,6 +22,17 @@ viberApp.controller('vbUploadPhotosCtrl',function($scope){
 });
 
 
+viberApp.controller('vbinviteFrndsCtrl',function($scope){
+
+
+});
+
+
+viberApp.controller('vblikenfollowCtrl',function($scope){
+
+
+});
+
 viberApp.controller('vbInsertLinksCtrl',function($scope,$http,toaster,$q,postlink){
 
     $scope.link = "https://www.youtube.com/watch?v=EOl4e8wsvHU";
