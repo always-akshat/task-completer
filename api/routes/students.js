@@ -381,7 +381,7 @@ function updateAnswers(facebookid, taskid, answers,cb) {
 
                 old_answers = new Array();
 
-                if(doc.user_tasks[0].answers.length >0 ) {
+                if(doc.user_tasks && doc.user_tasks[0].answers.length >0 ) {
                     old_answers = doc.user_tasks[0].answers;
                 }
                 old_answers.push(answers);
