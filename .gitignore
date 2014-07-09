@@ -3,8 +3,8 @@ dist
 .tmp
 .sass-cache
 app/bower_components
-api/socialauth.js
 .idea
-api/socialauth.js
+<<<<<<< HEAD
+=======
 .idea/workspace.xml
-.idea/*
+>>>>>>> 454764d8514985036c8b771925f1110ff5007c12

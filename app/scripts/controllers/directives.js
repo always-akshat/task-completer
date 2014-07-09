@@ -123,3 +123,31 @@ viberApp.directive('cheatBox', function(){
 
 });
 
+
+viberApp.directive('inviteFbFriends', function(){
+
+    return{
+
+        restrict : 'E',
+        templateUrl : 'views/invitefbfriends.html',
+        controller : 'vbinviteFrndsCtrl'
+
+    }
+});
+
+    viberApp.directive('likenFollow', function(){
+
+        return{
+
+            restrict : 'E',
+            templateUrl : 'views/likenfollow.html',
+            controller : 'vblikenfollowCtrl'
+
+        }
+
+
+    });
+
+
+
+
