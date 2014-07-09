@@ -6,9 +6,33 @@
 var viberApp = angular
     .module('viberApp');
 
-viberApp.controller('vbSurveyCtrl',function($scope){
+viberApp.controller('vbSurveyCtrl',function($scope,postsurvey){
 
+    $scope.used = undefined;
+    $scope.country = undefined;
+    $scope.awesome1 = undefined;
+    $scope.awesome2 = undefined;
+    $scope.awesome3 = undefined;
+    $scope.awesome4 = undefined;
+    $scope.coolest = undefined;
+    $scope.person1 = undefined;
+    $scope.person2 = undefined;
+    $scope.person3 = undefined;
 
+    $scope.submit = function(isValid){
+        if(isValid){
+            var postObj = {'answers':{'answer1' :$scope.used,'answer2':$scope.country,'answer3':{awesome1:$scope.awesome1,awesome2:$scope.awesome2,awesome3:$scope.awesome3,awesome4:$scope.awesome4},'answer4':$scope.coolest,'answer5':{'person1':$scope.person1, 'person2':$scope.person2,'person3':$scope.person3}},'taskid':'53a951f9e4b041d6a3190438'};
+            console.log(JSON.stringify(postObj));
+            postsurvey.postSurvey(postObj).then(function(success){
+                if(success){
+                    console.log("Success");
+                }
+                else{
+                    console.log("failure");
+                }
+            });
+        }
+    };
 });
 
 viberApp.controller('vbInsertMobileCtrl',function($scope){
@@ -77,14 +101,14 @@ viberApp.controller('vbInsertLinksCtrl',function($scope,$http,toaster,$q,postlin
             if (isValid) {
 
 
-                postlink.postsharelink($scope.link, $scope.message, task, $scope.checkedfb, $scope.checkedtw).then(function(success) {
+                postlink.postsharelink($scope.identity.currentUser,$scope.link, $scope.message, task, $scope.checkedfb, $scope.checkedtw).then(function(success) {
                     if($scope.checkedfb && $scope.checkedtw){
                         if (success) {
                             toaster.pop('success', "Twitter Post", "Your Message has been posted successfully");
                             toaster.pop('success', "Facebook Post", "Your Message has been posted successfully to Facebook");
                             twsuccess=true;
                             fbsuccess=true;
-
+                            $scope.identity.currentUser.points += 20;
                             bindCtrl();
                         }
                         else {
@@ -98,8 +122,9 @@ viberApp.controller('vbInsertLinksCtrl',function($scope,$http,toaster,$q,postlin
 
                             toaster.pop('success', "Facebook Post", "Your Message has been posted successfully to Facebook");
                             fbsuccess=true;
+                            $scope.identity.currentUser.points += 20;
                             bindCtrl();
-                            console.log("Completion Data"+$scope.completiondata.level);
+
                         }
                         else {
 
@@ -112,6 +137,7 @@ viberApp.controller('vbInsertLinksCtrl',function($scope,$http,toaster,$q,postlin
                         if (success) {
                             toaster.pop('success', "Twitter Post", "Your Message has been posted successfully");
                             twsuccess=true;
+                            $scope.identity.currentUser.points += 20;
                             bindCtrl();
                         }
                         else {

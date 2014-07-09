@@ -15,7 +15,7 @@
         <iframe width="100%" height="315px" src="//www.youtube.com/embed/EOl4e8wsvHU" frameborder="0" allowfullscreen></iframe>
 
     </div>
-
+    <form name="surveyForm" role="form" ng-submit="submit(surveyForm.$valid)" ng-controller="vbSurveyCtrl" novalidate>
     <div class="panel-body">
         <p class="alert-formnote">All questions are mandatory</p>
         <div class="row">
@@ -24,11 +24,11 @@
             </div>
             <div class="col-lg-22">
                 <p class="question-txt">Have you used Viber to connect with friends earlier ?</p>
-                <div class="form-group">
-                    <input type="checkbox" id="male" value="option1" class="custom" checked>
-                    <label for="male">Yes</label>
-                    <input type="checkbox" id="female" value="option2" class="custom">
-                    <label for="female">
+                <div class="form-group" required>
+                    <input type="radio" name="used" id="yes" value="yes" class="custom-radio" ng-model="used">
+                    <label for="yes">Yes</label>
+                    <input type="radio" name="used" id="no" value="no" class="custom-radio" ng-model="used">
+                    <label for="no">
                         No
                     </label>
                 </div>
@@ -45,14 +45,15 @@
                     <small>Please select one</small>
                 </p>
                 <div class="form-group">
-                    <input type="radio" id="qa1" name="qa1" class="custom-radio" value="" checked>
+                    <input type="radio" id="qa1" name="qa1" class="custom-radio" ng-model="country" value="United States" required>
                     <label for="qa1">United States</label>
-                    <input type="radio" id="qa2" name="qa1" class="custom-radio" value="">
+                    <input type="radio" id="qa2" name="qa1" class="custom-radio" ng-model="country" value="Israel" required>
                     <label for="qa2">Israel</label>
-                    <input type="radio" id="qa3" name="qa1" class="custom-radio" value="">
+                    <input type="radio" id="qa3" name="qa1" class="custom-radio" ng-model="country" value="Vietnam" required>
                     <label for="qa3">Vietnam</label>
-                    <input type="radio" id="qa4" name="qa1" class="custom-radio" value="">
+                    <input type="radio" id="qa4" name="qa1" class="custom-radio" ng-model="country" value="India" required>
                     <label for="qa4">India</label>
+                    <p ng-show="surveyForm.country.$invalid && surveyForm.country.$pristine" class="help-block">Your name is required.</p>
                 </div>
             </div>
         </div>
@@ -66,18 +67,18 @@
                 <p class="question-txt">What are the awesome things that you can do with Viber to connect with friends ?
                     <small>Please select as many true</small>
                 </p>
-                <div class="form-group">
-                    <input type="checkbox" id="c1" value="option1" class="custom" checked>
+                <div class="form-group" required>
+                    <input type="checkbox" id="c1" value="option1" class="custom" ng-model="awesome1" ng-true-value="'Text them'">
                     <label for="c1">Text them</label>
-                    <input type="checkbox" id="c2" value="option2" class="custom">
+                    <input type="checkbox" id="c2" value="option2" class="custom" ng-model="awesome2" ng-true-value="'Call them via internet'">
                     <label for="c2">
                         Call them via internet
                     </label>
-                    <input type="checkbox" id="c3" value="option2" class="custom">
+                    <input type="checkbox" id="c3" value="option2" class="custom" ng-model="awesome3" ng-true-value="'Form groups'">
                     <label for="c3">
                         Form groups
                     </label>
-                    <input type="checkbox" id="c4" value="option2" class="custom">
+                    <input type="checkbox" id="c4" value="option2" class="custom" ng-model="awesome4" ng-true-value="'Share stickers'">
                     <label for="c4">
                         Share stickers
                     </label>
@@ -95,7 +96,8 @@
                     <small>Open your heart</small>
                 </p>
                 <div class="form-group">
-                    <textarea name="" id="" cols="30" rows="5" class="form-control" placeholder="Your answer here…"></textarea>
+                    <textarea name="coolest" type="text" id="" cols="30" rows="5" class="form-control" placeholder="Your answer here…"ng-model="coolest" required></textarea>
+                    <p ng-show="surveyForm.coolest.$invalid && !surveyForm.coolest.$pristine" class="help-block">Your name is required.</p>
                 </div>
             </div>
         </div>
@@ -107,25 +109,25 @@
             </div>
             <div class="col-lg-22">
                 <p class="question-txt">Your personality resonates with which one of these ?</p>
-                <div class="form-group">
-                    <div class="col-lg-8">
+                <div class="form-group" required>
+                    <div class="col-lg-8 control-label">
                         <img src="images/img-check-1.jpg" alt="" class="img-responsive img-center"/>
                         <p class="text-center">
-                            <input type="checkbox" id="o1" value="option2" class="custom" checked>
+                            <input type="checkbox" id="o1" ng-true-value="einstein" class="custom" ng-model="person1">
                             <label for="o1" style="margin-right:0;"></label>
                         </p>
                     </div>
-                    <div class="col-lg-8">
+                    <div class="col-lg-8 control-label">
                         <img src="images/img-check-2.jpg" alt="" class="img-responsive img-center"/>
                         <p class="text-center">
-                            <input type="checkbox" id="o2" value="option2" class="custom">
+                            <input type="checkbox" id="o2" ng-true-value="gandhi" class="custom" ng-model="person2">
                             <label for="o2" style="margin-right:0;"></label>
                         </p>
                     </div>
-                    <div class="col-lg-8">
+                    <div class="col-lg-8 control-label">
                         <img src="images/img-check-3.jpg" alt="" class="img-responsive img-center"/>
                         <p class="text-center">
-                            <input type="checkbox" id="o3" value="option2" class="custom">
+                            <input type="checkbox" id="o3" ng-true-value="tagore" class="custom" ng-model="person3">
                             <label for="o3" style="margin-right:0;"></label>
                         </p>
                     </div>
@@ -134,6 +136,11 @@
             </div>
         </div>
     </div>
+    <div class="panel-body custom-form">
+        <button type="submit" class="btn btn-success col-lg-offset-2" ng-disabled="surveyForm.$invalid">submit</button>
+    </div>
+    </form>
+
     <!--<div class="panel-body">-->
         <!--<div class="row">-->
             <!--<div class="col-lg-2">-->
@@ -201,8 +208,5 @@
             <!--</div>-->
         <!--</div>-->
     <!--</div>-->
-    <div class="panel-body custom-form">
-        <button type="submit" class="btn btn-success col-lg-offset-2">submit</button>
-    </div>
 </div>
 </div>
