@@ -55,10 +55,7 @@ viberApp.factory('settingSubmit', function($http, $q){
 
             console.log("success");
                 if (angular.isObject(data)) {
-//                    vbIdentity.currentUser = data;
 //
-//                    $rootScope.identity = vbIdentity;
-//                    $rootScope.completion = 30;
                     dfd.resolve(true);
                 }
                 else {

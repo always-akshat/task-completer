@@ -1,7 +1,7 @@
 'use strict';
 
 var viberApp = angular
-  .module('viberApp', ['ngRoute','toaster','angular-loading-bar', 'ngAnimate']);
+  .module('viberApp', ['ngRoute','toaster','angular-loading-bar', 'ngAnimate','ui.bootstrap']);
 
 // angular routes configuration
 
@@ -102,30 +102,66 @@ viberApp.controller('leaderboardCtrl',function($scope,vbSharedService,$http,$win
 });
 
 
-viberApp.controller('lbMySettingsCntrl',function($scope,vbIdentity,vbSharedService,$window,settingSubmit){
+viberApp.controller('lbMySettingsCntrl',function($scope, $http,vbIdentity,vbSharedService,$window,settingSubmit){
 
     $window.scrollTo(0,0);
     var currentPage = {home:0,rewards:0,lb:0, mysettings:1};
     vbSharedService.prepForBroadcast(currentPage);
 
     $scope.user = $scope.identity.currentUser;
-//    console.log("name"+$scope.identity.currentUser.name);
-//    console.log("name"+$scope.identity.currentUser.gender);
-//    console.log("name"+$scope.identity.currentUser.mobile);
-//    console.log("name"+$scope.identity.currentUser.email);
-//    console.log("name"+$scope.identity.currentUser.location.id);
+
     $scope.transactions = $scope.user.vibes_transaction;
-    //console.log("Name level"+vbIdentity.currentUser.level);
     $scope.settingData = $scope.identity.currentUser;
+
+    $scope.getLocation = function(val){
+        if(val.length>=3) {
+            return $http.get('/locations/' + val).then(function (res) {
+                var places = [];
+                angular.forEach(res.data, function(item){
+                places.push(item);
+                });
+                return places;
+            });
+        }
+    };
+
+    $scope.onSelectLocation = function ($item) {
+       $scope.city_name = $item.CityName;
+       $scope.city_id = $item.Id;
+    };
+
+    $scope.getCollege = function(val){
+        if(val.length>=4) {
+            return $http.get('/colleges/' + val).then(function (res) {
+                var clges = [];
+                angular.forEach(res.data, function(item){
+                    clges.push(item);
+                });
+                return clges;
+            });
+        }
+    };
+
+    $scope.onSelectCollege = function ($item) {
+        $scope.college_name = $item.CollegeName;
+        $scope.college_id = $item.Id;
+    };
+
+
     $scope.submitForm = function(isValid){
         if(isValid){
+
             $scope.identity.currentUser.name = $scope.user.name;
             $scope.identity.currentUser.gender = $scope.user.gender;
             $scope.identity.currentUser.mobile = $scope.user.mobile;
             $scope.identity.currentUser.email = $scope.user.email;
-            $scope.identity.currentUser.college.id = $scope.user.college.id;
-            $scope.identity.currentUser.location.id = $scope.user.location.id;
+            $scope.identity.currentUser.college.id = $scope.college_id;
+            $scope.identity.currentUser.college.name = $scope.college_name;
+            $scope.identity.currentUser.location.id = $scope.city_id;
+            $scope.identity.currentUser.location.name = $scope.city_name;
 
+
+            //console.log(JSON.stringify($scope.identity.currentUser));
             settingSubmit.settingSubmitbutton($scope.identity.currentUser, $scope.user.facebookid).then(function(success){
                 if(success){
                     console.log("Success");
