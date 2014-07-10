@@ -89,6 +89,8 @@ exports.survey = function(req,res){
     var answers = req.body.answers;
     var taskid = req.body.taskid;
 
+    console.log('taskid :' + taskid + '\n asnwers : ' + JSON.stringify(answers));
+
 
     utilities.handle_task_Request(facebookid,taskid,answers,function(task_data){
         if(task_data !== 0){
