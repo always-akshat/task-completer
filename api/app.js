@@ -63,7 +63,8 @@ app.use(express.session({
         port: 6379,
         db: 9
     }),
-    secret: 'manchester_united'
+    secret: 'manchester_united',
+    cookie: { maxAge: 1800000 }
 }));
 
 app.use(express.urlencoded());
