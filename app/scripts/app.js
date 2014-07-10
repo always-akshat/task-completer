@@ -95,6 +95,56 @@ viberApp.controller('leaderboardCtrl',function($scope,vbSharedService,$http,$win
 
     });
 
+    $scope.getLocation = function(val){
+        if(val.length>=3) {
+            return $http.get('/locations/' + val).then(function (res) {
+                var places = [];
+                angular.forEach(res.data, function(item){
+                    places.push(item);
+                });
+                return places;
+            });
+        }
+    };
+
+    $scope.onSelectLocation = function ($item) {
+        console.log(JSON.stringify($item));
+        var place = $item.CityName;
+
+        $http.get('/students/leaderboard/city/'+place).success(function (data) {
+
+
+            if (angular.isObject(data)) {
+                $scope.lbstudents = data;
+
+                console.log('coming back from server');
+
+            }
+            else {
+                //console.log(data);
+
+            }
+
+        });
+
+    };
+
+//    $scope.getCollege = function(val){
+//        if(val.length>=4) {
+//            return $http.get('/colleges/' + val).then(function (res) {
+//                var clges = [];
+//                angular.forEach(res.data, function(item){
+//                    clges.push(item);
+//                });
+//                return clges;
+//            });
+//        }
+//    };
+//
+//    $scope.onSelectCollege = function ($item) {
+//        console.log(JSON.stringify($item));
+//    };
+
 
 
 
