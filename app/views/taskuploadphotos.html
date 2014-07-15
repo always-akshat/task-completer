@@ -16,9 +16,9 @@
     </div>
     <div class="panel-body">
         <div class="upload-nav text-right">
-            <span class="alert-success pull-left">0 submitted successfully</span>
+            <span class="alert-success pull-left">{{submitted}} submitted successfully</span>
             <ul>
-                <li class="active"><a href="#added" data-toggle="tab">0 Added</a></li>
+                <li class="active"><a href="#added" data-toggle="tab">{{selected}} Added</a></li>
                 <!--<li><a href="#pending" data-toggle="tab">12 Pending Approval</a></li>
                 <li><a href="#rejected" data-toggle="tab" class="rejected-photo">6 Rejected</a></li>-->
             </ul>
@@ -30,14 +30,14 @@
                 <a href="#."><img src="images/upload-img3.jpg" class="img-responsive" alt=""/></a>
                 <a href="#."><img src="images/upload-img4.jpg" class="img-responsive" alt=""/></a>
                 <a href="#."><img src="images/upload-img5.jpg" class="img-responsive" alt=""/></a>-->
-                <a href="#." class="upload-img">
+                <a href="#." onclick="document.getElementById('fileID').click(); return false;"class="upload-img">
                     <span class="icon-plus-circle"></span>
                     upload<br>
                     photos
                 </a>
-
+                <input type="file" id="fileID" style="visibility: hidden;" ng-file-select="onFileSelect($files)" multiple/>
                 <p style="margin-left: 18px;">
-                    <button type="submit" class="btn btn-success radius-none">submit</button>
+                    <button type="submit" class="btn btn-success radius-none" ng-click="onFileUpload()">submit</button>
                 </p>
             </div>
           <!--  <div class="tab-pane fade pending-approval" id="pending">
