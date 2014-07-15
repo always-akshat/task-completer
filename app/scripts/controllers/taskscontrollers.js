@@ -2,9 +2,9 @@
  * Created by Ankit Saxena on 25-06-2014.
  */
 
-
 var viberApp = angular
     .module('viberApp');
+
 
 viberApp.controller('vbSurveyCtrl',function($scope,postsurvey){
 
@@ -103,51 +103,55 @@ viberApp.controller('vbInsertMobileCtrl',function($scope){
 
 });
 
+
 viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload){
+
+
     $scope.selected = 0;
     $scope.submitted = 0;
+    $scope.done = [];
+
     $scope.onFileSelect = function($files){
-      $scope.files = $files;
-      $scope.selected = $scope.files.length;
+    $scope.files = $files;
+    $scope.selected = $scope.files.length;
     };
 
     $scope.onFileUpload = function(){
-        console.log($scope.files+"Hello Bitch!!");
         $scope.upload =[];
         for(var i=0;i<$scope.files.length;i++){
             var file = $scope.files[i];
-            console.log("file"+JSON.stringify(file));
+            var ran_num = Math.round(Math.random()*10000);
+            $scope.done[i]=ran_num+'$$'+file.name;
             $scope.upload[i]=$upload.upload({
                 url: 'https://viber-uploads.s3-ap-southeast-1.amazonaws.com/',
                 method: 'POST',
                 data: {
-                    'key' : 's3UploadExample/'+ Math.round(Math.random()*10000) + '$$' + file.name,
+                    'key' : 's3UploadExample/'+ ran_num + '$$' + file.name,
                     'acl' : 'public-read',
                     'Content-Type' : file.type,
                     'AWSAccessKeyId': 'AKIAITP3AH32R7ZKQ4XQ',
                     'success_action_status' : '201',
-                    'Policy' : 'eyJleHBpcmF0aW9uIjoiMjAxNC03LTE1VDEwOjAwOjAwLjAwMFoiLCJjb25kaXRpb25zIjpbWyJzdGFydHMtd2l0aCIsIiRrZXkiLCJzM1VwbG9hZEV4YW1wbGUvIl0seyJidWNrZXQiOiJ2aWJlci11cGxvYWRzIn0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiaW1hZ2UvanBlZyJdLHsic3VjY2Vzc19hY3Rpb25fc3RhdHVzIjoiMjAxIn1dfQ==',
-                    'Signature' : 'UXSOcH0u2Doz/2ZYRVQtr+ArayY='
+                    'Policy' : 'eyJleHBpcmF0aW9uIjoiMjAxNS03LTE2VDI0OjAwOjAwLjAwMFoiLCJjb25kaXRpb25zIjpbWyJzdGFydHMtd2l0aCIsIiRrZXkiLCJzM1VwbG9hZEV4YW1wbGUvIl0seyJidWNrZXQiOiJ2aWJlci11cGxvYWRzIn0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiaW1hZ2UvanBlZyJdLHsic3VjY2Vzc19hY3Rpb25fc3RhdHVzIjoiMjAxIn1dfQ==',
+                    'Signature' : 'kzikIBOel+cn8KYLhQIRX73IHhc='
                 },
                 file: file
             }).then(function(response){
                 if(response.status===201){
                     $scope.submitted += 1;
-                    var reqbody =  {
-                        "answers" : {
-                            "name" : file.name
-                        },
-                        "taskid" : '12a34b56c78d90e'
-                    };
-                    $http.put('/students/uploaimage', reqbody).success(function(data){
-                        console.log("success");
-
-                    });
                 }
             });
         }
-    };
+        var reqbody =  {
+            "answers" : {
+                "name" : $scope.done
+            },
+            "taskid" : '12a34b56c78d90e'
+        };
+        $http.put('/students/uploaimage', reqbody).success(function(data) {
+            console.log("success");
+        });
 
+    };
 });
 
 
@@ -198,10 +202,9 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http){
         FB.Event.subscribe('edge.create', function(response) {
             var reqbody =  {
                 "answers" : {
-                    "link" : "https://www.facebook.com/officialviberindia/",
-                    "handle" : "viber_india"
+                    "link" : "https://www.facebook.com/officialviberindia/"
                 },
-                "platform" : {"facebook_like": 1,"twitter_follow":1 },
+                "platform" : {"facebook_like": 1},
                 "taskid" : '12a34b56c78d90e'
             };
             $http.put('/students/likefollow', reqbody).success(function(data){
@@ -212,10 +215,9 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http){
         FB.Event.subscribe('edge.remove', function(response) {
             var reqbody =  {
                 "answers" : {
-                    "link" : "https://www.facebook.com/officialviberindia/",
-                    "handle" : "viber_india"
-                },
-                "platform" : {"facebook_like": 0,"twitter_follow":1 },
+                    "link" : "https://www.facebook.com/officialviberindia/"
+                    },
+                "platform" : {"facebook_like": 0},
                 "taskid" : '12a34b56c78d90e'
             };
             $http.put('/students/likefollow', reqbody).success(function(data){
@@ -255,10 +257,9 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http){
 
             var reqbody =  {
                 "answers" : {
-                    "link" : "https://www.facebook.com/officialviberindia/",
-                    "handle" : "viber_india"
+                    "link": "viber_india"
                 },
-                "platform" : {"facebook_like": 1,"twitter_follow":1 },
+                "platform" : {"twitter_follow":1 },
                 "taskid" : '12a34b56c78d90e'
             };
             $http.put('/students/likefollow', reqbody).success(function(data){
@@ -272,7 +273,7 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http){
                     "link" : "https://www.facebook.com/officialviberindia/",
                     "handle" : "viber_india"
                 },
-                "platform" : {"facebook_like": 1,"twitter_follow":0 },
+                "platform" : {"twitter_follow":0 },
                 "taskid" : '12a34b56c78d90e'
             };
             $http.put('/students/likefollow', reqbody).success(function(data){
