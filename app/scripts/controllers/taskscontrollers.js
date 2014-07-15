@@ -151,8 +151,39 @@ viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload){
 });
 
 
-viberApp.controller('vbinviteFrndsCtrl',function($scope){
+viberApp.controller('vbinviteFrndsCtrl',function($scope, $http){
 
+
+    // Load the SDK Asynchronously
+    (function(d){
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+    }(document));
+
+    $scope.sendRequest = function() {
+        //var user_id = document.getElementsByName("user_id")[0].value;
+
+        FB.ui({method: 'apprequests',
+                message: '',
+                display : 'popup'},
+            function(response) {
+                if (response) {
+                    var reqObj = {
+                        "answers" : {
+                            "fb_ids" : response.to
+                        },
+                        "taskid" : '12a34b56c78d90e'
+                    };
+                    $http.put('/students/invites', reqObj).success(function(data){
+                        console.log('Success Invites');
+                    });
+
+                }
+            });
+    }
 
 });
 
