@@ -319,39 +319,33 @@ function validateSignUp(req, callback) {
 }
 
 
-function updateSettings(req, callback,cb) {
+function updateSettings(req,callback) {
 
     facebookid = req.params.facebookid;
     updated_settings= req.body;
-    objstudent = new Students();
-    objstudent.name = updated_settings.name;
-    objstudent.mobile= updated_settings.mobile;
-    objstudent.email = updated_settings.email;
-    objstudent.location.id = updated_settings.city;
-    objstudent.college.id = updated_settings.college;
+    objstudent = new Students(updated_settings);
 
-    config.utils.objectvalidator('student_update', objstudent, function (validated_object) {
+
+        console.log(objstudent);
+       config.utils.objectvalidator('student_update', objstudent, function (validated_object) {
 
         var new_student = validated_object;
 
+
         if (validated_object !== 0) {
-            console.log(validated_object);
+            //console.log(validated_object);
             return Students.findOne({ facebookid: facebookid }, function (err, doc) {
                 if (!err) {
                     doc.name = validated_object.name;
+                    doc.mobile = validated_object.mobile;
+                    doc.email = validated_object.email;
+                    doc.gender = validated_object.gender;
+                    doc.location.id = validated_object.location.id;
+                    doc.location.name= validated_object.location.name;
+                    doc.college.id  = validated_object.college.id;
+                    doc.college.name  = validated_object.college.name;
                     doc.save();
-                    /*for (var key in validation_messages) {
-                        var obj = validation_messages[key];
-                        for (var prop in obj) {
-                            // important check that this is objects own property
-                            // not from prototype prop inherited
-                            if(obj.hasOwnProperty(prop)){
-                                alert(prop + " = " + obj[prop]);
-                            }
-                        }
-                    } */
                 }
-
                 else {
                     console.log(err)
                 }
@@ -360,7 +354,7 @@ function updateSettings(req, callback,cb) {
             //return callback(validated_object, 'User Registered');
         } else {
             console.log('there was an error');
-            //return callback(null, 'there was an error');
+
         }
     });
 

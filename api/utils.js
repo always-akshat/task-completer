@@ -6,6 +6,7 @@ var validator = require('validator');
 
 exports.objectvalidator = function(objecttype,object,cb){
     console.log('entering utility function');
+    console.log('the object type :' + objecttype);
     var error = 0;
 
     switch (objecttype) {
@@ -13,6 +14,7 @@ exports.objectvalidator = function(objecttype,object,cb){
         // validating basic student profile data
         //  name, email, facebookid, mobile, gender, college,location
         case 'student' : {
+            console.log('checking student object');
                 if(
                    validator.isEmail(object.email)
                 && validator.isNumeric(object.points)
@@ -34,7 +36,7 @@ exports.objectvalidator = function(objecttype,object,cb){
                     }else{
                    cb(0);
 }
-
+            break;
         }
 
 
@@ -44,9 +46,9 @@ exports.objectvalidator = function(objecttype,object,cb){
                 validator.isEmail(object.email)
                 && validator.isNumeric(parseInt(object.mobile))
                 && !validator.isNull(validator.escape(object.name))
-                // && !validator.isNull(validator.escape(object.location.name))
+                && !validator.isNull(validator.escape(object.location.name))
                 && validator.isNumeric(object.location.id)
-                // && !validator.isNull(validator.escape(object.college.name))
+                 && !validator.isNull(validator.escape(object.college.name))
                 && validator.isNumeric(object.college.id)){
                 console.log('student validated');
                 cb(object);
@@ -54,6 +56,7 @@ exports.objectvalidator = function(objecttype,object,cb){
                 cb(0);
             }
 
+            break;
         }
 
     }
