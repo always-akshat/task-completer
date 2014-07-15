@@ -47,28 +47,12 @@
                 <label class="col-sm-4 control-label">City</label>
                 <div class="col-sm-20">
                     <input type="text" ng-model="user.location.name" typeahead="place.CityName for place in getLocation($viewValue) " typeahead-on-select='onSelectLocation($item)' class="form-control">
-                    <!--<select class="form-control" ng-model="user.location.name">-->
-                        <!--<option>Select City</option>-->
-                        <!--<option>1</option>-->
-                        <!--<option>2</option>-->
-                        <!--<option>3</option>-->
-                        <!--<option>4</option>-->
-                        <!--<option>5</option>-->
-                    <!--</select>-->
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label">College</label>
                 <div class="col-sm-20">
                     <input type="text" ng-model="user.college.name" typeahead="clg.CollegeName for clg in getCollege($viewValue)" typeahead-on-select='onSelectCollege($item)'class="form-control">
-                    <!--<select class="form-control" ng-model="user.college.id">-->
-                        <!--<option>Select College</option>-->
-                        <!--<option>1</option>-->
-                        <!--<option>2</option>-->
-                        <!--<option>3</option>-->
-                        <!--<option>4</option>-->
-                        <!--<option>5</option>-->
-                    <!--</select>-->
                 </div>
             </div>
             <div class="form-group">
@@ -84,10 +68,10 @@
             Click this button, and we’ll send your access code to your registered email address.
         </p>
         <button class="btn btn-success">Email my access code</button>
+        <div class="list-box">
+            <h2 class="box-title">Social Accounts</h2>
+            <em style="font-size: 11px;">LetsIntern Promise: We never post without your permission</em>
     </div>
-    <div class="list-box">
-        <h2 class="box-title">Social Accounts</h2>
-        <em style="font-size: 11px;">LetsIntern Promise: We never post without your permission</em>
         <ul class="stripedUl">
             <li class="row">
                 <div class="col-sm-14 circle-icon-fb social-active">Awarded Bonus 200 vibes</div>

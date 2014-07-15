@@ -66,21 +66,13 @@
                 <p class="question-txt">What are the awesome things that you can do with Viber to connect with friends ?
                     <small>Please select as many true</small>
                 </p>
-                <div class="form-group" required>
-                    <input type="checkbox" id="c1" value="option1" class="custom" ng-model="awesome1" ng-true-value="Text them" ng-false-value="nothing" checked>
-                    <label for="c1">Text them</label>
-                    <input type="checkbox" id="c2" value="option2" class="custom" ng-model="awesome2" ng-true-value="Call them via internet" ng-false-value="nothing">
-                    <label for="c2">
-                        Call them via internet
-                    </label>
-                    <input type="checkbox" id="c3" value="option2" class="custom" ng-model="awesome3" ng-true-value="Form groups" ng-false-value="nothing">
-                    <label for="c3">
-                        Form groups
-                    </label>
-                    <input type="checkbox" id="c4" value="option2" class="custom" ng-model="awesome4" ng-true-value="Share stickers" ng-false-value="nothing">
-                    <label for="c4">
-                        Share stickers
-                    </label>
+                <div class="form-group">
+                    <span ng-repeat="awesome in awesomeness">
+
+                                <input type="checkbox" id="{{awesome.id}}" value="{{awesome.value}}" class="custom" ng-model="awesome.checked" ng-click="updateAwesomeValue(awesome)" name="group-one">
+                                <label for="{{awesome.id}}" style="margin-right: 0;">{{awesome.value}}</label>
+
+                    </span>
                 </div>
             </div>
         </div>
@@ -107,35 +99,45 @@
             </div>
             <div class="col-lg-22">
                 <p class="question-txt">Your personality resonates with which one of these ?</p>
-                <div class="form-group" required>
-                    <div class="col-lg-8 control-label">
-                        <img src="images/img-check-1.jpg" alt="" class="img-responsive img-center"/>
-                        <p class="text-center">
-                            <input type="checkbox" id="o1" ng-true-value="einstein" ng-false-value="nothing" class="custom" ng-model="person1" checked>
-                            <label for="o1" style="margin-right:0;"></label>
-                        </p>
-                    </div>
-                    <div class="col-lg-8 control-label">
-                        <img src="images/img-check-2.jpg" alt="" class="img-responsive img-center"/>
-                        <p class="text-center">
-                            <input type="checkbox" id="o2" ng-true-value="gandhi" ng-false-value="nothing" class="custom" ng-model="person2">
-                            <label for="o2" style="margin-right:0;"></label>
-                        </p>
-                    </div>
-                    <div class="col-lg-8 control-label">
-                        <img src="images/img-check-3.jpg" alt="" class="img-responsive img-center"/>
-                        <p class="text-center">
-                            <input type="checkbox" id="o3" ng-true-value="tagore" ng-false-value="nothing" class="custom" ng-model="person3">
-                            <label for="o3" style="margin-right:0;"></label>
-                        </p>
-                    </div>
+                <div class="form-group">
+                    <span ng-repeat="choice in persons">
+                        <div class="col-lg-8 control-label">
+                            <img src="{{choice.label}}" alt="" class="img-responsive img-center"/>
+                            <p class="text-center">
+                                <input type="checkbox" id="{{choice.id}}" value="{{choice.value}}" class="custom" ng-model="choice.checked" ng-click="updateQuestionValue(choice)" name="group-one">
+                                <label for="{{choice.id}}" style="margin-right: 0;"></label>
+                            </p>
+                        </div>
+                    </span>
+
+                    <!--<div class="col-lg-8 control-label">-->
+                        <!--<img src="images/img-check-1.jpg" alt="" class="img-responsive img-center"/>-->
+                        <!--<p class="text-center">-->
+                            <!--<input type="checkbox" id="o1" ng-true-value="einstein" ng-false-value="nothing" class="custom" ng-model="person1" checked>-->
+                            <!--<label for="o1" style="margin-right:0;"></label>-->
+                        <!--</p>-->
+                    <!--</div>-->
+                    <!--<div class="col-lg-8 control-label">-->
+                        <!--<img src="images/img-check-2.jpg" alt="" class="img-responsive img-center"/>-->
+                        <!--<p class="text-center">-->
+                            <!--<input type="checkbox" id="o2" ng-true-value="gandhi" ng-false-value="nothing" class="custom" ng-model="person2">-->
+                            <!--<label for="o2" style="margin-right:0;"></label>-->
+                        <!--</p>-->
+                    <!--</div>-->
+                    <!--<div class="col-lg-8 control-label">-->
+                        <!--<img src="images/img-check-3.jpg" alt="" class="img-responsive img-center"/>-->
+                        <!--<p class="text-center">-->
+                            <!--<input type="checkbox" id="o3" ng-true-value="tagore" ng-false-value="nothing" class="custom" ng-model="person3">-->
+                            <!--<label for="o3" style="margin-right:0;"></label>-->
+                        <!--</p>-->
+                    <!--</div>-->
 
                 </div>
             </div>
         </div>
     </div>
     <div class="panel-body custom-form">
-        <button type="submit" class="btn btn-success col-lg-offset-2" ng-disabled="surveyForm.$invalid">submit</button>
+        <button type="submit" class="btn btn-success col-lg-offset-2" ng-disabled="!((surveyForm.$valid) && (value1.length!=0) && (value2.length!=0))">submit</button>
     </div>
     </form>
 

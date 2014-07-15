@@ -1,28 +1,16 @@
 
 <div class="col-sm-13 col-sm-offset-1">
     <h1>Global Leaderboard</h1>
-   <!--<div class="box-bt-line row">-->
-        <!--<div class="form-group">-->
+   <div class="box-bt-line row">
+        <div class="form-group">
+            <div class="col-sm-12">
+                    <input type="text" placeholder="City" ng-model="user.location.name" typeahead="place.CityName for place in getLocation($viewValue) " typeahead-on-select='onSelectLocation($item)' class="form-control">
+            </div>
             <!--<div class="col-sm-12">-->
-                <!--<select class="form-control">-->
-                    <!--<option>Select City</option>-->
-                    <!--<option>City name</option>-->
-                    <!--<option>City name</option>-->
-                    <!--<option>City name</option>-->
-                    <!--<option>City name</option>-->
-                <!--</select>-->
+                <!--<input type="text" placeholder="College" ng-model="user.college.name" typeahead="clg.CollegeName for clg in getCollege($viewValue)" typeahead-on-select='onSelectCollege($item)'class="form-control">-->
             <!--</div>-->
-            <!--<div class="col-sm-12">-->
-                <!--<select class="form-control">-->
-                    <!--<option>Select College</option>-->
-                    <!--<option>College name</option>-->
-                    <!--<option>College name</option>-->
-                    <!--<option>College name</option>-->
-                    <!--<option>College name</option>-->
-                <!--</select>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
+        </div>
+    </div>
     <table class="table leaderboard" width="100%">
         <tr ng-repeat="student in lbstudents">
             <td width="5%"><span class="big-icon-bookmark">{{$index + 1}}</span> </td>
