@@ -31,7 +31,7 @@ var dummytask= {
             ]
 };
 
-
+//console.log(dummytask);
 
 function list(req, res) {
     tasks.find({}, function (err, tasks) {
