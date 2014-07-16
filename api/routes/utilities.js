@@ -25,7 +25,7 @@ exports.locationlist = function(req, res){
         filter='';
     }
     console.log(filter);
-    Locations.find({'CityName' : new RegExp(filter, 'i')}).sort({Id :1}).select('Id CityName').exec(function (err, locations){
+    Locations.find({'CityName' : new RegExp(filter, 'i')}).sort({Id :1}).limit(8).select('Id CityName').exec(function (err, locations){
         res.send(locations);
     });
 };
@@ -41,7 +41,7 @@ exports.collegelsist = function(req, res){
         filter='';
     }
     console.log(filter);
-    Colleges.find({'CollegeName' : new RegExp(filter, 'i')}).sort({Id :1}).select('Id CollegeName').exec(function (err, colleges){
+    Colleges.find({'CollegeName' : new RegExp(filter, 'i')}).sort({Id :1}).limit(8).select('Id CollegeName').exec(function (err, colleges){
         res.send(colleges);
     });
 };

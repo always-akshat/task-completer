@@ -174,9 +174,9 @@ app.get('/getstudentdata', IsAuthenticated,students.getstudentdata); // to initi
 
 app.post('/socialshare',sharer.share);
 app.post('/survey',sharer.survey);
-app.post('/likeshare',sharer.likeshare);
-app.post('/uploadselfie',sharer.selfie);
-
+app.put('/students/likefollow',sharer.likefollow);
+app.put('/students/uploadselfie',sharer.selfie);
+app.put('/students/invites',sharer.fb_invite);
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));

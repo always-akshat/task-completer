@@ -46,6 +46,7 @@ function list(req, res) {
 function stage_add_to_all(req, res) {
 
     console.log('hello');
+
     Students.find().exists('user_tasks', false).limit(5000).exec(function (err, students) {
 
         students.forEach(function (instance) {
@@ -59,18 +60,18 @@ function stage_add_to_all(req, res) {
                         };
             console.log(stage);
             console.log('adding student stages now');
-
             Students.update({'facebookid': instance.facebookid},
                 {$addToSet: {stages:stage}},{upsert:true},function(err){
                 if(err){
                     console.log(err);
                 }else{
                     console.log("Successfully added")
-                    stages_function.getStageInfo(stageid, function (err, stage) {
+             stages_function.getStageInfo(stageid, function (err, stage) {
                         if (!err) {
                             console.log('stages :'  + stage.tasks);
                             if (stage && stage.tasks) {
                                 var user_tasks = stage.tasks;
+                                console.log(user_tasks);
                                 user_tasks.forEach(function (user_tasks) {
                                     addTaskToUser(instance.facebookid, user_tasks.stageid.toString());
                                 });
@@ -588,7 +589,6 @@ function addTaskToUser(facebookid, taskid) {
                 return ('no record found');
             }
             else {
-
                 student_task = new studentSchema.student_task;
                 student_task.task_id = taskid;
                 student_task.points = task.points;
