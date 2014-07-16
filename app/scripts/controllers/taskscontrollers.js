@@ -171,7 +171,7 @@ viberApp.controller('vbinviteFrndsCtrl',function($scope, $http){
         //var user_id = document.getElementsByName("user_id")[0].value;
 
         FB.ui({method: 'apprequests',
-                message: '',
+                message: 'Request App!!',
                 display : 'popup'},
             function(response) {
                 if (response) {
@@ -204,7 +204,7 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http){
                 "answers" : {
                     "link" : "https://www.facebook.com/officialviberindia/"
                 },
-                "platform" : {"facebook_like": 1},
+                "platform" : {"facebook": true},
                 "taskid" : '12a34b56c78d90e'
             };
             $http.put('/students/likefollow', reqbody).success(function(data){
@@ -217,7 +217,7 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http){
                 "answers" : {
                     "link" : "https://www.facebook.com/officialviberindia/"
                     },
-                "platform" : {"facebook_like": 0},
+                "platform" : {"facebook": false},
                 "taskid" : '12a34b56c78d90e'
             };
             $http.put('/students/likefollow', reqbody).success(function(data){
@@ -259,7 +259,7 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http){
                 "answers" : {
                     "link": "viber_india"
                 },
-                "platform" : {"twitter_follow":1 },
+                "platform" : {"twitter":true },
                 "taskid" : '12a34b56c78d90e'
             };
             $http.put('/students/likefollow', reqbody).success(function(data){
@@ -273,7 +273,7 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http){
                     "link" : "https://www.facebook.com/officialviberindia/",
                     "handle" : "viber_india"
                 },
-                "platform" : {"twitter_follow":0 },
+                "platform" : {"twitter":false },
                 "taskid" : '12a34b56c78d90e'
             };
             $http.put('/students/likefollow', reqbody).success(function(data){

@@ -370,7 +370,7 @@ function updateSettings(req, callback,cb) {
 
 function updateAnswers(facebookid, taskid, answers,cb) {
 
-    console.log('logging new answers in updateAnswers :'  + JSON.stringify(answers));
+    //console.log('logging new answers in updateAnswers :'  + JSON.stringify(answers));
     Students.findOne({ 'facebookid': facebookid })
         .select({ 'user_tasks': { $elemMatch: {task_id: taskid}}})
         .exec(function (err, doc) {
