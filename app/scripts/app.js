@@ -1,8 +1,7 @@
 'use strict';
 
 var viberApp = angular
-    .module('viberApp', ['ngRoute', 'toaster', 'angular-loading-bar', 'ngAnimate', 'ui.bootstrap', 'ngCookies',
-        'ngSanitize','angularFileUpload']);
+    .module('viberApp', ['ngRoute', 'toaster', 'angular-loading-bar', 'ngAnimate', 'ui.bootstrap','angularFileUpload']);
 
 // angular routes configuration
 
