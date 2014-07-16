@@ -147,7 +147,7 @@ viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload){
             },
             "taskid" : '12a34b56c78d90e'
         };
-        $http.put('/students/uploaimage', reqbody).success(function(data) {
+        $http.put('/students/uploadselfie', reqbody).success(function(data) {
             console.log("success");
         });
 
