@@ -5,7 +5,6 @@
 var viberApp = angular
     .module('viberApp');
 
-
 viberApp.controller('vbSurveyCtrl',function($scope,postsurvey){
 
     $scope.persons = [{"id":1, "value":"einstein", "label":"images/img-check-1.jpg"}, {"id":2, "value":"gandhi","label":"images/img-check-2.jpg"},{"id":3, "value":"tagore","label":"images/img-check-3.jpg"}];
@@ -85,10 +84,10 @@ viberApp.controller('vbSurveyCtrl',function($scope,postsurvey){
             }
 
             var postObj = {'answers':{'answer1' :$scope.used,'answer2':$scope.country,'answer3':{'awesome1':$scope.awesome1,'awesome2':$scope.awesome2,'awesome3':$scope.awesome3,'awesome4':$scope.awesome4},'answer4':$scope.coolest,'answer5':{'person1':$scope.person1, 'person2':$scope.person2,'person3':$scope.person3}},'taskid':'53a951f9e4b041d6a3190438'};
-            console.log(JSON.stringify(postObj));
+            //console.log(JSON.stringify(postObj));
             postsurvey.postSurvey(postObj).then(function(success){
                 if(success){
-                    console.log("Success");
+                    $scope.identity.currentUser.points += 30;
                 }
                 else{
                     console.log("failure");
@@ -145,7 +144,7 @@ viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload){
             "answers" : {
                 "name" : $scope.done
             },
-            "taskid" : '12a34b56c78d90e'
+            "taskid" : '53a9526be4b041d6a3190439'
         };
         $http.put('/students/uploadselfie', reqbody).success(function(data) {
             console.log("success");
@@ -179,7 +178,7 @@ viberApp.controller('vbinviteFrndsCtrl',function($scope, $http){
                         "answers" : {
                             "fb_ids" : response.to
                         },
-                        "taskid" : '12a34b56c78d90e'
+                        "taskid" : '53a9526be4b041d6a3190441'
                     };
                     $http.put('/students/invites', reqObj).success(function(data){
                         console.log('Success Invites');
@@ -205,7 +204,7 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http){
                     "link" : "https://www.facebook.com/officialviberindia/"
                 },
                 "platform" : {"facebook": true},
-                "taskid" : '12a34b56c78d90e'
+                "taskid" : '53a9526be4b041d6a3190440'
             };
             $http.put('/students/likefollow', reqbody).success(function(data){
                console.log("success");
@@ -249,7 +248,7 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http){
                     "link": "viber_india"
                 },
                 "platform" : {"twitter":true },
-                "taskid" : '12a34b56c78d90e'
+                "taskid" : '53a9526be4b041d6a3190440'
             };
             $http.put('/students/likefollow', reqbody).success(function(data){
                 console.log("success");
@@ -298,7 +297,7 @@ viberApp.controller('vbInsertLinksCtrl',function($scope,$http,toaster,$q,postlin
     bindCtrl();
 
     if (angular.isObject($scope.identity.currentUser.facebook) && $scope.identity.currentUser.facebook.authorized == '1') $scope.checkedfb = true;
-    if (angular.isObject($scope.identity.currentUser.facebook) && $scope.identity.currentUser.twitter.authorized == '1') $scope.checkedtw = true;
+    if (angular.isObject($scope.identity.currentUser.twitter) && $scope.identity.currentUser.twitter.authorized == '1') $scope.checkedtw = true;
     console.log(angular.isObject($scope.answers.facebook));
 
     $scope.submitForm = function (isValid) {
