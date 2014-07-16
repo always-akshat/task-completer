@@ -212,19 +212,8 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http){
 
             });
         });
-        FB.Event.subscribe('edge.remove', function(response) {
-            var reqbody =  {
-                "answers" : {
-                    "link" : "https://www.facebook.com/officialviberindia/"
-                    },
-                "platform" : {"facebook": false},
-                "taskid" : '12a34b56c78d90e'
-            };
-            $http.put('/students/likefollow', reqbody).success(function(data){
-                console.log("success");
-
-            });
-        });
+//        FB.Event.subscribe('edge.remove', function(response) {
+//        });
     };
 
     (function(d, s, id) {
@@ -267,20 +256,8 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http){
 
             });
         });
-        twttr.events.bind('unfollow', function() {
-            var reqbody =  {
-                "answers" : {
-                    "link" : "https://www.facebook.com/officialviberindia/",
-                    "handle" : "viber_india"
-                },
-                "platform" : {"twitter":false },
-                "taskid" : '12a34b56c78d90e'
-            };
-            $http.put('/students/likefollow', reqbody).success(function(data){
-                console.log("success");
-
-            });
-        });
+//        twttr.events.bind('unfollow', function() {
+//        });
     });
 
 });
