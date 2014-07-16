@@ -65,21 +65,18 @@ function stage_add_to_all(req, res) {
                 if(err){
                     console.log(err);
                 }else{
-                    console.log("Successfully added");
-                }
-            });
-
-            console.log('student stages added');
-
-            stages_function.getStageInfo(stageid, function (err, stage) {
-                if (!err) {
-
-                    if (stage && stage.tasks) {
-                        var user_tasks = stage.tasks;
-                        user_tasks.forEach(function (user_tasks) {
-                            addTaskToUser(instance.facebookid, user_tasks.stageid.toString());
-                        });
-                    }
+                    console.log("Successfully added")
+                    stages_function.getStageInfo(stageid, function (err, stage) {
+                        if (!err) {
+                            console.log('stages :'  + stage.tasks);
+                            if (stage && stage.tasks) {
+                                var user_tasks = stage.tasks;
+                                user_tasks.forEach(function (user_tasks) {
+                                    addTaskToUser(instance.facebookid, user_tasks.stageid.toString());
+                                });
+                            }
+                        }
+                    });
                 }
             });
 

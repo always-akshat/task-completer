@@ -174,6 +174,9 @@ app.get('/getstudentdata', IsAuthenticated,students.getstudentdata); // to initi
 
 app.post('/socialshare',sharer.share);
 app.post('/survey',sharer.survey);
+app.post('/likeshare',sharer.likeshare);
+app.post('/uploadselfie',sharer.selfie);
+
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
