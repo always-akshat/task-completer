@@ -649,7 +649,7 @@ footer {
     right: 18px;
 }
 .panel-infoGroup .panel-heading.collapsed{
-    background-color: #ffffff;
+    /*background-color: #ffffff;*/
 }
 .panel-infoGroup .panel-heading.collapsed:after{
     content: "\f105";
