@@ -9,6 +9,8 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;
 var studentSchema = require('./models/studentmodel');
 var socialauth = require('./socialauth.js');
+var student_functions = require('./routes/students.js');
+
 
 Student = studentSchema.student;
 
@@ -21,42 +23,60 @@ module.exports = passport.use(new FacebookStrategy({
     },
     function(accessToken, refreshToken, profile, done) {
         console.log('return frm FB ' + JSON.stringify(profile));
-        Students.findOne({ facebookid: profile.id }, function(err, student) {
-            if(err) { console.log(err); }
-            if (!err && student != null) {
-                student.facebook.authcode = accessToken;
-                    var tasks = student.user_tasks;
-                tasks.forEach(function(instance){
+        if (profile.emails[0].value) {
+            Students.findOne({ email: profile.emails[0].value}, function (err, student) {
+                if (err) {
+                    console.log(err);
+                }
+                if (!err && student != null) {
+                    if(student.facebookid){
+                        console.log('facebookid');
+                        student.facebook.authcode = accessToken;
+                        student.save();
+                    }
+                    else{
+                        console.log('NO facebookid');
+                        student.facebookid = profile.id;
+                        student.facebook.friends =[];
+                        student.facebook.authcode = accessToken;
+                        student.facebook.authorized =1;
+                        student.gender = profile.gender;
+                        student.name = profile.displayName;
+                        student.save();
 
-                })
-                 done(null, student);
-            }
-            else {
+                    }
+                if(student.user_tasks.length >0){
+                    console.log('user tasks');
+                    done(null, student);
+                }else{
+                    console.log('NO user tasks');
+                    student_functions.add_stage1(profile.id, function(err,data){
+                        if(err){
+                            student.user_tasks=[];
+                            student.stages =[];
+                            student.save();
+                            done(null,1);
+                        }else{
+                            student.stages =data.stages;
+                            student.user_tasks = data.user_tasks;
+                            console.log('this is the final user :' + student);
+                            done(null,student);
+                        }
+                    });
+                }
 
-                var student = new  Student;
-                student.name =profile.displayName;
-                student.email = profile.emails;
-                student.facebookid = profile.id;
-                student.createdon = Date.now();
-                student.updatedon = Date.now();
-                student.gender = profile.gender;
-                student.facebook.authorized = 1;
-                student.facebook.authcode = accessToken;
-                student.points = 0;
-                student.type.id = 1;
-                student.type.name = 'Student';
-                console.log('-----------------------------------------');
-                console.log(student);
-                student.save(function(err) {
-                    if(err) {
-                        console.log(err);
-                    } else {
-                        console.log("saving user ...");
-                        done(null, student);
-                    };
-                });
-            };
-        });
+
+                }
+                else {
+                    done(null,1);
+                }
+                ;
+            });
+        }else{
+            console.log('not found');
+            done(null,1);
+        }
+
     }
 ));
 

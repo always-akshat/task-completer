@@ -103,18 +103,21 @@ app.get('/', routes.index);
 
 
 
-app.get('/auth/facebook', passport.authenticate('facebook',{ scope: 'publish_actions' }),function(req, res){
+app.get('/auth/facebook', passport.authenticate('facebook',{ scope: ['publish_actions','email','public_profile'] }),function(req, res){
 
 });
 
 app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {failureRedirect: '/' }),
     function(req, res) {
-
+        console.log(req.user);
+        if(req.user!= 1){
         req.session.student = req.user;
-        //res.send(req.session.student);
         res.redirect('/app/');
-        //console.log(req.session.student);
+        }else{
+            res.send('please register for phase 2.');
+        }
+
     });
 
 app.get('/auth/twitter',
@@ -146,8 +149,11 @@ app.put('/students/:fbid/tasks/:taskid',students.updatetask);
 app.put('/students/points/:facebookid',students.addpoints);
 app.get('/students/leaderboard/:type/:id?',students.leaderboard);
 app.get('/logout',students.logout);
+
 app.get('/students/backend/add_tasks',students.stage_add_to_all);
 app.get('/students/backend/transaction',students.VibesTransaction);
+app.get('/students/:facebookid/delete',students.delete_my_data);
+
 
 app.post('/campaigns',campaigns.addcampaign);
 app.get('/campaigns',campaigns.list);

@@ -43,7 +43,7 @@ function list(req, res) {
     });
 };
 
-function stage_add_to_all(req, res) {
+function stage_add_to_all(facebookid) {
 
     console.log('hello');
 
@@ -84,6 +84,67 @@ function stage_add_to_all(req, res) {
             });
 
         res.send('done');
+    });
+
+
+}
+
+
+function add_stage1(facebookid,cb) {
+
+    Students.find({ facebookid :facebookid}).limit(1).exec(function (err, students) {
+        var ret_array = {
+            stages :[],
+            user_tasks :[]
+        }
+        students.forEach(function (instance) {
+            console.log(instance.facebookid + ' -- ' + instance.name);
+            var stageid = '5390521624349ecc0c108c10';
+            var stage_name = 'Level 1';
+            var stage = {
+                "name" : stage_name.toString(),
+                "stageid" : stageid.toString(),
+                "completion" : 0
+            };
+            console.log(stage);
+            console.log('adding student stages now');
+            Students.update({'facebookid': instance.facebookid},
+                {$addToSet: {stages:stage}},{upsert:true},function(err){
+                    if(err){
+                        console.log(err);
+                    }else{
+                        ret_array.stages = stage;
+                        console.log("Successfully added")
+                        stages_function.getStageInfo(stageid, function (err, stage) {
+                            if (!err) {
+                                console.log('stages :'  + stage.tasks);
+                                if (stage && stage.tasks) {
+                                    var user_tasks = stage.tasks;
+                                    console.log(user_tasks);
+                                    var total_tasks = user_tasks.length;
+                                    var added =0;
+
+                                    user_tasks.forEach(function (user_tasks) {
+                                        addTaskToUser(instance.facebookid, user_tasks.stageid.toString(),function(err,data){
+                                            if(data){
+                                                ret_array.user_tasks.push(data);
+                                                added++;
+                                            }
+                                            if(added == total_tasks){
+
+                                                cb(null,ret_array);
+                                            }
+                                        });
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+
+        });
+
+
     });
 
 
@@ -577,16 +638,16 @@ function completeTask(facebookid, taskid,cb) {
 
 }
 
-function addTaskToUser(facebookid, taskid) {
+function addTaskToUser(facebookid, taskid,cb) {
 
     taskid = config.ObjectId(taskid);
 
-    return tasks.findOne({ '_id': taskid}, function (err, task) {
+     tasks.findOne({ '_id': taskid}, function (err, task) {
         if (!err) {
 
             if (task === null) {
                 console.log(taskid + ' not there ?')
-                return ('no record found');
+                cb(0)
             }
             else {
                 student_task = new studentSchema.student_task;
@@ -601,9 +662,8 @@ function addTaskToUser(facebookid, taskid) {
                 student_task.stage = task.stage;
                 student_task.completevalue = task.completevalue;
 
-
                 if (!student_task) {
-                    return ('student task could not be added');
+                    cb(0)
                 } else {
 
                     switch (student_task.type.id) {
@@ -628,15 +688,13 @@ function addTaskToUser(facebookid, taskid) {
                             break;
                         }  //phone_no
                     }
-
-
                     Students.update({'facebookid': facebookid}, {$addToSet: {user_tasks: student_task}},
                         function (err, added_task) {
 
                             if (err) {
-                                return ({"error": err});
+                                cb(0)
                             }
-                            return ({"updated": added_task});
+                            cb(null,student_task);
                         })
                 }
 
@@ -763,8 +821,38 @@ function complete_user_stage(facebookid,stageid,completion_value,cb) {
 
 }
 
+function delete_my_data(req,res){
+    var fb_id = req.params.facebookid;
+
+    return Students.findOne({facebookid :fb_id }, function (err, doc) {
+        if (!err) {
+
+            z = doc.name;
+                doc.stages =undefined;
+                doc.user_tasks=undefined;
+                doc.vibes_transaction = undefined;
+                doc.facebook = undefined;
+                doc.facebookid = undefined;
+                doc.gender = undefined;
+                doc.name = undefined;
+                doc.save();
+                res.send(' data deleted for ' + z);
+        };
+
+
+
+
+
+
+    });
+
+}
+
+
+
 module.exports = {list: list,
     stage_add_to_all: stage_add_to_all,
+    add_stage1 :add_stage1,
     getstudentdata: getstudentdata,
     signup: signup,
     info: info,
@@ -783,7 +871,9 @@ module.exports = {list: list,
     addTwitter: addTwitter,
     VibesTransaction: VibesTransaction,
     logout: logout,
-    updateSettings : updateSettings
-
+    updateSettings : updateSettings,
+    delete_my_data : delete_my_data
 }
+
+
 
