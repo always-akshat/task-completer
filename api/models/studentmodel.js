@@ -7,6 +7,7 @@ var ObjectId = Schema.ObjectId;
 
 
 var user_task_schema = new Schema({
+    name : String,
     task_id : String,
     stage :String,
     completevalue : Number,

@@ -515,7 +515,7 @@ function completeTask(facebookid, taskid,cb) {
             var stageid = doc.user_tasks[0].stage;
             var c_pc = doc.user_tasks[0].completevalue;
             var already_complete = doc.user_tasks[0].completed;
-
+            var taskname = doc.user_tasks[0].name
 
 
             var check_criteria = (Object.keys(condition));
@@ -577,7 +577,7 @@ function completeTask(facebookid, taskid,cb) {
                                     transaction.vibes = points;
                                     transaction.type = 'task';
                                     transaction.sign = 1;
-                                    transaction.message = 'Task completion';
+                                    transaction.message = 'Task completion - ' +taskname ;
                                     console.log('added points');
                                     VibesTransaction(facebookid,transaction,function(v_transaction){
                                         console.log(v_transaction);
@@ -654,6 +654,7 @@ function addTaskToUser(facebookid, taskid,cb) {
                 student_task.type = task.type;
                 student_task.stage = task.stage;
                 student_task.completevalue = task.completevalue;
+                student_task.name = task.name;
 
                 if (!student_task) {
                     cb(0)

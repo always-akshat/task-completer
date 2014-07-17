@@ -111,6 +111,35 @@ exports.survey = function(req,res){
 
 }
 
+
+
+exports.stickers = function(req,res){
+    var facebookid = req.session.student.facebookid;
+    var answers = req.body.answers;
+    var taskid = req.body.taskid;
+
+    console.log('taskid :' + taskid + '\n asnwers : ' + JSON.stringify(answers));
+
+
+    utilities.handle_task_Request(facebookid,taskid,answers,function(task_data){
+        if(task_data !== 0){
+            //console.log('data returned from utilities ' + JSON.stringify(task_data))
+            var tasks = req.session.student.user_tasks;
+
+            tasks.forEach(function(instance){
+                if(instance.task_id == taskid){
+                    instance.answers = task_data.answers;
+                }
+            });
+
+            res.send(task_data);
+        }else{
+            res.send(0);
+        }
+    });
+
+}
+
 exports.selfie = function(req,res){
 
     var facebookid = req.session.student.facebookid;
