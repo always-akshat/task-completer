@@ -153,11 +153,17 @@ viberApp.controller('lbMySettingsCntrl', function ($scope, $http, vbIdentity, vb
     var currentPage = {home: 0, rewards: 0, lb: 0, mysettings: 1};
     vbSharedService.prepForBroadcast(currentPage);
 
+    $scope.tw_auth = false;
     $scope.user = $scope.identity.currentUser;
 
     $scope.transactions = $scope.user.vibes_transaction;
     $scope.settingData = $scope.identity.currentUser;
-
+    if(angular.isObject($scope.user.twitter)){
+        $scope.tw_auth = true;
+    }
+    if(angular.isObject($scope.user.facebook)){
+        $scope.fb_auth = true;
+    }
     $scope.getLocation = function (val) {
         if (val.length >= 3) {
             return $http.get('/locations/' + val).then(function (res) {

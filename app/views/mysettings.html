@@ -52,7 +52,7 @@
             <div class="form-group">
                 <label class="col-sm-4 control-label">College</label>
                 <div class="col-sm-20">
-                    <input type="text" ng-model="user.college.name" typeahead="clg.CollegeName for clg in getCollege($viewValue)" typeahead-on-select='onSelectCollege($item)'class="form-control">
+                    <input type="text" ng-model="user.college.name" typeahead="clg.CollegeName for clg in getCollege($viewValue)" typeahead-items='5' typeahead-on-select='onSelectCollege($item)'class="form-control">
                 </div>
             </div>
             <div class="form-group">
@@ -75,11 +75,11 @@
         <ul class="stripedUl">
             <li class="row">
                 <div class="col-sm-14 circle-icon-fb social-active">Awarded Bonus 200 vibes</div>
-                <div class="col-sm-10"><label><input type="checkbox" class="ios-switch bigswitch" checked /><div><div></div></div></label></div>
+                <div class="col-sm-10"><label><input ng-model="fb_auth" type="checkbox" class="ios-switch bigswitch" checked /><div><div></div></div></label></div>
             </li>
             <li class="row">
                 <div class="col-sm-14 circle-icon-tw">Connect to win 200 vibes</div>
-                <div class="col-sm-10"><label><input type="checkbox" class="ios-switch bigswitch" /><div><div></div></div></label></div>
+                <div class="col-sm-10"><label><input ng-model="tw_auth" type="checkbox" class="ios-switch bigswitch" /><div><div></div></div></label></div>
             </li>
             <!--<li class="row">
                 <div class="col-sm-14 circle-icon-g">Connect to win 200 vibes</div>
