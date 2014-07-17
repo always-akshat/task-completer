@@ -93,10 +93,6 @@ function stage_add_to_all(facebookid) {
 function add_stage1(facebookid,cb) {
 
     Students.find({ facebookid :facebookid}).limit(1).exec(function (err, students) {
-        var ret_array = {
-            stages :[],
-            user_tasks :[]
-        }
         students.forEach(function (instance) {
             console.log(instance.facebookid + ' -- ' + instance.name);
             var stageid = '5390521624349ecc0c108c10';
@@ -113,7 +109,6 @@ function add_stage1(facebookid,cb) {
                     if(err){
                         console.log(err);
                     }else{
-                        ret_array.stages = stage;
                         console.log("Successfully added")
                         stages_function.getStageInfo(stageid, function (err, stage) {
                             if (!err) {
@@ -127,12 +122,10 @@ function add_stage1(facebookid,cb) {
                                     user_tasks.forEach(function (user_tasks) {
                                         addTaskToUser(instance.facebookid, user_tasks.stageid.toString(),function(err,data){
                                             if(data){
-                                                ret_array.user_tasks.push(data);
                                                 added++;
                                             }
                                             if(added == total_tasks){
-
-                                                cb(null,ret_array);
+                                                cb(null,1);
                                             }
                                         });
                                     });
@@ -694,6 +687,7 @@ function addTaskToUser(facebookid, taskid,cb) {
                             if (err) {
                                 cb(0)
                             }
+                            console.log(student_task);
                             cb(null,student_task);
                         })
                 }
@@ -823,11 +817,10 @@ function complete_user_stage(facebookid,stageid,completion_value,cb) {
 
 function delete_my_data(req,res){
     var fb_id = req.params.facebookid;
-
-    return Students.findOne({facebookid :fb_id }, function (err, doc) {
+    console.log(fb_id);
+    return Students.findOne({ facebookid: req.params.facebookid }, function (err, doc) {
         if (!err) {
-
-            z = doc.name;
+            console.log(JSON.stringify(doc));
             doc.stages =undefined;
             doc.user_tasks=undefined;
             doc.vibes_transaction = undefined;
@@ -836,7 +829,7 @@ function delete_my_data(req,res){
             doc.gender = undefined;
             doc.name = undefined;
             doc.save();
-            res.send(' data deleted for ' + z);
+            res.send(' data deleted');
         };
 
 

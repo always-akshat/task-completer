@@ -57,10 +57,10 @@ module.exports = passport.use(new FacebookStrategy({
                             student.save();
                             done(null,1);
                         }else{
-                            student.stages =data.stages;
-                            student.user_tasks = data.user_tasks;
-                            console.log('this is the final user :' + student);
-                            done(null,student);
+                            Students.findOne({ email: profile.emails[0].value}, function (err, student){
+                                done(null,student);
+                            })
+
                         }
                     });
                 }
