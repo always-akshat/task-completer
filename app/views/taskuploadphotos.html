@@ -4,8 +4,8 @@
     <h4 class="panel-title pull-left">
         Introduce stickers to your friends
     </h4>
-    <span class="pull-right" ng-show="taskcomplete4"><strong class="icon-tick"></strong></span>
-    <span class="pull-right" ng-hide="taskcomplete4"><strong>200</strong> vibes </span>
+    <span class="pull-right" ng-show="taskcomplete1"><strong class="icon-tick"></strong></span>
+    <span class="pull-right" ng-hide="taskcomplete1"><strong>200</strong> vibes </span>
 
 </div>
 
@@ -20,19 +20,15 @@
         <div class="upload-nav text-right">
             <span class="alert-success pull-left">{{submitted}} submitted successfully</span>
             <ul>
-                <li class="active"><a href="#added" data-toggle="tab">{{selected}} Added</a></li>
+                <li class="active"><a href="#added" data-toggle="tab">{{added}} Added</a></li>
                 <!--<li><a href="#pending" data-toggle="tab">12 Pending Approval</a></li>
                 <li><a href="#rejected" data-toggle="tab" class="rejected-photo">6 Rejected</a></li>-->
             </ul>
         </div>
         <div class="tab-content">
             <div class="tab-pane fade in active new-upload" id="added">
-                <!--<div ng-model="transactions" ng-repeat="transaction in transactions">-->
-                <!--<a href="#."><img src="https://s3-ap-southeast-1.amazonaws.com/viber-uploads/s3UploadExample/1100%24IMG_3704%5B1%5D.JPG" class="img-responsive" height="78" width="78" alt=""/></a>-->
-                <!--<a href="#."><img src="https://s3-ap-southeast-1.amazonaws.com/viber-uploads/s3UploadExample/1100%24IMG_3704%5B1%5D.JPG" class="img-responsive" height="78" width="78" alt=""/></a>-->
-                <!--<a href="#."><img src="https://s3-ap-southeast-1.amazonaws.com/viber-uploads/s3UploadExample/1100%24IMG_3704%5B1%5D.JPG" class="img-responsive" height="78" width="78" alt=""/></a>-->
-                <!--<a href="#."><img src="https://s3-ap-southeast-1.amazonaws.com/viber-uploads/s3UploadExample/1100%24IMG_3704%5B1%5D.JPG" class="img-responsive" height="78" width="78" alt=""/></a>-->
-                <!--<a href="#."><img src="https://s3-ap-southeast-1.amazonaws.com/viber-uploads/s3UploadExample/1100%24IMG_3704%5B1%5D.JPG" class="img-responsive" height="78" width="78" alt=""/></a>-->
+                <!--<div ng-model="s3added" ng-repeat="s3add in s3added">-->
+                <a ng-model="s3added" ng-repeat="s3add in s3added" href="#."><img src="{{s3add}}" height="78" width="78" alt=""/></a>
                 <!--</div>-->
                 <a href="#." onclick="document.getElementById('fileID').click(); return false;"class="upload-img">
                     <span class="icon-plus-circle"></span>
