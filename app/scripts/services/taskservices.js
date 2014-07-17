@@ -4,6 +4,7 @@
 
 var viberApp=angular.module('viberApp');
 
+
 viberApp.factory('postlink',function($http,$q){
 
     return{
@@ -66,33 +67,3 @@ viberApp.factory('getminileaderboard',function($http,$q){
 
 
 });
-
-viberApp.factory('postsurvey',function($http,$q){
-
-    return{
-
-        postSurvey: function (message) {
-
-            var dfd = $q.defer();
-            $http.post('/survey', JSON.stringify(message)).success(function(data){
-
-                if(angular.isObject(data)){
-                    dfd.resolve(true);
-                }
-                else{
-                    dfd.resolve(false);
-                }
-
-
-            });
-            return dfd.promise;
-
-        }
-
-
-    }
-
-});
-
-
-
