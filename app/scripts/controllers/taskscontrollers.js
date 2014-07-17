@@ -157,11 +157,11 @@ viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload){
                 data: {
                     'key' : 's3UploadExample/'+ ran_num + '$' + file.name,
                     'acl' : 'public-read',
-                    'Content-Type' : file.type,
+                    'Content-Type' : 'application',
                     'AWSAccessKeyId': 'AKIAITP3AH32R7ZKQ4XQ',
                     'success_action_status' : '201',
-                    'Policy' : 'eyJleHBpcmF0aW9uIjoiMjAxNS03LTE2VDI0OjAwOjAwLjAwMFoiLCJjb25kaXRpb25zIjpbWyJzdGFydHMtd2l0aCIsIiRrZXkiLCJzM1VwbG9hZEV4YW1wbGUvIl0seyJidWNrZXQiOiJ2aWJlci11cGxvYWRzIn0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiaW1hZ2UvanBlZyJdLHsic3VjY2Vzc19hY3Rpb25fc3RhdHVzIjoiMjAxIn1dfQ==',
-                    'Signature' : 'kzikIBOel+cn8KYLhQIRX73IHhc='
+                    'Policy' : 'eyJleHBpcmF0aW9uIjoiMjAxNS03LTE4VDIwOjAwOjAwLjAwMFoiLCJjb25kaXRpb25zIjpbWyJzdGFydHMtd2l0aCIsIiRrZXkiLCJzM1VwbG9hZEV4YW1wbGUvIl0seyJidWNrZXQiOiJ2aWJlci11cGxvYWRzIn0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiYXBwbGljYXRpb24iXSx7InN1Y2Nlc3NfYWN0aW9uX3N0YXR1cyI6IjIwMSJ9XX0=',
+                    'Signature' : '7OiVs5UxzIJdBbhfgjnuPaX6eKE='
                 },
                 file: file
             }).then(function(response){
@@ -303,7 +303,7 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http){
     }(document, 'script', 'facebook-jssdk'));
 
     //Twitter follow
-    (function(d, s, id) {
+    window.twttr = (function(d, s, id) {
         var t, js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return;
         js = d.createElement(s);
