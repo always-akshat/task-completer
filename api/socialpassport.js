@@ -52,8 +52,8 @@ module.exports = passport.use(new FacebookStrategy({
                     console.log('NO user tasks');
                     student_functions.add_stage1(profile.id, function(err,data){
                         if(err){
-                            student.user_tasks=[];
-                            student.stages =[];
+                            student.user_tasks= undefined;
+                            student.stages = undefined;
                             student.save();
                             done(null,2);
                         }else{
@@ -61,6 +61,9 @@ module.exports = passport.use(new FacebookStrategy({
                               if(student.stages.length == 1 && student.user_tasks.length ==5){
                                   done(null,student);
                               }else{
+                                  student.user_tasks= undefined;
+                                  student.stages = undefined;
+                                  student.save();
                                   done(null,2);
                               }
 
