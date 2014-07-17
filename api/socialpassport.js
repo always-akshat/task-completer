@@ -55,10 +55,15 @@ module.exports = passport.use(new FacebookStrategy({
                             student.user_tasks=[];
                             student.stages =[];
                             student.save();
-                            done(null,1);
+                            done(null,2);
                         }else{
                             Students.findOne({ email: profile.emails[0].value}, function (err, student){
-                                done(null,student);
+                              if(student.stages.length == 1 && student.user_tasks.length ==5){
+                                  done(null,student);
+                              }else{
+                                  done(null,2);
+                              }
+
                             })
 
                         }

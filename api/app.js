@@ -111,11 +111,15 @@ app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {failureRedirect: '/' }),
     function(req, res) {
         console.log(req.user);
-        if(req.user!= 1){
-        req.session.student = req.user;
-        res.redirect('/app/');
-        }else{
+        if(req.user == 1){
             res.send('please register for phase 2.');
+
+        }else if(req.user == 2){
+            res.send('error occurred');
+        }
+        else{
+            req.session.student = req.user;
+            res.redirect('/app/');
         }
 
     });
