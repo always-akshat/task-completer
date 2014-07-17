@@ -146,7 +146,7 @@ viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload){
             },
             "taskid" : '53a9526be4b041d6a3190439'
         };
-        $http.put('/students/uploadselfie', reqbody).success(function(data) {
+        $http.put('/uploadselfie', reqbody).success(function(data) {
             console.log("success");
         });
 
@@ -180,7 +180,7 @@ viberApp.controller('vbinviteFrndsCtrl',function($scope, $http){
                         },
                         "taskid" : '53a9526be4b041d6a3190441'
                     };
-                    $http.put('/students/invites', reqObj).success(function(data){
+                    $http.put('/invites', reqObj).success(function(data){
                         console.log('Success Invites');
                     });
 
@@ -206,7 +206,7 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http){
                 "platform" : {"facebook": true},
                 "taskid" : '53a9526be4b041d6a3190440'
             };
-            $http.put('/students/likefollow', reqbody).success(function(data){
+            $http.put('/likefollow', reqbody).success(function(data){
                console.log("success");
 
             });
@@ -250,7 +250,7 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http){
                 "platform" : {"twitter":true },
                 "taskid" : '53a9526be4b041d6a3190440'
             };
-            $http.put('/students/likefollow', reqbody).success(function(data){
+            $http.put('/likefollow', reqbody).success(function(data){
                 console.log("success");
 
             });
