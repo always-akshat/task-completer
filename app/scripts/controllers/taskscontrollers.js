@@ -6,6 +6,8 @@ var viberApp = angular
     .module('viberApp');
 
 viberApp.controller('vbSurveyCtrl',function($scope,postsurvey){
+    var user_tasks = $scope.identity.currentUser.user_tasks;
+    var task = _.where(user_tasks,{'task_id':'53a951f9e4b041d6a3190438'})[0];
 
     $scope.persons = [{"id":1, "value":"einstein", "label":"images/img-check-1.jpg"}, {"id":2, "value":"gandhi","label":"images/img-check-2.jpg"},{"id":3, "value":"tagore","label":"images/img-check-3.jpg"}];
     $scope.awesomeness = [{"id":11, "value":"Text them"},{"id":12, "value":"Call them via internet"},{"id":13, "value":"Form groups"},{"id":14, "value":"Share stickers"}];
@@ -88,6 +90,8 @@ viberApp.controller('vbSurveyCtrl',function($scope,postsurvey){
             postsurvey.postSurvey(postObj).then(function(success){
                 if(success){
                     $scope.identity.currentUser.points += 30;
+                    console.log(task.completiondata);
+                    console.log(task.answers);
                 }
                 else{
                     console.log("failure");
@@ -196,7 +200,7 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http){
     //Facebook Like
     window.fbAsyncInit = function() {
         FB.init({
-            appId: '247429375447674'
+            appId: '493599764105814'
         });
         FB.Event.subscribe('edge.create', function(response) {
             var reqbody =  {
