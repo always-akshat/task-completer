@@ -46,6 +46,20 @@ body {
 }
 .icon-tick:before {
     content: "\e602";
+    display:inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: #ac92c1;
+    border-radius: 50%;
+    font-size: 24px;
+    text-align: center;
+    line-height: 30px;
+    color: #FFFFFF;
+    /*position:absolute;*/
+    top: 0;
+    z-index: 1;
+    cursor: pointer;
+    text-decoration: none;
 }
 .icon-uncheck:before {
     content: "\e600";
@@ -404,6 +418,7 @@ footer {
     color: #7c529d;
 }
 
+
 .link-icon-home:after {
     content: '\f015';
 }
@@ -521,8 +536,21 @@ footer {
     cursor: pointer;
     text-decoration: none;
 }
-.round-icon:hover:before{
+
+.round-icon-facebook:before{
+    display:inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: #ac92c1;
+    border-radius: 50%;
+    font-size: 24px;
+    text-align: center;
+    line-height: 40px;
     color: #FFF;
+    position:absolute;
+    top: 0;
+    z-index: 1;
+    cursor: pointer;
     text-decoration: none;
 }
 .social-link a{

@@ -14,13 +14,15 @@ Object.size = function(obj) {
 };
 
 viberApp.controller('vbSurveyCtrl',function($scope,$http){
-    $scope.taskcomplete1 = false;
+    $scope.taskcomplete0 = false;
     $scope.persons = [{"id":1, "value":"einstein", "label":"images/img-check-1.jpg"}, {"id":2, "value":"gandhi","label":"images/img-check-2.jpg"},{"id":3, "value":"tagore","label":"images/img-check-3.jpg"}];
     $scope.awesomeness = [{"id":11, "value":"Text them"},{"id":12, "value":"Call them via internet"},{"id":13, "value":"Form groups"},{"id":14, "value":"Share stickers"}];
     $scope.value1 = [];
     $scope.value2 = [];
-    if($scope.identity.currentUser.user_tasks[1].completed==1)
-        $scope.taskcomplete1=true;
+    var user_tasks = $scope.identity.currentUser.user_tasks;
+    var task = _.where(user_tasks,{'task_id':'53a951f9e4b041d6a3190438'})[0];
+    if(task.completed==1)
+        $scope.taskcomplete0=true;
     $scope.updateQuestionValue = function(choice){
         $scope.value1 = $scope.value1 || [];
         if(choice.checked){
@@ -100,7 +102,7 @@ viberApp.controller('vbSurveyCtrl',function($scope,$http){
                 if(angular.isObject(data)){
                     if(Object.size(data.completiondata)==4){
                         $scope.identity.currentUser.complete += 20;
-                        $scope.taskcomplete1=true;
+                        $scope.taskcomplete0=true;
                     }
                     $scope.identity.currentUser.points += 30;
                 }
@@ -130,29 +132,30 @@ viberApp.controller('vbInsertMobileCtrl',function($scope){
 
 viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload){
 
+    //XML parser
 
-    $scope.selected = 0;
+    $scope.added = 0;
     $scope.submitted = 0;
     $scope.done = [];
-    $scope.taskcomplete4=false;
-    if($scope.identity.currentUser.user_tasks[4].completed==1)
-        $scope.taskcomplete4=true;
+    $scope.taskcomplete1=false;
+    var user_tasks = $scope.identity.currentUser.user_tasks;
+    var task = _.where(user_tasks,{'task_id':'53a9526be4b041d6a3190441'})[0];
+    if(task.completed==1)
+        $scope.taskcomplete1=true;
     $scope.onFileSelect = function($files){
-    $scope.files = $files;
-    $scope.selected = $scope.files.length;
-    };
-
-    $scope.onFileUpload = function(){
+        $scope.files = $files;
         $scope.upload =[];
+        $scope.s3added = [];
+        console.log($scope.files);
         for(var i=0;i<$scope.files.length;i++){
             var file = $scope.files[i];
             var ran_num = Math.round(Math.random()*10000);
-            $scope.done[i]=ran_num+'$$'+file.name;
+            $scope.done[i]=ran_num+'$'+file.name;
             $scope.upload[i]=$upload.upload({
                 url: 'https://viber-uploads.s3-ap-southeast-1.amazonaws.com/',
                 method: 'POST',
                 data: {
-                    'key' : 's3UploadExample/'+ ran_num + '$$' + file.name,
+                    'key' : 's3UploadExample/'+ ran_num + '$' + file.name,
                     'acl' : 'public-read',
                     'Content-Type' : file.type,
                     'AWSAccessKeyId': 'AKIAITP3AH32R7ZKQ4XQ',
@@ -163,21 +166,43 @@ viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload){
                 file: file
             }).then(function(response){
                 if(response.status===201){
-                    $scope.submitted += 1;
+                    $scope.added += 1;
+
+                    //xml parser
+                    if (window.DOMParser)
+                    {
+                        parser=new DOMParser();
+                        xmlDoc=parser.parseFromString(response.data,"text/xml");
+                    }
+                    else // Internet Explorer
+                    {
+                        xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+                        xmlDoc.async=false;
+                        xmlDoc.loadXML(txt);
+                    }
+                    $scope.s3added.push(xmlDoc.getElementsByTagName("Location")[0].childNodes[0].nodeValue);
+                    //console.log(response.data);
+                    //console.log(xmlDoc.getElementsByTagName("Location")[0].childNodes[0].nodeValue);
                 }
             });
+
         }
+
+    };
+
+    $scope.onFileUpload = function(){
+
         var reqbody =  {
             "answers" : {
                 "name" : $scope.done
             },
-            "taskid" : '53a9526be4b041d6a3190439'
+            "taskid" : '53a9526be4b041d6a3190441'
         };
         $http.put('/uploadselfie', reqbody).success(function(data) {
             if(angular.isObject(data)){
                 if(Object.size(data.completiondata)==4){
                     $scope.identity.currentUser.complete += 20;
-                    $scope.taskcomplete4=true;
+                    $scope.taskcomplete1=true;
                 }
                 $scope.identity.currentUser.points += 20;
             }
@@ -189,8 +214,10 @@ viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload){
 
 viberApp.controller('vbinviteFrndsCtrl',function($scope, $http){
 
+    var user_tasks = $scope.identity.currentUser.user_tasks;
+    var task = _.where(user_tasks,{'task_id':'53a9526be4b041d6a3190440'})[0];
     $scope.taskcomplete2=false;
-    if($scope.identity.currentUser.user_tasks[2].completed==1)
+    if(task.completed==1)
         $scope.taskcomplete2=true;
     // Load the SDK Asynchronously
     (function(d){
@@ -213,7 +240,7 @@ viberApp.controller('vbinviteFrndsCtrl',function($scope, $http){
                         "answers" : {
                             "fb_ids" : response.to
                         },
-                        "taskid" : '53a9526be4b041d6a3190441'
+                        "taskid" : '53a9526be4b041d6a3190440'
                     };
                     $http.put('/invites', reqObj).success(function(data){
                         if(Object.size(data.completiondata)==4){
@@ -234,6 +261,8 @@ viberApp.controller('vbinviteFrndsCtrl',function($scope, $http){
 viberApp.controller('vblikenfollowCtrl',function($scope, $http){
 
     //Facebook Like
+    var user_tasks = $scope.identity.currentUser.user_tasks;
+    var task = _.where(user_tasks,{'task_id':'53a9526be4b041d6a3190439'})[0];
     $scope.taskcomplete3=false;
     if($scope.identity.currentUser.user_tasks[3].completed==1)
         $scope.taskcomplete3=true;
@@ -248,7 +277,7 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http){
                     "link" : "https://www.facebook.com/officialviberindia/"
                 },
                 "platform" : {"facebook": true},
-                "taskid" : '53a9526be4b041d6a3190440'
+                "taskid" : '53a9526be4b041d6a3190439'
             };
             $http.put('/likefollow', reqbody).success(function(data){
                 if(angular.isObject(data)){
@@ -274,7 +303,7 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http){
     }(document, 'script', 'facebook-jssdk'));
 
     //Twitter follow
-    window.twttr = (function(d, s, id) {
+    (function(d, s, id) {
         var t, js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return;
         js = d.createElement(s);
@@ -298,7 +327,7 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http){
                     "link": "viber_india"
                 },
                 "platform" : {"twitter":true },
-                "taskid" : '53a9526be4b041d6a3190440'
+                "taskid" : '53a9526be4b041d6a3190439'
             };
             $http.put('/likefollow', reqbody).success(function(data){
                 if(Object.size(data.completiondata)==4){
@@ -319,11 +348,11 @@ viberApp.controller('vbInsertLinksCtrl',function($scope,$http,toaster,$q,postlin
     $scope.link = "https://www.youtube.com/watch?v=12n9qipCYno";
     console.log($scope.identity.currentUser);
     var user_tasks = $scope.identity.currentUser.user_tasks;
-    var task = _.where(user_tasks,{'task_id':'53a9515ae4b041d6a3190435'})[0];
+    var task = _.where(user_tasks,{'task_id':'53a9526be4b041d6a3190442'})[0];
 
-    $scope.taskcomplete0=false;
-    if($scope.identity.currentUser.user_tasks[0].completed==1)
-        $scope.taskcomplete0=true;
+    $scope.taskcomplete4=false;
+    if(task.completed==1)
+        $scope.taskcomplete4=true;
 
     var fbsuccess=false, twsuccess=false;
     var bindCtrl = function () {
