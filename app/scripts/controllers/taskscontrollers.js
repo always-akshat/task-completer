@@ -101,11 +101,10 @@ viberApp.controller('vbSurveyCtrl',function($scope,$http,toaster){
             var postObj = {'answers':{'answer1' :$scope.used,'answer2':$scope.country,'answer3':{'awesome1':$scope.awesome1,'awesome2':$scope.awesome2,'awesome3':$scope.awesome3,'awesome4':$scope.awesome4},'answer4':$scope.coolest,'answer5':{'person1':$scope.person1, 'person2':$scope.person2,'person3':$scope.person3}},'taskid':'53a951f9e4b041d6a3190438'};
 
             $http.post('/survey', JSON.stringify(postObj)).success(function(data){
-
+                $scope.taskcomplete0=true;
                 if(angular.isObject(data)){
                     if(Object.size(data.completiondata)==4){ // because the service will not return Level inside completiondata if the user is doing the same task again
                         $scope.identity.currentUser.complete += data.completiondata.level;
-                        $scope.taskcomplete0=true;
                         $scope.identity.currentUser.points += data.completiondata.points;
                         toaster.pop('success', "Task 1", "You have successfully finished the first task");
                     }
@@ -224,11 +223,11 @@ viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload, toaste
         $http.put('/uploadselfie', reqbody).success(function(data) {
             if(angular.isObject(data)){
                 if(Object.size(data.completiondata)==4){
-                    $scope.identity.currentUser.complete += 20;
+                    $scope.identity.currentUser.complete += data.completiondata.level;
+                    $scope.identity.currentUser.points += data.completiondata.points;
                     $scope.taskcomplete1=true;
                 }
                 $scope.submitted += $scope.done.length;
-                $scope.identity.currentUser.points += 20;
                 toaster.pop('success', "Task 4", "Your photo was uploaded successfully.");
             }
         });
@@ -275,10 +274,15 @@ viberApp.controller('vbinviteFrndsCtrl',function($scope, $http, toaster){
                     };
                     $http.put('/invites', reqObj).success(function(data){
                         if(Object.size(data.completiondata)==4){
-                            $scope.identity.currentUser.complete += 20;
+                            $scope.identity.currentUser.complete += data.completiondata.level;
+                            $scope.identity.currentUser.points += data.completiondata.points;
                             $scope.taskcomplete2=true;
+                            $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
                         }
-                        $scope.identity.currentUser.points += 20;
+                        else{
+                            $scope.identity.currentUser.points += data.completiondata.points;
+                            $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+                        }
                         toaster.pop('success', "Task 5", "Your invites were sent successfully.");
                     });
 
@@ -362,6 +366,7 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http,$window,$rootScop
 viberApp.controller('vbInsertLinksCtrl',function($scope,$http,toaster,$q,postlink){
 
     $scope.link = "https://www.youtube.com/watch?v=12n9qipCYno";
+    $scope.rate = undefined;
     console.log($scope.identity.currentUser);
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks,{'task_id':'53a9526be4b041d6a3190442'})[0];
@@ -370,100 +375,124 @@ viberApp.controller('vbInsertLinksCtrl',function($scope,$http,toaster,$q,postlin
     if(task.completed==1)
         $scope.taskcomplete4=true;
 
-    var fbsuccess=false, twsuccess=false;
-    var bindCtrl = function () {
-        $scope.answers = task.answers;
-        $scope.completiondata = task.completiondata;
-        $scope.answers.reverse();
-        _.each($scope.answers,function(answer){
+    $scope.submitForm = function(isValid){
+        if(isValid){
+            var reqbody = {
+                "answers": {
+                    "rate": $scope.rate
+                },
+                "taskid": '53a9526be4b041d6a3190442'
+            };
 
-            if(angular.isObject(answer.facebook)){
-
-                if(angular.isObject(answer.twitter)) {
-
-                    answer['fbsuccess'] = true;
-                    answer['twsuccess'] = true;
-                }
-                else {
-                    answer['fbsuccess'] = true;
-                    answer['twsuccess'] = false;
-                }
-
-            }
-            else{ answer['twsuccess'] = true;
-                answer['fbsuccess'] =false;
-            }
-        });
-    };
-
-    bindCtrl();
-
-    if (angular.isObject($scope.identity.currentUser.facebook) && $scope.identity.currentUser.facebook.authorized == '1') $scope.checkedfb = true;
-    if (angular.isObject($scope.identity.currentUser.twitter) && $scope.identity.currentUser.twitter.authorized == '1') $scope.checkedtw = true;
-    console.log(angular.isObject($scope.answers.facebook));
-
-    $scope.submitForm = function (isValid) {
-
-            if (isValid) {
-
-                toaster.pop('success', "Social Post", "Posting link to Faceboook");
-                $scope.taskcomplete4=true;
-
-                postlink.postsharelink($scope.identity.currentUser,$scope.link, $scope.message, task, $scope.checkedfb, $scope.checkedtw).then(function(success) {
-                    if($scope.checkedfb && $scope.checkedtw){
-                        if (success) {
-                            toaster.pop('success', "Twitter Post", "Your Message has been posted successfully");
-                            toaster.pop('success', "Facebook Post", "Your Message has been posted successfully to Facebook");
-                            twsuccess=true;
-                            fbsuccess=true;
-                            $scope.identity.currentUser.points += 20;
-                            bindCtrl();
-                        }
-                        else {
-
-                            toaster.pop('failure', "Twitter Post", "There was an error in publishing your post");
-                            toaster.pop('failure', "Facebook Post", "There was an error in publishing your post");
-                        }
-
-                        toaster.pop('success', "Social Post", "Your Message has been posted successfully to Facebook");
+            $http.put('/stickers',reqbody).success(function(data){
+                if(angular.isObject(data)){
+                    if(Object.size(data.completiondata)==4){ // because the service will not return Level inside completiondata if the user is doing the same task again
+                        $scope.identity.currentUser.complete += data.completiondata.level;
                         $scope.taskcomplete4=true;
+                        $scope.identity.currentUser.points += data.completiondata.points;
+                        toaster.pop('success', "Task 3", "You have successfully finished the third task");
+                        $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
                     }
-                    else if($scope.checkedfb){
-                        if (success) {
-
-                            toaster.pop('success', "Facebook Post", "Your Message has been posted successfully to Facebook");
-                            fbsuccess=true;
-                            $scope.identity.currentUser.points += 20;
-                            bindCtrl();
-
-                        }
-                        else {
-
-                            toaster.pop('failure', "Facebook Post", "There was an error in publishing your post");
-
-                        }
-
-                    }
-                    else if($scope.checkedtw){
-                        if (success) {
-                            toaster.pop('success', "Twitter Post", "Your Message has been posted successfully");
-                            twsuccess=true;
-                            $scope.identity.currentUser.points += 20;
-                            bindCtrl();
-                        }
-                        else {
-
-                            toaster.pop('failure', "Twitter Post", "There was an error in publishing your post");
-
-                        }
-                    }
-
-
-                });
-
-            }
-
+                }
+            })
         }
+    }
+
+//    var fbsuccess=false, twsuccess=false;
+//
+//    var bindCtrl = function () {
+//        $scope.answers = task.answers;
+//        $scope.completiondata = task.completiondata;
+//        $scope.answers.reverse();
+//        _.each($scope.answers,function(answer){
+//
+//            if(angular.isObject(answer.facebook)){
+//
+//                if(angular.isObject(answer.twitter)) {
+//
+//                    answer['fbsuccess'] = true;
+//                    answer['twsuccess'] = true;
+//                }
+//                else {
+//                    answer['fbsuccess'] = true;
+//                    answer['twsuccess'] = false;
+//                }
+//
+//            }
+//            else{ answer['twsuccess'] = true;
+//                answer['fbsuccess'] =false;
+//            }
+//        });
+//    };
+//
+//    bindCtrl();
+//
+//    if (angular.isObject($scope.identity.currentUser.facebook) && $scope.identity.currentUser.facebook.authorized == '1') $scope.checkedfb = true;
+//    if (angular.isObject($scope.identity.currentUser.twitter) && $scope.identity.currentUser.twitter.authorized == '1') $scope.checkedtw = true;
+//    console.log(angular.isObject($scope.answers.facebook));
+//
+//    $scope.submitForm = function (isValid) {
+//
+//            if (isValid) {
+//
+//
+//                postlink.postsharelink($scope.identity.currentUser,$scope.link, $scope.message, task, $scope.checkedfb, $scope.checkedtw).then(function(success) {
+//                    if($scope.checkedfb && $scope.checkedtw){
+//                        if (success) {
+//                            toaster.pop('success', "Twitter Post", "Your Message has been posted successfully");
+//                            toaster.pop('success', "Facebook Post", "Your Message has been posted successfully to Facebook");
+//                            twsuccess=true;
+//                            fbsuccess=true;
+//                            $scope.identity.currentUser.points += 20;
+//                            bindCtrl();
+//                        }
+//                        else {
+//
+//                            toaster.pop('failure', "Twitter Post", "There was an error in publishing your post");
+//                            toaster.pop('failure', "Facebook Post", "There was an error in publishing your post");
+//                        }
+//
+//                        toaster.pop('success', "Social Post", "Your Message has been posted successfully to Facebook");
+//                        $scope.taskcomplete4=true;
+//                    }
+//                    else if($scope.checkedfb){
+//                        if (success) {
+//
+//                            toaster.pop('success', "Facebook Post", "Your Message has been posted successfully to Facebook");
+//                            fbsuccess=true;
+//                            $scope.identity.currentUser.points += 20;
+//                            bindCtrl();
+//
+//                        }
+//                        else {
+//
+//                            toaster.pop('failure', "Facebook Post", "There was an error in publishing your post");
+//
+//                        }
+//
+//                    }
+//                    else if($scope.checkedtw){
+//                        if (success) {
+//                            toaster.pop('success', "Twitter Post", "Your Message has been posted successfully");
+//                            twsuccess=true;
+//                            $scope.identity.currentUser.points += 20;
+//                            bindCtrl();
+//                        }
+//                        else {
+//
+//                            toaster.pop('failure', "Twitter Post", "There was an error in publishing your post");
+//
+//                        }
+//                    }
+//
+//                    toaster.pop('success', "Social Post", "Your Message has been posted successfully to Facebook");
+//                    $scope.taskcomplete4=true;
+//
+//                });
+//
+//            }
+//
+//        }
 
 
 
