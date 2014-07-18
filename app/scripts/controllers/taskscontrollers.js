@@ -254,12 +254,12 @@ viberApp.controller('vbinviteFrndsCtrl',function($scope, $http, toaster){
 
     $scope.sendRequest = function() {
         //var user_id = document.getElementsByName("user_id")[0].value;
-//        FB.init({
-//            appId: '247429375447674',
-//            cookie:true,
-//            status:true,
-//            xfbml:true
-//        });
+        FB.init({
+            appId: '493599764105814',
+            cookie:true,
+            status:true,
+            xfbml:true
+        });
 
         FB.ui({method: 'apprequests',
                 message: 'Request App!!',
