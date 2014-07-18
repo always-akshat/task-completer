@@ -237,7 +237,7 @@ viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload, toaste
 });
 
 
-viberApp.controller('vbinviteFrndsCtrl',function($scope, $http){
+viberApp.controller('vbinviteFrndsCtrl',function($scope, $http, toaster){
 
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks,{'task_id':'53a9526be4b041d6a3190440'})[0];
@@ -255,6 +255,12 @@ viberApp.controller('vbinviteFrndsCtrl',function($scope, $http){
 
     $scope.sendRequest = function() {
         //var user_id = document.getElementsByName("user_id")[0].value;
+//        FB.init({
+//            appId: '247429375447674',
+//            cookie:true,
+//            status:true,
+//            xfbml:true
+//        });
 
         FB.ui({method: 'apprequests',
                 message: 'Request App!!',
@@ -273,7 +279,7 @@ viberApp.controller('vbinviteFrndsCtrl',function($scope, $http){
                             $scope.taskcomplete2=true;
                         }
                         $scope.identity.currentUser.points += 20;
-                        console.log('Success Invites');
+                        toaster.pop('success', "Task 5", "Your invites were sent successfully.");
                     });
 
                 }
