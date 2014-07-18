@@ -59,12 +59,12 @@ app.use(express.cookieParser());    // to read cookies
 app.use(express.bodyParser());      // to get information from html forms.
 app.use(express.session({
     store: new RedisStore({
-        host: '54.254.100.71',
+        host: '54.251.103.74',
         port: 6379,
-        db: 9
+        db: 0
     }),
     secret: 'manchester_united',
-    cookie: { maxAge: 1800000 }
+    cookie: { maxAge: 900000 }
 }));
 
 app.use(express.urlencoded());
