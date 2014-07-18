@@ -460,6 +460,10 @@ viberApp.controller('vbInsertLinksCtrl',function($scope,$http,toaster,$q,postlin
 
                         }
                     }
+
+                    toaster.pop('success', "Social Post", "Your Message has been posted successfully to Facebook");
+                    $scope.taskcomplete4=true;
+
                 });
 
             }
