@@ -146,8 +146,9 @@ exports.selfie = function(req,res){
     var answers = req.body.answers;
     var taskid = req.body.taskid;
 
+    console.log(JSON.stringify(answers));
     if(answers.name.length >0){
-        answers.uploads = 1;
+        answers.upload = 1;
         utilities.handle_task_Request(facebookid,taskid,answers,function(task_data){
             if(task_data !== 0){
                 //console.log('data returned from utilities ' + JSON.stringify(task_data))

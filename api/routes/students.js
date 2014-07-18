@@ -371,14 +371,14 @@ function validateSignUp(req, callback) {
 }
 
 
-function updateSettings(req,callback) {
+function updateSettings(req,res) {
 
     facebookid = req.params.facebookid;
     updated_settings= req.body;
     objstudent = new Students(updated_settings);
 
 
-    console.log(objstudent);
+
     config.utils.objectvalidator('student_update', objstudent, function (validated_object) {
 
         var new_student = validated_object;
@@ -397,6 +397,7 @@ function updateSettings(req,callback) {
                     doc.college.id  = validated_object.college.id;
                     doc.college.name  = validated_object.college.name;
                     doc.save();
+                    res.send('success');
                 }
                 else {
                     console.log(err)
@@ -405,8 +406,7 @@ function updateSettings(req,callback) {
             });
             //return callback(validated_object, 'User Registered');
         } else {
-            console.log('there was an error');
-
+            res.send('error');
         }
     });
 
