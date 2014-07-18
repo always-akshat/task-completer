@@ -141,23 +141,32 @@ viberApp.controller('vbInsertMobileCtrl',function($scope){
 });
 
 
-viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload){
+viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload, toaster){
 
     //XML parser
-
-    $scope.added = 0;
-    $scope.submitted = 0;
-    $scope.done = [];
-    $scope.taskcomplete1=false;
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks,{'task_id':'53a9526be4b041d6a3190441'})[0];
+    $scope.s3success = false;
+    $scope.submitted = 0;
+    $scope.added = 0;
+    $scope.serSubmitted = [];
+    $scope.done = [];
+    $scope.taskcomplete1=false;
+
+    _.each(task.answers,function(answer){
+        $scope.submitted += answer.name.length;
+        _.each(answer.name,function(names){
+            $scope.serSubmitted.push(names);
+         //$scope.serSubmitted.push(names);
+        });
+    });
     if(task.completed==1)
         $scope.taskcomplete1=true;
+
     $scope.onFileSelect = function($files){
         $scope.files = $files;
         $scope.upload =[];
         $scope.s3added = [];
-        console.log($scope.files);
         for(var i=0;i<$scope.files.length;i++){
             var file = $scope.files[i];
             var ran_num = Math.round(Math.random()*10000);
@@ -168,17 +177,17 @@ viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload){
                 data: {
                     'key' : 's3UploadExample/'+ ran_num + '$' + file.name,
                     'acl' : 'public-read',
-                    'Content-Type' : file.type,
+                    'Content-Type' : 'application',
                     'AWSAccessKeyId': 'AKIAITP3AH32R7ZKQ4XQ',
                     'success_action_status' : '201',
-                    'Policy' : 'eyJleHBpcmF0aW9uIjoiMjAxNS03LTE2VDI0OjAwOjAwLjAwMFoiLCJjb25kaXRpb25zIjpbWyJzdGFydHMtd2l0aCIsIiRrZXkiLCJzM1VwbG9hZEV4YW1wbGUvIl0seyJidWNrZXQiOiJ2aWJlci11cGxvYWRzIn0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiaW1hZ2UvanBlZyJdLHsic3VjY2Vzc19hY3Rpb25fc3RhdHVzIjoiMjAxIn1dfQ==',
-                    'Signature' : 'kzikIBOel+cn8KYLhQIRX73IHhc='
+                    'Policy' : 'eyJleHBpcmF0aW9uIjoiMjAxNS03LTE4VDIwOjAwOjAwLjAwMFoiLCJjb25kaXRpb25zIjpbWyJzdGFydHMtd2l0aCIsIiRrZXkiLCJzM1VwbG9hZEV4YW1wbGUvIl0seyJidWNrZXQiOiJ2aWJlci11cGxvYWRzIn0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiYXBwbGljYXRpb24iXSx7InN1Y2Nlc3NfYWN0aW9uX3N0YXR1cyI6IjIwMSJ9XX0=',
+                    'Signature' : '7OiVs5UxzIJdBbhfgjnuPaX6eKE='
                 },
                 file: file
             }).then(function(response){
                 if(response.status===201){
+                    //console.log("File   "+file.name);
                     $scope.added += 1;
-
                     //xml parser
                     if (window.DOMParser)
                     {
@@ -192,8 +201,8 @@ viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload){
                         xmlDoc.loadXML(txt);
                     }
                     $scope.s3added.push(xmlDoc.getElementsByTagName("Location")[0].childNodes[0].nodeValue);
-                    //console.log(response.data);
-                    //console.log(xmlDoc.getElementsByTagName("Location")[0].childNodes[0].nodeValue);
+                    $scope.s3success = true;
+                    //$scope.serSubmitted.push(ran_num + '$' + file.name);
                 }
             });
 
@@ -209,13 +218,18 @@ viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload){
             },
             "taskid" : '53a9526be4b041d6a3190441'
         };
+//        for(var i=0;i<$scope.done.length;i++) {
+//            $scope.serSubmitted.push($scope.done[i]);
+//        }
         $http.put('/uploadselfie', reqbody).success(function(data) {
             if(angular.isObject(data)){
                 if(Object.size(data.completiondata)==4){
                     $scope.identity.currentUser.complete += 20;
                     $scope.taskcomplete1=true;
                 }
+                $scope.submitted += $scope.done.length;
                 $scope.identity.currentUser.points += 20;
+                toaster.pop('success', "Task 4", "Your photo was uploaded successfully.");
             }
         });
 

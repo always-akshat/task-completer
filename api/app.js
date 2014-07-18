@@ -189,6 +189,7 @@ app.post('/survey',sharer.survey);
 app.put('/likefollow',sharer.likefollow);
 app.put('/uploadselfie',sharer.selfie);
 app.put('/invites',sharer.fb_invite);
+app.put('/stickers',sharer.stickers);
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));

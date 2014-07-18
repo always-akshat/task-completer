@@ -91,8 +91,9 @@ function stage_add_to_all(facebookid) {
 
 
 function add_stage1(facebookid,cb) {
-
-    Students.find({ facebookid :facebookid}).limit(1).exec(function (err, students) {
+console.log('reached add stage for' + facebookid);
+    Students.find({'facebookid' :facebookid}).exec(function (err, students) {
+        console.log('studnet :' + JSON.stringify(students));
         students.forEach(function (instance) {
             console.log(instance.facebookid + ' -- ' + instance.name);
             var stageid = '5390521624349ecc0c108c10';
@@ -139,7 +140,6 @@ function add_stage1(facebookid,cb) {
 
 
     });
-
 
 }
 
@@ -371,14 +371,14 @@ function validateSignUp(req, callback) {
 }
 
 
-function updateSettings(req,callback) {
+function updateSettings(req,res) {
 
     facebookid = req.params.facebookid;
     updated_settings= req.body;
     objstudent = new Students(updated_settings);
 
 
-    console.log(objstudent);
+
     config.utils.objectvalidator('student_update', objstudent, function (validated_object) {
 
         var new_student = validated_object;
@@ -397,6 +397,7 @@ function updateSettings(req,callback) {
                     doc.college.id  = validated_object.college.id;
                     doc.college.name  = validated_object.college.name;
                     doc.save();
+                    res.send('success');
                 }
                 else {
                     console.log(err)
@@ -405,8 +406,7 @@ function updateSettings(req,callback) {
             });
             //return callback(validated_object, 'User Registered');
         } else {
-            console.log('there was an error');
-
+            res.send('error');
         }
     });
 
@@ -515,7 +515,7 @@ function completeTask(facebookid, taskid,cb) {
             var stageid = doc.user_tasks[0].stage;
             var c_pc = doc.user_tasks[0].completevalue;
             var already_complete = doc.user_tasks[0].completed;
-
+            var taskname = doc.user_tasks[0].name
 
 
             var check_criteria = (Object.keys(condition));
@@ -577,7 +577,7 @@ function completeTask(facebookid, taskid,cb) {
                                     transaction.vibes = points;
                                     transaction.type = 'task';
                                     transaction.sign = 1;
-                                    transaction.message = 'Task completion';
+                                    transaction.message = 'Task completion - ' +taskname ;
                                     console.log('added points');
                                     VibesTransaction(facebookid,transaction,function(v_transaction){
                                         console.log(v_transaction);
@@ -654,6 +654,7 @@ function addTaskToUser(facebookid, taskid,cb) {
                 student_task.type = task.type;
                 student_task.stage = task.stage;
                 student_task.completevalue = task.completevalue;
+                student_task.name = task.name;
 
                 if (!student_task) {
                     cb(0)
@@ -818,10 +819,10 @@ function complete_user_stage(facebookid,stageid,completion_value,cb) {
 function delete_my_data(req,res){
     var fb_id = req.params.facebookid;
     console.log(fb_id);
-    return Students.findOne({ facebookid: req.params.facebookid }, function (err, doc) {
-        if (!err) {
+    return Students.findOne({facebookid: req.params.facebookid }, function (err, doc) {
+        if (!err & doc !== null) {
             console.log(JSON.stringify(doc));
-            doc.stages =undefined;
+            doc.stages = undefined;
             doc.user_tasks=undefined;
             doc.vibes_transaction = undefined;
             doc.facebook = undefined;
@@ -830,6 +831,8 @@ function delete_my_data(req,res){
             doc.name = undefined;
             doc.save();
             res.send(' data deleted');
+        }else{
+            res.send('done');
         };
 
 

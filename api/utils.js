@@ -5,7 +5,7 @@ var validator = require('validator');
 
 
 exports.objectvalidator = function(objecttype,object,cb){
-    console.log('entering utility function');
+    //console.log('entering utility function');
     console.log('the object type :' + objecttype);
     var error = 0;
 
@@ -41,7 +41,7 @@ exports.objectvalidator = function(objecttype,object,cb){
 
 
         case 'student_update' : {
-            console.log('this is a student_update');
+            //console.log('this is a student_update');
             if(
                 validator.isEmail(object.email)
                 && validator.isNumeric(parseInt(object.mobile))

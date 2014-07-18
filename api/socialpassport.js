@@ -27,12 +27,17 @@ module.exports = passport.use(new FacebookStrategy({
             Students.findOne({ email: profile.emails[0].value}, function (err, student) {
                 if (err) {
                     console.log(err);
+                    done(null,1);
                 }
-                if (!err && student != null) {
+                else if(student == null){
+                    done(null,1);
+                }
+                else if( student != null) {
+                        console.log(JSON.stringify(student));
+
                     if(student.facebookid){
                         console.log('facebookid');
                         student.facebook.authcode = accessToken;
-                        student.save();
                     }
                     else{
                         console.log('NO facebookid');
@@ -42,36 +47,46 @@ module.exports = passport.use(new FacebookStrategy({
                         student.facebook.authorized =1;
                         student.gender = profile.gender;
                         student.name = profile.displayName;
-                        student.save();
-
                     }
-                if(student.user_tasks.length >0){
-                    console.log('user tasks');
-                    done(null, student);
-                }else{
-                    console.log('NO user tasks');
-                    student_functions.add_stage1(profile.id, function(err,data){
-                        if(err){
-                            student.user_tasks= undefined;
-                            student.stages = undefined;
-                            student.save();
-                            done(null,2);
+
+                    student.save(function (err) {
+                        if (!err){
+                            if(student.user_tasks.length >0){
+                                console.log('user tasks');
+                                done(null, student);
+                            }
+                            else{
+                                console.log('NO user tasks');
+                                student_functions.add_stage1(profile.id, function(err,data){
+                                    if(err){
+                                        console.log(err);
+                                        student.user_tasks= undefined;
+                                        student.stages = undefined;
+                                        student.save();
+                                        done(null,2);
+                                    }else{
+                                        Students.findOne({ email: profile.emails[0].value}, function (err, student){
+                                            if(student.stages.length == 1 && student.user_tasks.length ==5){
+                                                done(null,student);
+                                            }else{
+                                                student.user_tasks= undefined;
+                                                student.stages = undefined;
+                                                student.save();
+                                                done(null,2);
+                                            }
+
+                                        })
+
+                                    }
+                                });
+
+                            }
                         }else{
-                            Students.findOne({ email: profile.emails[0].value}, function (err, student){
-                              if(student.stages.length == 1 && student.user_tasks.length ==5){
-                                  done(null,student);
-                              }else{
-                                  student.user_tasks= undefined;
-                                  student.stages = undefined;
-                                  student.save();
-                                  done(null,2);
-                              }
-
-                            })
-
+                            done(null,1);
                         }
+
                     });
-                }
+
 
 
                 }
