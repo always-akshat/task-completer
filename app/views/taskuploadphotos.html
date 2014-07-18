@@ -5,7 +5,7 @@
         Introduce stickers to your friends
     </h4>
     <span class="pull-right" ng-show="taskcomplete1"><strong class="icon-tick"></strong></span>
-    <span class="pull-right" ng-hide="taskcomplete1"><strong>200</strong> vibes </span>
+    <span class="pull-right" ng-hide="taskcomplete1"><strong>2500</strong> vibes </span>
 
 </div>
 
@@ -18,9 +18,9 @@
     </div>
     <div class="panel-body">
         <div class="upload-nav text-right">
-            <span class="alert-success pull-left">{{submitted}} submitted successfully</span>
+            <span ng-show="s3success" class="alert-success pull-left">{{added}} added successfully</span>
             <ul>
-                <li class="active"><a href="#added" data-toggle="tab">{{added}} Added</a></li>
+                <li class="active"><a href="#added" data-toggle="tab">{{submitted}} Submitted</a></li>
                 <!--<li><a href="#pending" data-toggle="tab">12 Pending Approval</a></li>
                 <li><a href="#rejected" data-toggle="tab" class="rejected-photo">6 Rejected</a></li>-->
             </ul>
@@ -28,14 +28,14 @@
         <div class="tab-content">
             <div class="tab-pane fade in active new-upload" id="added">
                 <!--<div ng-model="s3added" ng-repeat="s3add in s3added">-->
-                <a ng-model="s3added" ng-repeat="s3add in s3added" href="#."><img src="{{s3add}}" height="78" width="78" alt=""/></a>
+                <a ng-model="s3added" ng-repeat="s3add in s3added" href="#."><img ng-src="{{s3add}}" height="78" width="78" alt=""/></a>
                 <!--</div>-->
                 <a href="#." onclick="document.getElementById('fileID').click(); return false;"class="upload-img">
                     <span class="icon-plus-circle"></span>
-                    upload<br>
+                    Choose<br>
                     photos
                 </a>
-                <input type="file" id="fileID" style="visibility: hidden;" ng-file-select="onFileSelect($files)" multiple/>
+                <input type="file" accept="image/*" id="fileID" style="visibility: hidden;" ng-file-select="onFileSelect($files)" multiple/>
                 <p style="margin-left: 18px;">
                     <button type="submit" class="btn btn-success radius-none" ng-click="onFileUpload()">submit</button>
                 </p>

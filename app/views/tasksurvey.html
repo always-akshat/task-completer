@@ -4,12 +4,15 @@
         The #GoodVibes Introduction Video
     </h4>
     <span class="pull-right" ng-show="taskcomplete0"><strong class="icon-tick"></strong></span>
-    <span class="pull-right" ng-hide="taskcomplete0"><strong>500</strong> vibes </span>
+    <span class="pull-right" ng-hide="taskcomplete0"><strong>1000</strong> vibes </span>
 </div>
 <div id="collapseFour" class="panel-collapse collapse">
     <div class="panel-body">
         <p><strong>Task description:</strong></p>
         The #GoodVibes Community Introduction Video is here! Watch and learn from the Viber India Team about the brand Viber you all will be associating with for the next 2 months; why this community has been formed with young, dynamic people like you all and what's in store for you.
+        Dont forget to answer few simple questions at the end to earn Vibes.
+        <br/><br/>
+        Get 500 vibes for viewing the video and 500 vibes for answering the questions.
         <br/><br/>
         <iframe width="100%" height="315px" src="//www.youtube.com/embed/EOl4e8wsvHU" frameborder="0" allowfullscreen></iframe>
 
@@ -101,7 +104,7 @@
                 <div class="form-group">
                     <span ng-repeat="choice in persons">
                         <div class="col-lg-8 control-label">
-                            <img src="{{choice.label}}" alt="" class="img-responsive img-center"/>
+                            <img ng-src="{{choice.label}}" alt="" class="img-responsive img-center"/>
                             <p class="text-center">
                                 <input type="checkbox" id="{{choice.id}}" value="{{choice.value}}" class="custom" ng-model="choice.checked" ng-click="updateQuestionValue(choice)" name="group-one">
                                 <label for="{{choice.id}}" style="margin-right: 0;"></label>
