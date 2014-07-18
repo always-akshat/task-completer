@@ -14,8 +14,7 @@
                 <label for="inputLN" class="col-sm-4 control-label">Name</label>
                 <div class="col-sm-20">
                     <input type="text" name="name" class="form-control" id="inputLN" placeholder="Name" ng-model="user.name" required>
-                    <p ng-show="settingsForm.name.$invalid && !settingsForm.name.$pristine" class="help-block">Your name is required.</p>
-                </div>
+                    </div>
             </div>
            <div class="form-group">
                 <label class="col-sm-4 control-label">Sex</label>
@@ -32,16 +31,13 @@
                 <label for="inputM" class="col-sm-4 control-label">Mobile</label>
                 <div class="col-sm-20">
                     <input type="text" name="mobile" ng-model="user.mobile" ng-minlength="10" ng-maxlength="10" class="form-control" id="inputM" placeholder="Mobile" required>
-                    <p ng-show="settingsForm.mobile.$error.minlength && !settingsForm.mobile.$pristine" class="help-block">Enter valid mobile number.</p>
-
-                </div>
+                    </div>
             </div>
             <div class="form-group" ng-hide="true">
                 <label for="inputE" class="col-sm-4 control-label">Email</label>
                 <div class="col-sm-20">
                     <input type="email" name="email" class="form-control" id="inputE" placeholder="Email" ng-model="user.email" required >
-                    <p ng-show="settingsForm.email.$invalid && !settingsForm.email.$pristine" class="help-block">Enter valid email id.</p>
-                </div>
+                    </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label">City</label>
