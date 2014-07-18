@@ -14,6 +14,7 @@
 <body ng-cloak>
 
 <nav-bar></nav-bar>
+<div id="fb-root"></div>
 
 
 <section class="container">
@@ -27,7 +28,7 @@
 
 <div class="col-sm-4 col-sm-offset-1">
     <cheat-box></cheat-box>
-    <!--<social-connect></social-connect>-->
+    <social-connect></social-connect>
     <mini-leaderboard></mini-leaderboard>
 </div>
 </section>
@@ -35,6 +36,51 @@
 <!-- popovers alert -->
 
 </body>
+<script type="text/javascript">
+
+
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId: '493599764105814',
+            status: true,
+            cookie: true,
+            xfbml: true,
+            oauth: true
+        });
+        FB.Event.subscribe('edge.create', function(response) {
+
+           // console.log(response);
+            //alert('You liked the URL: ' + response);
+        });
+    };
+    (function(d) {
+        var js, id = 'facebook-jssdk';
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement('script');
+        js.id = id;
+        js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        d.getElementsByTagName('head')[0].appendChild(js);
+    }(document));
+    (function(d, s, id) {
+        var t, js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+        return window.twttr || (t = {
+            _e: [],
+            ready: function(f) {
+                t._e.push(f)
+            }
+        });
+    }(document, "script", "twitter-wjs"));
+
+
+</script>
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/angular-animate/angular-animate.js"></script>
