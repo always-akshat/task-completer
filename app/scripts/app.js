@@ -201,16 +201,19 @@ viberApp.controller('lbMySettingsCntrl', function ($scope, $http, vbIdentity, vb
 
     $scope.submitForm = function (isValid) {
         if (isValid) {
-
             $scope.identity.currentUser.name = $scope.user.name;
             $scope.identity.currentUser.gender = $scope.user.gender;
             $scope.identity.currentUser.mobile = $scope.user.mobile;
             $scope.identity.currentUser.email = $scope.user.email;
-            $scope.identity.currentUser.college.id = $scope.college_id;
-            $scope.identity.currentUser.college.name = $scope.college_name;
-            $scope.identity.currentUser.location.id = $scope.city_id;
-            $scope.identity.currentUser.location.name = $scope.city_name;
-
+            if($scope.college_name!=undefined) {
+                $scope.identity.currentUser.college.id = $scope.college_id;
+                $scope.identity.currentUser.college.name = $scope.college_name;
+            }
+            if($scope.city_name!=undefined)
+            {
+                $scope.identity.currentUser.location.id = $scope.city_id;
+                $scope.identity.currentUser.location.name = $scope.city_name;
+            }
 
             //console.log(JSON.stringify($scope.identity.currentUser));
             settingSubmit.settingSubmitbutton($scope.identity.currentUser, $scope.user.facebookid).then(function (success) {
