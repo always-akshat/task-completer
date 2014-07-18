@@ -13,7 +13,7 @@ Object.size = function(obj) {
     return size;
 };
 
-viberApp.controller('vbSurveyCtrl',function($scope,$http){
+viberApp.controller('vbSurveyCtrl',function($scope,$http,toaster){
     $scope.taskcomplete0 = false;
     $scope.persons = [{"id":1, "value":"einstein", "label":"images/img-check-1.jpg"}, {"id":2, "value":"gandhi","label":"images/img-check-2.jpg"},{"id":3, "value":"tagore","label":"images/img-check-3.jpg"}];
     $scope.awesomeness = [{"id":11, "value":"Text them"},{"id":12, "value":"Call them via internet"},{"id":13, "value":"Form groups"},{"id":14, "value":"Share stickers"}];
@@ -21,8 +21,9 @@ viberApp.controller('vbSurveyCtrl',function($scope,$http){
     $scope.value2 = [];
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks,{'task_id':'53a951f9e4b041d6a3190438'})[0];
-    if(task.completed==1)
-        $scope.taskcomplete0=true;
+    if(angular.isObject(task) && task.completed==1)  $scope.taskcomplete0=true;
+
+
     $scope.updateQuestionValue = function(choice){
         $scope.value1 = $scope.value1 || [];
         if(choice.checked){
@@ -31,7 +32,7 @@ viberApp.controller('vbSurveyCtrl',function($scope,$http){
             $scope.value1.push(choice.value);
             $scope.value1 = _.uniq($scope.value1);
         }
-        console.log($scope.value1);
+
     };
 
     $scope.updateAwesomeValue = function(choice){
@@ -58,6 +59,8 @@ viberApp.controller('vbSurveyCtrl',function($scope,$http){
 
     $scope.submit = function(isValid){
         if(isValid){
+
+
 
             switch($scope.value1.length){
                 case 1:
@@ -96,16 +99,24 @@ viberApp.controller('vbSurveyCtrl',function($scope,$http){
             }
 
             var postObj = {'answers':{'answer1' :$scope.used,'answer2':$scope.country,'answer3':{'awesome1':$scope.awesome1,'awesome2':$scope.awesome2,'awesome3':$scope.awesome3,'awesome4':$scope.awesome4},'answer4':$scope.coolest,'answer5':{'person1':$scope.person1, 'person2':$scope.person2,'person3':$scope.person3}},'taskid':'53a951f9e4b041d6a3190438'};
-            //console.log(JSON.stringify(postObj));
+
             $http.post('/survey', JSON.stringify(postObj)).success(function(data){
 
                 if(angular.isObject(data)){
-                    if(Object.size(data.completiondata)==4){
-                        $scope.identity.currentUser.complete += 20;
+                    if(Object.size(data.completiondata)==4){ // because the service will not return Level inside completiondata if the user is doing the same task again
+                        $scope.identity.currentUser.complete += data.completiondata.level;
                         $scope.taskcomplete0=true;
+                        $scope.identity.currentUser.points += data.completiondata.points;
+                        toaster.pop('success', "Task 1", "You have successfully finished the first task");
                     }
-                    $scope.identity.currentUser.points += 30;
+
                 }
+            }).error(function(err){
+
+                console.log(err);
+                toaster.pop('failure', "Task 1", "There was an error submitting your task, please try again");
+
+
             });
 //            postsurvey.postSurvey(postObj).then(function(success){
 //                console.log(success);
@@ -261,85 +272,88 @@ viberApp.controller('vbinviteFrndsCtrl',function($scope, $http){
 viberApp.controller('vblikenfollowCtrl',function($scope, $http){
 
     //Facebook Like
-    var user_tasks = $scope.identity.currentUser.user_tasks;
-    var task = _.where(user_tasks,{'task_id':'53a9526be4b041d6a3190439'})[0];
-    $scope.taskcomplete3=false;
-    if($scope.identity.currentUser.user_tasks[3].completed==1)
-        $scope.taskcomplete3=true;
-
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId: '493599764105814'
-        });
-        FB.Event.subscribe('edge.create', function(response) {
-            var reqbody =  {
-                "answers" : {
-                    "link" : "https://www.facebook.com/officialviberindia/"
-                },
-                "platform" : {"facebook": true},
-                "taskid" : '53a9526be4b041d6a3190439'
-            };
-            $http.put('/likefollow', reqbody).success(function(data){
-                if(angular.isObject(data)){
-                    if(Object.size(data.completiondata)==4){
-                        $scope.identity.currentUser.complete += 20;
-                        $scope.taskcomplete3=true;
-                    }
-                    $scope.identity.currentUser.points += 20;
-                }
-
-            });
-        });
-//        FB.Event.subscribe('edge.remove', function(response) {
+//    var user_tasks = $scope.identity.currentUser.user_tasks;
+//    var task = _.where(user_tasks,{'task_id':'53a9526be4b041d6a3190439'})[0];
+//    $scope.taskcomplete3=false;
+//
+//    if($scope.identity.currentUser.user_tasks[3].completed==1) {
+//        console.log('likenfollow task actually completed');
+//        $scope.taskcomplete3 = true;
+//    }
+//
+//    window.fbAsyncInit = function() {
+//        FB.init({
+//            appId: '493599764105814'
 //        });
-    };
-
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id; //js.async = true;
-        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=247429375447674";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-    //Twitter follow
-    (function(d, s, id) {
-        var t, js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "//platform.twitter.com/widgets.js";
-        fjs.parentNode.insertBefore(js, fjs);
-        return window.twttr || (t = {
-            _e: [],
-            ready: function(f) {
-                t._e.push(f)
-            }
-        });
-    }(document, "script", "twitter-wjs"));
-
-// Wait for the asynchronous resources to load
-    twttr.ready(function(twttr) {
-        twttr.events.bind('follow', function() {
-
-            var reqbody =  {
-                "answers" : {
-                    "link": "viber_india"
-                },
-                "platform" : {"twitter":true },
-                "taskid" : '53a9526be4b041d6a3190439'
-            };
-            $http.put('/likefollow', reqbody).success(function(data){
-                if(Object.size(data.completiondata)==4){
-                    $scope.identity.currentUser.complete += 20;
-                    $scope.taskcomplete3=true;
-                }
-                $scope.identity.currentUser.points += 20;
-           });
-        });
-//        twttr.events.bind('unfollow', function() {
+//        FB.Event.subscribe('edge.create', function(response) {
+//            var reqbody =  {
+//                "answers" : {
+//                    "link" : "https://www.facebook.com/officialviberindia/"
+//                },
+//                "platform" : {"facebook": true},
+//                "taskid" : '53a9526be4b041d6a3190439'
+//            };
+//            $http.put('/likefollow', reqbody).success(function(data){
+//                if(angular.isObject(data)){
+//                    if(Object.size(data.completiondata)==4){
+//                        $scope.identity.currentUser.complete += 20;
+//                        $scope.taskcomplete3=true;
+//                    }
+//                    $scope.identity.currentUser.points += 20;
+//                }
+//
+//            });
 //        });
-    });
+////        FB.Event.subscribe('edge.remove', function(response) {
+////        });
+//    };
+//
+//    (function(d, s, id) {
+//        var js, fjs = d.getElementsByTagName(s)[0];
+//        if (d.getElementById(id)) return;
+//        js = d.createElement(s); js.id = id; //js.async = true;
+//        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=247429375447674";
+//        fjs.parentNode.insertBefore(js, fjs);
+//    }(document, 'script', 'facebook-jssdk'));
+//
+//    //Twitter follow
+//    (function(d, s, id) {
+//        var t, js, fjs = d.getElementsByTagName(s)[0];
+//        if (d.getElementById(id)) return;
+//        js = d.createElement(s);
+//        js.id = id;
+//        js.src = "//platform.twitter.com/widgets.js";
+//        fjs.parentNode.insertBefore(js, fjs);
+//        return window.twttr || (t = {
+//            _e: [],
+//            ready: function(f) {
+//                t._e.push(f)
+//            }
+//        });
+//    }(document, "script", "twitter-wjs"));
+//
+//// Wait for the asynchronous resources to load
+//    twttr.ready(function(twttr) {
+//        twttr.events.bind('follow', function() {
+//
+//            var reqbody =  {
+//                "answers" : {
+//                    "link": "viber_india"
+//                },
+//                "platform" : {"twitter":true },
+//                "taskid" : '53a9526be4b041d6a3190439'
+//            };
+//            $http.put('/likefollow', reqbody).success(function(data){
+//                if(Object.size(data.completiondata)==4){
+//                    $scope.identity.currentUser.complete += 20;
+//                    $scope.taskcomplete3=true;
+//                }
+//                $scope.identity.currentUser.points += 20;
+//           });
+//        });
+////        twttr.events.bind('unfollow', function() {
+////        });
+//    });
 
 });
 

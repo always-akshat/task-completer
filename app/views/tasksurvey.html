@@ -101,7 +101,7 @@
                 <div class="form-group">
                     <span ng-repeat="choice in persons">
                         <div class="col-lg-8 control-label">
-                            <img src="{{choice.label}}" alt="" class="img-responsive img-center"/>
+                            <img ng-src="{{choice.label}}" alt="" class="img-responsive img-center"/>
                             <p class="text-center">
                                 <input type="checkbox" id="{{choice.id}}" value="{{choice.value}}" class="custom" ng-model="choice.checked" ng-click="updateQuestionValue(choice)" name="group-one">
                                 <label for="{{choice.id}}" style="margin-right: 0;"></label>
