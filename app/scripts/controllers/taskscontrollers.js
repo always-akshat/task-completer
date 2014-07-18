@@ -417,6 +417,8 @@ viberApp.controller('vbInsertLinksCtrl',function($scope,$http,toaster,$q,postlin
 
             if (isValid) {
 
+                toaster.pop('success', "Social Post", "Posting link to Faceboook");
+                $scope.taskcomplete4=true;
 
                 postlink.postsharelink($scope.identity.currentUser,$scope.link, $scope.message, task, $scope.checkedfb, $scope.checkedtw).then(function(success) {
                     if($scope.checkedfb && $scope.checkedtw){
@@ -467,8 +469,6 @@ viberApp.controller('vbInsertLinksCtrl',function($scope,$http,toaster,$q,postlin
                         }
                     }
 
-                    toaster.pop('success', "Social Post", "Your Message has been posted successfully to Facebook");
-                    $scope.taskcomplete4=true;
 
                 });
 
