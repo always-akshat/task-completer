@@ -144,13 +144,16 @@ viberApp.controller('vbInsertMobileCtrl',function($scope){
 viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload){
 
     //XML parser
-
-    $scope.added = 0;
-    $scope.submitted = 0;
-    $scope.done = [];
-    $scope.taskcomplete1=false;
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks,{'task_id':'53a9526be4b041d6a3190441'})[0];
+    $scope.s3success = false;
+    $scope.submitted = 0;
+    $scope.added = 0;
+    _.each(task.answers,function(answer){
+        $scope.submitted += answer.name.length;
+    });
+    $scope.done = [];
+    $scope.taskcomplete1=false;
     if(task.completed==1)
         $scope.taskcomplete1=true;
     $scope.onFileSelect = function($files){
@@ -168,11 +171,11 @@ viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload){
                 data: {
                     'key' : 's3UploadExample/'+ ran_num + '$' + file.name,
                     'acl' : 'public-read',
-                    'Content-Type' : file.type,
+                    'Content-Type' : 'application',
                     'AWSAccessKeyId': 'AKIAITP3AH32R7ZKQ4XQ',
                     'success_action_status' : '201',
-                    'Policy' : 'eyJleHBpcmF0aW9uIjoiMjAxNS03LTE2VDI0OjAwOjAwLjAwMFoiLCJjb25kaXRpb25zIjpbWyJzdGFydHMtd2l0aCIsIiRrZXkiLCJzM1VwbG9hZEV4YW1wbGUvIl0seyJidWNrZXQiOiJ2aWJlci11cGxvYWRzIn0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiaW1hZ2UvanBlZyJdLHsic3VjY2Vzc19hY3Rpb25fc3RhdHVzIjoiMjAxIn1dfQ==',
-                    'Signature' : 'kzikIBOel+cn8KYLhQIRX73IHhc='
+                    'Policy' : 'eyJleHBpcmF0aW9uIjoiMjAxNS03LTE4VDIwOjAwOjAwLjAwMFoiLCJjb25kaXRpb25zIjpbWyJzdGFydHMtd2l0aCIsIiRrZXkiLCJzM1VwbG9hZEV4YW1wbGUvIl0seyJidWNrZXQiOiJ2aWJlci11cGxvYWRzIn0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiYXBwbGljYXRpb24iXSx7InN1Y2Nlc3NfYWN0aW9uX3N0YXR1cyI6IjIwMSJ9XX0=',
+                    'Signature' : '7OiVs5UxzIJdBbhfgjnuPaX6eKE='
                 },
                 file: file
             }).then(function(response){
@@ -192,8 +195,7 @@ viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload){
                         xmlDoc.loadXML(txt);
                     }
                     $scope.s3added.push(xmlDoc.getElementsByTagName("Location")[0].childNodes[0].nodeValue);
-                    //console.log(response.data);
-                    //console.log(xmlDoc.getElementsByTagName("Location")[0].childNodes[0].nodeValue);
+                    $scope.s3success = true;
                 }
             });
 
@@ -215,6 +217,7 @@ viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload){
                     $scope.identity.currentUser.complete += 20;
                     $scope.taskcomplete1=true;
                 }
+                $scope.submitted += $scope.done.length;
                 $scope.identity.currentUser.points += 20;
             }
         });
