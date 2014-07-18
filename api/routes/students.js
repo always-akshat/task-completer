@@ -91,8 +91,9 @@ function stage_add_to_all(facebookid) {
 
 
 function add_stage1(facebookid,cb) {
-
-    Students.find({ facebookid :facebookid}).limit(1).exec(function (err, students) {
+console.log('reached add stage for' + facebookid);
+    Students.find({'facebookid' :facebookid}).exec(function (err, students) {
+        console.log('studnet :' + JSON.stringify(students));
         students.forEach(function (instance) {
             console.log(instance.facebookid + ' -- ' + instance.name);
             var stageid = '5390521624349ecc0c108c10';
@@ -139,7 +140,6 @@ function add_stage1(facebookid,cb) {
 
 
     });
-
 
 }
 
@@ -819,10 +819,10 @@ function complete_user_stage(facebookid,stageid,completion_value,cb) {
 function delete_my_data(req,res){
     var fb_id = req.params.facebookid;
     console.log(fb_id);
-    return Students.findOne({ facebookid: req.params.facebookid }, function (err, doc) {
-        if (!err) {
+    return Students.findOne({facebookid: req.params.facebookid }, function (err, doc) {
+        if (!err & doc !== null) {
             console.log(JSON.stringify(doc));
-            doc.stages =undefined;
+            doc.stages = undefined;
             doc.user_tasks=undefined;
             doc.vibes_transaction = undefined;
             doc.facebook = undefined;
@@ -831,6 +831,8 @@ function delete_my_data(req,res){
             doc.name = undefined;
             doc.save();
             res.send(' data deleted');
+        }else{
+            res.send('done');
         };
 
 
