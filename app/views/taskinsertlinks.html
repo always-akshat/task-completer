@@ -32,57 +32,36 @@
             <div class="tab-content custom-form">
                 <div class="tab-pane fade in active" id="add-social-link">
                   <form name="taskForm" ng-submit="submitForm(taskForm.$valid)" novalidate>
-                   <div class="form-group">
-                        <input type="text" class="form-control data_field" name="data_field"
-                               placeholder="video url" value="https://www.youtube.com/watch?v=12n9qipCYno" ng-model="link" ng-readonly="true">
-                        <span class="icon_clear icon-close-circle"></span>
-                    </div>
-                    <div class="form-group">
-                        <textarea name="message" id="" cols="30" rows="5" class="form-control"
-                                  placeholder="#goodvibes your message" ng-model="message" required ng-maxlength="120"></textarea>
-                    </div>
+                          <div class="row">
+                              <div class="col-lg-2">
+                                  <div class="que-box">Q</div>
+                              </div>
+                              <div class="col-lg-22">
+                                  <p class="question-txt">Rate this video.
+                                      <small>Please select one</small>
+                                  </p>
+                                  <div class="form-group">
+                                      <input type="radio" id="ra1" name="qa1" class="custom-radio" ng-model="rate" value="1" required>
+                                      <label for="ra1">1</label>
+                                      <input type="radio" id="ra2" name="qa1" class="custom-radio" ng-model="rate" value="2" required>
+                                      <label for="ra2">2</label>
+                                      <input type="radio" id="ra3" name="qa1" class="custom-radio" ng-model="rate" value="3" required>
+                                      <label for="ra3">3</label>
+                                      <input type="radio" id="ra4" name="qa1" class="custom-radio" ng-model="rate" value="4" required>
+                                      <label for="ra4">4</label>
+                                      <input type="radio" id="ra5" name="qa1" class="custom-radio" ng-model="rate" value="5" required>
+                                      <label for="ra5">5</label>
+                                  </div>
+                              </div>
+                          </div>
                     <p ng-show="taskForm.message.$invalid && !taskForm.message.$pristine" class="help-block">Your message can only be 120 characters long</p>
                     <div class="form-group">
                         <div class="pull-right">
-                            <input type="checkbox" id="post-fb" value="option1" ng-model="checkedfb"  class="custom icon-checked" >
-                            <label for="post-fb">
-                                <span class="circle-icon-fb" ng-class="{'social-active': checkedfb==true}"></span>
-                            </label>
-                            <input type="checkbox" id="post-tw" value="option2" ng-model="checkedtw" class="custom icon-checked">
-                            <label for="post-tw">
-                                <span class="circle-icon-tw" ng-class="{'social-active': checkedtw==true}"></span>
-                            </label>
-                            <!--<input type="checkbox" id="post-g" value="option2" class="custom icon-checked">
-                            <label for="post-g">
-                                <span class="circle-icon-g"></span>
-                            </label>-->
                             <button type="submit" class="btn btn-success" ng-disabled="taskForm.$invalid">submit</button>
                         </div>
 
                     </div>
                   </form>
-                </div>
-                <div class="tab-pane fade" id="show-social-links">
-                    <ul class="list-group social-link-list">
-
-                        <li class="list-group-item" ng-model="answers" ng-repeat="answer in answers">
-                            <p><a href="#.">{{answer.link}}</a></p>
-
-                            <div class="row">
-                                <div class="col-sm-18">
-                                    {{answer.message}}
-                                </div>
-                                <div class="col-sm-6">
-                                    <ul class="view-share">
-                                        <li class="circle-icon-fb" ng-class="{'social-active' : answer.fbsuccess == true}"></li>
-                                        <li class="circle-icon-tw"  ng-class="{'social-active' : answer.twsuccess == true}"></li>
-                                        <!--<li class="circle-icon-g"></li>-->
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                    <a href="#." target="_self" class="pull-right">+ post more</a>
                 </div>
             </div>
         </div>
