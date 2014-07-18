@@ -289,18 +289,20 @@ viberApp.controller('vbinviteFrndsCtrl',function($scope, $http, toaster){
 });
 
 
-viberApp.controller('vblikenfollowCtrl',function($scope, $http,$window){
+viberApp.controller('vblikenfollowCtrl',function($scope, $http,$window) {
 
     //Facebook Like
-    var user_tasks = $scope.identity.currentUser.user_tasks;
-    var task = _.where(user_tasks,{'task_id':'53a9526be4b041d6a3190439'})[0];
-    $scope.taskcomplete3=false;
 
-    if($scope.identity.currentUser.user_tasks[3].completed==1) {
+  //  console.log($window.fbAsyncInit);
+  //  $window.fbAsyncInit();
+    var user_tasks = $scope.identity.currentUser.user_tasks;
+    var task = _.where(user_tasks, {'task_id': '53a9526be4b041d6a3190439'})[0];
+    $scope.taskcomplete3 = false;
+
+    if ($scope.identity.currentUser.user_tasks[3].completed == 1) {
         console.log('likenfollow task actually completed');
         $scope.taskcomplete3 = true;
     }
-
 
 
 //
@@ -335,7 +337,7 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http,$window){
 ////        FB.Event.subscribe('edge.remove', function(response) {
 ////        });
 //        };
-//
+
 //        window.fbAsyncInit();
 //
 //        console.log(window.fbAsyncInit);
@@ -367,7 +369,6 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http,$window){
 //        twttr.events.bind('unfollow', function() {
 //        });
 //    });
-
 });
 
 viberApp.controller('vbInsertLinksCtrl',function($scope,$http,toaster,$q,postlink){
