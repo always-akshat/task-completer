@@ -427,6 +427,9 @@ viberApp.controller('vbInsertLinksCtrl',function($scope,$http,toaster,$q,postlin
                             toaster.pop('failure', "Twitter Post", "There was an error in publishing your post");
                             toaster.pop('failure', "Facebook Post", "There was an error in publishing your post");
                         }
+
+                        toaster.pop('success', "Social Post", "Your Message has been posted successfully to Facebook");
+                        $scope.taskcomplete4=true;
                     }
                     else if($scope.checkedfb){
                         if (success) {
