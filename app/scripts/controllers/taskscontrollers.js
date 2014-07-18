@@ -269,70 +269,63 @@ viberApp.controller('vbinviteFrndsCtrl',function($scope, $http){
 });
 
 
-viberApp.controller('vblikenfollowCtrl',function($scope, $http){
+viberApp.controller('vblikenfollowCtrl',function($scope, $http,$window){
 
     //Facebook Like
-//    var user_tasks = $scope.identity.currentUser.user_tasks;
-//    var task = _.where(user_tasks,{'task_id':'53a9526be4b041d6a3190439'})[0];
-//    $scope.taskcomplete3=false;
+    var user_tasks = $scope.identity.currentUser.user_tasks;
+    var task = _.where(user_tasks,{'task_id':'53a9526be4b041d6a3190439'})[0];
+    $scope.taskcomplete3=false;
+
+    if($scope.identity.currentUser.user_tasks[3].completed==1) {
+        console.log('likenfollow task actually completed');
+        $scope.taskcomplete3 = true;
+    }
+
+
+
 //
-//    if($scope.identity.currentUser.user_tasks[3].completed==1) {
-//        console.log('likenfollow task actually completed');
-//        $scope.taskcomplete3 = true;
-//    }
-//
-//    window.fbAsyncInit = function() {
-//        FB.init({
-//            appId: '493599764105814'
-//        });
-//        FB.Event.subscribe('edge.create', function(response) {
-//            var reqbody =  {
-//                "answers" : {
-//                    "link" : "https://www.facebook.com/officialviberindia/"
-//                },
-//                "platform" : {"facebook": true},
-//                "taskid" : '53a9526be4b041d6a3190439'
-//            };
-//            $http.put('/likefollow', reqbody).success(function(data){
-//                if(angular.isObject(data)){
-//                    if(Object.size(data.completiondata)==4){
-//                        $scope.identity.currentUser.complete += 20;
-//                        $scope.taskcomplete3=true;
-//                    }
-//                    $scope.identity.currentUser.points += 20;
-//                }
-//
+//    console.log(window.fbAsyncInit);
+//    if(window.fbAsyncInit === undefined) {
+//        console.log('initiating fbasyncinit');
+//        window.fbAsyncInit = function () {
+//            FB.init({
+//                appId: '247429375447674'
 //            });
-//        });
+//            FB.Event.subscribe('edge.create', function (response) {
+//                var reqbody = {
+//                    "answers": {
+//                        "link": "https://www.facebook.com/officialviberindia/"
+//                    },
+//                    "platform": {"facebook": true},
+//                    "taskid": '53a9526be4b041d6a3190439'
+//                };
+//                $http.put('/likefollow', reqbody).success(function (data) {
+//                    if (angular.isObject(data)) {
+//                        if (Object.size(data.completiondata) == 4) {
+//                            $scope.identity.currentUser.complete += 20;
+//                            $scope.taskcomplete3 = true;
+//                            $scope.identity.currentUser.points += 250;
+//                            toaster.pop('success', "Facebook Like", "You have successfully like the Viber Facebook Page");
+//                        }
+//
+//                    }
+//
+//                });
+//            });
 ////        FB.Event.subscribe('edge.remove', function(response) {
 ////        });
-//    };
+//        };
 //
-//    (function(d, s, id) {
-//        var js, fjs = d.getElementsByTagName(s)[0];
-//        if (d.getElementById(id)) return;
-//        js = d.createElement(s); js.id = id; //js.async = true;
-//        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=247429375447674";
-//        fjs.parentNode.insertBefore(js, fjs);
-//    }(document, 'script', 'facebook-jssdk'));
+//        window.fbAsyncInit();
 //
-//    //Twitter follow
-//    (function(d, s, id) {
-//        var t, js, fjs = d.getElementsByTagName(s)[0];
-//        if (d.getElementById(id)) return;
-//        js = d.createElement(s);
-//        js.id = id;
-//        js.src = "//platform.twitter.com/widgets.js";
-//        fjs.parentNode.insertBefore(js, fjs);
-//        return window.twttr || (t = {
-//            _e: [],
-//            ready: function(f) {
-//                t._e.push(f)
-//            }
-//        });
-//    }(document, "script", "twitter-wjs"));
+//        console.log(window.fbAsyncInit);
+
 //
-//// Wait for the asynchronous resources to load
+
+//
+    //Twitter follow
+
+// Wait for the asynchronous resources to load
 //    twttr.ready(function(twttr) {
 //        twttr.events.bind('follow', function() {
 //
@@ -351,8 +344,8 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http){
 //                $scope.identity.currentUser.points += 20;
 //           });
 //        });
-////        twttr.events.bind('unfollow', function() {
-////        });
+//        twttr.events.bind('unfollow', function() {
+//        });
 //    });
 
 });
