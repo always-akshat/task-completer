@@ -27,7 +27,7 @@ module.exports = passport.use(new FacebookStrategy({
             Students.findOne({ email: profile.emails[0].value}, function (err, student) {
                 if (err) {
                     console.log(err);
-                    done(null,1);
+                    done(null,2);
                 }
                 else if(student == null){
                     done(null,1);
@@ -82,7 +82,7 @@ module.exports = passport.use(new FacebookStrategy({
 
                             }
                         }else{
-                            done(null,1);
+                            done(null,2);
                         }
 
                     });

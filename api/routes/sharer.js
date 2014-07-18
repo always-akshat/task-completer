@@ -18,13 +18,12 @@ exports.share = function(req,res){
     var taskid = req.body.taskid;
     var platform = req.body.platform;
     var auth = req.session.student.facebook.authcode;
-    var twit_token =   req.session.student.twitter.authcode;
-    var twit_secret =  req.session.student.twitter.secret
+
 
 
     asyncTasks = [];
 
-    if(platform.facebook == 1){
+    if(platform.facebook == 1) {
         asyncTasks.push(function(cb){
             feed_sharelink(auth,answers, function(facebook_post_data){
                 console.log('hii facebook');
@@ -41,18 +40,25 @@ exports.share = function(req,res){
 
 
     if(platform.twitter == 1){
-        asyncTasks.push(function(cb){
-            sharetweet(twit_token,twit_secret,answers,function(twitter_post_data){
-                console.log('hii twitter');
-                if(twitter_post_data && twitter_post_data !=0){
-                    answers.twitter = {};
-                    answers.twitter.post_id =twitter_post_data;
-                    console.log('twitter returned' + JSON.stringify(twitter_post_data));
-                }
-                cb(null,1);
-            });
+        if (req.session.student.twitter) {
+            var twit_token = req.session.student.twitter.authcode;
+            var twit_secret = req.session.student.twitter.secret;
+            asyncTasks.push(function(cb){
+                sharetweet(twit_token,twit_secret,answers,function(twitter_post_data){
+                    console.log('hii twitter');
+                    if(twitter_post_data && twitter_post_data !=0){
+                        answers.twitter = {};
+                        answers.twitter.post_id =twitter_post_data;
+                        console.log('twitter returned' + JSON.stringify(twitter_post_data));
+                    }
+                    cb(null,1);
+                });
 
-        });
+            });
+        }else{
+            res.send('link your twitter profile');
+        }
+
     }
 
 
@@ -118,26 +124,27 @@ exports.stickers = function(req,res){
     var answers = req.body.answers;
     var taskid = req.body.taskid;
 
-    console.log('taskid :' + taskid + '\n asnwers : ' + JSON.stringify(answers));
+    if(answers.rate && answers.rate >0 && answers.rate <6) {
+        answers.rating = 1;
+        utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
+            if (task_data !== 0) {
+                //console.log('data returned from utilities ' + JSON.stringify(task_data))
+                var tasks = req.session.student.user_tasks;
 
+                tasks.forEach(function (instance) {
+                    if (instance.task_id == taskid) {
+                        instance.answers = task_data.answers;
+                    }
+                });
 
-    utilities.handle_task_Request(facebookid,taskid,answers,function(task_data){
-        if(task_data !== 0){
-            //console.log('data returned from utilities ' + JSON.stringify(task_data))
-            var tasks = req.session.student.user_tasks;
-
-            tasks.forEach(function(instance){
-                if(instance.task_id == taskid){
-                    instance.answers = task_data.answers;
-                }
-            });
-
-            res.send(task_data);
-        }else{
-            res.send(0);
-        }
-    });
-
+                res.send(task_data);
+            } else {
+                res.send(0);
+            }
+        });
+    }else{
+        res.send('error');
+    }
 }
 
 exports.selfie = function(req,res){

@@ -112,10 +112,10 @@ app.get('/auth/facebook/callback',
     function(req, res) {
         console.log(req.user);
         if(req.user == 1){
-            res.send('please register for phase 2.');
+            res.redirect('/register');
 
         }else if(req.user == 2){
-            res.send('error occurred');
+            res.redirect('/?error=1');
         }
         else{
             req.session.student = req.user;
@@ -190,6 +190,9 @@ app.put('/likefollow',sharer.likefollow);
 app.put('/uploadselfie',sharer.selfie);
 app.put('/invites',sharer.fb_invite);
 app.put('/stickers',sharer.stickers);
+
+app.get('/register',function(req,res){res.send('register')});
+
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
