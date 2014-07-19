@@ -301,7 +301,7 @@ viberApp.controller('vbinviteFrndsCtrl',['$scope','$http','toaster', function($s
 }]);
 
 
-viberApp.controller('vblikenfollowCtrl',['$scope','$http','toaster', '$window', '$rootScope', function($scope, $http,$window,$rootScope,toaster) {
+viberApp.controller('vblikenfollowCtrl',function($scope, $http,$window,$rootScope,toaster) {
 
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks, {'task_id': '53a9526be4b041d6a3190439'})[0];
@@ -373,7 +373,7 @@ viberApp.controller('vblikenfollowCtrl',['$scope','$http','toaster', '$window', 
 
 
 
-}]);
+});
 
 viberApp.controller('vbInsertLinksCtrl',['$scope','$http','toaster', function($scope,$http,toaster /*,$q,postlink */){
 
