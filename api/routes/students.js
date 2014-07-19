@@ -514,9 +514,8 @@ function completeTask(facebookid, taskid,cb) {
             var points = doc.user_tasks[0].points;
             var stageid = doc.user_tasks[0].stage;
             var c_pc = doc.user_tasks[0].completevalue;
-            var already_complete = doc.user_tasks[0].completed;
-            var taskname = doc.user_tasks[0].name
-
+             already_complete = doc.user_tasks[0].completed;
+            var taskname = doc.user_tasks[0].name;
 
             var check_criteria = (Object.keys(condition));
 
@@ -567,28 +566,35 @@ function completeTask(facebookid, taskid,cb) {
                         if (err) {
                             cb(0);
                         } else {
-                            addpoints(facebookid,points,function(points_to_add){
+
+                            var singular = false;
+                            if (taskid = '53a9526be4b041d6a3190441' && already_complete == 1) {
+                                singular = true;
+                            }
+                           
+                            if (singular == false) {
+                            addpoints(facebookid, points, function (points_to_add) {
                                 //console.log('points to add :'+ points_to_add);
-                                if(points_to_add == 0){
+                                if (points_to_add == 0) {
                                     cb(0)
-                                }else{
+                                } else {
                                     completion_value.points = points_to_add;
                                     var transaction = new studentSchema.vibes_transaction;
                                     transaction.vibes = points;
                                     transaction.type = 'task';
                                     transaction.sign = 1;
-                                    transaction.message = 'Task completion - ' +taskname ;
+                                    transaction.message = 'Task completion - ' + taskname;
                                     console.log('added points');
-                                    VibesTransaction(facebookid,transaction,function(v_transaction){
+                                    VibesTransaction(facebookid, transaction, function (v_transaction) {
                                         console.log(v_transaction);
-                                        if(v_transaction !== 0) {
+                                        if (v_transaction !== 0) {
                                             completion_value.transaction = v_transaction;
                                             if (already_complete != 1) {
                                                 console.log('calling stage completion');
-                                                complete_user_stage(facebookid, stageid, c_pc, function (completed_percentage){
-                                                    if(completed_percentage ==0){
+                                                complete_user_stage(facebookid, stageid, c_pc, function (completed_percentage) {
+                                                    if (completed_percentage == 0) {
                                                         cb(0)
-                                                    }else{
+                                                    } else {
                                                         completion_value.level = completed_percentage;
                                                         cb(completion_value);
                                                     }
@@ -598,16 +604,16 @@ function completeTask(facebookid, taskid,cb) {
                                                 cb(completion_value);
                                             }
                                             console.log('added transactiontion');
-                                        }else{
+                                        } else {
                                             cb(0)
                                         }
 
                                     });
                                 }
                             });
-
-
-
+                        }else{
+                            cb(0)
+                            }
 
                             /*task_functions.getchildren(taskid, function (new_tasks) {
                              var unlockedtasks = new_tasks;
@@ -829,6 +835,7 @@ function delete_my_data(req,res){
             doc.facebookid = undefined;
             doc.gender = undefined;
             doc.name = undefined;
+            doc.points = 0;
             doc.save();
             res.send(' data deleted');
         }else{
