@@ -13,7 +13,7 @@ Object.size = function(obj) {
     return size;
 };
 
-viberApp.controller('vbSurveyCtrl',function($scope,$http,toaster, $rootScope){
+viberApp.controller('vbSurveyCtrl',['$scope','$http','toaster','$rootScope', function($scope,$http,toaster, $rootScope){
     $rootScope.ataskcomplete0 = false;
     //$scope.ataskcomplete0 = false;
     $scope.persons = [{"id":1, "value":"einstein", "label":"images/img-check-1.jpg"}, {"id":2, "value":"gandhi","label":"images/img-check-2.jpg"},{"id":3, "value":"tagore","label":"images/img-check-3.jpg"}];
@@ -141,7 +141,7 @@ viberApp.controller('vbSurveyCtrl',function($scope,$http,toaster, $rootScope){
 //            });
         }
     };
-});
+}]);
 
 viberApp.controller('vbInsertMobileCtrl',function($scope){
 
@@ -149,7 +149,7 @@ viberApp.controller('vbInsertMobileCtrl',function($scope){
 });
 
 
-viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload, toaster){
+viberApp.controller('vbUploadPhotosCtrl',['$scope','$http', '$upload','toaster' , function($scope, $http, $upload, toaster){
 
     //XML parser
     var user_tasks = $scope.identity.currentUser.user_tasks;
@@ -172,18 +172,18 @@ viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload, toaste
         $scope.taskcomplete1=true;
 
     $scope.onFileSelect = function($files){
+        var fbid = $scope.identity.currentUser.facebookid;
         $scope.files = $files;
         $scope.upload =[];
         $scope.s3added = [];
         for(var i=0;i<$scope.files.length;i++){
             var file = $scope.files[i];
-            var ran_num = Math.round(Math.random()*10000);
-            $scope.done[i]=ran_num+'$'+file.name;
+            $scope.done[i]=fbid+'$'+file.name;
             $scope.upload[i]=$upload.upload({
                 url: 'https://viber-uploads.s3-ap-southeast-1.amazonaws.com/',
                 method: 'POST',
                 data: {
-                    'key' : 's3UploadExample/'+ ran_num + '$' + file.name,
+                    'key' : 's3UploadExample/'+ fbid + '$' + file.name,
                     'acl' : 'public-read',
                     'Content-Type' : 'application',
                     'AWSAccessKeyId': 'AKIAITP3AH32R7ZKQ4XQ',
@@ -244,10 +244,10 @@ viberApp.controller('vbUploadPhotosCtrl',function($scope, $http, $upload, toaste
         });
 
     };
-});
+}]);
 
 
-viberApp.controller('vbinviteFrndsCtrl',function($scope, $http, toaster){
+viberApp.controller('vbinviteFrndsCtrl',['$scope','$http','toaster', function($scope, $http, toaster){
 
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks,{'task_id':'53a9526be4b041d6a3190440'})[0];
@@ -298,10 +298,10 @@ viberApp.controller('vbinviteFrndsCtrl',function($scope, $http, toaster){
             });
     }
 
-});
+}]);
 
 
-viberApp.controller('vblikenfollowCtrl',function($scope, $http,$window,$rootScope,toaster) {
+viberApp.controller('vblikenfollowCtrl',['$scope','$http','toaster', '$window', '$rootScope', function($scope, $http,$window,$rootScope,toaster) {
 
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks, {'task_id': '53a9526be4b041d6a3190439'})[0];
@@ -373,9 +373,9 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http,$window,$rootScop
 
 
 
-});
+}]);
 
-viberApp.controller('vbInsertLinksCtrl',function($scope,$http,toaster,$q,postlink){
+viberApp.controller('vbInsertLinksCtrl',['$scope','$http','toaster', function($scope,$http,toaster /*,$q,postlink */){
 
     $scope.link = "https://www.youtube.com/watch?v=12n9qipCYno";
     $scope.rate = undefined;
@@ -509,4 +509,4 @@ viberApp.controller('vbInsertLinksCtrl',function($scope,$http,toaster,$q,postlin
 
 
 
-});
+}]);

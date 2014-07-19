@@ -20,7 +20,7 @@
                 <source src="audio/test.mp4" type="video/ogg">
                 Your browser does not support the video tag.
             </video>-->
-
+            <p ng-show="taskcomplete4">You have already completed this task</p>
             </p>
 
         </div>
@@ -31,7 +31,7 @@
             </ul>
             <div class="tab-content custom-form">
                 <div class="tab-pane fade in active" id="add-social-link">
-                  <form name="taskForm" ng-submit="submitForm(taskForm.$valid)" novalidate>
+                  <form name="taskForm" ng-hide="taskcomplete4" ng-submit="submitForm(taskForm.$valid)" novalidate>
                           <div class="row">
                               <div class="col-lg-2">
                                   <div class="que-box">Q</div>
@@ -61,6 +61,7 @@
                         </div>
 
                     </div>
+
                   </form>
                 </div>
             </div>
