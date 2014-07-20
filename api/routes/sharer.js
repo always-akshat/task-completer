@@ -99,6 +99,10 @@ exports.survey = function(req,res){
     var answers = req.body.answers;
     var taskid = req.body.taskid;
 
+    if(!answers.answer4 || !answers.answer5){
+        answers.answer4 = 'dummy';
+        answers.answer5 = 'dummy';
+    }
     if(answers){
         utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
             if (task_data !== 0) {
