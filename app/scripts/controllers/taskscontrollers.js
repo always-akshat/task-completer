@@ -16,10 +16,7 @@ Object.size = function(obj) {
 viberApp.controller('vbSurveyCtrl',['$scope','$http','toaster','$rootScope', function($scope,$http,toaster, $rootScope){
     $rootScope.ataskcomplete0 = false;
     //$scope.ataskcomplete0 = false;
-    $scope.persons = [{"id":1, "value":"einstein", "label":"images/img-check-1.jpg"}, {"id":2, "value":"gandhi","label":"images/img-check-2.jpg"},{"id":3, "value":"tagore","label":"images/img-check-3.jpg"}];
-    $scope.awesomeness = [{"id":11, "value":"Text them"},{"id":12, "value":"Call them via internet"},{"id":13, "value":"Form groups"},{"id":14, "value":"Share stickers"}];
-    $scope.value1 = [];
-    $scope.value2 = [];
+
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks,{'task_id':'53a951f9e4b041d6a3190438'})[0];
     if(angular.isObject(task) && task.completed==1) {
@@ -27,83 +24,14 @@ viberApp.controller('vbSurveyCtrl',['$scope','$http','toaster','$rootScope', fun
         $rootScope.ataskcomplete0 = true;
     }
 
-
-
-    $scope.updateQuestionValue = function(choice){
-        $scope.value1 = $scope.value1 || [];
-        if(choice.checked){
-            $scope.value1 = _.without($scope.value1, choice.value);
-        }else{
-            $scope.value1.push(choice.value);
-            $scope.value1 = _.uniq($scope.value1);
-        }
-
-    };
-
-    $scope.updateAwesomeValue = function(choice){
-        $scope.value2 = $scope.value2 || [];
-        if(choice.checked){
-            $scope.value2 = _.without($scope.value2, choice.value);
-        }else{
-            $scope.value2.push(choice.value);
-            $scope.value2 = _.uniq($scope.value2);
-        }
-        console.log($scope.value2);
-    };
-
-    $scope.used = undefined;
-    $scope.country = undefined;
-    $scope.awesome1 = undefined;
-    $scope.awesome2 = undefined;
-    $scope.awesome3 = undefined;
-    $scope.awesome4 = undefined;
-    $scope.coolest = undefined;
-    $scope.person1 = undefined;
-    $scope.person2 = undefined;
-    $scope.person3 = undefined;
+    $scope.person = undefined;
+    $scope.old = undefined;
+    $scope.learning = undefined;
 
     $scope.submit = function(isValid){
         if(isValid){
 
-
-
-            switch($scope.value1.length){
-                case 1:
-                    $scope.person1=$scope.value1[0];
-                    break;
-                case 2:
-                    $scope.person1=$scope.value1[0];
-                    $scope.person2=$scope.value1[1];
-                    break;
-                case 3:
-                    $scope.person1=$scope.value1[0];
-                    $scope.person2=$scope.value1[1];
-                    $scope.person3=$scope.value1[2];
-                    break;
-            }
-
-            switch($scope.value2.length){
-                case 1:
-                    $scope.awesome1=$scope.value2[0];
-                    break;
-                case 2:
-                    $scope.awesome1=$scope.value2[0];
-                    $scope.awesome2=$scope.value2[1];
-                    break;
-                case 3:
-                    $scope.awesome1=$scope.value2[0];
-                    $scope.awesome2=$scope.value2[1];
-                    $scope.awesome3=$scope.value2[2];
-                    break;
-                case 3:
-                    $scope.awesome1=$scope.value2[0];
-                    $scope.awesome2=$scope.value2[1];
-                    $scope.awesome3=$scope.value2[2];
-                    $scope.awesome4=$scope.value2[3];
-                    break;
-            }
-
-            var postObj = {'answers':{'answer1' :$scope.used,'answer2':$scope.country,'answer3':{'awesome1':$scope.awesome1,'awesome2':$scope.awesome2,'awesome3':$scope.awesome3,'awesome4':$scope.awesome4},'answer4':$scope.coolest,'answer5':{'person1':$scope.person1, 'person2':$scope.person2,'person3':$scope.person3}},'taskid':'53a951f9e4b041d6a3190438'};
+            var postObj = {'answers':{'answer1' :$scope.person,'answer2':$scope.old,'answer3':$scope.learning},'taskid':'53a951f9e4b041d6a3190438'};
 
             $http.post('/survey', JSON.stringify(postObj)).success(function(data){
                 if(angular.isObject(data)){
