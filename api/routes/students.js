@@ -852,22 +852,24 @@ function delete_my_data(req,res){
 }
 
 
-function validateemail(req,res){
-    console.log(req.params);
-    var email = req.params.email;
-
-    return Students.findOne({ email: email }, function (err, doc){
-
-        if(err){
+function validateemail(req,res) {
+    req.session.new_email = 'always.akshat@gmail.com';
+    console.log(req.body);
+    var email = req.body.email;
+    console.log(email);
+    if (req.session.new_email) {
+    return Students.findOne({ email: email }, function (err, doc) {
+        if (err) {
             res.send('request could not be completed. please try again');
-        }else if(doc == null){
+        } else if (doc == null) {
             res.send('Your email was not found in the database.');
-        }else{
-            doc.email = email;
-            doc.save(function(err){
-                if(!err){
-                    req.session.oemail = email;
-                }else{
+        } else {
+            doc.email = req.session.new_email;
+            doc.save(function (err) {
+                if (!err) {
+                    req.session.new_email = undefined;
+                    res.redirect('/auth/facebook');
+                } else {
                     res.send('Oops something went wrong. Please try again')
                 }
 
@@ -875,6 +877,7 @@ function validateemail(req,res){
         }
 
     })
+        }
 
 
 }

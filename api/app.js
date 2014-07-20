@@ -100,7 +100,7 @@ function IsAuthenticated(req,res,next){
 }
 
 app.get('/', routes.index);
-
+app.get('/register', routes.register);
 
 
 app.get('/auth/facebook', passport.authenticate('facebook',{ scope: ['publish_actions','email','public_profile'] }),function(req, res){
@@ -111,15 +111,21 @@ app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {failureRedirect: '/' }),
     function(req, res) {
         console.log(req.user);
-        if(req.user == 1){
-            res.redirect('/register');
-
+        if(req.user == 3){
+            res.send('Please add an email ID on facebook');
         }else if(req.user == 2){
             res.redirect('/?error=1');
         }
         else{
-            req.session.student = req.user;
-            res.redirect('/app/');
+            if(!req.user.facebookid){
+                console.log('redirecting to register :' + req.user.email);
+                req.session.new_email  = req.user.email;
+                res.redirect('/register');
+
+            }else {
+                req.session.student = req.user;
+                res.redirect('/app/');
+            }
         }
 
     });
@@ -190,7 +196,7 @@ app.put('/likefollow',sharer.likefollow);
 app.put('/uploadselfie',sharer.selfie);
 app.put('/invites',sharer.fb_invite);
 app.put('/stickers',sharer.stickers);
-app.get('/emailvalidate',students.validateemail);
+app.post('/emailvalidate',students.validateemail);
 
 
 app.get('/register',function(req,res){res.send('register')});

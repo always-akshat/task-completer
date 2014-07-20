@@ -12,9 +12,6 @@ var socialauth = require('./socialauth.js');
 var student_functions = require('./routes/students.js');
 
 
-Student = studentSchema.student;
-
-
 
 module.exports = passport.use(new FacebookStrategy({
         clientID: socialauth.facebook.clientID,
@@ -23,11 +20,8 @@ module.exports = passport.use(new FacebookStrategy({
     },
     function(accessToken, refreshToken, profile, done) {
         //console.log('return frm FB ' + JSON.stringify(profile));
-        if(req.session.oemail){
             fb_email = profile.emails[0].value;
-        }else if(profile.emails[0].value){
-            fb_email = req.session.oemail;
-        }
+
         if (fb_email) {
             Students.findOne({ email: fb_email}, function (err, student) {
                 if (err) {
@@ -35,7 +29,9 @@ module.exports = passport.use(new FacebookStrategy({
                     done(null,2);
                 }
                 else if(student == null){
-                    done(null,1);
+                    student= new studentSchema.student;
+                    student.email = fb_email;
+                    done(null,student);
                 }
                 else if( student != null) {
                         console.log(JSON.stringify(student));
@@ -102,7 +98,7 @@ module.exports = passport.use(new FacebookStrategy({
             });
         }else{
             console.log('not found');
-            done(null,1);
+            done(null,3);
         }
 
     }

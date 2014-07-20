@@ -9,6 +9,10 @@ var utilities = require("./utilities");
 var FB = require('fb');
 var TW = require('../node_modules/twit/lib/twitter.js');
 
+var studentSchema = require('../models/studentmodel');
+var student_functions = require('./students.js');
+
+
 
 exports.share = function(req,res){
 
@@ -188,29 +192,52 @@ exports.selfie = function(req,res){
 
 exports.fb_invite = function(req,res){
 
-
     var facebookid = req.session.student.facebookid;
     var answers = req.body.answers;
     var taskid = '53a9526be4b041d6a3190440';//req.body.taskid;
         console.log('length' +answers.fb_ids.length);
-    if(answers.fb_ids.length >1){
+    if(answers.fb_ids.length >1) {
         answers.invite_2 = 1;
-        utilities.handle_task_Request(facebookid,taskid,answers,function(task_data){
-            if(task_data !== 0){
+        utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
+            if (task_data !== 0) {
                 //console.log('data returned from utilities ' + JSON.stringify(task_data))
                 var tasks = req.session.student.user_tasks;
 
-                tasks.forEach(function(instance){
-                    if(instance.task_id == taskid){
+                tasks.forEach(function (instance) {
+                    if (instance.task_id == taskid) {
                         instance.answers = task_data.answers;
                     }
                 });
 
                 res.send(task_data);
-            }else{
+            } else {
                 res.send(0);
             }
         });
+
+        var points = (answers.fb_ids.length - 2 ) * 100
+        console.log('total points :' + points);
+        if (points > 0) {
+        student_functions.addpoints(facebookid, points, function (points_to_add) {
+            //console.log('points to add :'+ points_to_add);
+            if (points_to_add == 0) {
+
+            } else {
+                var transaction = new studentSchema.vibes_transaction;
+                transaction.vibes = points;
+                transaction.type = 'task';
+                transaction.sign = 1;
+                transaction.message = 'Task completion - Invite facebook friends' ;
+                console.log('added points');
+                student_functions.VibesTransaction(facebookid, transaction, function (v_transaction) {
+                    console.log(v_transaction);
+                    if (v_transaction !== 0) {
+                        console.log('added transactiontion');
+                    }
+                });
+            }
+        });
+    }
     }else{
         res.send('minimum 2 friends needed');
     }
