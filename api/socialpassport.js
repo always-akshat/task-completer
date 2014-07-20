@@ -96,7 +96,7 @@ module.exports = passport.use(new FacebookStrategy({
 
                 }
                 else {
-                    done(null,1);
+                    done(null,2);
                 }
                 ;
             });

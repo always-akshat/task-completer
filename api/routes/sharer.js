@@ -126,7 +126,6 @@ exports.survey = function(req,res){
 
 }
 
-
 exports.stickers = function(req,res){
     var facebookid = req.session.student.facebookid;
     var answers = req.body.answers;

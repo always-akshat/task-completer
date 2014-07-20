@@ -45,7 +45,6 @@ function list(req, res) {
 
 function stage_add_to_all(facebookid) {
 
-    console.log('hello');
 
     Students.find().exists('user_tasks', false).limit(5000).exec(function (err, students) {
 
@@ -91,11 +90,11 @@ function stage_add_to_all(facebookid) {
 
 
 function add_stage1(facebookid,cb) {
-console.log('reached add stage for' + facebookid);
+console.log('adding stage to new user')
     Students.find({'facebookid' :facebookid}).exec(function (err, students) {
         console.log('studnet :' + JSON.stringify(students));
         students.forEach(function (instance) {
-            console.log(instance.facebookid + ' -- ' + instance.name);
+            //console.log(instance.facebookid + ' -- ' + instance.name);
             var stageid = '5390521624349ecc0c108c10';
             var stage_name = 'Level 1';
             var stage = {
@@ -103,7 +102,7 @@ console.log('reached add stage for' + facebookid);
                 "stageid" : stageid.toString(),
                 "completion" : 0
             };
-            console.log(stage);
+            //console.log(stage);
             console.log('adding student stages now');
             Students.update({'facebookid': instance.facebookid},
                 {$addToSet: {stages:stage}},{upsert:true},function(err){
@@ -113,7 +112,7 @@ console.log('reached add stage for' + facebookid);
                         console.log("Successfully added")
                         stages_function.getStageInfo(stageid, function (err, stage) {
                             if (!err) {
-                                console.log('stages :'  + stage.tasks);
+                                //console.log('stages :'  + stage.tasks);
                                 if (stage && stage.tasks) {
                                     var user_tasks = stage.tasks;
                                     console.log(user_tasks);
@@ -423,7 +422,7 @@ function updateAnswers(facebookid, taskid, answers,cb) {
             if (err) {
                 cb(0);
             } else {
-                console.log('these are the answers \n' +JSON.stringify(doc.user_tasks[0].answers) +'\n\n');
+
 
                 old_answers = new Array();
 
@@ -444,6 +443,7 @@ function updateAnswers(facebookid, taskid, answers,cb) {
                             console.log(err);
                             cb(0);
                         } else {
+                            console.log('answers updated');
                             cb(old_answers);
                         }
                     });
@@ -804,7 +804,7 @@ function logout(req, res) {
 }
 
 function complete_user_stage(facebookid,stageid,completion_value,cb) {
-    console.log('stage completion data...' + facebookid + ' -- \n' + stageid + '----\n ' + completion_value);
+    //console.log('stage completion data...' + facebookid + ' -- \n' + stageid + '----\n ' + completion_value);
 
     Students.update({'facebookid': facebookid, 'stages.stageid': stageid.toString()},
         {$inc: { 'stages.$.completion': completion_value } }
@@ -854,9 +854,9 @@ function delete_my_data(req,res){
 
 function validateemail(req,res) {
 
-    console.log(req.body);
+
     var email = req.body.mail;
-    console.log(email);
+    console.log('validating from backend - ' email);
     if (req.session.new_email) {
     return Students.findOne({ email: email }, function (err, doc) {
         if (err) {

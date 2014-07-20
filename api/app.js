@@ -108,7 +108,7 @@ app.get('/auth/facebook', passport.authenticate('facebook',{ scope: ['publish_ac
 });
 
 app.get('/auth/facebook/callback',
-        passport.authenticate('facebook', {failureRedirect: '/' }),
+        passport.authenticate('facebook', {failureRedirect: '/auth/facebook' }),
     function(req, res) {
         console.log(req.user);
         if(req.user == 3){
