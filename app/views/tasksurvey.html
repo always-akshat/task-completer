@@ -15,11 +15,15 @@
         <br/><br/>
         Get 500 vibes for viewing the video and 500 vibes for answering the questions.
         <br/><br/>
-        <iframe width="100%" height="315px" src="//www.youtube.com/embed/EOl4e8wsvHU" frameborder="0" allowfullscreen></iframe>
-        <p ng-show="taskcomplete0">You have already completed this task</p>
+        <video width="100%" height="100%" controls style="margin-bottom: 20px;">
+            <source ng-src="/video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <!--<iframe width="100%" height="315px" src="//www.youtube.com/embed/EOl4e8wsvHU" frameborder="0" allowfullscreen></iframe>-->
+        <p ng-show="ataskcomplete0">You have already completed this task</p>
     </div>
 
-    <form ng-hide="taskcomplete0" name="surveyForm" role="form" ng-submit="submit(surveyForm.$valid)" ng-controller="vbSurveyCtrl"  novalidate>
+    <form ng-hide="ataskcomplete0" name="surveyForm" role="form" ng-submit="submit(surveyForm.$valid)" ng-controller="vbSurveyCtrl"  novalidate>
 
     <div class="panel-body">
         <p class="alert-formnote">All questions are mandatory</p>
@@ -28,121 +32,56 @@
                 <div class="que-box">Q</div>
             </div>
             <div class="col-lg-22">
-                <p class="question-txt">Have you used Viber to connect with friends earlier ?</p>
+                <p class="question-txt">Who is the person speaking in this video?</p>
                 <div class="form-group" required>
-                    <input type="radio" name="used" id="yes" value="yes" class="custom-radio" ng-model="used" required>
-                    <label for="yes">Yes</label>
-                    <input type="radio" name="used" id="no" value="no" class="custom-radio" ng-model="used" required>
-                    <label for="no">
-                        No
+                    <input type="radio" name="person" id="person1" value="Varun, Digital marketing and PR Manager" class="custom-radio" ng-model="person" required>
+                    <label for="person1">Varun, Digital marketing and PR Manager</label>
+                    <input type="radio" name="person" id="person2" value="Abhay, Film Director" class="custom-radio" ng-model="person" required>
+                    <label for="person2">
+                        Abhay, Film Director
                     </label>
                 </div>
             </div>
         </div>
     </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-lg-2">
-                <div class="que-box">Q</div>
-            </div>
-            <div class="col-lg-22">
-                <p class="question-txt">Viber was founded in which one of the following countries ?
-                    <small>Please select one</small>
-                </p>
-                <div class="form-group">
-                    <input type="radio" id="qa1" name="qa1" class="custom-radio" ng-model="country" value="United States" required>
-                    <label for="qa1">United States</label>
-                    <input type="radio" id="qa2" name="qa1" class="custom-radio" ng-model="country" value="Israel" required>
-                    <label for="qa2">Israel</label>
-                    <input type="radio" id="qa3" name="qa1" class="custom-radio" ng-model="country" value="Vietnam" required>
-                    <label for="qa3">Vietnam</label>
-                    <input type="radio" id="qa4" name="qa1" class="custom-radio" ng-model="country" value="India" required>
-                    <label for="qa4">India</label>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="que-box">Q</div>
+                </div>
+                <div class="col-lg-22">
+                    <p class="question-txt">How old is the Viber India office?</p>
+                    <div class="form-group" required>
+                        <input type="radio" name="old" id="old6m" value="6 months" class="custom-radio" ng-model="old" required>
+                        <label for="old6m">6 months</label>
+                        <input type="radio" name="old" id="old6y" value="6 years" class="custom-radio" ng-model="old" required>
+                        <label for="old6y">
+                            6 years
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-lg-2">
-                <div class="que-box">Q</div>
-            </div>
-            <div class="col-lg-22">
-                <p class="question-txt">What are the awesome things that you can do with Viber to connect with friends ?
-                    <small>Please select as many true</small>
-                </p>
-                <div class="form-group">
-                    <span ng-repeat="awesome in awesomeness">
-
-                                <input type="checkbox" id="{{awesome.id}}" value="{{awesome.value}}" class="custom" ng-model="awesome.checked" ng-click="updateAwesomeValue(awesome)" name="group-one">
-                                <label for="{{awesome.id}}" style="margin-right: 0;">{{awesome.value}}</label>
-
-                    </span>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="que-box">Q</div>
+                </div>
+                <div class="col-lg-22">
+                    <p class="question-txt">What are the 3 biggest learnings of this internship?</p>
+                    <div class="form-group" required>
+                        <input type="radio" name="learning" id="fca" value="Finance, commerce and Accounts" class="custom-radio" ng-model="learning" required>
+                        <label for="fca">Finance, commerce and Accounts</label>
+                        <input type="radio" name="learning" id="nms" value="Networking, marketing and social media" class="custom-radio" ng-model="learning" required>
+                        <label for="nms">
+                            Networking, marketing and social media
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-lg-2">
-                <div class="que-box">Q</div>
-            </div>
-            <div class="col-lg-22">
-                <p class="question-txt">What do you think are the coolest features of Viber ?
-                    <small>Open your heart</small>
-                </p>
-                <div class="form-group">
-                    <textarea name="coolest" type="text" id="" cols="30" rows="5" class="form-control" placeholder="Your answer here…"ng-model="coolest" required></textarea>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-lg-2">
-                <div class="que-box">Q</div>
-            </div>
-            <div class="col-lg-22">
-                <p class="question-txt">Your personality resonates with which one of these ?</p>
-                <div class="form-group">
-                    <span ng-repeat="choice in persons">
-                        <div class="col-lg-8 control-label">
-                            <img ng-src="{{choice.label}}" alt="" class="img-responsive img-center"/>
-                            <p class="text-center">
-                                <input type="checkbox" id="{{choice.id}}" value="{{choice.value}}" class="custom" ng-model="choice.checked" ng-click="updateQuestionValue(choice)" name="group-one">
-                                <label for="{{choice.id}}" style="margin-right: 0;"></label>
-                            </p>
-                        </div>
-                    </span>
-
-                    <!--<div class="col-lg-8 control-label">-->
-                        <!--<img src="images/img-check-1.jpg" alt="" class="img-responsive img-center"/>-->
-                        <!--<p class="text-center">-->
-                            <!--<input type="checkbox" id="o1" ng-true-value="einstein" ng-false-value="nothing" class="custom" ng-model="person1" checked>-->
-                            <!--<label for="o1" style="margin-right:0;"></label>-->
-                        <!--</p>-->
-                    <!--</div>-->
-                    <!--<div class="col-lg-8 control-label">-->
-                        <!--<img src="images/img-check-2.jpg" alt="" class="img-responsive img-center"/>-->
-                        <!--<p class="text-center">-->
-                            <!--<input type="checkbox" id="o2" ng-true-value="gandhi" ng-false-value="nothing" class="custom" ng-model="person2">-->
-                            <!--<label for="o2" style="margin-right:0;"></label>-->
-                        <!--</p>-->
-                    <!--</div>-->
-                    <!--<div class="col-lg-8 control-label">-->
-                        <!--<img src="images/img-check-3.jpg" alt="" class="img-responsive img-center"/>-->
-                        <!--<p class="text-center">-->
-                            <!--<input type="checkbox" id="o3" ng-true-value="tagore" ng-false-value="nothing" class="custom" ng-model="person3">-->
-                            <!--<label for="o3" style="margin-right:0;"></label>-->
-                        <!--</p>-->
-                    <!--</div>-->
-
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="panel-body custom-form">
-        <button type="submit" class="btn btn-success col-lg-offset-2" ng-disabled="!((surveyForm.$valid) && (value1.length!=0) && (value2.length!=0))">submit</button>
+        <button type="submit" class="btn btn-success col-lg-offset-2" ng-disabled="surveyForm.$invalid">submit</button>
     </div>
     </form>
 

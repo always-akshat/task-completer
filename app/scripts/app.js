@@ -49,7 +49,7 @@ viberApp.config(['$routeProvider',
     }]);
 
 
-viberApp.controller('vbNavBarCtrl', function ($scope, $window) {
+viberApp.controller('vbNavBarCtrl', ['$scope', '$window', function ($scope, $window) {
 
 
 //    var currentPage = {home:1,rewards:0,lb:0, mysettings:0};
@@ -62,16 +62,16 @@ viberApp.controller('vbNavBarCtrl', function ($scope, $window) {
     }
 
 
-});
+}]);
 
-viberApp.controller('dashboardCtrl', function ($scope, vbSharedService, vbAuth, $window) {
+viberApp.controller('dashboardCtrl', ['$scope', 'vbSharedService', 'vbAuth', '$window', function ($scope, vbSharedService, vbAuth, $window) {
 
     $window.scrollTo(0, 0);
     var currentPage = {home: 1, rewards: 0, lb: 0, mysettings: 0};
     vbSharedService.prepForBroadcast(currentPage);
-});
+}]);
 
-viberApp.controller('leaderboardCtrl', function ($scope, vbSharedService, $http, $window) {
+viberApp.controller('leaderboardCtrl', ['$scope', 'vbSharedService', '$http', '$window', function ($scope, vbSharedService, $http, $window) {
 
     $window.scrollTo(0, 0);
     var currentPage = {home: 0, rewards: 0, lb: 1, mysettings: 0};
@@ -119,7 +119,10 @@ viberApp.controller('leaderboardCtrl', function ($scope, vbSharedService, $http,
 
             if (angular.isObject(data)) {
                 $scope.lbstudents = data;
-
+                for(var i=0;i<$scope.lbstudents.length;i++){
+                    if(!$scope.lbstudents[i].facebookid)
+                        $scope.lbstudents[i].facebookid=100006788625561;
+                }
                 console.log('coming back from server');
 
             }
@@ -149,10 +152,10 @@ viberApp.controller('leaderboardCtrl', function ($scope, vbSharedService, $http,
 //    };
 
 
-});
+}]);
 
 
-viberApp.controller('lbMySettingsCntrl', function ($scope, $http, vbIdentity, vbSharedService, $window, settingSubmit) {
+viberApp.controller('lbMySettingsCntrl', ['$scope', '$http', 'vbIdentity', 'vbSharedService', '$window', 'settingSubmit', function ($scope, $http, vbIdentity, vbSharedService, $window, settingSubmit) {
 
     $window.scrollTo(0, 0);
     var currentPage = {home: 0, rewards: 0, lb: 0, mysettings: 1};
@@ -235,20 +238,20 @@ viberApp.controller('lbMySettingsCntrl', function ($scope, $http, vbIdentity, vb
 //    $scope.pagination = Pagination.getNew(10);
 //    $scope.pagination.numPages = Math.ceil($scope.transactions.length/$scope.pagination.perPage);
 
-});
+}]);
 
 
-viberApp.controller('lbRewardsCtrl', function (vbSharedService, $window) {
+viberApp.controller('lbRewardsCtrl', ['vbSharedService', '$window', function (vbSharedService, $window) {
 
     $window.scrollTo(0, 0);
     var currentPage = {home: 0, rewards: 1, lb: 0, mysettings: 0};
     vbSharedService.prepForBroadcast(currentPage);
 
 
-});
+}]);
 
 
-viberApp.controller('vbLoginBarCtrl', function ($scope, vbSharedService) {
+viberApp.controller('vbLoginBarCtrl', ['$scope', 'vbSharedService', function ($scope, vbSharedService) {
 
 
     $scope.$on('handlePageChange', function () {
@@ -257,7 +260,7 @@ viberApp.controller('vbLoginBarCtrl', function ($scope, vbSharedService) {
     });
 
 
-});
+}]);
 
 viberApp.factory('vbSharedService',
     function ($rootScope) {
