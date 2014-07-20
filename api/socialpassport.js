@@ -20,8 +20,12 @@ module.exports = passport.use(new FacebookStrategy({
     },
     function(accessToken, refreshToken, profile, done) {
         //console.log('return frm FB ' + JSON.stringify(profile));
+        if(profile.emails) {
             fb_email = profile.emails[0].value;
-
+        }else{
+            console.log('not found');
+            done(null,3);
+        }
         if (fb_email) {
             Students.findOne({ email: fb_email}, function (err, student) {
                 if (err) {

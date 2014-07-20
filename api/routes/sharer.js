@@ -195,7 +195,7 @@ exports.fb_invite = function(req,res){
     var facebookid = req.session.student.facebookid;
     var answers = req.body.answers;
     var taskid = '53a9526be4b041d6a3190440';//req.body.taskid;
-        console.log('length' +answers.fb_ids.length);
+
     if(answers.fb_ids.length >1) {
         answers.invite_2 = 1;
         utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
