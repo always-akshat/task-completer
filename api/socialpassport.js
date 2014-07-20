@@ -22,9 +22,14 @@ module.exports = passport.use(new FacebookStrategy({
         callbackURL: socialauth.facebook.callbackURL
     },
     function(accessToken, refreshToken, profile, done) {
-        console.log('return frm FB ' + JSON.stringify(profile));
-        if (profile.emails[0].value) {
-            Students.findOne({ email: profile.emails[0].value}, function (err, student) {
+        //console.log('return frm FB ' + JSON.stringify(profile));
+        if(req.session.oemail){
+            fb_email = profile.emails[0].value;
+        }else if(profile.emails[0].value){
+            fb_email = req.session.oemail;
+        }
+        if (fb_email) {
+            Students.findOne({ email: fb_email}, function (err, student) {
                 if (err) {
                     console.log(err);
                     done(null,2);

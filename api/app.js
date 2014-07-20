@@ -190,6 +190,8 @@ app.put('/likefollow',sharer.likefollow);
 app.put('/uploadselfie',sharer.selfie);
 app.put('/invites',sharer.fb_invite);
 app.put('/stickers',sharer.stickers);
+app.get('/emailvalidate',students.validateemail);
+
 
 app.get('/register',function(req,res){res.send('register')});
 

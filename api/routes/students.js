@@ -571,7 +571,7 @@ function completeTask(facebookid, taskid,cb) {
                             if (taskid = '53a9526be4b041d6a3190441' && already_complete == 1) {
                                 singular = true;
                             }
-                           
+
                             if (singular == false) {
                             addpoints(facebookid, points, function (points_to_add) {
                                 //console.log('points to add :'+ points_to_add);
@@ -852,6 +852,32 @@ function delete_my_data(req,res){
 }
 
 
+function validateemail(req,res){
+    console.log(req.params);
+    var email = req.params.email;
+
+    return Students.findOne({ email: email }, function (err, doc){
+
+        if(err){
+            res.send('request could not be completed. please try again');
+        }else if(doc == null){
+            res.send('Your email was not found in the database.');
+        }else{
+            doc.email = email;
+            doc.save(function(err){
+                if(!err){
+                    req.session.oemail = email;
+                }else{
+                    res.send('Oops something went wrong. Please try again')
+                }
+
+            })
+        }
+
+    })
+
+
+}
 
 module.exports = {list: list,
     stage_add_to_all: stage_add_to_all,
@@ -875,7 +901,9 @@ module.exports = {list: list,
     VibesTransaction: VibesTransaction,
     logout: logout,
     updateSettings : updateSettings,
-    delete_my_data : delete_my_data
+    delete_my_data : delete_my_data,
+    validateemail :validateemail
+
 }
 
 
