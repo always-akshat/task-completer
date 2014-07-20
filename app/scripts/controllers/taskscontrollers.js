@@ -106,12 +106,13 @@ viberApp.controller('vbUploadPhotosCtrl',['$scope','$http', '$upload','toaster' 
         $scope.s3added = [];
         for(var i=0;i<$scope.files.length;i++){
             var file = $scope.files[i];
-            $scope.done[i]=fbid+'$'+file.name;
+            var ran_num = Math.round(Math.random()*1000);
+            $scope.done[i]=fbid+'$'+ran_num+'$'+file.name;
             $scope.upload[i]=$upload.upload({
                 url: 'https://viber-uploads.s3-ap-southeast-1.amazonaws.com/',
                 method: 'POST',
                 data: {
-                    'key' : 's3UploadExample/'+ fbid + '$' + file.name,
+                    'key' : 's3UploadExample/'+ fbid+'$'+ran_num+'$'+file.name,
                     'acl' : 'public-read',
                     'Content-Type' : 'application',
                     'AWSAccessKeyId': 'AKIAITP3AH32R7ZKQ4XQ',
