@@ -855,7 +855,7 @@ function delete_my_data(req,res){
 function validateemail(req,res) {
     req.session.new_email = 'always.akshat@gmail.com';
     console.log(req.body);
-    var email = req.body.email;
+    var email = req.body.mail;
     console.log(email);
     if (req.session.new_email) {
     return Students.findOne({ email: email }, function (err, doc) {
