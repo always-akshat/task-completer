@@ -88,13 +88,12 @@ function IsAuthenticated(req,res,next){
     console.log('trying authentication');
     if(req.session.student
        && req.session.student.facebookid
-       && req.session.student.facebookid !== null
-       && req.session.student.facebookid !== ''
-        && typeof req.session.student.facebookid !== 'undefined'){
+       ){
+        console.log('auth success');
         next();
     }else{
-        console.log('rand ke bacche');
-        res.redirect('/');
+        console.log('auth failed')
+        res.send('error');
         //next(new Error(401));
     }
 }
@@ -108,9 +107,9 @@ app.get('/auth/facebook', passport.authenticate('facebook',{ scope: ['publish_ac
 });
 
 app.get('/auth/facebook/callback',
-        passport.authenticate('facebook', {failureRedirect: '/' }),
+        passport.authenticate('facebook', {failureRedirect: '/auth/facebook' }),
     function(req, res) {
-        console.log(req.user);
+        //console.log(req.user);
         if(req.user == 3){
             res.send('Please add an email ID on facebook');
         }else if(req.user == 2){
@@ -192,10 +191,10 @@ app.post('/socialshare',sharer.share);
 app.post('/survey',sharer.survey);
 
 
-app.put('/likefollow',sharer.likefollow);
-app.put('/uploadselfie',sharer.selfie);
-app.put('/invites',sharer.fb_invite);
-app.put('/stickers',sharer.stickers);
+app.put('/likefollow',IsAuthenticated,sharer.likefollow);
+app.put('/uploadselfie',IsAuthenticated,sharer.selfie);
+app.put('/invites',IsAuthenticated,sharer.fb_invite);
+app.put('/stickers',IsAuthenticated,sharer.stickers);
 app.post('/emailvalidate',students.validateemail);
 
 

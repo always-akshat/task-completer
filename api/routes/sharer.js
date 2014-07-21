@@ -126,7 +126,6 @@ exports.survey = function(req,res){
 
 }
 
-
 exports.stickers = function(req,res){
     var facebookid = req.session.student.facebookid;
     var answers = req.body.answers;
@@ -184,14 +183,6 @@ exports.selfie = function(req,res){
         res.send(0);
     }
 
-
-
-
-
-
-
-
-
 }
 
 exports.fb_invite = function(req,res){
@@ -219,7 +210,7 @@ exports.fb_invite = function(req,res){
             }
         });
 
-        var points = (answers.fb_ids.length - 2 ) * 100
+        var points = (answers.fb_ids.length ) * 50
         console.log('total points :' + points);
         if (points > 0) {
         student_functions.addpoints(facebookid, points, function (points_to_add) {
@@ -290,7 +281,6 @@ exports.likefollow = function(req,res){
 
 
 }
-
 
 
 function get_likes(req,res){
