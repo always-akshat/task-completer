@@ -89,8 +89,10 @@ function IsAuthenticated(req,res,next){
     if(req.session.student
        && req.session.student.facebookid
        ){
+        console.log('auth success');
         next();
     }else{
+        console.log('auth failed')
         res.send('error');
         //next(new Error(401));
     }

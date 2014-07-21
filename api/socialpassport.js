@@ -38,7 +38,7 @@ module.exports = passport.use(new FacebookStrategy({
                     done(null,student);
                 }
                 else if( student != null) {
-                        console.log(JSON.stringify(student));
+                        //console.log(JSON.stringify(student));
 
                     if(student.facebookid){
                         console.log('facebookid');
