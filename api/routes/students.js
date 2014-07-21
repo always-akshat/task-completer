@@ -754,7 +754,7 @@ function addTwitter(req, res) {
                                 //console.log('session transactions are : ' + JSON.stringify(req.session.student.vibes_transaction));
                                 //console.log('session points are later: ' + req.session.student.points);
                                 //console.log('done');
-                                console.log('this is the session' + JSON.stringify(req.session.student));
+                                //console.log('this is the session' + JSON.stringify(req.session.student));
                                 res.send('<script>window.close()</script>');
                             } else {
                                 console.log('bhencho err');
