@@ -3,7 +3,7 @@
  */
 var viberApp = angular.module('viberApp');
 
-viberApp.factory('vbAuth', function($http,vbIdentity,$q,$rootScope,$window){
+viberApp.factory('vbAuth',['$http','vbIdentity','$q','$rootScope','$window',  function($http,vbIdentity,$q,$rootScope,$window){
 
     return{
         authenticateUser: function()
@@ -42,9 +42,9 @@ viberApp.factory('vbAuth', function($http,vbIdentity,$q,$rootScope,$window){
         }
     }
 
-});
+}]);
 
-viberApp.factory('settingSubmit', function($http, $q){
+viberApp.factory('settingSubmit',['$http', '$q', function($http, $q){
     return{
         settingSubmitbutton: function (form_data, fbid) {
 
@@ -67,4 +67,4 @@ viberApp.factory('settingSubmit', function($http, $q){
             return dfd.promise;
         }
     }
-});
+}]);

@@ -71,10 +71,10 @@ viberApp.controller('vbSurveyCtrl',['$scope','$http','toaster','$rootScope', fun
     };
 }]);
 
-viberApp.controller('vbInsertMobileCtrl',function($scope){
+viberApp.controller('vbInsertMobileCtrl',['$scope',function($scope){
 
 
-});
+}]);
 
 
 viberApp.controller('vbUploadPhotosCtrl',['$scope','$http', '$upload','toaster' , function($scope, $http, $upload, toaster){
@@ -230,7 +230,7 @@ viberApp.controller('vbinviteFrndsCtrl',['$scope','$http','toaster', function($s
 }]);
 
 
-viberApp.controller('vblikenfollowCtrl',function($scope, $http,$window,$rootScope,toaster) {
+viberApp.controller('vblikenfollowCtrl',['$scope', '$http','$window','$rootScope','toaster', function($scope, $http,$window,$rootScope,toaster) {
 
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks, {'task_id': '53a9526be4b041d6a3190439'})[0];
@@ -302,7 +302,7 @@ viberApp.controller('vblikenfollowCtrl',function($scope, $http,$window,$rootScop
 
 
 
-});
+}]);
 
 viberApp.controller('vbInsertLinksCtrl',['$scope','$http','toaster', function($scope,$http,toaster /*,$q,postlink */){
 

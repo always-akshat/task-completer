@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('viberApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('MainCtrl', ['$scope',function ($scope) {
 
         $scope.users=[
 
@@ -49,9 +49,9 @@ angular.module('viberApp')
 
 
 
-  });
+  }]);
 
-viberApp.controller('lbCntrl', function($scope){
+viberApp.controller('lbCntrl',['$scope', function($scope){
 
     $scope.users=[
 
@@ -96,9 +96,9 @@ viberApp.controller('lbCntrl', function($scope){
 
     ];
 
-});
+}]);
 
-viberApp.controller('signupCntrl',function($scope,$http,$location){
+viberApp.controller('signupCntrl',[ '$scope','$http','$location', function($scope,$http,$location){
 
     $scope.User = {};
     $scope.errorMessage ='Error';
@@ -124,4 +124,4 @@ viberApp.controller('signupCntrl',function($scope,$http,$location){
     }
 
 
-});
+}]);
