@@ -88,13 +88,10 @@ function IsAuthenticated(req,res,next){
     console.log('trying authentication');
     if(req.session.student
        && req.session.student.facebookid
-       && req.session.student.facebookid !== null
-       && req.session.student.facebookid !== ''
-        && typeof req.session.student.facebookid !== 'undefined'){
+       ){
         next();
     }else{
-        console.log('rand ke bacche');
-        res.redirect('/');
+        res.send('error');
         //next(new Error(401));
     }
 }
@@ -192,11 +189,11 @@ app.post('/socialshare',sharer.share);
 app.post('/survey',sharer.survey);
 
 
-app.put('/likefollow',sharer.likefollow);
-app.put('/uploadselfie',sharer.selfie);
-app.put('/invites',sharer.fb_invite);
-app.put('/stickers',sharer.stickers);
-app.post('/emailvalidate',students.validateemail);
+app.put('/likefollow',IsAuthenticated,sharer.likefollow);
+app.put('/uploadselfie',IsAuthenticated,sharer.selfie);
+app.put('/invites',IsAuthenticated,sharer.fb_invite);
+app.put('/stickers',IsAuthenticated,sharer.stickers);
+app.post('/emailvalidate',IsAuthenticated,students.validateemail);
 
 
 app.get('/register',function(req,res){res.send('register')});
