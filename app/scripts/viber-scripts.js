@@ -4,7 +4,7 @@
 if (typeof jQuery === 'undefined') {
     throw new Error('JavaScript requires jQuery')
 }
-+function ($) {
+(function ($) {
     'use strict';
 
     $(document).ready(function () {
@@ -74,4 +74,4 @@ if (typeof jQuery === 'undefined') {
 
     });
 
-}(jQuery);
+})(jQuery);

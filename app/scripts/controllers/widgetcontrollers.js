@@ -5,17 +5,17 @@
 var viberApp = angular
     .module('viberApp');
 
-viberApp.controller('vbCheatBoxCtrl',function($scope){
+viberApp.controller('vbCheatBoxCtrl',['$scope', function($scope){
 
 
-});
+}]);
 
-viberApp.controller('vbSocialConnectCtrl',function($scope){
+viberApp.controller('vbSocialConnectCtrl',['$scope', function($scope){
 
 
-});
+}]);
 
-viberApp.controller('vbMiniLeaderBoardCtrl',function($scope,$http){
+viberApp.controller('vbMiniLeaderBoardCtrl',[ '$scope','$http', function($scope,$http){
 
 
 
@@ -42,4 +42,4 @@ viberApp.controller('vbMiniLeaderBoardCtrl',function($scope,$http){
 
 
 
-});
+}]);

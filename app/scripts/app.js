@@ -6,8 +6,7 @@ var viberApp = angular
 // angular routes configuration
 
 
-viberApp.config(['$routeProvider',
-    function ($routeProvider) {
+viberApp.config(['$routeProvider', function ($routeProvider) {
 
         $routeProvider.
             when('/', {

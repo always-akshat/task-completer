@@ -5,7 +5,7 @@
 var viberApp=angular.module('viberApp');
 
 
-viberApp.factory('postlink',function($http,$q){
+viberApp.factory('postlink',['$http','$q',function($http,$q){
 
     return{
 
@@ -36,11 +36,11 @@ viberApp.factory('postlink',function($http,$q){
     }
 
 
-});
+}]);
 
 
 
-viberApp.factory('getminileaderboard',function($http,$q){
+viberApp.factory('getminileaderboard',['$http','$q',function($http,$q){
 
     return{
 
@@ -66,4 +66,4 @@ viberApp.factory('getminileaderboard',function($http,$q){
     }
 
 
-});
+}]);
