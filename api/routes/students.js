@@ -568,7 +568,7 @@ function completeTask(facebookid, taskid,cb) {
                         } else {
 
                             var singular = false;
-                            if (taskid = '53a9526be4b041d6a3190441' && already_complete == 1) {
+                            if ((taskid == '53a9526be4b041d6a3190441' || taskid == '53a9526be4b041d6a3190440') && already_complete == 1) {
                                 singular = true;
                             }
 
