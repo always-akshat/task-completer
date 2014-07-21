@@ -122,7 +122,7 @@ app.get('/auth/facebook/callback',
                 req.session.new_email  = req.user.email;
                 res.redirect('/register');
             }else {
-                cosole.log('everything fin. logging in');
+                console.log('everything fin. logging in');
                 req.session.student = req.user;
                 res.redirect('/app/');
             }

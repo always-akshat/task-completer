@@ -694,7 +694,7 @@ function addTaskToUser(facebookid, taskid,cb) {
                             if (err) {
                                 cb(0)
                             }
-                            console.log(student_task);
+                            //console.log(student_task);
                             cb(null,student_task);
                         })
                 }
