@@ -856,7 +856,7 @@ function validateemail(req,res) {
 
 
     var email = req.body.mail;
-    console.log('validating from backend - ' email);
+    console.log('validating from backend - ' + email);
     if (req.session.new_email) {
     return Students.findOne({ email: email }, function (err, doc) {
         if (err) {
