@@ -110,10 +110,10 @@ app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {failureRedirect: '/' }),
     function(req, res) {
         if(req.user == 3){
-            cosole.log('no email found - redirecting to main page');
+            console.log('no email found - redirecting to main page');
             res.redirect('/?error=2');
         }else if(req.user == 2){
-            cosole.log('error occured - redirecting to main page');
+            console.log('error occured - redirecting to main page');
             res.redirect('/?error=1');
         }
         else{
