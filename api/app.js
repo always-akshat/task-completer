@@ -88,6 +88,8 @@ function IsAuthenticated(req,res,next){
     console.log('trying authentication');
     if(req.session.student
        && req.session.student.facebookid
+       && req.session.student.facebookid != null
+       && req.session.student.facebookid != ''
        ){
         console.log('auth success');
         next();

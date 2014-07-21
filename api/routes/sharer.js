@@ -123,7 +123,6 @@ exports.survey = function(req,res){
     }else{
         res.send('invalid answers');
     }
-
 }
 
 exports.stickers = function(req,res){
@@ -160,7 +159,6 @@ exports.selfie = function(req,res){
     var answers = req.body.answers;
     var taskid = req.body.taskid;
 
-    console.log(JSON.stringify(answers));
     if(answers.name.length >0){
         answers.upload = 1;
         utilities.handle_task_Request(facebookid,taskid,answers,function(task_data){
@@ -191,7 +189,7 @@ exports.fb_invite = function(req,res){
     var answers = req.body.answers;
     var taskid = '53a9526be4b041d6a3190440';//req.body.taskid;
 
-    if(answers.fb_ids.length >1) {
+    if(answers.fb_ids && answers.fb_ids.length >1) {
         answers.invite_2 = 1;
         utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
             if (task_data !== 0) {

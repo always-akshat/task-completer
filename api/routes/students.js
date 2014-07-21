@@ -568,6 +568,7 @@ function completeTask(facebookid, taskid,cb) {
                         } else {
 
                             var singular = false;
+                            console.log('this is the task id in complete answers :' + taskid);
                             if ((taskid == '53a9526be4b041d6a3190441' || taskid == '53a9526be4b041d6a3190440') && already_complete == 1) {
                                 singular = true;
                             }
