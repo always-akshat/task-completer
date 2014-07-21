@@ -183,14 +183,6 @@ exports.selfie = function(req,res){
         res.send(0);
     }
 
-
-
-
-
-
-
-
-
 }
 
 exports.fb_invite = function(req,res){
@@ -289,7 +281,6 @@ exports.likefollow = function(req,res){
 
 
 }
-
 
 
 function get_likes(req,res){

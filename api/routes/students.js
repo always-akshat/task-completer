@@ -862,7 +862,8 @@ function validateemail(req,res) {
         if (err) {
             res.send('request could not be completed. please try again');
         } else if (doc == null) {
-            res.send('Your email was not found in the database.');
+            res.send('Your email was not found in the database.<br>' +
+                'Please click <a href="http://thegoodvibes.in">here </a> to register for batch 2.</a>');
         } else {
             doc.email = req.session.new_email;
             doc.save(function (err) {
