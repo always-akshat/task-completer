@@ -107,12 +107,13 @@ app.get('/auth/facebook', passport.authenticate('facebook',{ scope: ['publish_ac
 });
 
 app.get('/auth/facebook/callback',
-        passport.authenticate('facebook', {failureRedirect: '/auth/facebook' }),
+        passport.authenticate('facebook', {failureRedirect: '/' }),
     function(req, res) {
-        //console.log(req.user);
         if(req.user == 3){
-            res.send('Please add an email ID on facebook');
+            cosole.log('no email found - redirecting to main page');
+            res.redirect('/?error=2');
         }else if(req.user == 2){
+            cosole.log('error occured - redirecting to main page');
             res.redirect('/?error=1');
         }
         else{
@@ -120,8 +121,8 @@ app.get('/auth/facebook/callback',
                 console.log('redirecting to register :' + req.user.email);
                 req.session.new_email  = req.user.email;
                 res.redirect('/register');
-
             }else {
+                cosole.log('everything fin. logging in');
                 req.session.student = req.user;
                 res.redirect('/app/');
             }
