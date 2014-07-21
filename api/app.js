@@ -195,7 +195,7 @@ app.put('/likefollow',IsAuthenticated,sharer.likefollow);
 app.put('/uploadselfie',IsAuthenticated,sharer.selfie);
 app.put('/invites',IsAuthenticated,sharer.fb_invite);
 app.put('/stickers',IsAuthenticated,sharer.stickers);
-app.post('/emailvalidate',IsAuthenticated,students.validateemail);
+app.post('/emailvalidate',students.validateemail);
 
 
 app.get('/register',function(req,res){res.send('register')});

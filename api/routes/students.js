@@ -70,7 +70,7 @@ function stage_add_to_all(facebookid) {
                                 console.log('stages :'  + stage.tasks);
                                 if (stage && stage.tasks) {
                                     var user_tasks = stage.tasks;
-                                    console.log(user_tasks);
+                                    //console.log(user_tasks);
                                     user_tasks.forEach(function (user_tasks) {
                                         addTaskToUser(instance.facebookid, user_tasks.stageid.toString());
                                     });
@@ -854,7 +854,7 @@ function delete_my_data(req,res){
 
 function validateemail(req,res) {
 
-
+    console.log('reached validate');
     var email = req.body.mail;
     console.log('validating from backend - ' + email);
     if (req.session.new_email) {
