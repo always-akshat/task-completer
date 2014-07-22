@@ -19,6 +19,7 @@ module.exports = passport.use(new FacebookStrategy({
         callbackURL: socialauth.facebook.callbackURL
     },
     function(accessToken, refreshToken, profile, done) {
+        console.log('reached fb auth callback');
         //console.log('return frm FB ' + JSON.stringify(profile));
         if(profile.emails) {
             fb_email = profile.emails[0].value;
@@ -26,20 +27,22 @@ module.exports = passport.use(new FacebookStrategy({
             console.log('not found');
             done(null,3);
         }
+        console.log('checked for mail');
         if (fb_email) {
             Students.findOne({ email: fb_email}, function (err, student) {
                 if (err) {
-                    console.log(err);
+                    console.log('error occured at finding student');
                     done(null,2);
                 }
                 else if(student == null){
+                    console.log('student null. reached new student schema');
                     student= new studentSchema.student;
                     student.email = fb_email;
                     done(null,student);
                 }
                 else if( student != null) {
                         //console.log(JSON.stringify(student));
-
+                    console.log('student not null');
                     if(student.facebookid){
                         console.log('facebookid');
                         student.facebook.authcode = accessToken;
