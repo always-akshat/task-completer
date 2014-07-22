@@ -612,7 +612,7 @@ viberApp.controller('vbSurveyCtrl', [
           };
         $http.post('/survey', JSON.stringify(postObj)).success(function (data) {
           if (angular.isObject(data)) {
-            if (Object.size(data.completiondata) == 4) {
+            if (angular.isObject(data.completiondata)) {
               // because the service will not return Level inside completiondata if the user is doing the same task again
               $rootScope.ataskcomplete0 = true;
               //$scope.ataskcomplete0=true;
@@ -729,7 +729,7 @@ viberApp.controller('vbUploadPhotosCtrl', [
       //        }
       $http.put('/uploadselfie', reqbody).success(function (data) {
         if (angular.isObject(data)) {
-          if (Object.size(data.completiondata) == 4) {
+          if (angular.isObject(data.completiondata)) {
             $scope.identity.currentUser.complete += data.completiondata.level;
             $scope.identity.currentUser.points += data.completiondata.points;
             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
@@ -785,7 +785,7 @@ viberApp.controller('vbinviteFrndsCtrl', [
                 'taskid': '53a9526be4b041d6a3190440'
               };
             $http.put('/invites', reqObj).success(function (data) {
-              if (Object.size(data.completiondata) == 4) {
+              if (angular.isObject(data.completiondata)) {
                 $scope.identity.currentUser.complete += data.completiondata.level;
                 $scope.identity.currentUser.points += data.completiondata.points;
                 $scope.taskcomplete2 = true;
@@ -825,7 +825,7 @@ viberApp.controller('vblikenfollowCtrl', [
           };
         $http.put('/likefollow', reqbody).success(function (data) {
           if (angular.isObject(data)) {
-            if (Object.size(data.completiondata) == 4) {
+            if (angular.isObject(data.completiondata)) {
               $scope.identity.currentUser.complete += data.completiondata.level;
               $scope.taskcomplete3 = true;
               task.completed = 1;
@@ -846,7 +846,7 @@ viberApp.controller('vblikenfollowCtrl', [
             'taskid': '53a9526be4b041d6a3190439'
           };
         $http.put('/likefollow', reqbody).success(function (data) {
-          if (Object.size(data.completiondata) == 4) {
+          if (angular.isObject(data.completiondata)) {
             $scope.identity.currentUser.complete += data.completiondata.level;
             $scope.taskcomplete3 = true;
             task.completed = 1;
@@ -1002,7 +1002,7 @@ viberApp.controller('vbInsertLinksCtrl', [
             };
           $http.put('/stickers', reqbody).success(function (data) {
             if (angular.isObject(data)) {
-              if (data.completiondata.level) {
+              if (angular.isObject(data.completiondata)) {
                 // because the service will not return Level inside completiondata if the user is doing the same task again
                 $scope.identity.currentUser.complete += data.completiondata.level;
                 $scope.taskcomplete4 = true;
