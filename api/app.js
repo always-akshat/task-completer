@@ -111,7 +111,7 @@ app.get('/auth/facebook',
 });
 
 app.get('/auth/facebook/callback',
-        passport.authenticate('facebook', {failureRedirect: '/' }),
+        passport.authenticate('facebook', {failureRedirect: '/auth/facebook' }),
     function(req, res) {
         if(req.user == 3){
             console.log('no email found - redirecting to main page');

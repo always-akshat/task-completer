@@ -567,11 +567,11 @@ function completeTask(facebookid, taskid,cb) {
                             console.log('cb error');
                             cb(0);
                         } else {
-                            var singular = false;
+                            //var singular = false;
                             console.log('this is the task id in complete answers :' + taskid);
 
 
-                            if (already_complete !== 1) {
+                            if (already_complete != 1) {
                             addpoints(facebookid, points, function (points_to_add) {
                                 //console.log('points to add :'+ points_to_add);
                                 if (points_to_add == 0) {
@@ -589,20 +589,16 @@ function completeTask(facebookid, taskid,cb) {
                                         //console.log(v_transaction);
                                         if (v_transaction !== 0) {
                                             completion_value.transaction = v_transaction;
-                                            if (already_complete !== 1) {
                                                 console.log('calling stage completion');
                                                 complete_user_stage(facebookid, stageid, c_pc, function (completed_percentage) {
                                                     if (completed_percentage == 0) {
-                                                        cb(0)
+                                                        cb(completion_value);
                                                     } else {
                                                         completion_value.level = completed_percentage;
                                                         cb(completion_value);
                                                     }
                                                 })
-                                            }
-                                            else {
-                                                cb(completion_value);
-                                            }
+
                                             console.log('added transactiontion');
                                         } else {
                                             console.log('cb error');
@@ -805,7 +801,7 @@ function logout(req, res) {
 }
 
 function complete_user_stage(facebookid,stageid,completion_value,cb) {
-    //console.log('stage completion data...' + facebookid + ' -- \n' + stageid + '----\n ' + completion_value);
+    console.log('stage completion data...' + facebookid + ' -- \n' + stageid + '----\n ' + completion_value);
 
     Students.update({'facebookid': facebookid, 'stages.stageid': stageid.toString()},
         {$inc: { 'stages.$.completion': completion_value } }
