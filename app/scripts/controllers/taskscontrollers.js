@@ -88,6 +88,7 @@ viberApp.controller('vbUploadPhotosCtrl',['$scope','$http', '$upload','toaster' 
     $scope.serSubmitted = [];
     $scope.done = [];
     $scope.taskcomplete1=false;
+    $scope.zeroselected = true;
 
     _.each(task.answers,function(answer){
         $scope.submitted += answer.name.length;
@@ -104,49 +105,49 @@ viberApp.controller('vbUploadPhotosCtrl',['$scope','$http', '$upload','toaster' 
         $scope.files = $files;
         $scope.upload =[];
         $scope.s3added = [];
-        for(var i=0;i<$scope.files.length;i++){
-            var file = $scope.files[i];
-            var ran_num = Math.round(Math.random()*1000);
-            $scope.done[i]=fbid+'$'+ran_num+'$'+file.name;
-            $scope.upload[i]=$upload.upload({
-                url: 'https://viber-uploads.s3-ap-southeast-1.amazonaws.com/',
-                method: 'POST',
-                data: {
-                    'key' : 's3UploadExample/'+ fbid+'$'+ran_num+'$'+file.name,
-                    'acl' : 'public-read',
-                    'Content-Type' : 'application',
-                    'AWSAccessKeyId': 'AKIAITP3AH32R7ZKQ4XQ',
-                    'success_action_status' : '201',
-                    'Policy' : 'eyJleHBpcmF0aW9uIjoiMjAxNS03LTE4VDIwOjAwOjAwLjAwMFoiLCJjb25kaXRpb25zIjpbWyJzdGFydHMtd2l0aCIsIiRrZXkiLCJzM1VwbG9hZEV4YW1wbGUvIl0seyJidWNrZXQiOiJ2aWJlci11cGxvYWRzIn0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiYXBwbGljYXRpb24iXSx7InN1Y2Nlc3NfYWN0aW9uX3N0YXR1cyI6IjIwMSJ9XX0=',
-                    'Signature' : '7OiVs5UxzIJdBbhfgjnuPaX6eKE='
-                },
-                file: file
-            }).then(function(response){
-                if(response.status===201){
-                    //console.log("File   "+file.name);
-                    $scope.added += 1;
-                    //xml parser
-                    if (window.DOMParser)
-                    {
-                        parser=new DOMParser();
-                        xmlDoc=parser.parseFromString(response.data,"text/xml");
+        if($scope.files.length>0) {
+            $scope.zeroselected = false;
+            for (var i = 0; i < $scope.files.length; i++) {
+                var file = $scope.files[i];
+                var ran_num = Math.round(Math.random() * 1000);
+                $scope.done[i] = fbid + '$' + ran_num + '$' + file.name;
+                $scope.upload[i] = $upload.upload({
+                    url: 'https://viber-uploads.s3-ap-southeast-1.amazonaws.com/',
+                    method: 'POST',
+                    data: {
+                        'key': 's3UploadExample/' + fbid + '$' + ran_num + '$' + file.name,
+                        'acl': 'public-read',
+                        'Content-Type': 'application',
+                        'AWSAccessKeyId': 'AKIAITP3AH32R7ZKQ4XQ',
+                        'success_action_status': '201',
+                        'Policy': 'eyJleHBpcmF0aW9uIjoiMjAxNS03LTE4VDIwOjAwOjAwLjAwMFoiLCJjb25kaXRpb25zIjpbWyJzdGFydHMtd2l0aCIsIiRrZXkiLCJzM1VwbG9hZEV4YW1wbGUvIl0seyJidWNrZXQiOiJ2aWJlci11cGxvYWRzIn0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiYXBwbGljYXRpb24iXSx7InN1Y2Nlc3NfYWN0aW9uX3N0YXR1cyI6IjIwMSJ9XX0=',
+                        'Signature': '7OiVs5UxzIJdBbhfgjnuPaX6eKE='
+                    },
+                    file: file
+                }).then(function (response) {
+                    if (response.status === 201) {
+                        $scope.added += 1;
+                        var xmlDoc;
+                        //xml parser
+                        if (window.DOMParser) {
+                            parser = new DOMParser();
+                            xmlDoc = parser.parseFromString(response.data, "text/xml");
+                        }
+                        else // Internet Explorer
+                        {
+                            xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+                            xmlDoc.async = false;
+                            xmlDoc.loadXML(txt);
+                        }
+                        $scope.s3added.push(xmlDoc.getElementsByTagName("Location")[0].childNodes[0].nodeValue);
+                        $scope.s3success = true;
+                        //$scope.serSubmitted.push(ran_num + '$' + file.name);
                     }
-                    else // Internet Explorer
-                    {
-                        xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
-                        xmlDoc.async=false;
-                        xmlDoc.loadXML(txt);
-                    }
-                    $scope.s3added.push(xmlDoc.getElementsByTagName("Location")[0].childNodes[0].nodeValue);
-                    $scope.s3success = true;
-                    //$scope.serSubmitted.push(ran_num + '$' + file.name);
-                }
-            });
+                });
 
+            }
         }
-
     };
-
     $scope.onFileUpload = function(){
 
         var reqbody =  {
@@ -206,24 +207,26 @@ viberApp.controller('vbinviteFrndsCtrl',['$scope','$http','toaster', function($s
                 display : 'popup'},
             function(response) {
                 if (response) {
+                    if (Object.size(response) == 3) {
                     var reqObj = {
-                        "answers" : {
-                            "fb_ids" : response.to
+                        "answers": {
+                            "fb_ids": response.to
                         },
-                        "taskid" : '53a9526be4b041d6a3190440'
+                        "taskid": '53a9526be4b041d6a3190440'
                     };
-                    $http.put('/invites', reqObj).success(function(data){
-                        if(Object.size(data.completiondata)==4){
+                    $http.put('/invites', reqObj).success(function (data) {
+                        if (Object.size(data.completiondata) == 4) {
                             $scope.identity.currentUser.complete += data.completiondata.level;
                             $scope.identity.currentUser.points += data.completiondata.points;
-                            $scope.taskcomplete2=true;
-                            task.completed=1;
+                            $scope.taskcomplete2 = true;
+                            task.completed = 1;
                             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
                         }
                         toaster.pop('success', "Task 5", "Your invites were sent successfully.");
                     });
 
                 }
+            }
             });
     }
 
@@ -237,7 +240,7 @@ viberApp.controller('vblikenfollowCtrl',['$scope', '$http','$window','$rootScope
     $scope.taskcomplete3 = false;
 
     if (task.completed == 1) {
-             $scope.taskcomplete3 = true;
+        $scope.taskcomplete3 = true;
     }
 
     $rootScope.twfollow = false;
@@ -247,33 +250,33 @@ viberApp.controller('vblikenfollowCtrl',['$scope', '$http','$window','$rootScope
     $scope.$watch('fblike', function(currentValue,newValue) {
 
 
-    if($scope.taskcomplete3==false && currentValue==true) {
-        console.log('Executing FB');
-        var reqbody = {
-            "answers": {
-                "link": "https://www.facebook.com/officialviberindia/"
-            },
-            "platform": {"facebook": true},
-            "taskid": '53a9526be4b041d6a3190439'
-        };
-        $http.put('/likefollow', reqbody).success(function (data) {
-            if (angular.isObject(data)) {
-                if (Object.size(data.completiondata) == 4) {
-                    $scope.identity.currentUser.complete += data.completiondata.level;
-                    $scope.taskcomplete3 = true;
-                    task.completed=1;
-                    $scope.identity.currentUser.points += data.completiondata.points;
-                    $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+        if($scope.taskcomplete3==false && currentValue==true) {
+            console.log('Executing FB');
+            var reqbody = {
+                "answers": {
+                    "link": "https://www.facebook.com/officialviberindia/"
+                },
+                "platform": {"facebook": true},
+                "taskid": '53a9526be4b041d6a3190439'
+            };
+            $http.put('/likefollow', reqbody).success(function (data) {
+                if (angular.isObject(data)) {
+                    if (Object.size(data.completiondata) == 4) {
+                        $scope.identity.currentUser.complete += data.completiondata.level;
+                        $scope.taskcomplete3 = true;
+                        task.completed=1;
+                        $scope.identity.currentUser.points += data.completiondata.points;
+                        $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+                    }
+                    toaster.pop('success', "Facebook Like", "Your Facebook like has been saved");
                 }
-                toaster.pop('success', "Facebook Like", "Your Facebook like has been saved");
-            }
 
-        });
+            });
 
-    }
+        }
 
 
- });
+    });
 
     $scope.$watch('twfollow', function(currentValue,newValue) {
 
@@ -301,7 +304,6 @@ viberApp.controller('vblikenfollowCtrl',['$scope', '$http','$window','$rootScope
     });
 
 
-
 }]);
 
 viberApp.controller('vbInsertLinksCtrl',['$scope','$http','toaster', function($scope,$http,toaster /*,$q,postlink */){
@@ -315,31 +317,31 @@ viberApp.controller('vbInsertLinksCtrl',['$scope','$http','toaster', function($s
     $scope.taskcomplete4=false;
     if(task.completed==1)
         $scope.taskcomplete4=true;
+    if(task.completed = 1) {
+        $scope.submitForm = function (isValid) {
+            if (isValid) {
+                var reqbody = {
+                    "answers": {
+                        "rate": $scope.rate
+                    },
+                    "taskid": '53a9526be4b041d6a3190442'
+                };
 
-    $scope.submitForm = function(isValid){
-        if(isValid){
-            var reqbody = {
-                "answers": {
-                    "rate": $scope.rate
-                },
-                "taskid": '53a9526be4b041d6a3190442'
-            };
-
-            $http.put('/stickers',reqbody).success(function(data){
-                if(angular.isObject(data)){
-                    if(Object.size(data.completiondata)==4){ // because the service will not return Level inside completiondata if the user is doing the same task again
-                        $scope.identity.currentUser.complete += data.completiondata.level;
-                        $scope.taskcomplete4=true;
-                        task.completed=1;
-                        $scope.identity.currentUser.points += data.completiondata.points;
-                        toaster.pop('success', "Task 3", "You have successfully finished the third task");
-                        $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+                $http.put('/stickers', reqbody).success(function (data) {
+                    if (angular.isObject(data)) {
+                        if (Object.size(data.completiondata) == 4) { // because the service will not return Level inside completiondata if the user is doing the same task again
+                            $scope.identity.currentUser.complete += data.completiondata.level;
+                            $scope.taskcomplete4 = true;
+                            task.completed = 1;
+                            $scope.identity.currentUser.points += data.completiondata.points;
+                            toaster.pop('success', "Task 3", "You have successfully finished the third task");
+                            $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+                        }
                     }
-                }
-            })
+                })
+            }
         }
     }
-
 //    var fbsuccess=false, twsuccess=false;
 //
 //    var bindCtrl = function () {

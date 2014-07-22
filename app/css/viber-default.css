@@ -1,4 +1,6 @@
 @import url('../bootstrap/css/bootstrap.css');
-@import url('viber-theme.css');
+/*@import url('viber-theme.css');*/
+@import url('../build/styles/styles.css');
 @import url('ekko-lightbox.css');
+/*@import url('../build/styles/styles.css');*/
 

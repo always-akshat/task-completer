@@ -18,7 +18,12 @@ viberApp.factory('vbAuth',['$http','vbIdentity','$q','$rootScope','$window',  fu
                     //console.log("Data"+vbIdentity.currentUser.stages[0].name);
                     $rootScope.identity = vbIdentity;
                     vbIdentity.currentUser.level = vbIdentity.currentUser.stages[0].name;
-                    vbIdentity.currentUser.complete = vbIdentity.currentUser.stages[0].completion;
+                    //vbIdentity.currentUser.complete = vbIdentity.currentUser.stages[0].completion;
+                    var level_com = 0;
+                    _.each(vbIdentity.currentUser.user_tasks,function(usertask){
+                        level_com += (usertask.completed);
+                    });
+                    vbIdentity.currentUser.complete = level_com*20;
                     dfd.resolve(true);
 
 
