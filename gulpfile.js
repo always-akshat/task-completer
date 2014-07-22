@@ -29,12 +29,12 @@ gulp.task('app1', function() {
 gulp.task('app', function() {
     return gulp.src(['app/bower_components/angular/angular.js','app/scripts/jquery-1.11.1.min.js','app/bootstrap/js/bootstrap.min.js','app/scripts/enscroll-0.6.0.min.js','app/bower_components/angular-route/angular-route.js',
         'app/bower_components/angular-animate/angular-animate.js','app/bower_components/AngularJS-Toaster/toaster.js','app/bower_components/angular-loading-bar/build/loading-bar.js','app/bower_components/underscore/underscore.js',
-        'app/bower_components/ng-file-upload/angular-file-upload.js','app/scripts/ekko-lightbox.js','app/scripts/viber-scripts.js','app/scripts/iframetracker.js'])
+        'app/bower_components/ng-file-upload/angular-file-upload.js','app/scripts/ekko-lightbox.js','app/scripts/viber-scripts.js'])
 
         .pipe(concat('app.js'))
         .pipe(ngmin())
         .pipe(uglify())
-        .pipe(stripDebug())
+        //.pipe(stripDebug())
         //.pipe(uglify({outSourceMap: true}))
         .pipe(gulp.dest('app/build/scripts/'));
 
