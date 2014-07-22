@@ -88,10 +88,6 @@ exports.share = function(req,res){
 
     });
 
-
-
-
-
 }
 
 exports.survey = function(req,res){

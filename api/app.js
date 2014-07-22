@@ -104,7 +104,9 @@ app.get('/', routes.index);
 app.get('/register', routes.register);
 
 
-app.get('/auth/facebook', passport.authenticate('facebook',{ scope: ['publish_actions','email','public_profile'] }),function(req, res){
+app.get('/auth/facebook',
+    passport.authenticate('facebook',{ scope: ['publish_actions','email','public_profile'] }),
+    function(req, res){
 
 });
 
@@ -191,9 +193,9 @@ app.get('/getstudentdata', IsAuthenticated,students.getstudentdata); // to initi
 
 
 app.post('/socialshare',sharer.share);
-app.post('/survey',sharer.survey);
 
 
+app.post('/survey',IsAuthenticated,sharer.survey);
 app.put('/likefollow',IsAuthenticated,sharer.likefollow);
 app.put('/uploadselfie',IsAuthenticated,sharer.selfie);
 app.put('/invites',IsAuthenticated,sharer.fb_invite);

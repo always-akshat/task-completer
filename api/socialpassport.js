@@ -35,7 +35,7 @@ module.exports = passport.use(new FacebookStrategy({
                     done(null,2);
                 }
                 else if(student == null){
-                    console.log('student null. reached new student schema');
+                    console.log('student null. created new student schema');
                     student= new studentSchema.student;
                     student.email = fb_email;
                     done(null,student);
