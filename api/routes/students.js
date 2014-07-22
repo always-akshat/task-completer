@@ -564,6 +564,7 @@ function completeTask(facebookid, taskid,cb) {
                     {$set: { 'user_tasks.$.completed': 1 } }
                     , function (err) {
                         if (err) {
+                            console.log('cb error');
                             cb(0);
                         } else {
 
@@ -577,6 +578,7 @@ function completeTask(facebookid, taskid,cb) {
                             addpoints(facebookid, points, function (points_to_add) {
                                 //console.log('points to add :'+ points_to_add);
                                 if (points_to_add == 0) {
+                                    console.log('cb error');
                                     cb(0)
                                 } else {
                                     completion_value.points = points_to_add;
@@ -587,7 +589,7 @@ function completeTask(facebookid, taskid,cb) {
                                     transaction.message = 'Task completion - ' + taskname;
                                     console.log('added points');
                                     VibesTransaction(facebookid, transaction, function (v_transaction) {
-                                        console.log(v_transaction);
+                                        //console.log(v_transaction);
                                         if (v_transaction !== 0) {
                                             completion_value.transaction = v_transaction;
                                             if (already_complete != 1) {
@@ -606,6 +608,7 @@ function completeTask(facebookid, taskid,cb) {
                                             }
                                             console.log('added transactiontion');
                                         } else {
+                                            console.log('cb error');
                                             cb(0)
                                         }
 
