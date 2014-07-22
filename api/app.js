@@ -94,8 +94,8 @@ function IsAuthenticated(req,res,next){
         console.log('auth success');
         next();
     }else{
-        console.log('auth failed')
-        res.send('error');
+        console.log('auth failed');
+        res.redirect('/auth/facebook');
         //next(new Error(401));
     }
 }

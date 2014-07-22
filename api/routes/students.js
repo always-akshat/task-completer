@@ -567,14 +567,11 @@ function completeTask(facebookid, taskid,cb) {
                             console.log('cb error');
                             cb(0);
                         } else {
-
                             var singular = false;
                             console.log('this is the task id in complete answers :' + taskid);
-                            if ((taskid == '53a9526be4b041d6a3190441' || taskid == '53a9526be4b041d6a3190440') && already_complete == 1) {
-                                singular = true;
-                            }
 
-                            if (singular == false) {
+
+                            if (already_complete !== 1) {
                             addpoints(facebookid, points, function (points_to_add) {
                                 //console.log('points to add :'+ points_to_add);
                                 if (points_to_add == 0) {
@@ -592,7 +589,7 @@ function completeTask(facebookid, taskid,cb) {
                                         //console.log(v_transaction);
                                         if (v_transaction !== 0) {
                                             completion_value.transaction = v_transaction;
-                                            if (already_complete != 1) {
+                                            if (already_complete !== 1) {
                                                 console.log('calling stage completion');
                                                 complete_user_stage(facebookid, stageid, c_pc, function (completed_percentage) {
                                                     if (completed_percentage == 0) {
