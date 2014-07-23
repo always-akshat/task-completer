@@ -108,11 +108,10 @@ viberApp.controller('vbUploadPhotosCtrl',['$scope','$http', '$upload','toaster' 
         $scope.s3added = [];
         if($scope.files.length>0) {
             $scope.zeroselected = false;
-            for (var i = 0; i < $scope.files.length; i++) {
-                var file = $scope.files[i];
+                var file = $scope.files[0];
                 var ran_num = Math.round(Math.random() * 1000);
-                $scope.done[i] = fbid + '$' + ran_num + '$' + file.name;
-                $scope.upload[i] = $upload.upload({
+                $scope.done[0] = fbid + '$' + ran_num + '$' + file.name;
+                $scope.upload[0] = $upload.upload({
                     url: 'https://viber-uploads.s3-ap-southeast-1.amazonaws.com/',
                     method: 'POST',
                     data: {
@@ -147,7 +146,6 @@ viberApp.controller('vbUploadPhotosCtrl',['$scope','$http', '$upload','toaster' 
                 });
 
             }
-        }
     };
     $scope.onFileUpload = function(){
 
@@ -170,6 +168,8 @@ viberApp.controller('vbUploadPhotosCtrl',['$scope','$http', '$upload','toaster' 
                     task.completed=1;
                 }
                 $scope.submitted += $scope.done.length;
+                $scope.added = 0;
+                $scope.s3success = false;
                 toaster.pop('success', "Task 4", "Your photo was uploaded successfully.");
             }
         });
