@@ -108,11 +108,10 @@ viberApp.controller('vbUploadPhotosCtrl',['$scope','$http', '$upload','toaster' 
         $scope.s3added = [];
         if($scope.files.length>0) {
             $scope.zeroselected = false;
-            for (var i = 0; i < $scope.files.length; i++) {
-                var file = $scope.files[i];
+                var file = $scope.files[0];
                 var ran_num = Math.round(Math.random() * 1000);
-                $scope.done[i] = fbid + '$' + ran_num + '$' + file.name;
-                $scope.upload[i] = $upload.upload({
+                $scope.done[0] = fbid + '$' + ran_num + '$' + file.name;
+                $scope.upload[0] = $upload.upload({
                     url: 'https://viber-uploads.s3-ap-southeast-1.amazonaws.com/',
                     method: 'POST',
                     data: {
@@ -147,7 +146,6 @@ viberApp.controller('vbUploadPhotosCtrl',['$scope','$http', '$upload','toaster' 
                 });
 
             }
-        }
     };
     $scope.onFileUpload = function(){
 
@@ -158,7 +156,7 @@ viberApp.controller('vbUploadPhotosCtrl',['$scope','$http', '$upload','toaster' 
             "taskid" : '53a9526be4b041d6a3190441'
         };
         $scope.serSubmitted.push($scope.done[0]);
-        $scope.done = [];
+        $scope.s3added = [];
         $scope.zeroselected = true;
         $http.put('/uploadselfie', reqbody).success(function(data) {
             if(angular.isObject(data)){
@@ -170,6 +168,8 @@ viberApp.controller('vbUploadPhotosCtrl',['$scope','$http', '$upload','toaster' 
                     task.completed=1;
                 }
                 $scope.submitted += $scope.done.length;
+                $scope.added = 0;
+                $scope.s3success = false;
                 toaster.pop('success', "Task 4", "Your photo was uploaded successfully.");
             }
         });
@@ -572,19 +572,19 @@ viberApp.controller('vbInsertLinksCtrl',['$scope','$http','toaster', function($s
 
 }]);
 
-viberApp.filter('unique', function() {
-    return function(collection, keyname) {
-        var output = [],
-            keys = [];
-
-        angular.forEach(collection, function(item) {
-            var key = item[keyname];
-            if(keys.indexOf(key) === -1) {
-                keys.push(key);
-                output.push(item);
-            }
-        });
-
-        return output;
-    };
-});
+//viberApp.filter('unique', function() {
+//    return function(collection, keyname) {
+//        var output = [],
+//            keys = [];
+//        console.log(collection);
+//        angular.forEach(collection, function(item) {
+//            var key = item[keyname];
+//            if(keys.indexOf(key) === -1) {
+//                keys.push(key);
+//                output.push(item);
+//            }
+//        });
+//        console.log(output);
+//        return output;
+//    };
+//});
