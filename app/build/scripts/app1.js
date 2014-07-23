@@ -60,6 +60,10 @@ viberApp.controller('dashboardCtrl', [
         mysettings: 0
       };
     vbSharedService.prepForBroadcast(currentPage);
+    $scope.myStyle = undefined;
+    if ($scope.identity.currentUser.complete == 100) {
+      $scope.myStyle = { 'font-size': '14px' };
+    }
   }
 ]);
 viberApp.controller('leaderboardCtrl', [
@@ -714,9 +718,9 @@ viberApp.controller('vbUploadPhotosCtrl', [
           'answers': { 'name': $scope.done },
           'taskid': '53a9526be4b041d6a3190441'
         };
-      //        for(var i=0;i<$scope.done.length;i++) {
-      //            $scope.serSubmitted.push($scope.done[i]);
-      //        }
+      $scope.serSubmitted.push($scope.done[0]);
+      $scope.done = [];
+      $scope.zeroselected = true;
       $http.put('/uploadselfie', reqbody).success(function (data) {
         if (angular.isObject(data)) {
           if (angular.isObject(data.completiondata)) {
@@ -1102,6 +1106,19 @@ viberApp.controller('vbInsertLinksCtrl', [
        //        }
   }
 ]);
+viberApp.filter('unique', function () {
+  return function (collection, keyname) {
+    var output = [], keys = [];
+    angular.forEach(collection, function (item) {
+      var key = item[keyname];
+      if (keys.indexOf(key) === -1) {
+        keys.push(key);
+        output.push(item);
+      }
+    });
+    return output;
+  };
+});
 /**
  * Created by Ankit Saxena on 25-06-2014.
  */
