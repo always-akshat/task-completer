@@ -68,6 +68,13 @@ viberApp.controller('dashboardCtrl', ['$scope', 'vbSharedService', 'vbAuth', '$w
     $window.scrollTo(0, 0);
     var currentPage = {home: 1, rewards: 0, lb: 0, mysettings: 0};
     vbSharedService.prepForBroadcast(currentPage);
+
+    $scope.myStyle = undefined;
+    if($scope.identity.currentUser.complete==100){
+        $scope.myStyle = {'font-size':'14px'};
+    }
+
+
 }]);
 
 viberApp.controller('leaderboardCtrl', ['$scope', 'vbSharedService', '$http', '$window', function ($scope, vbSharedService, $http, $window) {

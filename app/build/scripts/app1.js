@@ -60,6 +60,10 @@ viberApp.controller('dashboardCtrl', [
         mysettings: 0
       };
     vbSharedService.prepForBroadcast(currentPage);
+    $scope.myStyle = undefined;
+    if ($scope.identity.currentUser.complete == 100) {
+      $scope.myStyle = { 'font-size': '14px' };
+    }
   }
 ]);
 viberApp.controller('leaderboardCtrl', [
