@@ -848,7 +848,6 @@ function delete_my_data(req,res){
 
 }
 
-
 function validateemail(req,res) {
 
     console.log('reached validate');
@@ -880,6 +879,97 @@ function validateemail(req,res) {
 
 }
 
+function verify_vibes(req,res){
+    Students.find({facebookid: '10152180936772499'}, 'facebookid',  function (err, v_students) {
+        var facebookids = new Array();
+
+        v_students.forEach(function(instance){
+
+                if(instance.facebookid == '10152180936772499'){
+                    var final_points =0;
+                    var vibes_points = 0;
+                return Students.findOne({ facebookid: instance.facebookid }, function (err, doc) {
+                    doc.vibes_transaction.forEach(function(transaction){
+                        //console.log(transaction.vibes);
+                        vibes_points+= parseInt(transaction.vibes);
+                    });
+
+                    var original_vibes = (parseInt(doc.points) - vibes_points >0) ? (parseInt(doc.points) - vibes_points) : 0;
+                    console.log('what we got by substraction :' + (parseInt(doc.points) - vibes_points));
+                    console.log('what we think were the original vibes :' + original_vibes);
+                    final_points += original_vibes;
+
+                    var counted_tasks = [];
+                    var invited_friends = [];
+                    doc.user_tasks.forEach(function(task){
+                        if(task.completed ==1 ){
+                            if(!counted_tasks[task.taskid]) {
+                                    //console.log('counted');
+                                switch(task.task_id){
+                                    case '53a9526be4b041d6a3190439':{         //like and follow
+                                        final_points += 500;
+                                        break;
+                                    }
+                                    case '53a951f9e4b041d6a3190438':{         //get to know viber
+                                        final_points += 1000;
+                                        break;
+                                    }
+                                    case '53a9526be4b041d6a3190442':{         //wowed by stickers
+                                        final_points += 1000;
+                                        break;
+                                    }
+                                    case '53a9526be4b041d6a3190440':{         //invite facebook friends
+                                        final_points += 500;
+                                        break;
+                                    }
+                                    case '53a9526be4b041d6a3190441':{         //upload photos selfie
+                                        final_points += 2500;
+                                        break;
+                                    }
+
+                                }
+                                counted_tasks[task.taskid] == 1
+                            }
+                        }
+
+
+                        if(task.task_id =='53a9526be4b041d6a3190440'){
+                            //console.log('facebook friends');
+                            task.answers.forEach(function(answers){
+                               answers.fb_ids.forEach(function(friend) {
+                                   if (invited_friends.indexOf(friend) == -1){
+                                       invited_friends.push(friend);
+                               }
+                               })
+                            });
+                        }
+
+
+                    });
+                    final_points += (invited_friends.length)*50;
+                    //console.log('total friends :' + invited_friends.length);
+
+                    doc.points  = final_points;
+                    doc.save(function(err){
+                        if(!err){
+                            console.log('actual vibes  for ' + doc.email +' are ' +  final_points);
+                        }else{
+                            console.log(err);
+                        }
+                    })
+                });
+
+            }
+        });
+
+
+
+    });
+    //res.send('done');
+}
+
+
+
 module.exports = {list: list,
     stage_add_to_all: stage_add_to_all,
     add_stage1 :add_stage1,
@@ -903,8 +993,8 @@ module.exports = {list: list,
     logout: logout,
     updateSettings : updateSettings,
     delete_my_data : delete_my_data,
-    validateemail :validateemail
-
+    validateemail :validateemail,
+    verify_vibes :verify_vibes
 }
 
 
