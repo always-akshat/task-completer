@@ -44,6 +44,7 @@ viberApp.controller('vbSurveyCtrl',['$scope','$http','toaster','$rootScope', fun
                         $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
                         toaster.pop('success', "Task 1", "You have successfully finished the first task");
                     }
+
                     console.log("task complete0  "+$scope.taskcomplete0);
 
                 }
@@ -156,9 +157,9 @@ viberApp.controller('vbUploadPhotosCtrl',['$scope','$http', '$upload','toaster' 
             },
             "taskid" : '53a9526be4b041d6a3190441'
         };
-//        for(var i=0;i<$scope.done.length;i++) {
-//            $scope.serSubmitted.push($scope.done[i]);
-//        }
+        $scope.serSubmitted.push($scope.done[0]);
+        $scope.done = [];
+        $scope.zeroselected = true;
         $http.put('/uploadselfie', reqbody).success(function(data) {
             if(angular.isObject(data)){
                 if(angular.isObject(data.completiondata)){
@@ -570,3 +571,20 @@ viberApp.controller('vbInsertLinksCtrl',['$scope','$http','toaster', function($s
 
 
 }]);
+
+viberApp.filter('unique', function() {
+    return function(collection, keyname) {
+        var output = [],
+            keys = [];
+
+        angular.forEach(collection, function(item) {
+            var key = item[keyname];
+            if(keys.indexOf(key) === -1) {
+                keys.push(key);
+                output.push(item);
+            }
+        });
+
+        return output;
+    };
+});

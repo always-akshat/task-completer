@@ -34,7 +34,7 @@ gulp.task('app', function() {
         .pipe(concat('app.js'))
         .pipe(ngmin())
         .pipe(uglify())
-        //.pipe(stripDebug())
+        .pipe(stripDebug())
         //.pipe(uglify({outSourceMap: true}))
         .pipe(gulp.dest('app/build/scripts/'));
 
