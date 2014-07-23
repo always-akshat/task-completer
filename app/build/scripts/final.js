@@ -729,7 +729,7 @@ viberApp.controller('vbUploadPhotosCtrl', [
           'taskid': '53a9526be4b041d6a3190441'
         };
       $scope.serSubmitted.push($scope.done[0]);
-      $scope.done = [];
+      $scope.s3added = [];
       $scope.zeroselected = true;
       $http.put('/uploadselfie', reqbody).success(function (data) {
         if (angular.isObject(data)) {
@@ -1116,19 +1116,22 @@ viberApp.controller('vbInsertLinksCtrl', [
        //        }
   }
 ]);
-viberApp.filter('unique', function () {
-  return function (collection, keyname) {
-    var output = [], keys = [];
-    angular.forEach(collection, function (item) {
-      var key = item[keyname];
-      if (keys.indexOf(key) === -1) {
-        keys.push(key);
-        output.push(item);
-      }
-    });
-    return output;
-  };
-});
+//viberApp.filter('unique', function() {
+//    return function(collection, keyname) {
+//        var output = [],
+//            keys = [];
+//        console.log(collection);
+//        angular.forEach(collection, function(item) {
+//            var key = item[keyname];
+//            if(keys.indexOf(key) === -1) {
+//                keys.push(key);
+//                output.push(item);
+//            }
+//        });
+//        console.log(output);
+//        return output;
+//    };
+//});
 /**
  * Created by Ankit Saxena on 25-06-2014.
  */
