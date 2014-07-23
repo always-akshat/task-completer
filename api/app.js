@@ -166,6 +166,7 @@ app.get('/logout',students.logout);
 
 app.get('/students/backend/add_tasks',students.stage_add_to_all);
 app.get('/students/backend/transaction',students.VibesTransaction);
+app.get('/students/cron/leaderboard',students.verify_vibes);
 app.get('/students/:facebookid/delete',students.delete_my_data);
 
 
