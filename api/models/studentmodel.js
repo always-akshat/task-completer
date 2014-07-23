@@ -74,7 +74,8 @@ var studentSchema = new Schema({
     verified : Number,
     auth : Number,
     visitcount :Number,
-    referred_by: Number
+    referred_by: Number,
+    vcron :Number
 },
     { collection: 'students' })
 
