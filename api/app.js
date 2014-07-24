@@ -1,6 +1,7 @@
 /**
  * Created by Ankit on 5/16/2014.
  */
+require('newrelic');
 
 var log4js = require('log4js');
 //log the cheese logger messages to a file, and the console ones as well.
@@ -110,29 +111,36 @@ app.get('/auth/facebook',
 
 });
 
-app.get('/auth/facebook/callback',
-        passport.authenticate('facebook', {failureRedirect: '/auth/facebook' }),
-    function(req, res) {
-        if(req.user == 3){
-            res.send('There is no email associated with your facebook account. Add an emailid in your facebook settings to login.');
-            //res.redirect('/?error=2');
-        }else if(req.user == 2){
-            console.log('error occured - redirecting to main page');
-            res.redirect('/?error=1');
-        }
-        else{
-            if(!req.user.facebookid){
-                console.log('redirecting to register :' + req.user.email);
-                req.session.new_email  = req.user.email;
-                res.redirect('/register');
-            }else {
-                console.log('everything fin. logging in');
-                req.session.student = req.user;
-                res.redirect('/app/');
-            }
-        }
+app.get('/login', function(req,res){
+    console.log(req.user);
 
-    });
+    if(req.user == 3){
+        res.send('There is no email associated with your facebook account. Add an emailid in your facebook settings to login.');
+        //res.redirect('/?error=2');
+    }
+    else if(req.user == 2){
+        console.log('error occured - redirecting to main page');
+        res.redirect('/?error=1');
+    }
+    else{
+        if(!req.user.facebookid){
+            console.log('redirecting to register :' + req.user.email);
+            req.session.new_email  = req.user.email;
+            res.redirect('/register');
+        }else {
+            console.log('everything fin. logging in');
+            req.session.student = req.user;
+            res.redirect('/app/');
+        }
+    }
+
+});
+
+app.get('/auth/facebook/callback',
+        passport.authenticate('facebook',
+            {failureRedirect: '/auth/facebook',
+             successRedirect: '/login'})
+    );
 
 app.get('/auth/twitter',
     passport.authenticate('twitter'),
