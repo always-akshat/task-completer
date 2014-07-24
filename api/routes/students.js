@@ -880,27 +880,34 @@ function validateemail(req,res) {
 }
 
 function verify_vibes(req,res){
-    Students.find({facebookid: '10152180936772499'}, 'facebookid',  function (err, v_students) {
+    Students.find({}, 'facebookid',  function (err, v_students) {
         var facebookids = new Array();
+        console.log('got students');
 
         v_students.forEach(function(instance){
 
-                if(instance.facebookid == '10152180936772499'){
+                if(instance.facebookid){
+                    //console.log ('calculation for : ' +  instance.facebookid);
                     var final_points =0;
                     var vibes_points = 0;
                 return Students.findOne({ facebookid: instance.facebookid }, function (err, doc) {
                     doc.vibes_transaction.forEach(function(transaction){
-                        //console.log(transaction.vibes);
+                        console.log(transaction.vibes);
                         vibes_points+= parseInt(transaction.vibes);
                     });
 
-                    var original_vibes = (parseInt(doc.points) - vibes_points >0) ? (parseInt(doc.points) - vibes_points) : 0;
-                    console.log('what we got by substraction :' + (parseInt(doc.points) - vibes_points));
-                    console.log('what we think were the original vibes :' + original_vibes);
+                    if(!doc.vcron) {
+                        var original_vibes = (parseInt(doc.points) - vibes_points > 0) ? (parseInt(doc.points) - vibes_points) : 0;
+                    }else{
+                        var original_vibes = parseInt(doc.points);
+                    }
+                    //console.log('after  substraction :' + (parseInt(doc.points) - vibes_points));
+                    //console.log('original vibes :' + original_vibes);
                     final_points += original_vibes;
 
                     var counted_tasks = [];
                     var invited_friends = [];
+                    var stage_completion = 0;
                     doc.user_tasks.forEach(function(task){
                         if(task.completed ==1 ){
                             if(!counted_tasks[task.taskid]) {
@@ -928,28 +935,35 @@ function verify_vibes(req,res){
                                     }
 
                                 }
+                                stage_completion += task.completevalue;
                                 counted_tasks[task.taskid] == 1
                             }
                         }
 
 
-                        if(task.task_id =='53a9526be4b041d6a3190440'){
+                        if(task.task_id =='53a9526be4b041d6a3190440') {
                             //console.log('facebook friends');
-                            task.answers.forEach(function(answers){
-                               answers.fb_ids.forEach(function(friend) {
-                                   if (invited_friends.indexOf(friend) == -1){
-                                       invited_friends.push(friend);
-                               }
-                               })
+                            if(task.answers){
+                            task.answers.forEach(function (answers) {
+                                if(typeof answers.fb_ids == 'object' &&  answers.fb_ids.length >0) {
+                                    answers.fb_ids.forEach(function (friend) {
+                                        if (invited_friends.indexOf(friend) == -1) {
+                                            invited_friends.push(friend);
+                                        }
+                                    })
+                                }
                             });
+                        }
                         }
 
 
                     });
                     final_points += (invited_friends.length)*50;
-                    //console.log('total friends :' + invited_friends.length);
+                    console.log('total friends :' + invited_friends.length);
 
                     doc.points  = final_points;
+                    doc.vcron = 1;
+                    doc.stages[0].completion = stage_completion;
                     doc.save(function(err){
                         if(!err){
                             console.log('actual vibes  for ' + doc.email +' are ' +  final_points);
@@ -996,6 +1010,8 @@ module.exports = {list: list,
     validateemail :validateemail,
     verify_vibes :verify_vibes
 }
+
+
 
 
 
