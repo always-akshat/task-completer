@@ -114,8 +114,8 @@ app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {failureRedirect: '/auth/facebook' }),
     function(req, res) {
         if(req.user == 3){
-            console.log('no email found - redirecting to main page');
-            res.redirect('/?error=2');
+            res.send('There is no email associated with your facebook account. Add an emailid in yur facebook settings to login.');
+            //res.redirect('/?error=2');
         }else if(req.user == 2){
             console.log('error occured - redirecting to main page');
             res.redirect('/?error=1');
