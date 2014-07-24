@@ -988,6 +988,24 @@ function verify_vibes(req,res){
     //res.send('done');
 }
 
+function one_task(req,res){
+    console.log('reached one_task cron');
+        Students.find()
+            .where('stages.0.completion')
+            .gte(20)
+            .exec(function (err, v_students) {
+                if(v_students){
+                    console.log(v_students);
+                    res.send('done');
+                }else{
+                    console.log('nothing found');
+                    res.send('done');
+                }
+            });
+
+    };
+
+
 
 
 module.exports = {list: list,
@@ -1014,7 +1032,8 @@ module.exports = {list: list,
     updateSettings : updateSettings,
     delete_my_data : delete_my_data,
     validateemail :validateemail,
-    verify_vibes :verify_vibes
+    verify_vibes :verify_vibes,
+    one_task :one_task
 }
 
 

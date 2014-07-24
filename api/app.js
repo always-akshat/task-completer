@@ -114,7 +114,7 @@ app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {failureRedirect: '/auth/facebook' }),
     function(req, res) {
         if(req.user == 3){
-            res.send('There is no email associated with your facebook account. Add an emailid in yur facebook settings to login.');
+            res.send('There is no email associated with your facebook account. Add an emailid in your facebook settings to login.');
             //res.redirect('/?error=2');
         }else if(req.user == 2){
             console.log('error occured - redirecting to main page');
@@ -166,7 +166,7 @@ app.get('/logout',students.logout);
 
 app.get('/students/backend/add_tasks',students.stage_add_to_all);
 app.get('/students/backend/transaction',students.VibesTransaction);
-app.get('/cron/leaderboard',students.verify_vibes);
+
 //app.get('/students/:facebookid/delete',students.delete_my_data);
 
 
@@ -205,6 +205,11 @@ app.post('/emailvalidate',students.validateemail);
 
 
 app.get('/register',function(req,res){res.send('register')});
+
+
+app.get('/cron/leaderboard',students.verify_vibes);
+app.get('/cron/one_task',students.one_task);
+
 
 
 http.createServer(app).listen(app.get('port'), function(){
