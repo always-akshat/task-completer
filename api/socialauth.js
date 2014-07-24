@@ -9,15 +9,15 @@
 module.exports = {
 
     'facebook' : {
-        'clientID' 		: '247429375447674', // Facebook App ID
-        'clientSecret' 	: '39f90607bfbef3e72f92aa9a4728e799', // Facebook App Secret
-        'callbackURL' 	: 'http://localhost:3001/auth/facebook/callback'
+        'clientID' 		: '493599764105814', // Facebook App ID
+        'clientSecret' 	: 'df75f65d2a15ac2b60c88e0f33d793f3', // Facebook App Secret
+        'callbackURL' 	: 'http://app.thegoodvibes.in/auth/facebook/callback'
     },
 
      'twitter' : {
      'consumerKey' 		: 'LrZ3vwBNjaE8jkJNi4od4ntdX',
      'consumerSecret' 	: 'vx84F0lXUygTou3idnl2oHfkfcVDQyfblBAAnZFgn4TR1sZKOQ',
-     'callbackURL' 		: 'http://localhost:3001/auth/twitter/callback'
+     'callbackURL' 		: 'http://app.thegoodvibes.in/auth/twitter/callback'
      }/*,
 
      'googleAuth' : {
