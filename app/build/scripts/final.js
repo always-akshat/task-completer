@@ -57,11 +57,12 @@ viberApp.controller('vbNavBarCtrl', [
   }
 ]);
 viberApp.controller('dashboardCtrl', [
+  '$rootScope',
   '$scope',
   'vbSharedService',
   'vbAuth',
   '$window',
-  function ($scope, vbSharedService, vbAuth, $window) {
+  function ($rootScope, $scope, vbSharedService, vbAuth, $window) {
     $window.scrollTo(0, 0);
     var currentPage = {
         home: 1,
@@ -70,9 +71,9 @@ viberApp.controller('dashboardCtrl', [
         mysettings: 0
       };
     vbSharedService.prepForBroadcast(currentPage);
-    $scope.myStyle = undefined;
+    $rootScope.myStyle = undefined;
     if ($scope.identity.currentUser.complete == 100) {
-      $scope.myStyle = { 'font-size': '14px' };
+      $rootScope.myStyle = { 'font-size': '14px' };
     }
   }
 ]);
@@ -684,43 +685,41 @@ viberApp.controller('vbUploadPhotosCtrl', [
       $scope.s3added = [];
       if ($scope.files.length > 0) {
         $scope.zeroselected = false;
-        for (var i = 0; i < $scope.files.length; i++) {
-          var file = $scope.files[i];
-          var ran_num = Math.round(Math.random() * 1000);
-          $scope.done[i] = fbid + '$' + ran_num + '$' + file.name;
-          $scope.upload[i] = $upload.upload({
-            url: 'https://viber-uploads.s3-ap-southeast-1.amazonaws.com/',
-            method: 'POST',
-            data: {
-              'key': 's3UploadExample/' + fbid + '$' + ran_num + '$' + file.name,
-              'acl': 'public-read',
-              'Content-Type': 'application',
-              'AWSAccessKeyId': 'AKIAITP3AH32R7ZKQ4XQ',
-              'success_action_status': '201',
-              'Policy': 'eyJleHBpcmF0aW9uIjoiMjAxNS03LTE4VDIwOjAwOjAwLjAwMFoiLCJjb25kaXRpb25zIjpbWyJzdGFydHMtd2l0aCIsIiRrZXkiLCJzM1VwbG9hZEV4YW1wbGUvIl0seyJidWNrZXQiOiJ2aWJlci11cGxvYWRzIn0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiYXBwbGljYXRpb24iXSx7InN1Y2Nlc3NfYWN0aW9uX3N0YXR1cyI6IjIwMSJ9XX0=',
-              'Signature': '7OiVs5UxzIJdBbhfgjnuPaX6eKE='
-            },
-            file: file
-          }).then(function (response) {
-            if (response.status === 201) {
-              $scope.added += 1;
-              var xmlDoc;
-              //xml parser
-              if (window.DOMParser) {
-                parser = new DOMParser();
-                xmlDoc = parser.parseFromString(response.data, 'text/xml');
-              } else
-                // Internet Explorer
-                {
-                  xmlDoc = new ActiveXObject('Microsoft.XMLDOM');
-                  xmlDoc.async = false;
-                  xmlDoc.loadXML(txt);
-                }
-              $scope.s3added.push(xmlDoc.getElementsByTagName('Location')[0].childNodes[0].nodeValue);
-              $scope.s3success = true;  //$scope.serSubmitted.push(ran_num + '$' + file.name);
-            }
-          });
-        }
+        var file = $scope.files[0];
+        var ran_num = Math.round(Math.random() * 1000);
+        $scope.done[0] = fbid + '$' + ran_num + '$' + file.name;
+        $scope.upload[0] = $upload.upload({
+          url: 'https://viber-uploads.s3-ap-southeast-1.amazonaws.com/',
+          method: 'POST',
+          data: {
+            'key': 's3UploadExample/' + fbid + '$' + ran_num + '$' + file.name,
+            'acl': 'public-read',
+            'Content-Type': 'application',
+            'AWSAccessKeyId': 'AKIAITP3AH32R7ZKQ4XQ',
+            'success_action_status': '201',
+            'Policy': 'eyJleHBpcmF0aW9uIjoiMjAxNS03LTE4VDIwOjAwOjAwLjAwMFoiLCJjb25kaXRpb25zIjpbWyJzdGFydHMtd2l0aCIsIiRrZXkiLCJzM1VwbG9hZEV4YW1wbGUvIl0seyJidWNrZXQiOiJ2aWJlci11cGxvYWRzIn0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiYXBwbGljYXRpb24iXSx7InN1Y2Nlc3NfYWN0aW9uX3N0YXR1cyI6IjIwMSJ9XX0=',
+            'Signature': '7OiVs5UxzIJdBbhfgjnuPaX6eKE='
+          },
+          file: file
+        }).then(function (response) {
+          if (response.status === 201) {
+            $scope.added += 1;
+            var xmlDoc;
+            //xml parser
+            if (window.DOMParser) {
+              parser = new DOMParser();
+              xmlDoc = parser.parseFromString(response.data, 'text/xml');
+            } else
+              // Internet Explorer
+              {
+                xmlDoc = new ActiveXObject('Microsoft.XMLDOM');
+                xmlDoc.async = false;
+                xmlDoc.loadXML(txt);
+              }
+            $scope.s3added.push(xmlDoc.getElementsByTagName('Location')[0].childNodes[0].nodeValue);
+            $scope.s3success = true;  //$scope.serSubmitted.push(ran_num + '$' + file.name);
+          }
+        });
       }
     };
     $scope.onFileUpload = function () {
@@ -729,7 +728,7 @@ viberApp.controller('vbUploadPhotosCtrl', [
           'taskid': '53a9526be4b041d6a3190441'
         };
       $scope.serSubmitted.push($scope.done[0]);
-      $scope.done = [];
+      $scope.s3added = [];
       $scope.zeroselected = true;
       $http.put('/uploadselfie', reqbody).success(function (data) {
         if (angular.isObject(data)) {
@@ -741,6 +740,8 @@ viberApp.controller('vbUploadPhotosCtrl', [
             task.completed = 1;
           }
           $scope.submitted += $scope.done.length;
+          $scope.added = 0;
+          $scope.s3success = false;
           toaster.pop('success', 'Task 4', 'Your photo was uploaded successfully.');
         }
       });
@@ -1116,19 +1117,22 @@ viberApp.controller('vbInsertLinksCtrl', [
        //        }
   }
 ]);
-viberApp.filter('unique', function () {
-  return function (collection, keyname) {
-    var output = [], keys = [];
-    angular.forEach(collection, function (item) {
-      var key = item[keyname];
-      if (keys.indexOf(key) === -1) {
-        keys.push(key);
-        output.push(item);
-      }
-    });
-    return output;
-  };
-});
+//viberApp.filter('unique', function() {
+//    return function(collection, keyname) {
+//        var output = [],
+//            keys = [];
+//        console.log(collection);
+//        angular.forEach(collection, function(item) {
+//            var key = item[keyname];
+//            if(keys.indexOf(key) === -1) {
+//                keys.push(key);
+//                output.push(item);
+//            }
+//        });
+//        console.log(output);
+//        return output;
+//    };
+//});
 /**
  * Created by Ankit Saxena on 25-06-2014.
  */
