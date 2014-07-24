@@ -880,26 +880,26 @@ function validateemail(req,res) {
 }
 
 function verify_vibes(req,res){
+    console.log('readched cron');
     Students.find({}, 'facebookid',  function (err, v_students) {
         var facebookids = new Array();
         console.log('got students');
-
+        console.log(JSON.stringify(v_students));
         v_students.forEach(function(instance){
-
                 if(instance.facebookid){
                     //console.log ('calculation for : ' +  instance.facebookid);
                     var final_points =0;
                     var vibes_points = 0;
                 return Students.findOne({ facebookid: instance.facebookid }, function (err, doc) {
                     doc.vibes_transaction.forEach(function(transaction){
-                        console.log(transaction.vibes);
+                        //console.log(transaction.vibes);
                         vibes_points+= parseInt(transaction.vibes);
                     });
 
                     if(!doc.vcron) {
                         var original_vibes = (parseInt(doc.points) - vibes_points > 0) ? (parseInt(doc.points) - vibes_points) : 0;
                     }else{
-                        var original_vibes = parseInt(doc.points);
+                        var original_vibes = parseInt(doc.vcron);
                     }
                     //console.log('after  substraction :' + (parseInt(doc.points) - vibes_points));
                     //console.log('original vibes :' + original_vibes);
@@ -940,6 +940,7 @@ function verify_vibes(req,res){
                             }
                         }
 
+                            console.log('final points after tasks :' + final_points);
 
                         if(task.task_id =='53a9526be4b041d6a3190440') {
                             //console.log('facebook friends');
@@ -962,8 +963,13 @@ function verify_vibes(req,res){
                     console.log('total friends :' + invited_friends.length);
 
                     doc.points  = final_points;
-                    doc.vcron = 1;
-                    doc.stages[0].completion = stage_completion;
+                    doc.vcron = original_vibes;
+                    if(typeof doc.stages =='object' && doc.stages[0]) {
+                        console.log(doc.facebookid);
+                        doc.stages[0].completion = stage_completion;
+                    }else{
+                        console.log('no stage');
+                    }
                     doc.save(function(err){
                         if(!err){
                             console.log('actual vibes  for ' + doc.email +' are ' +  final_points);
