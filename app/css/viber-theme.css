@@ -10,11 +10,11 @@ body {
 
 @font-face {
     font-family: 'font-awesome';
-    src:url('../fonts/font-awesome.eot?-dyn7vk');
-    src:url('../fonts/font-awesome.eot?#iefix-dyn7vk') format('embedded-opentype'),
-    url('../fonts/font-awesome.woff?-dyn7vk') format('woff'),
-    url('../fonts/font-awesome.ttf?-dyn7vk') format('truetype'),
-    url('../fonts/font-awesome.svg?-dyn7vk#font-awesome') format('svg');
+    src:url('build/fonts/font-awesome.eot?-dyn7vk');
+    src:url('build/fonts/font-awesome.eot?#iefix-dyn7vk') format('embedded-opentype'),
+    url('build/fonts/font-awesome.woff?-dyn7vk') format('woff'),
+    url('build/fonts/font-awesome.ttf?-dyn7vk') format('truetype'),
+    url('build/fonts/font-awesome.svg?-dyn7vk#font-awesome') format('svg');
     font-weight: normal;
     font-style: normal;
 }
