@@ -1,7 +1,7 @@
 /**
  * Created by Ankit on 5/16/2014.
  */
-require('newrelic');
+//require('newrelic');
 
 var log4js = require('log4js');
 //log the cheese logger messages to a file, and the console ones as well.
@@ -175,7 +175,7 @@ app.get('/logout',students.logout);
 app.get('/students/backend/add_tasks',students.stage_add_to_all);
 app.get('/students/backend/transaction',students.VibesTransaction);
 
-//app.get('/students/:facebookid/delete',students.delete_my_data);
+app.get('/students/:facebookid/delete',students.delete_my_data);
 
 
 app.post('/campaigns',campaigns.addcampaign);

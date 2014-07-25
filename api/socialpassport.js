@@ -23,86 +23,22 @@ module.exports = passport.use(new FacebookStrategy({
         //console.log('return frm FB ' + JSON.stringify(profile));
         if(profile.emails) {
             fb_email = profile.emails[0].value;
-        }else{
+        }
+        else{
             console.log('not found');
             done(null,3);
         }
+
         console.log('checked for mail');
         if (fb_email) {
-            Students.findOne({ email: fb_email}, function (err, student) {
-                if (err) {
-                    console.log('error occured at finding student');
-                    done(null,2);
+            enter_old_user(profile, function(err,data){
+                console.log('data recieved in main function');
+                if(err){
+                    console.log(err);
                 }
-                else if(student == null){
-                    console.log('student null. created new student schema');
-                    student= new studentSchema.student;
-                    student.email = fb_email;
-                    done(null,student);
-                }
-                else if( student != null) {
-                        //console.log(JSON.stringify(student));
-                    console.log('student not null');
-                    if(student.facebookid){
-                        console.log('facebookid');
-                        student.facebook.authcode = accessToken;
-                    }
-                    else{
-                        console.log('NO facebookid');
-                        student.facebookid = profile.id;
-                        student.facebook.friends =[];
-                        student.facebook.authcode = accessToken;
-                        student.facebook.authorized =1;
-                        student.gender = profile.gender;
-                        student.name = profile.displayName;
-                    }
-
-                    student.save(function (err) {
-                        if (!err){
-                            if(student.user_tasks.length >0){
-                                console.log('user tasks');
-                                done(null, student);
-                            }
-                            else{
-                                console.log('NO user tasks');
-                                student_functions.add_stage1(profile.id, function(err,data){
-                                    if(err){
-                                        console.log(err);
-                                        student.user_tasks= undefined;
-                                        student.stages = undefined;
-                                        student.save();
-                                        done(null,2);
-                                    }else{
-                                        Students.findOne({ email: profile.emails[0].value}, function (err, student){
-                                            if(student.stages.length == 1 && student.user_tasks.length ==5){
-                                                done(null,student);
-                                            }else{
-                                                student.user_tasks= undefined;
-                                                student.stages = undefined;
-                                                student.save();
-                                                done(null,2);
-                                            }
-
-                                        })
-
-                                    }
-                                });
-
-                            }
-                        }else{
-                            done(null,2);
-                        }
-
-                    });
-
-
-
-                }
-                else {
-                    done(null,2);
-                }
-                ;
+                done(null,data);
             });
+
         }else{
             console.log('not found');
             done(null,3);
@@ -138,3 +74,111 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(obj, done) {
     done(null, obj);
 });
+
+function enter_old_user(profile,cb){
+
+    console.log('enter old user reg');
+    Students.findOne({ email: fb_email}, function (err, student) {
+        if (err) {
+            console.log('error occured at finding student');
+            cb(err,2);
+        }
+        else {
+
+            if(student == null) {
+                console.log('student null. created new student schema.registering new user');
+                student = new studentSchema.student;
+                student.email = fb_email;
+                student.facebookid = profile.id;
+                student.facebook.friends = [];
+                //student.facebook.authcode = accessToken;
+                student.facebook.authorized = 1;
+                student.gender = profile.gender;
+                student.name = profile.displayName;
+                student.points = 0;
+
+            }
+            else if (student != null) {
+
+                console.log('student not null');
+
+                if (!student.facebookid) {
+                    console.log('NO facebookid');
+                    student.facebookid = profile.id;
+                    student.facebook.friends = [];
+                    //student.facebook.authcode = accessToken;
+                    student.facebook.authorized = 1;
+                    student.gender = profile.gender;
+                    student.name = profile.displayName;
+                }
+            }
+
+                console.log(student);
+                student.save(function(err) {
+                    console.log('trying to save student');
+                    if (!err) {
+                        if (student.user_tasks.length > 0) {
+                            console.log('user tasks found and returning student');
+                            cb(null, student);
+                        }
+                        else {
+                            console.log('NO user tasks');
+                            tasks_in_registration(student, function (err, student) {
+                                if (err) {
+                                    cb(err, 2);
+                                } else {
+                                    cb(null, student);
+                                }
+
+                            });
+
+                        }
+                    } else {
+                        console.log('error' + err);
+                        cb(err,2);
+                    }
+
+                });
+
+        }
+
+    });
+
+
+
+}
+
+function tasks_in_registration(student,cb){
+    console.log('entering new tasks');
+    student_functions.add_stage1(student.facebookid, function(err,data){
+        console.log('data recieved from add tasks is :' + data);
+        if(err){
+            console.log('error occured in adding stages' + err);
+            student.user_tasks= undefined;
+            student.stages = undefined;
+            student.save();
+            cb(err,0)
+        }else{
+            console.log('tasks added checking student data integrity');
+            Students.findOne({ email: student.email}, function (err, final_student){
+                if(final_student.stages.length == 1 && final_student.user_tasks.length ==5){
+                    console.log('everything fine');
+                    cb(null,final_student);
+                }else{
+                    console.log('incorrect number of tasks or stages found. err');
+                    final_student.user_tasks= undefined;
+                    final_student.stages = undefined;
+                    final_student.save(function(err){
+                        if(err){
+                            console.log('error occured in deleting student' +err);
+                        }
+                        cb(err,0);
+                    });
+
+                }
+
+            })
+
+        }
+    });
+}
