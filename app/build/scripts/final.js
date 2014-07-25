@@ -57,11 +57,12 @@ viberApp.controller('vbNavBarCtrl', [
   }
 ]);
 viberApp.controller('dashboardCtrl', [
+  '$rootScope',
   '$scope',
   'vbSharedService',
   'vbAuth',
   '$window',
-  function ($scope, vbSharedService, vbAuth, $window) {
+  function ($rootScope, $scope, vbSharedService, vbAuth, $window) {
     $window.scrollTo(0, 0);
     var currentPage = {
         home: 1,
@@ -70,9 +71,9 @@ viberApp.controller('dashboardCtrl', [
         mysettings: 0
       };
     vbSharedService.prepForBroadcast(currentPage);
-    $scope.myStyle = undefined;
+    $rootScope.myStyle = undefined;
     if ($scope.identity.currentUser.complete == 100) {
-      $scope.myStyle = { 'font-size': '14px' };
+      $rootScope.myStyle = { 'font-size': '14px' };
     }
   }
 ]);
@@ -740,6 +741,7 @@ viberApp.controller('vbUploadPhotosCtrl', [
           }
           $scope.submitted += $scope.done.length;
           $scope.added = 0;
+          $scope.s3success = false;
           toaster.pop('success', 'Task 4', 'Your photo was uploaded successfully.');
         }
       });
