@@ -57,12 +57,11 @@ viberApp.controller('vbNavBarCtrl', [
   }
 ]);
 viberApp.controller('dashboardCtrl', [
-  '$rootScope',
   '$scope',
   'vbSharedService',
   'vbAuth',
   '$window',
-  function ($rootScope, $scope, vbSharedService, vbAuth, $window) {
+  function ($scope, vbSharedService, vbAuth, $window) {
     $window.scrollTo(0, 0);
     var currentPage = {
         home: 1,
@@ -71,9 +70,9 @@ viberApp.controller('dashboardCtrl', [
         mysettings: 0
       };
     vbSharedService.prepForBroadcast(currentPage);
-    $rootScope.myStyle = undefined;
+    $scope.myStyle = undefined;
     if ($scope.identity.currentUser.complete == 100) {
-      $rootScope.myStyle = { 'font-size': '14px' };
+      $scope.myStyle = { 'font-size': '14px' };
     }
   }
 ]);
@@ -481,6 +480,41 @@ viberApp.directive('likenFollow', function () {
     restrict: 'E',
     templateUrl: 'views/likenfollow.html',
     controller: 'vblikenfollowCtrl'
+  };
+});
+viberApp.directive('taskYuwa', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'views/taskyuwa.html',
+    controller: 'vbTaskYuwaCtrl'
+  };
+});
+viberApp.directive('supportYuwa', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'views/supportyuwa.html',
+    controller: 'vbSupportYuwaCtrl'
+  };
+});
+viberApp.directive('taskKnowviber', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'views/taskknowviber.html',
+    controller: 'vbKnowViberCtrl'
+  };
+});
+viberApp.directive('activateFriends', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'views/activatefriends.html',
+    controller: 'vbActivateCtrl'
+  };
+});
+viberApp.directive('goodvibesMind', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'views/goodvibesmind.html',
+    controller: 'vbGoodvibesMindCtrl'
   };
 });
 'use strict';
@@ -1117,22 +1151,94 @@ viberApp.controller('vbInsertLinksCtrl', [
        //        }
   }
 ]);
-//viberApp.filter('unique', function() {
-//    return function(collection, keyname) {
-//        var output = [],
-//            keys = [];
-//        console.log(collection);
-//        angular.forEach(collection, function(item) {
-//            var key = item[keyname];
-//            if(keys.indexOf(key) === -1) {
-//                keys.push(key);
-//                output.push(item);
-//            }
-//        });
-//        console.log(output);
-//        return output;
-//    };
-//});
+//Level 2 Tasks
+viberApp.controller('vbKnowViberCtrl', [
+  '$scope',
+  'toaster',
+  '$http',
+  function ($scope, toaster, $http) {
+    $scope.taskcomplete21 = false;
+    var user_tasks = $scope.identity.currentUser.user_tasks;
+    var task = _.where(user_tasks, { 'task_id': 'taskid1234567890' })[0];
+    if (angular.isObject(task) && task.completed == 1) {
+      $scope.taskcomplete21 = true;
+    }
+    $scope.task1que1 = undefined;
+    $scope.task1que2 = undefined;
+    $scope.task1que3 = undefined;
+    $scope.task1que4 = undefined;
+    $scope.task1que5 = undefined;
+    $scope.task1que6 = undefined;
+    $scope.task1que7 = undefined;
+    $scope.task1que8 = undefined;
+    $scope.task1que9 = undefined;
+    $scope.submit = function (isValid) {
+      if (isValid) {
+        var postObj = {
+            'answers': {
+              'answer1': $scope.task1que1,
+              'answer2': $scope.task1que2,
+              'answer3': $scope.task1que3,
+              'answer4': $scope.task1que4,
+              'answer5': $scope.task1que5,
+              'answer6': $scope.task1que6,
+              'answer7': $scope.task1que7,
+              'answer8': $scope.task1que8,
+              'answer9': $scope.task1que9
+            },
+            'taskid': 'taskid1234567890',
+            'complete': task.completed
+          };
+        $http.post('/level2task1', JSON.stringify(postObj)).success(function (data) {
+          if (angular.isObject(data)) {
+          }
+        }).error(function (err) {
+          void 0;
+          toaster.pop('failure', 'Task 1', 'There was an error submitting your task, please try again');
+        });
+      }
+    };
+  }
+]);
+viberApp.controller('vbActivateCtrl', [
+  '$scope',
+  function ($scope) {
+  }
+]);
+viberApp.controller('vbGoodvibesMindCtrl', [
+  '$scope',
+  function ($scope) {
+  }
+]);
+viberApp.controller('vbTaskYuwaCtrl', [
+  '$scope',
+  '$http',
+  function ($scope, $http) {
+    $scope.rateyuwa = undefined;
+    var user_tasks = $scope.identity.currentUser.user_tasks;
+    var task = _.where(user_tasks, { 'task_id': 'taskyuwa1234567890' })[0];
+    $scope.taskcomplete24 = false;
+    if (angular.isObject(task) && task.completed == 1)
+      $scope.taskcomplete24 = true;
+    $scope.submitForm = function (isValid) {
+      if (isValid) {
+        var reqbody = {
+            'answers': { 'rate': $scope.rateyuwa },
+            'taskid': 'taskyuwa1234567890'
+          };
+        $http.put('/level2task4', reqbody).success(function (data) {
+          if (angular.isObject(data)) {
+          }
+        });
+      }
+    };
+  }
+]);
+viberApp.controller('vbSupportYuwaCtrl', [
+  '$scope',
+  function ($scope) {
+  }
+]);
 /**
  * Created by Ankit Saxena on 25-06-2014.
  */

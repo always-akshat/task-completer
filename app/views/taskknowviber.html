@@ -1,0 +1,279 @@
+<div class="panel panel-default">
+<div class="panel-heading collapsed" data-parent="#panel-l2" data-toggle="collapse" data-target="#collapseTwo0">
+    <h4 class="panel-title pull-left">
+        How well do you know Viber- The app?
+    </h4>
+
+    <span ng-show="taskcomplete21" class="pull-right" ><strong class="icon-tick"></strong></span>
+    <span ng-hide="taskcomplete21"class="pull-right" ><strong>1000</strong> vibes </span>
+</div>
+<div id="collapseTwo0" class="panel-collapse collapse">
+    <div class="panel-body">
+        <p><strong>Task description:</strong></p>
+        It's time to challenge you and see how well you know Viber- The App. Answer these questions (simple
+
+        and some not so simple) and show us your knowledge of this. Psst...No cheating
+        <br/><br/>
+        Get 1000 vibes for answering the questions.
+        <br/><br/>
+        <!--<video width="100%" height="100%" controls style="margin-bottom: 20px;">-->
+        <!--<source ng-src="video/Viber.mp4" type="video/mp4">-->
+        <!--Your browser does not support the video tag.-->
+        <!--</video>-->
+        <!--<iframe width="100%" height="315px" src="//www.youtube.com/embed/EOl4e8wsvHU" frameborder="0" allowfullscreen></iframe>-->
+    </div>
+
+    <form ng-hide="taskcomplete21" name="knowviberForm" role="form" ng-controller="vbKnowViberCtrl"  ng-submit="submit(knowviberForm.$valid)" novalidate>
+
+        <div class="panel-body">
+            <p class="alert-formnote">All questions are mandatory</p>
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="que-box">Q</div>
+                </div>
+                <div class="col-lg-22">
+                    <p class="question-txt">How much do you pay to download Viber?</p>
+                    <div class="form-group" required>
+                        <input type="radio" name="que1" id="que1a" value="1" class="custom-radio" ng-model="task1que1" required>
+                        <label for="que1a">It's free</label>
+                        <input type="radio" name="que1" id="que1b" value="2" class="custom-radio" ng-model="task1que1" required>
+                        <label for="que1b">
+                            $1-5
+                        </label>
+                        <input type="radio" name="que1" id="que1c" value="3" class="custom-radio" ng-model="task1que1" required>
+                        <label for="que1c">$6-10</label>
+                        <input type="radio" name="que1" id="que1d" value="4" class="custom-radio" ng-model="task1que1" required>
+                        <label for="que1d">
+                            Pay whatever price you want
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="que-box">Q</div>
+                </div>
+                <div class="col-lg-22">
+                    <p class="question-txt">How many ads will you find on Viber?</p>
+                    <div class="form-group" required>
+                        <input type="radio" name="que2" id="que2a" value="3" class="custom-radio" ng-model="task1que2" required>
+                        <label for="que2a">Every time you open the app</label>
+                        <input type="radio" name="que2" id="que2b" value="4" class="custom-radio" ng-model="task1que2" required>
+                        <label for="que2b">
+                            1 per contact that you have
+                        </label>
+                        <input type="radio" name="que2" id="que2c" value="1" class="custom-radio" ng-model="task1que2" required>
+                        <label for="que2c">No ads</label>
+                        <input type="radio" name="que2" id="que2d" value="2" class="custom-radio" ng-model="task1que2" required>
+                        <label for="que2d">
+                            Every time you finish a call
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="que-box">Q</div>
+                </div>
+                <div class="col-lg-22">
+                    <p class="question-txt">In Viber, who is Violet?</p>
+                    <div class="form-group" required>
+                        <input type="radio" name="que3" id="que3a" value="1" class="custom-radio" ng-model="task1que3" required>
+                        <label for="que3a">A Viber girl sticker that communicates more than just emoticons</label>
+                        <input type="radio" name="que3" id="que3b" value="2" class="custom-radio" ng-model="task1que3" required>
+                        <label for="que3b">
+                            An ad
+                        </label>
+                        <input type="radio" name="que3" id="que3c" value="3" class="custom-radio" ng-model="task1que3" required>
+                        <label for="que3c">A flower</label>
+                        <input type="radio" name="que3" id="que3d" value="4" class="custom-radio" ng-model="task1que3" required>
+                        <label for="que3d">
+                            A virus
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="que-box">Q</div>
+                </div>
+                <div class="col-lg-22">
+                    <p class="question-txt"> What can I do with Viber?</p>
+                    <div class="form-group" required>
+                        <input type="radio" name="que4" id="que4a" value="4" class="custom-radio" ng-model="task1que4" required>
+                        <label for="que4a">Text individuals</label>
+                        <input type="radio" name="que4" id="que4b" value="2" class="custom-radio" ng-model="task1que4" required>
+                        <label for="que4b">
+                            Text and send emoticons
+                        </label>
+                        <input type="radio" name="que4" id="que4c" value="3" class="custom-radio" ng-model="task1que4" required>
+                        <label for="que4c">Text and call my friends</label>
+                        <input type="radio" name="que4" id="que4d" value="1" class="custom-radio" ng-model="task1que4" required>
+                        <label for="que4d">
+                            Text, call, doodle, send emoticons, share stickers to all my phone
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="que-box">Q</div>
+                </div>
+                <div class="col-lg-22">
+                    <p class="question-txt">What is my user ID on Viber?</p>
+                    <div class="form-group" required>
+                        <input type="radio" name="que5" id="que5a" value="3" class="custom-radio" ng-model="task1que5" required>
+                        <label for="que5a">Make a new one</label>
+                        <input type="radio" name="que5" id="que5b" value="4" class="custom-radio" ng-model="task1que5" required>
+                        <label for="que5b">
+                            My email address
+                        </label>
+                        <input type="radio" name="que5" id="que5c" value="1" class="custom-radio" ng-model="task1que5" required>
+                        <label for="que5c">My phone number</label>
+                        <input type="radio" name="que5" id="que5d" value="2" class="custom-radio" ng-model="task1que5" required>
+                        <label for="que5d">
+                            My PAN card number
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="que-box">Q</div>
+                </div>
+                <div class="col-lg-22">
+                    <p class="question-txt">Can I call from Viber if my balance runs out?</p>
+                    <div class="form-group" required>
+                        <input type="radio" name="que6" id="que6a" value="1" class="custom-radio" ng-model="task1que6" required>
+                        <label for="que6a">No you can’t use Viber to make calls</label>
+                        <input type="radio" name="que6" id="que6b" value="2" class="custom-radio" ng-model="task1que6" required>
+                        <label for="que6b">
+                            No you need balance
+                        </label>
+                        <input type="radio" name="que6" id="que6c" value="3" class="custom-radio" ng-model="task1que6" required>
+                        <label for="que6c"> Yes, but you need 3G or Wi-Fi</label>
+                        <input type="radio" name="que6" id="que6d" value="4" class="custom-radio" ng-model="task1que6" required>
+                        <label for="que6d">
+                            Yes, but the receiver pays for you
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="que-box">Q</div>
+                </div>
+                <div class="col-lg-22">
+                    <p class="question-txt">Can you do a video chat on Viber?</p>
+                    <div class="form-group" required>
+                        <input type="radio" name="que7" id="que7a" value="1" class="custom-radio" ng-model="task1que7" required>
+                        <label for="que7a">No</label>
+                        <input type="radio" name="que7" id="que7b" value="2" class="custom-radio" ng-model="task1que7" required>
+                        <label for="que7b">
+                            Yes
+                        </label>
+                        <input type="radio" name="que7" id="que7c" value="3" class="custom-radio" ng-model="task1que7" required>
+                        <label for="que7c">Yes, only through the desktop application</label>
+                        <input type="radio" name="que7" id="que7d" value="4" class="custom-radio" ng-model="task1que7" required>
+                        <label for="que7d">
+                            Yes, but you need to pay a registration fee
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="que-box">Q</div>
+                </div>
+                <div class="col-lg-22">
+
+                    <p class="question-txt">What is the maximum size of a group on Viber?</p>
+                    <div class="form-group" required>
+                        <input type="radio" name="que8" id="que8a" value="3" class="custom-radio" ng-model="task1que8" required>
+                        <label for="que8a">10</label>
+                        <input type="radio" name="que8" id="que8b" value="4" class="custom-radio" ng-model="task1que8" required>
+                        <label for="que8b">
+                           25
+                        </label>
+                        <input type="radio" name="que8" id="que8c" value="2" class="custom-radio" ng-model="task1que8" required>
+                        <label for="que8c">50</label>
+                        <input type="radio" name="que8" id="que8d" value="1" class="custom-radio" ng-model="task1que8" required>
+                        <label for="que8d">
+                            100
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="que-box">Q</div>
+                </div>
+                <div class="col-lg-22">
+                    <p class="question-txt">How many countries in Viber in?</p>
+                    <div class="form-group" required>
+                        <input type="radio" name="que9" id="que9a" value="2" class="custom-radio" ng-model="task1que9" required>
+                        <label for="que9a">29</label>
+                        <input type="radio" name="que9" id="que9b" value="1" class="custom-radio" ng-model="task1que9" required>
+                        <label for="que9b">
+                            193
+                        </label>
+                        <input type="radio" name="que9" id="que9c" value="3" class="custom-radio" ng-model="task1que9" required>
+                        <label for="que9c">123</label>
+                        <input type="radio" name="que9" id="que9d" value="4" class="custom-radio" ng-model="task1que9" required>
+                        <label for="que9d">
+                            57
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="que-box">Q</div>
+                </div>
+                <div class="col-lg-22">
+                    <p class="question-txt">Which of these is not a Viber Sticker?</p>
+                    <div class="form-group" required>
+                        <input type="radio" name="que10" id="que10a" value="2" class="custom-radio" ng-model="task1que10" required>
+                        <label for="que10a"><img ng-src="images/img-check-1.jpg"></label>
+                        <input type="radio" name="que10" id="que10b" value="1" class="custom-radio" ng-model="task1que10" required>
+                        <label for="que10b">
+                            <img ng-src="images/img-check-2.jpg">
+                        </label>
+                        <input type="radio" name="que10" id="que10c" value="3" class="custom-radio" ng-model="task1que10" required>
+                        <label for="que10c"><img ng-src="images/upload-img1.jpg"></label>
+                        <input type="radio" name="que10" id="que10d" value="4" class="custom-radio" ng-model="task1que10" required>
+                        <label for="que10d">
+                            <img ng-src="images/img-check-3.jpg">
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body custom-form">
+            <button type="submit" class="btn btn-success col-lg-offset-2" ng-disabled="knowviberForm.$invalid">submit</button>
+        </div>
+    </form>
+</div>
+</div>
