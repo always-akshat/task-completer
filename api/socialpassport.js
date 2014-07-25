@@ -29,10 +29,10 @@ module.exports = passport.use(new FacebookStrategy({
             done(null,3);
         }
 
-        console.log('checked for mail');
+//        console.log('checked for mail');
         if (fb_email) {
             enter_old_user(profile, function(err,data){
-                console.log('data recieved in main function');
+  //              console.log('data recieved in main function');
                 if(err){
                     console.log(err);
                 }
@@ -80,7 +80,7 @@ function enter_old_user(profile,cb){
     console.log('enter old user reg');
     Students.findOne({ email: fb_email}, function (err, student) {
         if (err) {
-            console.log('error occured at finding student');
+            console.log('error occured at finding student' );
             cb(err,2);
         }
         else {
@@ -113,7 +113,7 @@ function enter_old_user(profile,cb){
                 }
             }
 
-                console.log(student);
+                //console.log(student);
                 student.save(function(err) {
                     console.log('trying to save student');
                     if (!err) {

@@ -112,7 +112,7 @@ app.get('/auth/facebook',
 });
 
 app.get('/login', function(req,res){
-    console.log(req.user);
+    //console.log(req.user);
 
     if(req.user == 3){
         res.send('There is no email associated with your facebook account. Add an emailid in your facebook settings to login.');
