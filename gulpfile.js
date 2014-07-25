@@ -5,10 +5,8 @@
 var gulp = require('gulp');
 
 // Include Our Plugins
-var jshint = require('gulp-jshint');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
 var ngmin = require('gulp-ngmin');
 var stripDebug = require('gulp-strip-debug');
 var autoprefix = require('gulp-autoprefixer');

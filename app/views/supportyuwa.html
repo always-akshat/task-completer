@@ -1,20 +1,53 @@
 <div class="panel panel-default">
-    <div class="panel-heading collapsed" data-parent="#panel-l2" data-toggle="collapse" data-target="#collapseOne3">
+    <div class="panel-heading collapsed" data-parent="#panel-l2" data-toggle="collapse" data-target="#collapseOne5">
         <h4 class="panel-title pull-left">
             Support Yuwa
         </h4>
+        <span class="pull-right" ng-show="taskcomplete25"><strong class="icon-tick"></strong></span>
+        <span class="pull-right" ng-hide="taskcomplete25"><strong>2500</strong> vibes </span>
 
-        <span class="pull-right" ><strong class="icon-tick"></strong></span>
-        <span class="pull-right" ><strong>1000</strong> vibes </span>
     </div>
-    <div id="collapseOne3" class="panel-collapse collapse">
+
+    <div id="collapseOne5" class="panel-collapse collapse">
         <div class="panel-body">
             <p><strong>Task description:</strong></p>
             Now that you know you can easily help by just conversing on Viber. The more you converse, the more you
+
             can help them. So what are you waiting for?
             <br/><br/>
-            Get 1000 vibes for answering the questions.
+            2000 Vibes for sharing the best screenshot
             <br/><br/>
         </div>
+        <div class="panel-body">
+            <div class="upload-nav text-right">
+                <span ng-show="s3success25" class="alert-success pull-left">{{added25}} added successfully</span>
+                <span class="alert-success pull-right">{{submitted25}} Submitted</span>
+                <!--<ul>-->
+                <!--<li class="active"><a href="#added" target="_self" data-toggle="tab">{{submitted}} Submitted</a></li>-->
+                <!--&lt;!&ndash;<li><a href="#pending" data-toggle="tab">12 Pending Approval</a></li>-->
+                <!--<li><a href="#rejected" data-toggle="tab" class="rejected-photo">6 Rejected</a></li>&ndash;&gt;-->
+                <!--</ul>-->
+            </div>
+            <form name="photoForm" ng-submit="onFileUploadtask5()" novalidate>
+                <div class="tab-pane fade in active new-upload">
+                    <a ng-model="serSubmitted25" ng-repeat="serSubmit in serSubmitted25" href=""><img ng-src="https://s3-ap-southeast-1.amazonaws.com/viber-uploads/level2task5/{{serSubmit}}" height="78" width="78" alt=""/></a>
+                    <a ng-model="s3added25" ng-repeat="s3add in s3added25" href=""><img ng-src="{{s3add}}" height="78" width="78" alt=""/></a>
+
+
+                    <a href="#." onclick="document.getElementById('filetask5').click(); return false;"class="upload-img">
+                        <span class="icon-plus-circle"></span>
+                        Choose<br>
+                        photos
+                    </a>
+                    <input type="file" accept="image/*" id="filetask5" style="visibility: hidden;" ng-file-select="onFileSelecttask5($files)"/>
+                    <p style="margin-left: 18px;">
+                        <button type="submit" class="btn btn-success radius-none" ng-disabled="zeroselected25">submit</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+
+
     </div>
+</div>
 </div>
