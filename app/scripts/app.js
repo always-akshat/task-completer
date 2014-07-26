@@ -71,6 +71,17 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
             console.log('redirecting');
            $scope.profilecomplete=false;
         }
+    console.log("dashboard "+ JSON.stringify($scope.identity));
+    var stage = $scope.identity.currentUser.stages;
+    var level1= _.where(stage,{'stageid':'5390521624349ecc0c108c10'})[0];
+    var level2= _.where(stage,{'stageid':'53d36e0abb5c82917b3a3d94'})[0];
+    console.log($scope.identity.currentUser.stages);
+    console.log(level1);
+    console.log(level2);
+    $scope.level1stagecompletion= level1.completion;
+    $scope.level1stagename = level1.name;
+    $scope.level2stagecompletion = level2.completion;
+    $scope.level2stagename = level2.name;
 
 
     $window.scrollTo(0, 0);
@@ -273,6 +284,20 @@ viberApp.controller('vbLoginBarCtrl', ['$scope', 'vbSharedService', function ($s
         $scope.currentPage = vbSharedService.currentPage;
     });
 
+//    console.log("Login Bar"+ JSON.stringify($scope.identity));
+//    var stage = $scope.identity.currentUser.stages;
+//    var level1= _.where(stage,{'stageid':'5390521624349ecc0c108c10'});
+//    var level2= _.where(stage,{'stageid':'53d36e0abb5c82917b3a3d94'});
+//
+//
+//    if(level1.completion==100) {
+//        $scope.currentlevel = level2.name;
+//        $scope.currentcompleted = level2.completion;
+//    }
+//    else{
+//        $scope.currentlevel = level1.name;
+//        $scope.currentcompleted = level1.completion;
+//    }
 
 }]);
 

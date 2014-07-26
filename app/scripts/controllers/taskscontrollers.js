@@ -848,7 +848,7 @@ viberApp.controller('vbTaskYuwaCtrl',['$scope','$http','toaster',function($scope
                     if (angular.isObject(data)) {
                         if (angular.isObject(data.completiondata)) { // because the service will not return Level inside completiondata if the user is doing the same task again
                             $scope.identity.currentUser.complete += data.completiondata.level;
-                            $scope.taskcomplete4 = true;
+                            $scope.taskcomplete24 = true;
                             task.completed = 1;
                             $scope.identity.currentUser.points += data.completiondata.points;
                             toaster.pop('success', "Task 3", "You have successfully finished the third task");
