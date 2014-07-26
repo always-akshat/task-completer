@@ -558,9 +558,6 @@ function updateAnswers(facebookid, taskid, answers,cb) {
             }
         });
 
-
-
-
     /*Students.findOne({ 'facebookid': facebookid })
      .select({ 'user_tasks': { $elemMatch: {task_id: taskid}}})
      .exec(function (err, doc) {
@@ -911,17 +908,20 @@ function logout(req, res) {
 function complete_user_stage(facebookid,stageid,completion_value,cb) {
     console.log('stage completion data...' + facebookid + ' -- \n' + stageid + '----\n ' + completion_value);
 
-    Students.update({'facebookid': facebookid, 'stages.stageid': stageid.toString()},
-        {$inc: { 'stages.$.completion': completion_value } }
-        , function (err,data) {
-            console.log(data);
-            if (err) {
-                console.log(err);
-                cb(0);
-            } else {
-                cb(completion_value);
-            }
+    Students.findOne({ 'facebookid': facebookid })
+        .select({ 'stages': { $elemMatch: {stageid: stageid.toString()}}})
+        .exec(function (err, doc) {
+            console.log('comp data' + doc.stages[0].completion);
+            doc.stages[0].completion = parseInt(doc.stages[0].completion)  + completion_value;
+            console.log('final value' + doc.stages[0].completion);
+
+            Students.update({'facebookid': facebookid, 'stages.stageid': stageid},
+                {$set: { 'stages.$.completion': doc.stages[0].completion } }
+                , function (err){
+                    cb(20);
+                })
         });
+
 
 
 
