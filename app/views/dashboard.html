@@ -1,6 +1,6 @@
 <div class="col-sm-13 col-sm-offset-1">
 <h1>Complete Tasks. Unlock Levels. Win Big!</h1>
-<p ng-show="!profilecomplete">Please complete your profile first from <a href="#mysettings"> My Settings</a></p>
+
 <div class="level-box">
     <div class="level-meter clearfix">
         <div class="level-title">{{identity.currentUser.level}}</div>
@@ -37,12 +37,30 @@
     <div class="level-meter clearfix">
         <div class="level-title">Level 2</div>
         <div class="progress-box">
-            This level will get unlocked on 26th July
+            <span ng-hide="level1completed">Unlock this level to collect 400 bonus vibes</span>
+            <span ng-show="level1completed">
+            <div class="row pull-left progress-row">
+                <div class="col-xs-6"></div>
+                <div class="col-xs-6"></div>
+                <div class="col-xs-6"></div>
+                <div class="col-xs-6" style="border: 0px;"></div>
+                <div class="progress-bar" style="width:40%;"></div>
+            </div>
+            <span class="progress-txt">40%</span>
+            </span>
         </div>
     </div>
+    <div class="panel-group panel-infoGroup" id="panel-l2">
+        <div class="panel">
+            <task-knowviber></task-knowviber>
+            <activate-friends></activate-friends>
+            <goodvibes-mind></goodvibes-mind>
+            <task-yuwa></task-yuwa>
+            <support-yuwa></support-yuwa>
+        </div>
+        <!--  <task-insert-mobile></task-insert-mobile> -->
+    </div>
 </div>
-
-<p><strong>*</strong>Vibes rewarded for duplicate transactions will get removed at the end of the day.</p>
 <!--<div class="level-box">-->
     <!--<div class="level-meter clearfix">-->
         <!--<div class="level-title">Level 2</div>-->

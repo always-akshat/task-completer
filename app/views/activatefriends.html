@@ -1,0 +1,52 @@
+<div class="panel panel-default">
+    <div class="panel-heading collapsed" data-parent="#panel-l2" data-toggle="collapse" data-target="#collapseOne2">
+        <h4 class="panel-title pull-left">
+            Activate your most contacted friends on Viber
+        </h4>
+        <span class="pull-right" ng-show="taskcomplete22"><strong class="icon-tick"></strong></span>
+        <span class="pull-right" ng-hide="taskcomplete22"><strong>2500</strong> vibes </span>
+
+    </div>
+
+    <div id="collapseOne2" class="panel-collapse collapse">
+        <div class="panel-body">
+            <p><strong>Task description:</strong></p>
+            Activate your most contacted friends on viber, tell them how chatting is fun on Viber and share some
+            #GoodVibes with them
+            <br/><br/>
+            Get 1500 Vibes for sharing the best screenshot
+            <br/><br/>
+        </div>
+        <div class="panel-body">
+            <div class="upload-nav text-right">
+                <span ng-show="s3success22" class="alert-success pull-left">{{added22}} added successfully</span>
+                <span class="alert-success pull-right">{{submitted22}} Submitted</span>
+                <!--<ul>-->
+                <!--<li class="active"><a href="#added" target="_self" data-toggle="tab">{{submitted}} Submitted</a></li>-->
+                <!--&lt;!&ndash;<li><a href="#pending" data-toggle="tab">12 Pending Approval</a></li>-->
+                <!--<li><a href="#rejected" data-toggle="tab" class="rejected-photo">6 Rejected</a></li>&ndash;&gt;-->
+                <!--</ul>-->
+            </div>
+            <form name="photoForm" ng-submit="onFileUploadtask2()" novalidate>
+                <div class="tab-pane fade in active new-upload">
+                    <a ng-model="serSubmitted22" ng-repeat="serSubmit in serSubmitted22" href=""><img ng-src="https://s3-ap-southeast-1.amazonaws.com/viber-uploads/level2task2/{{serSubmit}}" height="78" width="78" alt=""/></a>
+                    <a ng-model="s3added22" ng-repeat="s3add in s3added22" href=""><img ng-src="{{s3add}}" height="78" width="78" alt=""/></a>
+
+
+                    <a href="#." onclick="document.getElementById('filetask2').click(); return false;"class="upload-img">
+                        <span class="icon-plus-circle"></span>
+                        Choose<br>
+                        photos
+                    </a>
+                    <input type="file" accept="image/*" id="filetask2" style="visibility: hidden;" ng-file-select="onFileSelecttask2($files)"/>
+                    <p style="margin-left: 18px;">
+                        <button type="submit" class="btn btn-success radius-none" ng-disabled="zeroselected22">submit</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+</div>
