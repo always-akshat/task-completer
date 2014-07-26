@@ -1,3 +1,12 @@
+<script>
+    /**
+     * jQuery iframe click tracking plugin
+     * Version 1.3 (2014-05-16)
+     * Copyright � 2014 Vincent Par�, www.finalclap.com
+     */
+
+</script>
+
 <script type="text/javascript" xmlns="http://www.w3.org/1999/html">
 
    // console.log('initiating FB');
@@ -44,39 +53,13 @@
                     src="//platform.twitter.com/widgets/follow_button.html?screen_name=viber_india"
                     style="width:300px; height:20px;" ng-click="alert('yo')"></iframe>
             </br></br>
-            <a href="http://www.viber.com/dl"><button class="btn btn-success" style="background-color: #7c529d">Download Viber</button></a>
+            <a href="http://www.viber.com/dl" target="_new"><button class="btn btn-success" style="background-color: #7c529d">Download Viber</button></a>
 
             <p><br/> If you have already like the FB page or Followed the Twitter account,Unlike->Like and Unfollow->Follow from these buttons.</p>
         </div>
     </div>
 </div>
-        <script>
 
-            $('#chaljatw').iframeTracker({blurCallback: function(){
+<script>
 
-
-                var scope = angular.element(document).scope();
-
-                scope.$apply(function(){
-                    scope.$root.twfollow=true;
-
-                });
-
-                //scope.$apply();
-            }});
-
-
-            $('#chaljafb').iframeTracker({blurCallback: function(){
-
-
-                var scope = angular.element(document).scope();
-
-                scope.$apply(function(){
-                    scope.$root.fblike=true;
-
-                });
-
-
-            }});
-
-        </script>
+</script>

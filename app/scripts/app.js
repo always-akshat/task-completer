@@ -17,7 +17,6 @@ viberApp.config(['$routeProvider', function ($routeProvider) {
                     if (!vbAuth.isAuthenticated())
                         return vbAuth.authenticateUser()
                 }
-
                 }
             }).
             when('/signup', {
@@ -63,15 +62,24 @@ viberApp.controller('vbNavBarCtrl', ['$scope', '$window', function ($scope, $win
 
 }]);
 
-viberApp.controller('dashboardCtrl', ['$scope', 'vbSharedService', 'vbAuth', '$window', function ($scope, vbSharedService, vbAuth, $window) {
+viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 'vbAuth', '$window','$location', function ($rootScope, $scope, vbSharedService, vbAuth, $window,$location) {
+
+
+        $scope.profilecomplete=true;
+        if(!angular.isObject($scope.identity.currentUser.college) || !angular.isObject($scope.identity.currentUser.college))
+        {
+            console.log('redirecting');
+           $scope.profilecomplete=false;
+        }
+
 
     $window.scrollTo(0, 0);
     var currentPage = {home: 1, rewards: 0, lb: 0, mysettings: 0};
     vbSharedService.prepForBroadcast(currentPage);
 
-    $scope.myStyle = undefined;
+    $rootScope.myStyle = undefined;
     if($scope.identity.currentUser.complete==100){
-        $scope.myStyle = {'font-size':'14px'};
+        $rootScope.myStyle = {'font-size':'14px'};
     }
 
 

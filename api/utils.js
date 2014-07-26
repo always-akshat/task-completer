@@ -4,7 +4,7 @@
 var validator = require('validator');
 
 
-exports.objectvalidator = function(objecttype,object,cb){
+exports. objectvalidator = function(objecttype,object,cb){
     //console.log('entering utility function');
     console.log('the object type :' + objecttype);
     var error = 0;
