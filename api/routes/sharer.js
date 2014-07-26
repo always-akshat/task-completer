@@ -25,8 +25,7 @@ exports.share = function(req,res){
 
 
 
-    asyncTasks = [];
-
+    push
     if(platform.facebook == 1) {
         asyncTasks.push(function(cb){
             feed_sharelink(auth,answers, function(facebook_post_data){
@@ -38,7 +37,6 @@ exports.share = function(req,res){
                 }
                 cb(null,1);
             });
-
         });
     }
 

@@ -142,6 +142,114 @@ console.log('adding stage to new user')
 
 }
 
+function add_stage2(facebookid,cb) {
+    console.log('adding stage to new user')
+    Students.find({'facebookid' :facebookid}).exec(function (err, students) {
+        console.log('studnet :' + JSON.stringify(students));
+        students.forEach(function (instance) {
+            //console.log(instance.facebookid + ' -- ' + instance.name);
+            var stageid = '53d1e5fbbb5c82917b3a3a40';
+            var stage_name = 'Level 2';
+            var stage = {
+                "name" : stage_name.toString(),
+                "stageid" : stageid.toString(),
+                "completion" : 0
+            };
+            //console.log(stage);
+            console.log('adding student stages now');
+            Students.update({'facebookid': instance.facebookid},
+                {$addToSet: {stages:stage}},{upsert:true},function(err){
+                    if(err){
+                        console.log(err);
+                    }else{
+                        console.log("Successfully added")
+                        stages_function.getStageInfo(stageid, function (err, stage) {
+                            if (!err) {
+                                //console.log('stages :'  + stage.tasks);
+                                if (stage && stage.tasks) {
+                                    var user_tasks = stage.tasks;
+                                    console.log(user_tasks);
+                                    var total_tasks = user_tasks.length;
+                                    var added =0;
+
+                                    user_tasks.forEach(function (user_tasks) {
+                                        addTaskToUser(instance.facebookid, user_tasks.stageid.toString(),function(err,data){
+                                            if(data){
+                                                added++;
+                                            }
+                                            if(added == total_tasks){
+                                                cb(null,1);
+                                            }
+                                        });
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+
+        });
+
+
+    });
+
+}
+
+
+function add_stage(facebookid,stageid,stagename,cb) {
+    console.log('adding stage to new user')
+    console.log('stagename :' +stagename);
+    Students.find({'facebookid' :facebookid}).exec(function (err, students) {
+        //console.log('studnet :' + JSON.stringify(students));
+        students.forEach(function (instance) {
+            //console.log(instance.facebookid + ' -- ' + instance.name);
+            var stage = {
+                "name" : stagename.toString(),
+                "stageid" : stageid.toString(),
+                "completion" : 0
+            };
+            //console.log(stage);
+            console.log('adding student stages now');
+            Students.update({'facebookid': instance.facebookid},
+                {$addToSet: {stages:stage}},{upsert:true},function(err){
+                    if(err){
+                        console.log(err);
+                    }else{
+                        console.log("Successfully added")
+                        stages_function.getStageInfo(stageid, function (err, stage) {
+                            if (!err) {
+                                //console.log('stages :'  + stage.tasks);
+                                if (stage && stage.tasks) {
+                                    var user_tasks = stage.tasks;
+                                    console.log(user_tasks);
+                                    var total_tasks = user_tasks.length;
+                                    var added =0;
+
+                                    user_tasks.forEach(function (user_tasks) {
+                                        addTaskToUser(instance.facebookid, user_tasks.stageid.toString(),function(err,data){
+                                            if(data){
+                                                added++;
+                                            }
+                                            if(added == total_tasks){
+                                                cb(null,1);
+                                            }
+                                        });
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+
+        });
+
+
+    });
+
+}
+
+
+
 function getstudentdata(req, res) {
 
     if (req.session.student !== null) // check if the user is logged in
@@ -1011,6 +1119,8 @@ function one_task(req,res){
 module.exports = {list: list,
     stage_add_to_all: stage_add_to_all,
     add_stage1 :add_stage1,
+    add_stage2 : add_stage2,
+    add_stage : add_stage,
     getstudentdata: getstudentdata,
     signup: signup,
     info: info,

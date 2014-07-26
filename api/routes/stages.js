@@ -29,9 +29,13 @@ var dummystage= {
 
 
 
-function list(req, res) {
+function list(cb) {
     stages.find({}, function (err, stages) {
-        res.send(JSON.stringify(stages));
+        if(!err){
+            cb(stages);
+        }else{
+            cb(0);
+        }
     });
 };
 
