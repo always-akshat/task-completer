@@ -251,7 +251,7 @@ function add_stage(facebookid,stageid,stagename,cb) {
 
 
 function getstudentdata(req, res) {
-
+    console.log('reached get student data');
     if (req.session.student !== null) // check if the user is logged in
     {
         res.send(req.session.student);

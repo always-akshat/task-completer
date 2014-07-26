@@ -135,18 +135,79 @@ viberApp.directive('inviteFbFriends', function(){
     }
 });
 
-    viberApp.directive('likenFollow', function(){
+    viberApp.directive('likenFollow', function() {
 
         return{
 
-            restrict : 'E',
-            templateUrl : 'views/likenfollow.html',
-            controller : 'vblikenfollowCtrl'
+            restrict: 'E',
+            templateUrl: 'views/likenfollow.html',
+            controller: 'vblikenfollowCtrl'
 
         }
 
 
     });
+
+viberApp.directive('taskYuwa', function(){
+
+    return{
+
+        restrict : 'E',
+        templateUrl : 'views/taskyuwa.html',
+        controller : 'vbTaskYuwaCtrl'
+
+    }
+
+
+});
+viberApp.directive('supportYuwa', function(){
+
+    return{
+
+        restrict : 'E',
+        templateUrl : 'views/supportyuwa.html',
+        controller : 'vbSupportYuwaCtrl'
+
+    }
+
+
+});
+viberApp.directive('taskKnowviber', function(){
+
+    return{
+
+        restrict : 'E',
+        templateUrl : 'views/taskknowviber.html',
+        controller : 'vbKnowViberCtrl'
+
+    }
+
+
+});
+viberApp.directive('activateFriends', function(){
+
+    return{
+
+        restrict : 'E',
+        templateUrl : 'views/activatefriends.html',
+        controller : 'vbActivateCtrl'
+
+    }
+
+
+});
+viberApp.directive('goodvibesMind', function(){
+
+    return{
+
+        restrict : 'E',
+        templateUrl : 'views/goodvibesmind.html',
+        controller : 'vbGoodvibesMindCtrl'
+
+    }
+
+
+});
 
 
 

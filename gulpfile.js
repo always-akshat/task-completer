@@ -5,15 +5,13 @@
 var gulp = require('gulp');
 
 // Include Our Plugins
-var jshint = require('gulp-jshint');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
 var ngmin = require('gulp-ngmin');
 var stripDebug = require('gulp-strip-debug');
 var autoprefix = require('gulp-autoprefixer');
 var minifyCSS = require('gulp-minify-css');
-
+var watch = require('gulp-watch');
 
 
 // Concatenate & Minify JS
@@ -52,6 +50,13 @@ gulp.task('styles', function() {
         .pipe(autoprefix('last 2 versions'))
         .pipe(minifyCSS())
         .pipe(gulp.dest('app/build/styles/'));
+});
+
+gulp.task('watch', function() {
+    gulp.watch('app/scripts/app.js', ['app1']);
+    gulp.watch('app/scripts/services/*.js', ['app1']);
+    gulp.watch('app/scripts/controllers/*.js', ['app1']);
+    gulp.watch('app/build/scripts/app1.js', ['mix']);
 });
 
 // Default Task

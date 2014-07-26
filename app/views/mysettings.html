@@ -42,13 +42,13 @@
             <div class="form-group">
                 <label class="col-sm-4 control-label">City</label>
                 <div class="col-sm-20">
-                    <input type="text" ng-model="user.location.name" typeahead="place.CityName for place in getLocation($viewValue) " typeahead-on-select='onSelectLocation($item)' class="form-control">
+                    <input type="text" ng-model="user.location.name" typeahead="place.CityName for place in getLocation($viewValue) " typeahead-on-select='onSelectLocation($item)' class="form-control" required>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label">College</label>
                 <div class="col-sm-20">
-                    <input type="text" ng-model="user.college.name" typeahead="clg.CollegeName for clg in getCollege($viewValue)" typeahead-items='5' typeahead-on-select='onSelectCollege($item)'class="form-control">
+                    <input type="text" ng-model="user.college.name" typeahead="clg.CollegeName for clg in getCollege($viewValue)" typeahead-items='5' typeahead-on-select='onSelectCollege($item)'class="form-control" required>
                 </div>
             </div>
             <div class="form-group">
