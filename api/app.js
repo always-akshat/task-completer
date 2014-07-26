@@ -204,7 +204,7 @@ app.get('/getstudentdata', IsAuthenticated,students.getstudentdata); // to initi
 app.post('/socialshare',sharer.share);
 
 
-app.post('/survey',IsAuthenticated,sharer.survey);
+app.put('/survey',IsAuthenticated,sharer.survey);
 app.put('/likefollow',IsAuthenticated,sharer.likefollow);
 app.put('/uploadselfie',IsAuthenticated,sharer.selfie);
 app.put('/uploadphoto',IsAuthenticated,sharer.selfie);

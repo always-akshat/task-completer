@@ -19,6 +19,7 @@ viberApp.factory('vbAuth',['$http','vbIdentity','$q','$rootScope','$window',  fu
                     //console.log("Data"+vbIdentity.currentUser.stages[0].name);
                     $rootScope.identity = vbIdentity;
 
+
                     var stage = vbIdentity.currentUser.stages;
                     var level1= _.where(stage,{'stageid':'5390521624349ecc0c108c10'})[0];
                     var level2= _.where(stage,{'stageid':'53d36e0abb5c82917b3a3d94'})[0];

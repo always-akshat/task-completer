@@ -65,12 +65,11 @@ viberApp.controller('vbNavBarCtrl', ['$scope', '$window', function ($scope, $win
 viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 'vbAuth', '$window','$location', function ($rootScope, $scope, vbSharedService, vbAuth, $window,$location) {
 
 
-        $scope.profilecomplete=true;
-        if(!angular.isObject($scope.identity.currentUser.college) || !angular.isObject($scope.identity.currentUser.college))
-        {
-            console.log('redirecting');
-           $scope.profilecomplete=false;
-        }
+    $scope.profilecomplete=true;
+    if(!angular.isObject($scope.identity.currentUser.college) || !angular.isObject($scope.identity.currentUser.college)) {
+        console.log('redirecting');
+        $scope.profilecomplete = false;
+    }
     console.log("dashboard "+ JSON.stringify($scope.identity));
     var stage = $scope.identity.currentUser.stages;
     var level1= _.where(stage,{'stageid':'5390521624349ecc0c108c10'})[0];
@@ -88,9 +87,14 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
     var currentPage = {home: 1, rewards: 0, lb: 0, mysettings: 0};
     vbSharedService.prepForBroadcast(currentPage);
 
-    $rootScope.myStyle = undefined;
-    if($scope.identity.currentUser.complete==100){
-        $rootScope.myStyle = {'font-size':'14px'};
+    $rootScope.style1 = undefined;
+    if($scope.level1stagecompletion==100){
+        $rootScope.style1 = {'font-size':'14px'};
+    }
+
+    $rootScope.style2 = undefined;
+    if($scope.level2stagecompletion ==100){
+        $rootScope.style2 = {'font-size':'14px'};
     }
 
 
