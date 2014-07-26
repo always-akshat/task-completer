@@ -19,7 +19,7 @@ gulp.task('app1', function() {
     return gulp.src(['app/scripts/app.js','app/scripts/services/*.js','app/scripts/controllers/*.js'])
         .pipe(concat('app1.js'))
         .pipe(ngmin())
-        .pipe(stripDebug())
+       // .pipe(stripDebug())
         .pipe(gulp.dest('app/build/scripts/'));
 
 });

@@ -578,7 +578,7 @@ viberApp.controller('vbInsertLinksCtrl',['$scope','$http','toaster', function($s
 viberApp.controller('vbKnowViberCtrl',['$scope','toaster', '$http',function($scope, toaster, $http){
     $scope.taskcomplete21 = false;
     var user_tasks = $scope.identity.currentUser.user_tasks;
-    var task = _.where(user_tasks,{'task_id':'taskid1234567890'})[0];
+    var task = _.where(user_tasks,{'task_id':'53d1e789bb5c82917b3a3a41'})[0];
     if(angular.isObject(task) && task.completed==1) {
         $scope.taskcomplete21 = true;
     }
@@ -592,26 +592,25 @@ viberApp.controller('vbKnowViberCtrl',['$scope','toaster', '$http',function($sco
     $scope.task1que7 = undefined;
     $scope.task1que8 = undefined;
     $scope.task1que9 = undefined;
+    $scope.task1que10 = undefined;
 
 
     $scope.submit = function(isValid){
         if(isValid){
             var postObj = {'answers':{'answer1' :$scope.task1que1,'answer2':$scope.task1que2,'answer3':$scope.task1que3,'answer4' :$scope.task1que4,
-                                'answer5':$scope.task1que5,'answer6':$scope.task1que6,'answer7' :$scope.task1que7,'answer8':$scope.task1que8,'answer9':$scope.task1que9},'taskid':'taskid1234567890','complete':task.completed};
+                                'answer5':$scope.task1que5,'answer6':$scope.task1que6,'answer7' :$scope.task1que7,'answer8':$scope.task1que8,'answer9':$scope.task1que9,'answer10':$scope.task1que10},'taskid':'53d1e789bb5c82917b3a3a41'};
 
-            $http.post('/level2task1', JSON.stringify(postObj)).success(function(data){
+            $http.post('/knowviber', JSON.stringify(postObj)).success(function(data){
                 if(angular.isObject(data)){
-//                    if(angular.isObject(data.completiondata)){ // because the service will not return Level inside completiondata if the user is doing the same task again
-//                        $scope.taskcomplete21 = true;
-//                        task.completed=1;
-//                        $scope.identity.currentUser.complete += data.completiondata.level;
-//                        $scope.identity.currentUser.points += data.completiondata.points;
-//                        $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
-//                        toaster.pop('success', "Task 1", "You have successfully finished the first task");
-//                    }
-//
-//                    console.log("task complete0  "+$scope.taskcomplete0);
-//
+                    if(angular.isObject(data.completiondata)){ // because the service will not return Level inside completiondata if the user is doing the same task again
+                        $scope.taskcomplete21 = true;
+                        task.completed=1;
+                        $scope.identity.currentUser.complete += data.completiondata.level;
+                        $scope.identity.currentUser.points += data.completiondata.points;
+                        $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+                        toaster.pop('success', "Task 1", "You have successfully finished the first task");
+                    }
+
                 }
             }).error(function(err){
 
@@ -625,9 +624,9 @@ viberApp.controller('vbKnowViberCtrl',['$scope','toaster', '$http',function($sco
 
 }]);
 
-viberApp.controller('vbActivateCtrl',['$scope', '$upload', '$http',function($scope, $upload, $http){
+viberApp.controller('vbActivateCtrl',['$scope', '$upload', '$http', 'toaster',function($scope, $upload, $http, toaster){
     var user_tasks = $scope.identity.currentUser.user_tasks;
-    var task = _.where(user_tasks,{'task_id':'level2task21234567890'})[0];
+    var task = _.where(user_tasks,{'task_id':'53d1e85abb5c82917b3a3a42'})[0];
     $scope.s3success22 = false;
     $scope.submitted22 = 0;
     $scope.added22 = 0;
@@ -636,13 +635,13 @@ viberApp.controller('vbActivateCtrl',['$scope', '$upload', '$http',function($sco
     $scope.taskcomplete22=false;
     $scope.zeroselected22 = true;
 
-//    _.each(task.answers,function(answer){
-//        $scope.submitted22 += answer.name.length;
-//        _.each(answer.name,function(names){
-//            $scope.serSubmitted22.push(names);
-//            //$scope.serSubmitted.push(names);
-//        });
-//    });
+        _.each(task.answers, function (answer) {
+            $scope.submitted22 += answer.name.length;
+            _.each(answer.name, function (names) {
+                $scope.serSubmitted22.push(names);
+            });
+        });
+
     if(angular.isObject(task) && task.completed==1)
         $scope.taskcomplete22=true;
 
@@ -699,35 +698,35 @@ viberApp.controller('vbActivateCtrl',['$scope', '$upload', '$http',function($sco
             "answers" : {
                 "name" : $scope.done22
             },
-            "taskid" : 'level2task21234567890'
+            "taskid" : '53d1e85abb5c82917b3a3a42'
         };
         $scope.serSubmitted22.push($scope.done22[0]);
         $scope.s3added22 = [];
         $scope.zeroselected22 = true;
-        $http.put('/level2task2', reqbody).success(function(data) {
-//            if(angular.isObject(data)){
-//                if(angular.isObject(data.completiondata)){
-//                    $scope.identity.currentUser.complete += data.completiondata.level;
-//                    $scope.identity.currentUser.points += data.completiondata.points;
-//                    $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
-//                    $scope.taskcomplete22=true;
-//                    task.completed=1;
-//                }
-//                $scope.submitted22 += $scope.done22.length;
-//                $scope.added22 = 0;
-//                $scope.s3success22 = false;
-//                toaster.pop('success', "Task 2", "Your photo was uploaded successfully.");
-//            }
+        $http.put('/uploadphoto', reqbody).success(function(data) {
+            if(angular.isObject(data)){
+                if(angular.isObject(data.completiondata)){
+                    $scope.identity.currentUser.complete += data.completiondata.level;
+                    $scope.identity.currentUser.points += data.completiondata.points;
+                    $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+                    $scope.taskcomplete22=true;
+                    task.completed=1;
+                }
+                $scope.submitted22 += $scope.done22.length;
+                $scope.added22 = 0;
+                $scope.s3success22 = false;
+                toaster.pop('success', "Task 2", "Your photo was uploaded successfully.");
+            }
         });
 
     };
 
 }]);
 
-viberApp.controller('vbGoodvibesMindCtrl',['$scope','$upload', '$http',function($scope, $upload, $http){
+viberApp.controller('vbGoodvibesMindCtrl',['$scope','$upload', '$http','toaster',function($scope, $upload, $http, toaster){
 
     var user_tasks = $scope.identity.currentUser.user_tasks;
-    var task = _.where(user_tasks,{'task_id':'level2task31234567890'})[0];
+    var task = _.where(user_tasks,{'task_id':'53d1e8c9bb5c82917b3a3a43'})[0];
     $scope.s3success23 = false;
     $scope.submitted23 = 0;
     $scope.added23 = 0;
@@ -736,13 +735,15 @@ viberApp.controller('vbGoodvibesMindCtrl',['$scope','$upload', '$http',function(
     $scope.taskcomplete23=false;
     $scope.zeroselected23 = true;
 
-//    _.each(task.answers,function(answer){
-//        $scope.submitted23 += answer.name.length;
-//        _.each(answer.name,function(names){
-//            $scope.serSubmitted23.push(names);
-//            //$scope.serSubmitted.push(names);
-//        });
-//    });
+
+        _.each(task.answers, function (answer) {
+            $scope.submitted23 += answer.name.length;
+            _.each(answer.name, function (names) {
+                $scope.serSubmitted23.push(names);
+                //$scope.serSubmitted.push(names);
+            });
+        });
+
     if(angular.isObject(task) && task.completed==1)
         $scope.taskcomplete23=true;
 
@@ -799,35 +800,36 @@ viberApp.controller('vbGoodvibesMindCtrl',['$scope','$upload', '$http',function(
             "answers" : {
                 "name" : $scope.done23
             },
-            "taskid" : 'level2task31234567890'
+            "taskid" : '53d1e8c9bb5c82917b3a3a43'
+
         };
         $scope.serSubmitted23.push($scope.done23[0]);
         $scope.s3added23 = [];
         $scope.zeroselected23 = true;
-        $http.put('/level2task3', reqbody).success(function(data) {
-//            if(angular.isObject(data)){
-//                if(angular.isObject(data.completiondata)){
-//                    $scope.identity.currentUser.complete += data.completiondata.level;
-//                    $scope.identity.currentUser.points += data.completiondata.points;
-//                    $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
-//                    $scope.taskcomplete23=true;
-//                    task.completed=1;
-//                }
-//                $scope.submitted23 += $scope.done23.length;
-//                $scope.added23 = 0;
-//                $scope.s3success23 = false;
-//                toaster.pop('success', "Task 3", "Your photo was uploaded successfully.");
-//            }
+        $http.put('/uploadphoto', reqbody).success(function(data) {
+            if(angular.isObject(data)){
+                if(angular.isObject(data.completiondata)){
+                    $scope.identity.currentUser.complete += data.completiondata.level;
+                    $scope.identity.currentUser.points += data.completiondata.points;
+                    $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+                    $scope.taskcomplete23=true;
+                    task.completed=1;
+                }
+                $scope.submitted23 += $scope.done23.length;
+                $scope.added23 = 0;
+                $scope.s3success23 = false;
+                toaster.pop('success', "Task 3", "Your photo was uploaded successfully.");
+            }
         });
 
     };
 
 }]);
 
-viberApp.controller('vbTaskYuwaCtrl',['$scope','$http',function($scope, $http){
+viberApp.controller('vbTaskYuwaCtrl',['$scope','$http','toaster',function($scope, $http,toaster){
     $scope.rateyuwa = undefined;
     var user_tasks = $scope.identity.currentUser.user_tasks;
-    var task= _.where(user_tasks,{'task_id':'taskyuwa1234567890'})[0];
+    var task= _.where(user_tasks,{'task_id':'53d1e90cbb5c82917b3a3a44'})[0];
 
     $scope.taskcomplete24=false;
     if(angular.isObject(task) && task.completed==1)
@@ -839,19 +841,19 @@ viberApp.controller('vbTaskYuwaCtrl',['$scope','$http',function($scope, $http){
                     "answers": {
                         "rate": $scope.rateyuwa
                     },
-                    "taskid": 'taskyuwa1234567890'
+                    "taskid": '53d1e90cbb5c82917b3a3a44'
                 };
 
-                $http.put('/level2task4', reqbody).success(function (data) {
+                $http.put('/rating', reqbody).success(function (data) {
                     if (angular.isObject(data)) {
-//                        if (angular.isObject(data.completiondata)) { // because the service will not return Level inside completiondata if the user is doing the same task again
-//                            $scope.identity.currentUser.complete += data.completiondata.level;
-//                            $scope.taskcomplete4 = true;
-//                            task.completed = 1;
-//                            $scope.identity.currentUser.points += data.completiondata.points;
-//                            toaster.pop('success', "Task 3", "You have successfully finished the third task");
-//                            $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
-//                        }
+                        if (angular.isObject(data.completiondata)) { // because the service will not return Level inside completiondata if the user is doing the same task again
+                            $scope.identity.currentUser.complete += data.completiondata.level;
+                            $scope.taskcomplete4 = true;
+                            task.completed = 1;
+                            $scope.identity.currentUser.points += data.completiondata.points;
+                            toaster.pop('success', "Task 3", "You have successfully finished the third task");
+                            $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+                        }
                     }
                 });
             }
@@ -860,10 +862,10 @@ viberApp.controller('vbTaskYuwaCtrl',['$scope','$http',function($scope, $http){
 
 }]);
 
-viberApp.controller('vbSupportYuwaCtrl',['$scope','$upload','$http',function($scope, $upload, $http){
+viberApp.controller('vbSupportYuwaCtrl',['$scope','$upload','$http','toaster',function($scope, $upload, $http, toaster){
 
     var user_tasks = $scope.identity.currentUser.user_tasks;
-    var task = _.where(user_tasks,{'task_id':'level2task31234567890'})[0];
+    var task = _.where(user_tasks,{'task_id':'53d1ec3bbb5c82917b3a3a45'})[0];
     $scope.s3success25 = false;
     $scope.submitted25 = 0;
     $scope.added25 = 0;
@@ -872,13 +874,14 @@ viberApp.controller('vbSupportYuwaCtrl',['$scope','$upload','$http',function($sc
     $scope.taskcomplete25=false;
     $scope.zeroselected25 = true;
 
-//    _.each(task.answers,function(answer){
-//        $scope.submitted25 += answer.name.length;
-//        _.each(answer.name,function(names){
-//            $scope.serSubmitted25.push(names);
-//            //$scope.serSubmitted.push(names);
-//        });
-//    });
+    if(angular.isObject(task.answers)) {
+        _.each(task.answers, function (answer) {
+            $scope.submitted25 += answer.name.length;
+            _.each(answer.name, function (names) {
+                $scope.serSubmitted25.push(names);
+            });
+        });
+    }
     if(angular.isObject(task) && task.completed==1)
         $scope.taskcomplete25=true;
 
@@ -935,25 +938,25 @@ viberApp.controller('vbSupportYuwaCtrl',['$scope','$upload','$http',function($sc
             "answers" : {
                 "name" : $scope.done25
             },
-            "taskid" : 'level2task51234567890'
+            "taskid" : '53d1ec3bbb5c82917b3a3a45'
         };
         $scope.serSubmitted25.push($scope.done25[0]);
         $scope.s3added25 = [];
         $scope.zeroselected25 = true;
-        $http.put('/level2task5', reqbody).success(function(data) {
-//            if(angular.isObject(data)){
-//                if(angular.isObject(data.completiondata)){
-//                    $scope.identity.currentUser.complete += data.completiondata.level;
-//                    $scope.identity.currentUser.points += data.completiondata.points;
-//                    $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
-//                    $scope.taskcomplete25=true;
-//                    task.completed=1;
-//                }
-//                $scope.submitted25 += $scope.done25.length;
-//                $scope.added25 = 0;
-//                $scope.s3success25 = false;
-//                toaster.pop('success', "Task 5", "Your photo was uploaded successfully.");
-//            }
+        $http.put('/uploadphoto', reqbody).success(function(data) {
+            if(angular.isObject(data)){
+                if(angular.isObject(data.completiondata)){
+                    $scope.identity.currentUser.complete += data.completiondata.level;
+                    $scope.identity.currentUser.points += data.completiondata.points;
+                    $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+                    $scope.taskcomplete25=true;
+                    task.completed=1;
+                }
+                $scope.submitted25 += $scope.done25.length;
+                $scope.added25 = 0;
+                $scope.s3success25 = false;
+                toaster.pop('success', "Task 5", "Your photo was uploaded successfully.");
+            }
         });
 
     };
