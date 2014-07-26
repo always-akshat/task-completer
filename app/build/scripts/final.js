@@ -66,7 +66,7 @@ viberApp.controller('dashboardCtrl', [
   function ($rootScope, $scope, vbSharedService, vbAuth, $window, $location) {
     $scope.profilecomplete = true;
     if (!angular.isObject($scope.identity.currentUser.college) || !angular.isObject($scope.identity.currentUser.college)) {
-      console.log('redirecting');
+      void 0;
       $scope.profilecomplete = false;
     }
     $window.scrollTo(0, 0);
@@ -99,13 +99,13 @@ viberApp.controller('leaderboardCtrl', [
     vbSharedService.prepForBroadcast(currentPage);
     $http.get('/students/leaderboard/points').success(function (data) {
       if (angular.isObject(data)) {
-        console.log(data);
+        void 0;
         $scope.lbstudents = data;
         for (var i = 0; i < $scope.lbstudents.length; i++) {
           if (!$scope.lbstudents[i].facebookid)
             $scope.lbstudents[i].facebookid = 100006788625561;
         }
-        console.log('coming back from server');
+        void 0;
       } else {
       }
     });
@@ -121,7 +121,7 @@ viberApp.controller('leaderboardCtrl', [
       }
     };
     $scope.onSelectLocation = function ($item) {
-      console.log(JSON.stringify($item));
+      void 0;
       var place = $item.CityName;
       $http.get('/students/leaderboard/city/' + place).success(function (data) {
         if (angular.isObject(data)) {
@@ -130,7 +130,7 @@ viberApp.controller('leaderboardCtrl', [
             if (!$scope.lbstudents[i].facebookid)
               $scope.lbstudents[i].facebookid = 100006788625561;
           }
-          console.log('coming back from server');
+          void 0;
         } else {
         }
       });
@@ -224,9 +224,9 @@ viberApp.controller('lbMySettingsCntrl', [
         //console.log(JSON.stringify($scope.identity.currentUser));
         settingSubmit.settingSubmitbutton($scope.identity.currentUser, $scope.user.facebookid).then(function (success) {
           if (success) {
-            console.log('Success');
+            void 0;
           } else {
-            console.log('failure');
+            void 0;
           }
         });
       }
@@ -254,7 +254,7 @@ viberApp.controller('vbLoginBarCtrl', [
   'vbSharedService',
   function ($scope, vbSharedService) {
     $scope.$on('handlePageChange', function () {
-      console.log('event received');
+      void 0;
       $scope.currentPage = vbSharedService.currentPage;
     });
   }
@@ -325,7 +325,7 @@ viberApp.factory('settingSubmit', [
         //console.log("before put");
         //console.log($scope.identity.currentUser.facebookid);
         $http.put('/students/' + fbid, JSON.stringify(form_data)).success(function (data) {
-          console.log('success');
+          void 0;
           if (angular.isObject(data)) {
             //
             dfd.resolve(true);
@@ -377,7 +377,7 @@ viberApp.factory('postlink', [
             task.answers = data.answers;
             task.completiondata = data.completiondata;
             identity.vibes_transaction.push(task.completiondata.transaction);
-            console.log(JSON.stringify(identity.vibes_transaction));
+            void 0;
             //$scope.identity.currentUser.vibes_transaction += task.completiondata.transaction;
             dfd.resolve(true);
           } else {
@@ -568,7 +568,7 @@ viberApp.controller('signupCntrl', [
     $scope.User = {};
     $scope.errorMessage = 'Error';
     $scope.Register = function () {
-      console.log('tryoing to send data');
+      void 0;
       $http({
         method: 'POST',
         url: '/signup',
@@ -633,10 +633,10 @@ viberApp.controller('vbSurveyCtrl', [
               $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
               toaster.pop('success', 'Task 1', 'You have successfully finished the first task');
             }
-            console.log('task complete0  ' + $scope.taskcomplete0);
+            void 0;
           }
         }).error(function (err) {
-          console.log(err);
+          void 0;
           toaster.pop('failure', 'Task 1', 'There was an error submitting your task, please try again');
         });  //            postsurvey.postSurvey(postObj).then(function(success){
              //                console.log(success);
@@ -828,7 +828,7 @@ viberApp.controller('vblikenfollowCtrl', [
     $rootScope.fblike = false;
     $scope.$watch('fblike', function (currentValue, newValue) {
       if ($scope.taskcomplete3 == false && currentValue == true) {
-        console.log('Executing FB');
+        void 0;
         var reqbody = {
             'answers': { 'link': 'https://www.facebook.com/officialviberindia/' },
             'platform': { 'facebook': true },
@@ -850,7 +850,7 @@ viberApp.controller('vblikenfollowCtrl', [
     });
     $scope.$watch('twfollow', function (currentValue, newValue) {
       if ($scope.taskcomplete3 == false && currentValue == true) {
-        console.log('Executing TW');
+        void 0;
         var reqbody = {
             'answers': { 'link': 'viber_india' },
             'platform': { 'twitter': true },
@@ -876,7 +876,7 @@ viberApp.controller('vblikenfollowCtrl', [
         // Binding boundary listener
         $(this).bind('mouseover', { handler: handler }, function (e) {
           e.data.handler.over = true;
-          console.log('Mouseover');
+          void 0;
           try {
             e.data.handler.overCallback(this);
           } catch (ex) {
@@ -884,7 +884,7 @@ viberApp.controller('vblikenfollowCtrl', [
         }).bind('mouseout', { handler: handler }, function (e) {
           e.data.handler.over = false;
           $.iframeTracker.focusRetriever.focus();
-          console.log('Mouseout');
+          void 0;
           try {
             e.data.handler.outCallback(this);
           } catch (ex) {
@@ -950,14 +950,14 @@ viberApp.controller('vblikenfollowCtrl', [
                 e.stopPropagation();
               });
             } catch (ex) {
-              console.log('[iframeTracker] Please update jQuery to 1.7 or newer. (exception: ' + ex.message + ')');
+              void 0;
             }
           }
         },
         windowLoseFocus: function (event) {
           for (var i in this.handlersList) {
             if (this.handlersList[i].over == true) {
-              console.log('Blur callback');
+              void 0;
               try {
                 this.handlersList[i].blurCallback();
               } catch (ex) {
@@ -969,7 +969,7 @@ viberApp.controller('vblikenfollowCtrl', [
       // Init the iframeTracker on document ready
       $(document).ready(function () {
         $.iframeTracker.init();
-        console.log('Iframetracker init');
+        void 0;
       });
     }(jQuery));
     $('#chaljatw').iframeTracker({
@@ -982,7 +982,7 @@ viberApp.controller('vblikenfollowCtrl', [
     });
     $('#chaljafb').iframeTracker({
       blurCallback: function () {
-        console.log('clicked fb');
+        void 0;
         var scope = angular.element(document).scope();
         scope.$apply(function () {
           scope.$root.fblike = true;
@@ -998,7 +998,7 @@ viberApp.controller('vbInsertLinksCtrl', [
   function ($scope, $http, toaster) {
     $scope.link = 'https://www.youtube.com/watch?v=12n9qipCYno';
     $scope.rate = undefined;
-    console.log($scope.identity.currentUser);
+    void 0;
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks, { 'task_id': '53a9526be4b041d6a3190442' })[0];
     $scope.taskcomplete4 = false;
@@ -1164,7 +1164,7 @@ viberApp.controller('vbMiniLeaderBoardCtrl', [
           if (!$scope.lbstudents[i].facebookid)
             $scope.lbstudents[i].facebookid = 100006788625561;
         }
-        console.log('coming back from server');
+        void 0;
       } else {
       }
     });

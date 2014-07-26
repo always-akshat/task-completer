@@ -52,7 +52,13 @@ viberApp.controller('dashboardCtrl', [
   'vbSharedService',
   'vbAuth',
   '$window',
-  function ($rootScope, $scope, vbSharedService, vbAuth, $window) {
+  '$location',
+  function ($rootScope, $scope, vbSharedService, vbAuth, $window, $location) {
+    $scope.profilecomplete = true;
+    if (!angular.isObject($scope.identity.currentUser.college) || !angular.isObject($scope.identity.currentUser.college)) {
+      void 0;
+      $scope.profilecomplete = false;
+    }
     $window.scrollTo(0, 0);
     var currentPage = {
         home: 1,
