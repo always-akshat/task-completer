@@ -176,11 +176,12 @@ function tasks_in_registration(student,stages,cb){
     var initial = 0;
     var final =0;
     if(stages){
+        initial = Object.keys(stages).length;
         for(var key in stages) {
-            initial++;
             add_stage_to_student(student,key,stages[key],function(err,data){
                console.log('data recieved from last function to second last function :' + data);
                     final++;
+                console.log('final :' + final);
                 if(initial == final){
                     console.log('final level');
                     cb(null,1);
