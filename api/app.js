@@ -1,7 +1,7 @@
 /**
  * Created by Ankit on 5/16/2014.
  */
-//require('newrelic');
+require('newrelic');
 
 var log4js = require('log4js');
 //log the cheese logger messages to a file, and the console ones as well.
@@ -56,9 +56,9 @@ app.set('port', process.env.PORT || 3001);
 //app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
-//app.use(express.cookieParser());    // to read cookies
+app.use(express.cookieParser());    // to read cookies
 app.use(express.bodyParser());      // to get information from html forms.
-/*app.use(express.session({
+app.use(express.session({
     store: new RedisStore({
         host: '54.251.103.74',
         port: 6379,
@@ -66,9 +66,7 @@ app.use(express.bodyParser());      // to get information from html forms.
     }),
     secret: 'manchester_united',
     cookie: { maxAge: 900000 }
-})); */
-app.use(express.cookieParser('S3CRE7'));
-app.use(express.cookieSession());
+}));
 
 app.use(express.urlencoded());
 app.use(passport.initialize());
@@ -125,22 +123,26 @@ app.get('/auth/facebook',
 
 app.get('/login', function(req,res){
     //console.log(req.user);
-    req.session.student =null;
-    if(req.user == 3){
-        res.send('There is no email associated with your facebook account. Add an emailid in your facebook settings to login.');
-        //res.redirect('/?error=2');
-    }
-    else if(req.user == 2){
-        console.log('error occured - redirecting to main page');
-        res.redirect('/?error=1');
-    }
-    else{
+    req.session.student = null;
+    if(req.user) {
+        if (req.user == 3) {
+            res.send('There is no email associated with your facebook account. Add an emailid in your facebook settings to login.');
+            //res.redirect('/?error=2');
+        }
+        else if (req.user == 2) {
+            console.log('error occured - redirecting to main page');
+            res.redirect('/?error=1');
+        }
+        else {
             console.log('everything fin. logging in');
             req.session.student = req.user;
             req.session.student.facebookid = req.user.facebookid;
             console.log('set facebookid to :' + req.session.student.facebookid);
             res.redirect('/app/');
 
+        }
+    }else{
+        res.redirect('/');
     }
 
 });
