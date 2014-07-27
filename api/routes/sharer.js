@@ -160,7 +160,7 @@ exports.stickers = function(req,res){
     var answers = req.body.answers;
     var taskid = req.body.taskid;
 
-    if(answers.rate && answers.rate >0 && answers.rate <6) {
+    if(answers.rate && parseInt(answers.rate) >0 && parseInt(answers.rate) <6) {
         answers.rating = 1;
         utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
             if (task_data !== 0) {
