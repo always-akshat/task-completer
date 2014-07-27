@@ -106,8 +106,8 @@ function IsAuthenticatedPage(req,res,next){
         next();
     }else{
         console.log('auth failed');
-        res.redirect('/auth/facebook');
-        //next(new Error(401));
+
+        next(new Error(401));
     }
 }
 
@@ -207,7 +207,7 @@ app.get('/colleges/:n?',utility_routes.collegelsist);
 app.get('/students/leaderboard/:type/:id?',students.leaderboard);
 
 app.get('/getstudentdata', IsAuthenticatedPage,students.getstudentdata); // to initially set the student data
-
+ // to initially set the student data
 
 app.post('/socialshare',sharer.share);
 
