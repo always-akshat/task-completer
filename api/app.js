@@ -87,11 +87,7 @@ if ('development' == app.get('env')) {
 
 function IsAuthenticatedService(req,res,next){
     console.log('trying authentication');
-    if(req.session.student
-       && req.session.student.facebookid
-       && req.session.student.facebookid != null
-       && req.session.student.facebookid != ''
-       ){
+    if(req.session.student.facebookid){
         console.log('service auth');
         next();
     }else{
