@@ -256,7 +256,9 @@ function getstudentdata(req, res) {
     {
         res.send(req.session.student);
     }
-    else res.send('Unauthorized');
+    else {
+        res.send('Unauthorized');
+    }
 
 }
 

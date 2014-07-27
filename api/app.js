@@ -106,8 +106,7 @@ function IsAuthenticatedPage(req,res,next){
         next();
     }else{
         console.log('auth failed');
-
-        next(new Error(401));
+        next(res.redirect('/?nosess=1'));
     }
 }
 
