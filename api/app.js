@@ -1,7 +1,7 @@
 /**
  * Created by Ankit on 5/16/2014.
  */
-//require('newrelic');
+require('newrelic');
 
 var log4js = require('log4js');
 //log the cheese logger messages to a file, and the console ones as well.
@@ -85,21 +85,31 @@ if ('development' == app.get('env')) {
 }
 
 
-function IsAuthenticated(req,res,next){
+function IsAuthenticatedService(req,res,next){
+    console.log('trying authentication');
+    if(req.session.student){
+        console.log('service auth');
+        next();
+    }else{
+        console.log('auth failed');
+        next(new Error(403));
+    }
+}
+function IsAuthenticatedPage(req,res,next){
     console.log('trying authentication');
     if(req.session.student
-       && req.session.student.facebookid
-       && req.session.student.facebookid != null
-       && req.session.student.facebookid != ''
-       ){
+        && req.session.student.facebookid
+        && req.session.student.facebookid != null
+        && req.session.student.facebookid != ''
+        ){
         console.log('auth success');
         next();
     }else{
         console.log('auth failed');
-        res.redirect('/auth/facebook');
-        //next(new Error(401));
+        next(res.redirect('/?nosess=1'));
     }
 }
+
 
 app.get('/', routes.index);
 app.get('/register', routes.register);
@@ -123,15 +133,12 @@ app.get('/login', function(req,res){
         res.redirect('/?error=1');
     }
     else{
-        if(!req.user.facebookid){
-            console.log('redirecting to register :' + req.user.email);
-            req.session.new_email  = req.user.email;
-            res.redirect('/register');
-        }else {
             console.log('everything fin. logging in');
             req.session.student = req.user;
+            req.session.student.facebookid = req.user.facebookid;
+            console.log('set facebookid to :' + req.session.student.facebookid);
             res.redirect('/app/');
-        }
+
     }
 
 });
@@ -198,20 +205,20 @@ app.get('/locations/:n?',utility_routes.locationlist);
 app.get('/colleges/:n?',utility_routes.collegelsist);
 app.get('/students/leaderboard/:type/:id?',students.leaderboard);
 
-app.get('/getstudentdata', IsAuthenticated,students.getstudentdata); // to initially set the student data
-
+app.get('/getstudentdata', IsAuthenticatedPage,students.getstudentdata); // to initially set the student data
+ // to initially set the student data
 
 app.post('/socialshare',sharer.share);
 
 
-app.put('/survey',IsAuthenticated,sharer.survey);
-app.put('/likefollow',IsAuthenticated,sharer.likefollow);
-app.put('/uploadselfie',IsAuthenticated,sharer.selfie);
-app.put('/uploadphoto',IsAuthenticated,sharer.selfie);
-app.put('/invites',IsAuthenticated,sharer.fb_invite);
-app.put('/stickers',IsAuthenticated,sharer.stickers);
-app.put('/rating',IsAuthenticated,sharer.stickers);
-app.post('/knowviber',IsAuthenticated,sharer.knowviber);
+app.put('/survey',IsAuthenticatedService,sharer.survey);
+app.put('/likefollow',IsAuthenticatedService,sharer.likefollow);
+app.put('/uploadselfie',IsAuthenticatedService,sharer.selfie);
+app.put('/uploadphoto',IsAuthenticatedService,sharer.selfie);
+app.put('/invites',IsAuthenticatedService,sharer.fb_invite);
+app.put('/stickers',IsAuthenticatedService,sharer.stickers);
+app.put('/rating',IsAuthenticatedService,sharer.stickers);
+app.post('/knowviber',IsAuthenticatedService,sharer.knowviber);
 
 app.post('/emailvalidate',students.validateemail);
 

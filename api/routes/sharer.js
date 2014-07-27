@@ -118,11 +118,20 @@ exports.survey = function(req,res){
         res.send('invalid answers');
     }
 }
+
 exports.knowviber = function(req,res){
     var facebookid = req.session.student.facebookid;
     var answers = req.body.answers;
     var taskid = req.body.taskid;
 
+    var points = 0;
+    for(key in answers){
+        if(answers[key]=='1'){
+            points +=100;
+        }
+    }
+    console.log('points :' + points);
+    answers.points = points;
 
     if(answers){
         utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
@@ -272,9 +281,11 @@ exports.likefollow = function(req,res){
     if(size >0) {
         if (platform.facebook == true) {
             answers.facebook = 1;
+            answers.twitter = 1;
         }
         if (platform.twitter == true) {
             answers.twitter = 1;
+            answers.facebook = 1;
         }
 
         utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
