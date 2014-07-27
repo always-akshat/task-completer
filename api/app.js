@@ -87,7 +87,7 @@ if ('development' == app.get('env')) {
 
 function IsAuthenticatedService(req,res,next){
     console.log('trying authentication');
-    if(req.session.student.facebookid){
+    if(req.session.student){
         console.log('service auth');
         next();
     }else{
@@ -134,15 +134,12 @@ app.get('/login', function(req,res){
         res.redirect('/?error=1');
     }
     else{
-        if(!req.user.facebookid){
-            console.log('redirecting to register :' + req.user.email);
-            req.session.new_email  = req.user.email;
-            res.redirect('/register');
-        }else {
             console.log('everything fin. logging in');
             req.session.student = req.user;
+            req.session.student.facebookid = req.user.facebookid;
+            console.log('set facebookid to :' + req.session.student.facebookid);
             res.redirect('/app/');
-        }
+
     }
 
 });
