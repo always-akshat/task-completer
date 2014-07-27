@@ -656,7 +656,8 @@ viberApp.controller('vbSurveyCtrl', [
   '$http',
   'toaster',
   '$rootScope',
-  function ($scope, $http, toaster, $rootScope) {
+  '$window',
+  function ($scope, $http, toaster, $rootScope, $window) {
     $rootScope.ataskcomplete0 = false;
     //$scope.ataskcomplete0 = false;
     var user_tasks = $scope.identity.currentUser.user_tasks;
@@ -694,6 +695,8 @@ viberApp.controller('vbSurveyCtrl', [
               }
               toaster.pop('success', 'Task 1', 'You have successfully finished the first task');
             }
+          } else {
+            $window.location = '/';
           }
         }).error(function (err) {
           void 0;
@@ -726,7 +729,8 @@ viberApp.controller('vbUploadPhotosCtrl', [
   '$upload',
   'toaster',
   '$rootScope',
-  function ($scope, $http, $upload, toaster, $rootScope) {
+  '$window',
+  function ($scope, $http, $upload, toaster, $rootScope, $window) {
     //XML parser
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks, { 'task_id': '53a9526be4b041d6a3190441' })[0];
@@ -814,6 +818,8 @@ viberApp.controller('vbUploadPhotosCtrl', [
           $scope.added = 0;
           $scope.s3success = false;
           toaster.pop('success', 'Task 4', 'Your photo was uploaded successfully.');
+        } else {
+          $window.location = '/';
         }
       });
     };
@@ -824,7 +830,8 @@ viberApp.controller('vbinviteFrndsCtrl', [
   '$http',
   'toaster',
   '$rootScope',
-  function ($scope, $http, toaster, $rootScope) {
+  '$window',
+  function ($scope, $http, toaster, $rootScope, $window) {
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks, { 'task_id': '53a9526be4b041d6a3190440' })[0];
     $scope.taskcomplete2 = false;
@@ -862,18 +869,22 @@ viberApp.controller('vbinviteFrndsCtrl', [
                 'taskid': '53a9526be4b041d6a3190440'
               };
             $http.put('/invites', reqObj).success(function (data) {
-              if (angular.isObject(data.completiondata)) {
-                $scope.identity.currentUser.complete1 += data.completiondata.level;
-                $scope.identity.currentUser.points += data.completiondata.points;
-                //$rootScope.level1stagecompletion += data.completiondata.level;
-                if ($scope.identity.currentUser.complete1 == 100) {
-                  $rootScope.style1 = { 'font-size': '14px' };
+              if (angular.isObject(data)) {
+                if (angular.isObject(data.completiondata)) {
+                  $scope.identity.currentUser.complete1 += data.completiondata.level;
+                  $scope.identity.currentUser.points += data.completiondata.points;
+                  //$rootScope.level1stagecompletion += data.completiondata.level;
+                  if ($scope.identity.currentUser.complete1 == 100) {
+                    $rootScope.style1 = { 'font-size': '14px' };
+                  }
+                  $scope.taskcomplete2 = true;
+                  task.completed = 1;
+                  $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+                  toaster.pop('success', 'Task 5', 'Your invites were sent successfully.');
                 }
-                $scope.taskcomplete2 = true;
-                task.completed = 1;
-                $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+              } else {
+                $window.location = '/';
               }
-              toaster.pop('success', 'Task 5', 'Your invites were sent successfully.');
             });
           }
         }
@@ -918,6 +929,8 @@ viberApp.controller('vblikenfollowCtrl', [
               $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             }
             toaster.pop('success', 'Facebook Like', 'Your Facebook like has been saved');
+          } else {
+            $window.location = '/';
           }
         });
       }
@@ -1074,7 +1087,8 @@ viberApp.controller('vbInsertLinksCtrl', [
   '$http',
   'toaster',
   '$rootScope',
-  function ($scope, $http, toaster, $rootScope) {
+  '$window',
+  function ($scope, $http, toaster, $rootScope, $window) {
     $scope.link = 'https://www.youtube.com/watch?v=12n9qipCYno';
     $scope.rate = undefined;
     void 0;
@@ -1104,6 +1118,8 @@ viberApp.controller('vbInsertLinksCtrl', [
               toaster.pop('success', 'Task 3', 'You have successfully finished the third task');
               $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             }
+          } else {
+            $window.location = '/';
           }
         });
       }
@@ -1211,7 +1227,8 @@ viberApp.controller('vbKnowViberCtrl', [
   '$scope',
   'toaster',
   '$http',
-  function ($rootScope, $scope, toaster, $http) {
+  '$window',
+  function ($rootScope, $scope, toaster, $http, $window) {
     $rootScope.taskcomplete21 = false;
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks, { 'task_id': '53d1e789bb5c82917b3a3a41' })[0];
@@ -1260,6 +1277,8 @@ viberApp.controller('vbKnowViberCtrl', [
               $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
               toaster.pop('success', 'Task 1', 'You have successfully finished the first task');
             }
+          } else {
+            $window.location = '/';
           }
         }).error(function (err) {
           void 0;
@@ -1275,7 +1294,8 @@ viberApp.controller('vbActivateCtrl', [
   '$http',
   'toaster',
   '$rootScope',
-  function ($scope, $upload, $http, toaster, $rootScope) {
+  '$window',
+  function ($scope, $upload, $http, toaster, $rootScope, $window) {
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks, { 'task_id': '53d1e85abb5c82917b3a3a42' })[0];
     $scope.s3success22 = false;
@@ -1362,6 +1382,8 @@ viberApp.controller('vbActivateCtrl', [
           $scope.added22 = 0;
           $scope.s3success22 = false;
           toaster.pop('success', 'Task 2', 'Your photo was uploaded successfully.');
+        } else {
+          $window.location = '/';
         }
       });
     };
@@ -1373,7 +1395,8 @@ viberApp.controller('vbGoodvibesMindCtrl', [
   '$http',
   'toaster',
   '$rootScope',
-  function ($scope, $upload, $http, toaster, $rootScope) {
+  '$window',
+  function ($scope, $upload, $http, toaster, $rootScope, $window) {
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks, { 'task_id': '53d1e8c9bb5c82917b3a3a43' })[0];
     $scope.s3success23 = false;
@@ -1460,6 +1483,8 @@ viberApp.controller('vbGoodvibesMindCtrl', [
           $scope.added23 = 0;
           $scope.s3success23 = false;
           toaster.pop('success', 'Task 3', 'Your photo was uploaded successfully.');
+        } else {
+          $window.location = '/';
         }
       });
     };
@@ -1470,7 +1495,8 @@ viberApp.controller('vbTaskYuwaCtrl', [
   '$http',
   'toaster',
   '$rootScope',
-  function ($scope, $http, toaster, $rootScope) {
+  '$window',
+  function ($scope, $http, toaster, $rootScope, $window) {
     $scope.rateyuwa = undefined;
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks, { 'task_id': '53d1e90cbb5c82917b3a3a44' })[0];
@@ -1498,6 +1524,8 @@ viberApp.controller('vbTaskYuwaCtrl', [
               toaster.pop('success', 'Task 3', 'You have successfully finished the third task');
               $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             }
+          } else {
+            $window.location = '/';
           }
         });
       }
@@ -1510,7 +1538,8 @@ viberApp.controller('vbSupportYuwaCtrl', [
   '$http',
   'toaster',
   '$rootScope',
-  function ($scope, $upload, $http, toaster, $rootScope) {
+  '$window',
+  function ($scope, $upload, $http, toaster, $rootScope, $window) {
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks, { 'task_id': '53d1ec3bbb5c82917b3a3a45' })[0];
     $scope.s3success25 = false;
@@ -1599,6 +1628,8 @@ viberApp.controller('vbSupportYuwaCtrl', [
           $scope.added25 = 0;
           $scope.s3success25 = false;
           toaster.pop('success', 'Task 5', 'Your photo was uploaded successfully.');
+        } else {
+          $window.location = '/';
         }
       });
     };

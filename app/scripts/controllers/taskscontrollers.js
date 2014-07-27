@@ -13,7 +13,7 @@ Object.size = function(obj) {
     return size;
 };
 
-viberApp.controller('vbSurveyCtrl',['$scope','$http','toaster','$rootScope', function($scope,$http,toaster, $rootScope){
+viberApp.controller('vbSurveyCtrl',['$scope','$http','toaster','$rootScope','$window', function($scope,$http,toaster, $rootScope, $window){
     $rootScope.ataskcomplete0 = false;
     //$scope.ataskcomplete0 = false;
 
@@ -50,6 +50,10 @@ viberApp.controller('vbSurveyCtrl',['$scope','$http','toaster','$rootScope', fun
                     }
 
                 }
+                else
+                {
+                    $window.location = '/';
+                }
             }).error(function(err){
 
                 console.log(err);
@@ -80,7 +84,7 @@ viberApp.controller('vbInsertMobileCtrl',['$scope',function($scope){
 }]);
 
 
-viberApp.controller('vbUploadPhotosCtrl',['$scope','$http', '$upload','toaster','$rootScope' , function($scope, $http, $upload, toaster,$rootScope){
+viberApp.controller('vbUploadPhotosCtrl',['$scope','$http', '$upload','toaster','$rootScope','$window' , function($scope, $http, $upload, toaster,$rootScope,$window){
 
     //XML parser
     var user_tasks = $scope.identity.currentUser.user_tasks;
@@ -178,13 +182,17 @@ viberApp.controller('vbUploadPhotosCtrl',['$scope','$http', '$upload','toaster',
                 $scope.s3success = false;
                 toaster.pop('success', "Task 4", "Your photo was uploaded successfully.");
             }
+            else
+            {
+                $window.location = '/';
+            }
         });
 
     };
 }]);
 
 
-viberApp.controller('vbinviteFrndsCtrl',['$scope','$http','toaster','$rootScope', function($scope, $http, toaster,$rootScope){
+viberApp.controller('vbinviteFrndsCtrl',['$scope','$http','toaster','$rootScope','$window', function($scope, $http, toaster,$rootScope,$window){
 
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks,{'task_id':'53a9526be4b041d6a3190440'})[0];
@@ -222,18 +230,25 @@ viberApp.controller('vbinviteFrndsCtrl',['$scope','$http','toaster','$rootScope'
                         "taskid": '53a9526be4b041d6a3190440'
                     };
                     $http.put('/invites', reqObj).success(function (data) {
-                        if (angular.isObject(data.completiondata)) {
-                            $scope.identity.currentUser.complete1 += data.completiondata.level;
-                            $scope.identity.currentUser.points += data.completiondata.points;
-                            //$rootScope.level1stagecompletion += data.completiondata.level;
-                            if($scope.identity.currentUser.complete1==100){
-                                $rootScope.style1 = {'font-size':'14px'};
+                        if (angular.isObject(data)) {
+                            if (angular.isObject(data.completiondata)) {
+                                $scope.identity.currentUser.complete1 += data.completiondata.level;
+                                $scope.identity.currentUser.points += data.completiondata.points;
+                                //$rootScope.level1stagecompletion += data.completiondata.level;
+                                if ($scope.identity.currentUser.complete1 == 100) {
+                                    $rootScope.style1 = {'font-size': '14px'};
+                                }
+                                $scope.taskcomplete2 = true;
+                                task.completed = 1;
+                                $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+                                toaster.pop('success', "Task 5", "Your invites were sent successfully.");
                             }
-                            $scope.taskcomplete2 = true;
-                            task.completed = 1;
-                            $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+
                         }
-                        toaster.pop('success', "Task 5", "Your invites were sent successfully.");
+                        else
+                        {
+                            $window.location = '/';
+                        }
                     });
 
                 }
@@ -285,6 +300,10 @@ viberApp.controller('vblikenfollowCtrl',['$scope', '$http','$window','$rootScope
 
                     }
                     toaster.pop('success', "Facebook Like", "Your Facebook like has been saved");
+                }
+                else
+                {
+                    $window.location = '/';
                 }
 
             });
@@ -455,7 +474,7 @@ viberApp.controller('vblikenfollowCtrl',['$scope', '$http','$window','$rootScope
 
 }]);
 
-viberApp.controller('vbInsertLinksCtrl',['$scope','$http','toaster','$rootScope', function($scope,$http,toaster ,$rootScope/*,$q,postlink */){
+viberApp.controller('vbInsertLinksCtrl',['$scope','$http','toaster','$rootScope','$window', function($scope,$http,toaster ,$rootScope,$window/*,$q,postlink */){
 
     $scope.link = "https://www.youtube.com/watch?v=12n9qipCYno";
     $scope.rate = undefined;
@@ -490,6 +509,10 @@ viberApp.controller('vbInsertLinksCtrl',['$scope','$http','toaster','$rootScope'
                         toaster.pop('success', "Task 3", "You have successfully finished the third task");
                         $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
                     }
+                }
+                else
+                {
+                    $window.location = '/';
                 }
             })
         }
@@ -597,7 +620,7 @@ viberApp.controller('vbInsertLinksCtrl',['$scope','$http','toaster','$rootScope'
 
 //Level 2 Tasks
 
-viberApp.controller('vbKnowViberCtrl',['$rootScope', '$scope','toaster', '$http',function($rootScope, $scope, toaster, $http){
+viberApp.controller('vbKnowViberCtrl',['$rootScope', '$scope','toaster', '$http','$window',function($rootScope, $scope, toaster, $http,$window){
     $rootScope.taskcomplete21 = false;
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks,{'task_id':'53d1e789bb5c82917b3a3a41'})[0];
@@ -637,6 +660,10 @@ viberApp.controller('vbKnowViberCtrl',['$rootScope', '$scope','toaster', '$http'
                     }
 
                 }
+                else
+                {
+                    $window.location = '/';
+                }
             }).error(function(err){
 
                 console.log(err);
@@ -649,7 +676,7 @@ viberApp.controller('vbKnowViberCtrl',['$rootScope', '$scope','toaster', '$http'
 
 }]);
 
-viberApp.controller('vbActivateCtrl',['$scope', '$upload', '$http', 'toaster','$rootScope',function($scope, $upload, $http, toaster,$rootScope){
+viberApp.controller('vbActivateCtrl',['$scope', '$upload', '$http', 'toaster','$rootScope','$window',function($scope, $upload, $http, toaster,$rootScope,$window){
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks,{'task_id':'53d1e85abb5c82917b3a3a42'})[0];
     $scope.s3success22 = false;
@@ -746,13 +773,17 @@ viberApp.controller('vbActivateCtrl',['$scope', '$upload', '$http', 'toaster','$
                 $scope.s3success22 = false;
                 toaster.pop('success', "Task 2", "Your photo was uploaded successfully.");
             }
+            else
+            {
+                $window.location = '/';
+            }
         });
 
     };
 
 }]);
 
-viberApp.controller('vbGoodvibesMindCtrl',['$scope','$upload', '$http','toaster','$rootScope',function($scope, $upload, $http, toaster, $rootScope){
+viberApp.controller('vbGoodvibesMindCtrl',['$scope','$upload', '$http','toaster','$rootScope','$window',function($scope, $upload, $http, toaster, $rootScope,$window){
 
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks,{'task_id':'53d1e8c9bb5c82917b3a3a43'})[0];
@@ -853,13 +884,17 @@ viberApp.controller('vbGoodvibesMindCtrl',['$scope','$upload', '$http','toaster'
                 $scope.s3success23 = false;
                 toaster.pop('success', "Task 3", "Your photo was uploaded successfully.");
             }
+            else
+            {
+                $window.location = '/';
+            }
         });
 
     };
 
 }]);
 
-viberApp.controller('vbTaskYuwaCtrl',['$scope','$http','toaster','$rootScope',function($scope, $http,toaster,$rootScope){
+viberApp.controller('vbTaskYuwaCtrl',['$scope','$http','toaster','$rootScope','$window',function($scope, $http,toaster,$rootScope,$window){
     $scope.rateyuwa = undefined;
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task= _.where(user_tasks,{'task_id':'53d1e90cbb5c82917b3a3a44'})[0];
@@ -892,6 +927,10 @@ viberApp.controller('vbTaskYuwaCtrl',['$scope','$http','toaster','$rootScope',fu
                             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
                         }
                     }
+                    else
+                    {
+                        $window.location = '/';
+                    }
                 });
             }
         }
@@ -899,7 +938,7 @@ viberApp.controller('vbTaskYuwaCtrl',['$scope','$http','toaster','$rootScope',fu
 
 }]);
 
-viberApp.controller('vbSupportYuwaCtrl',['$scope','$upload','$http','toaster','$rootScope',function($scope, $upload, $http, toaster,$rootScope){
+viberApp.controller('vbSupportYuwaCtrl',['$scope','$upload','$http','toaster','$rootScope','$window',function($scope, $upload, $http, toaster,$rootScope,$window){
 
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks,{'task_id':'53d1ec3bbb5c82917b3a3a45'})[0];
@@ -997,6 +1036,10 @@ viberApp.controller('vbSupportYuwaCtrl',['$scope','$upload','$http','toaster','$
                 $scope.added25 = 0;
                 $scope.s3success25 = false;
                 toaster.pop('success', "Task 5", "Your photo was uploaded successfully.");
+            }
+            else
+            {
+                $window.location = '/';
             }
         });
 
