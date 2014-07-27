@@ -74,13 +74,7 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
     var stage = $scope.identity.currentUser.stages;
     var level1= _.where(stage,{'stageid':'5390521624349ecc0c108c10'})[0];
     var level2= _.where(stage,{'stageid':'53d36e0abb5c82917b3a3d94'})[0];
-    console.log($scope.identity.currentUser.stages);
-    console.log(level1);
-    console.log(level2);
-    $rootScope.level1stagecompletion= level1.completion;
-    $rootScope.level1stagename = level1.name;
-    $rootScope.level2stagecompletion = level2.completion;
-    $rootScope.level2stagename = level2.name;
+
 
 
     $window.scrollTo(0, 0);
@@ -88,12 +82,12 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
     vbSharedService.prepForBroadcast(currentPage);
 
     $rootScope.style1 = undefined;
-    if($rootScope.level1stagecompletion==100){
+    if($scope.identity.currentUser.complete1==100){
         $rootScope.style1 = {'font-size':'14px'};
     }
 
     $rootScope.style2 = undefined;
-    if($rootScope.level2stagecompletion ==100){
+    if($scope.identity.currentUser.complete2==100){
         $rootScope.style2 = {'font-size':'14px'};
     }
 

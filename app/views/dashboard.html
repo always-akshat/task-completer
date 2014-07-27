@@ -3,16 +3,16 @@
 <p ng-show="!profilecomplete">Please complete your profile first from <a href="#mysettings"> My Settings</a></p>
 <div class="level-box">
     <div class="level-meter clearfix">
-        <div class="level-title">{{level1stagename}}</div>
+        <div class="level-title">{{identity.currentUser.level1}}</div>
         <div class="progress-box">
             <div class="row pull-left progress-row">
             <div class="col-xs-6"></div>
             <div class="col-xs-6"></div>
             <div class="col-xs-6"></div>
             <div class="col-xs-6" style="border: 0px;"></div>
-            <div class="progress-bar" style="width:{{level1stagecompletion}}%;"></div>
+            <div class="progress-bar" style="width:{{identity.currentUser.complete1}}%;"></div>
             </div>
-            <span ng-style="style1" class="progress-txt">{{level1stagecompletion}}%</span>
+            <span ng-style="style1" class="progress-txt">{{identity.currentUser.complete1}}%</span>
         </div>
     </div>
     <div class="panel-group panel-infoGroup" id="panel-l1">
@@ -35,16 +35,16 @@
 
 <div class="level-box">
     <div class="level-meter clearfix">
-        <div class="level-title">{{level2stagename}}</div>
+        <div class="level-title">{{identity.currentUser.level2}}</div>
         <div class="progress-box">
             <div class="row pull-left progress-row">
                 <div class="col-xs-6"></div>
                 <div class="col-xs-6"></div>
                 <div class="col-xs-6"></div>
                 <div class="col-xs-6" style="border: 0px;"></div>
-                <div class="progress-bar" style="width:{{level2stagecompletion}}%;"></div>
+                <div class="progress-bar" style="width:{{identity.currentUser.complete2}}%;"></div>
             </div>
-            <span ng-style="style2" class="progress-txt">{{level2stagecompletion}}%</span>
+            <span ng-style="style2" class="progress-txt">{{identity.currentUser.complete2}}%</span>
         </div>
     </div>
     <div class="panel-group panel-infoGroup" id="panel-l2">

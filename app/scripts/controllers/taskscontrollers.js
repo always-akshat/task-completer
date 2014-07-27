@@ -39,10 +39,13 @@ viberApp.controller('vbSurveyCtrl',['$scope','$http','toaster','$rootScope', fun
                         $rootScope.ataskcomplete0 = true;
                         //$scope.ataskcomplete0=true;
                         task.completed=1;
-                        $scope.identity.currentUser.complete += data.completiondata.level;
+                        $scope.identity.currentUser.complete1 += data.completiondata.level;
                         $scope.identity.currentUser.points += data.completiondata.points;
-                        $rootScope.level1stagecompletion += data.completiondata.level;
+//                        $rootScope.level1stagecompletion += data.completiondata.level;
                         $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+                        if($scope.identity.currentUser.complete1==100){
+                            $rootScope.style1 = {'font-size':'14px'};
+                        }
                         toaster.pop('success', "Task 1", "You have successfully finished the first task");
                     }
 
@@ -160,10 +163,13 @@ viberApp.controller('vbUploadPhotosCtrl',['$scope','$http', '$upload','toaster',
         $http.put('/uploadselfie', reqbody).success(function(data) {
             if(angular.isObject(data)){
                 if(angular.isObject(data.completiondata)){
-                    $scope.identity.currentUser.complete += data.completiondata.level;
+                    $scope.identity.currentUser.complete1 += data.completiondata.level;
                     $scope.identity.currentUser.points += data.completiondata.points;
-                    $rootScope.level1stagecompletion += data.completiondata.level;
+                    //$rootScope.level1stagecompletion += data.completiondata.level;
                     $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+                    if($scope.identity.currentUser.complete1==100){
+                        $rootScope.style1 = {'font-size':'14px'};
+                    }
                     $scope.taskcomplete1=true;
                     task.completed=1;
                 }
@@ -217,9 +223,12 @@ viberApp.controller('vbinviteFrndsCtrl',['$scope','$http','toaster','$rootScope'
                     };
                     $http.put('/invites', reqObj).success(function (data) {
                         if (angular.isObject(data.completiondata)) {
-                            $scope.identity.currentUser.complete += data.completiondata.level;
+                            $scope.identity.currentUser.complete1 += data.completiondata.level;
                             $scope.identity.currentUser.points += data.completiondata.points;
-                            $rootScope.level1stagecompletion += data.completiondata.level;
+                            //$rootScope.level1stagecompletion += data.completiondata.level;
+                            if($scope.identity.currentUser.complete1==100){
+                                $rootScope.style1 = {'font-size':'14px'};
+                            }
                             $scope.taskcomplete2 = true;
                             task.completed = 1;
                             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
@@ -264,12 +273,16 @@ viberApp.controller('vblikenfollowCtrl',['$scope', '$http','$window','$rootScope
             $http.put('/likefollow', reqbody).success(function (data) {
                 if (angular.isObject(data)) {
                     if (angular.isObject(data.completiondata)) {
-                        $scope.identity.currentUser.complete += data.completiondata.level;
+                        $scope.identity.currentUser.complete1 += data.completiondata.level;
                         $scope.taskcomplete3 = true;
                         task.completed=1;
                         $scope.identity.currentUser.points += data.completiondata.points;
-                        $rootScope.level1stagecompletion += data.completiondata.level;
+                       // $rootScope.level1stagecompletion += data.completiondata.level;
+                        if($scope.identity.currentUser.complete1==100){
+                            $rootScope.style1 = {'font-size':'14px'};
+                        }
                         $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+
                     }
                     toaster.pop('success', "Facebook Like", "Your Facebook like has been saved");
                 }
@@ -295,11 +308,14 @@ viberApp.controller('vblikenfollowCtrl',['$scope', '$http','$window','$rootScope
             };
             $http.put('/likefollow', reqbody).success(function (data) {
                 if (angular.isObject(data.completiondata)) {
-                    $scope.identity.currentUser.complete += data.completiondata.level;
+                    $scope.identity.currentUser.complete1 += data.completiondata.level;
                     $scope.taskcomplete3 = true;
                     task.completed=1;
                     $scope.identity.currentUser.points += data.completiondata.points;
-                    $rootScope.level1stagecompletion += data.completiondata.level;
+                    //$rootScope.level1stagecompletion += data.completiondata.level;
+                    if($scope.identity.currentUser.complete1==100){
+                        $rootScope.style1 = {'font-size':'14px'};
+                    }
                     $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
                 }
                 toaster.pop('success', "Twitter Follow", "Your Twitter Follow has been saved");
@@ -463,11 +479,14 @@ viberApp.controller('vbInsertLinksCtrl',['$scope','$http','toaster','$rootScope'
             $http.put('/stickers', reqbody).success(function (data) {
                 if (angular.isObject(data)) {
                     if (angular.isObject(data.completiondata)) { // because the service will not return Level inside completiondata if the user is doing the same task again
-                        $scope.identity.currentUser.complete += data.completiondata.level;
+                        $scope.identity.currentUser.complete1 += data.completiondata.level;
                         $scope.taskcomplete4 = true;
                         task.completed = 1;
                         $scope.identity.currentUser.points += data.completiondata.points;
-                        $rootScope.level1stagecompletion += data.completiondata.level;
+                        //$rootScope.level1stagecompletion += data.completiondata.level;
+                        if($scope.identity.currentUser.complete1==100){
+                            $rootScope.style1 = {'font-size':'14px'};
+                        }
                         toaster.pop('success', "Task 3", "You have successfully finished the third task");
                         $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
                     }
@@ -607,9 +626,12 @@ viberApp.controller('vbKnowViberCtrl',['$rootScope', '$scope','toaster', '$http'
                     if(angular.isObject(data.completiondata)){ // because the service will not return Level inside completiondata if the user is doing the same task again
                         $rootScope.taskcomplete21 = true;
                         task.completed=1;
-                        $scope.identity.currentUser.complete += data.completiondata.level;
+                        $scope.identity.currentUser.complete2 += data.completiondata.level;
                         $scope.identity.currentUser.points += data.completiondata.points;
-                        $rootScope.level2stagecompletion += data.completiondata.level;
+                        //$rootScope.level2stagecompletion += data.completiondata.level;
+                        if($scope.identity.currentUser.complete2==100){
+                            $rootScope.style2 = {'font-size':'14px'};
+                        }
                         $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
                         toaster.pop('success', "Task 1", "You have successfully finished the first task");
                     }
@@ -709,9 +731,12 @@ viberApp.controller('vbActivateCtrl',['$scope', '$upload', '$http', 'toaster','$
         $http.put('/uploadphoto', reqbody).success(function(data) {
             if(angular.isObject(data)){
                 if(angular.isObject(data.completiondata)){
-                    $scope.identity.currentUser.complete += data.completiondata.level;
+                    $scope.identity.currentUser.complete2 += data.completiondata.level;
                     $scope.identity.currentUser.points += data.completiondata.points;
-                    $rootScope.level2stagecompletion += data.completiondata.level;
+                    //$rootScope.level2stagecompletion += data.completiondata.level;
+                    if($scope.identity.currentUser.complete2==100){
+                        $rootScope.style2 = {'font-size':'14px'};
+                    }
                     $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
                     $scope.taskcomplete22=true;
                     task.completed=1;
@@ -813,9 +838,12 @@ viberApp.controller('vbGoodvibesMindCtrl',['$scope','$upload', '$http','toaster'
         $http.put('/uploadphoto', reqbody).success(function(data) {
             if(angular.isObject(data)){
                 if(angular.isObject(data.completiondata)){
-                    $scope.identity.currentUser.complete += data.completiondata.level;
+                    $scope.identity.currentUser.complete2 += data.completiondata.level;
                     $scope.identity.currentUser.points += data.completiondata.points;
-                    $rootScope.level2stagecompletion += data.completiondata.level;
+                    //$rootScope.level2stagecompletion += data.completiondata.level;
+                    if($scope.identity.currentUser.complete2==100){
+                        $rootScope.style2 = {'font-size':'14px'};
+                    }
                     $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
                     $scope.taskcomplete23=true;
                     task.completed=1;
@@ -852,11 +880,14 @@ viberApp.controller('vbTaskYuwaCtrl',['$scope','$http','toaster','$rootScope',fu
                 $http.put('/rating', reqbody).success(function (data) {
                     if (angular.isObject(data)) {
                         if (angular.isObject(data.completiondata)) { // because the service will not return Level inside completiondata if the user is doing the same task again
-                            $scope.identity.currentUser.complete += data.completiondata.level;
+                            $scope.identity.currentUser.complete2 += data.completiondata.level;
                             $scope.taskcomplete24 = true;
                             task.completed = 1;
                             $scope.identity.currentUser.points += data.completiondata.points;
-                            $rootScope.level2stagecompletion += data.completiondata.level;
+                            //$rootScope.level2stagecompletion += data.completiondata.level;
+                            if($scope.identity.currentUser.complete2==100){
+                                $rootScope.style2 = {'font-size':'14px'};
+                            }
                             toaster.pop('success', "Task 3", "You have successfully finished the third task");
                             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
                         }
@@ -952,9 +983,12 @@ viberApp.controller('vbSupportYuwaCtrl',['$scope','$upload','$http','toaster','$
         $http.put('/uploadphoto', reqbody).success(function(data) {
             if(angular.isObject(data)){
                 if(angular.isObject(data.completiondata)){
-                    $scope.identity.currentUser.complete += data.completiondata.level;
+                    $scope.identity.currentUser.complete2 += data.completiondata.level;
                     $scope.identity.currentUser.points += data.completiondata.points;
-                    $rootScope.level2stagecompletion += data.completiondata.level;
+                    //$rootScope.level2stagecompletion += data.completiondata.level;
+                    if($scope.identity.currentUser.complete2==100){
+                        $rootScope.style2 = {'font-size':'14px'};
+                    }
                     $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
                     $scope.taskcomplete25=true;
                     task.completed=1;
