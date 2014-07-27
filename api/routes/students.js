@@ -362,6 +362,7 @@ function putfacebookfriends(req, res) {
 
 function addpoints(facebookid,points,cb) {
     //console.log('reached add points');
+    console.log('points to add :' + points);
     Students.update({facebookid: facebookid},
         {$inc: {
             points: points
@@ -608,15 +609,21 @@ function updateAnswers(facebookid, taskid, answers,cb) {
 
 };
 
-function completeTask(facebookid, taskid,cb) {
-
+function completeTask(facebookid, taskid,orig_points,cb) {
 
     Students.findOne({ 'facebookid': facebookid })
         .select({ 'user_tasks': { $elemMatch: {task_id: taskid}}})
         .exec(function (err, doc) {
             var condition = doc.user_tasks[0].condition;
             var answers = doc.user_tasks[0].answers;
-            var points = doc.user_tasks[0].points;
+            var points =0;
+            if(orig_points !== 0){
+                console.log('points found');
+                points = orig_points;
+            }else{
+                points = doc.user_tasks[0].points;
+            }
+
             var stageid = doc.user_tasks[0].stage;
             var c_pc = doc.user_tasks[0].completevalue;
              already_complete = doc.user_tasks[0].completed;

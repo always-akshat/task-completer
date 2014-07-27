@@ -56,8 +56,11 @@ exports.handle_task_Request = function(facebookid,taskid,answers,cb) {
             //console.log('obtained added_Answers');
             var value_to_return = {};
             value_to_return.answers = added_answers;
-            students.completeTask(facebookid, taskid, function (completion_val) {
-
+            var points =0;
+            if(answers.points){
+                points = answers.points
+            }
+            students.completeTask(facebookid, taskid,points,function (completion_val) {
                 if (completion_val !== 0) {
                     value_to_return.completiondata = completion_val;
                 }
