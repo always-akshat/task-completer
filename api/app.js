@@ -223,7 +223,7 @@ app.put('/uploadphoto',IsAuthenticatedService,sharer.selfie);
 app.put('/invites',IsAuthenticatedService,sharer.fb_invite);
 app.put('/stickers',IsAuthenticatedService,sharer.stickers);
 app.put('/rating',IsAuthenticatedService,sharer.stickers);
-app.post('/knowviber',sharer.knowviber);
+app.put('/knowviber',sharer.knowviber);
 
 app.post('/emailvalidate',students.validateemail);
 

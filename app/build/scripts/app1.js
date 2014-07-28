@@ -696,7 +696,7 @@ viberApp.controller('vbSurveyCtrl', [
               toaster.pop('success', 'Task 1', 'You have successfully finished the first task');
             }
           } else {
-            $window.location = '/';
+            $window.location = '/logout';
           }
         }).error(function (err) {
           void 0;
@@ -819,7 +819,7 @@ viberApp.controller('vbUploadPhotosCtrl', [
           $scope.s3success = false;
           toaster.pop('success', 'Task 4', 'Your photo was uploaded successfully.');
         } else {
-          $window.location = '/';
+          $window.location = '/logout';
         }
       }).error(function (err) {
         void 0;
@@ -886,7 +886,7 @@ viberApp.controller('vbinviteFrndsCtrl', [
                   toaster.pop('success', 'Task 5', 'Your invites were sent successfully.');
                 }
               } else {
-                $window.location = '/';
+                $window.location = '/logout';
               }
             }).error(function (err) {
               void 0;
@@ -936,7 +936,7 @@ viberApp.controller('vblikenfollowCtrl', [
             }
             toaster.pop('success', 'Facebook Like', 'Your Facebook like has been saved');
           } else {
-            $window.location = '/';
+            $window.location = '/logout';
           }
         }).error(function (err) {
           void 0;
@@ -953,18 +953,22 @@ viberApp.controller('vblikenfollowCtrl', [
             'taskid': '53a9526be4b041d6a3190439'
           };
         $http.put('/likefollow', reqbody).success(function (data) {
-          if (angular.isObject(data.completiondata)) {
-            $scope.identity.currentUser.complete1 += data.completiondata.level;
-            $scope.taskcomplete3 = true;
-            task.completed = 1;
-            $scope.identity.currentUser.points += data.completiondata.points;
-            //$rootScope.level1stagecompletion += data.completiondata.level;
-            if ($scope.identity.currentUser.complete1 == 100) {
-              $rootScope.style1 = { 'font-size': '14px' };
+          if (angular.isObject(data)) {
+            if (angular.isObject(data.completiondata)) {
+              $scope.identity.currentUser.complete1 += data.completiondata.level;
+              $scope.taskcomplete3 = true;
+              task.completed = 1;
+              $scope.identity.currentUser.points += data.completiondata.points;
+              //$rootScope.level1stagecompletion += data.completiondata.level;
+              if ($scope.identity.currentUser.complete1 == 100) {
+                $rootScope.style1 = { 'font-size': '14px' };
+              }
+              $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             }
-            $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+            toaster.pop('success', 'Twitter Follow', 'Your Twitter Follow has been saved');
+          } else {
+            $window.location = '/logout';
           }
-          toaster.pop('success', 'Twitter Follow', 'Your Twitter Follow has been saved');
         }).error(function (err) {
           void 0;
           toaster.pop('failure', 'Task 2', 'There was an error submitting your task, please try again');
@@ -1131,7 +1135,7 @@ viberApp.controller('vbInsertLinksCtrl', [
               $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             }
           } else {
-            $window.location = '/';
+            $window.location = '/logout';
           }
         }).error(function (err) {
           void 0;
@@ -1277,7 +1281,7 @@ viberApp.controller('vbKnowViberCtrl', [
             },
             'taskid': '53d1e789bb5c82917b3a3a41'
           };
-        $http.post('/knowviber', JSON.stringify(postObj)).success(function (data) {
+        $http.put('/knowviber', JSON.stringify(postObj)).success(function (data) {
           if (angular.isObject(data)) {
             if (angular.isObject(data.completiondata)) {
               // because the service will not return Level inside completiondata if the user is doing the same task again
@@ -1293,7 +1297,7 @@ viberApp.controller('vbKnowViberCtrl', [
               toaster.pop('success', 'Task 1', 'You have successfully finished the first task');
             }
           } else {
-            $window.location = '/';
+            $window.location = '/logout';
           }
         }).error(function (err) {
           void 0;
@@ -1398,7 +1402,7 @@ viberApp.controller('vbActivateCtrl', [
           $scope.s3success22 = false;
           toaster.pop('success', 'Task 2', 'Your photo was uploaded successfully.');
         } else {
-          $window.location = '/';
+          $window.location = '/logout';
         }
       }).error(function (err) {
         void 0;
@@ -1502,7 +1506,7 @@ viberApp.controller('vbGoodvibesMindCtrl', [
           $scope.s3success23 = false;
           toaster.pop('success', 'Task 3', 'Your photo was uploaded successfully.');
         } else {
-          $window.location = '/';
+          $window.location = '/logout';
         }
       }).error(function (err) {
         void 0;
@@ -1546,7 +1550,7 @@ viberApp.controller('vbTaskYuwaCtrl', [
               $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             }
           } else {
-            $window.location = '/';
+            $window.location = '/logout';
           }
         }).error(function (err) {
           void 0;
@@ -1653,7 +1657,7 @@ viberApp.controller('vbSupportYuwaCtrl', [
           $scope.s3success25 = false;
           toaster.pop('success', 'Task 5', 'Your photo was uploaded successfully.');
         } else {
-          $window.location = '/';
+          $window.location = '/logout';
         }
       }).error(function (err) {
         void 0;

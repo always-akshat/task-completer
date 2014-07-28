@@ -52,7 +52,7 @@ viberApp.controller('vbSurveyCtrl',['$scope','$http','toaster','$rootScope','$wi
                 }
                 else
                 {
-                    $window.location = '/';
+                    $window.location = '/logout';
                 }
             }).error(function(err){
 
@@ -184,7 +184,7 @@ viberApp.controller('vbUploadPhotosCtrl',['$scope','$http', '$upload','toaster',
             }
             else
             {
-                $window.location = '/';
+                $window.location = '/logout';
             }
         }).error(function(err){
 
@@ -253,7 +253,7 @@ viberApp.controller('vbinviteFrndsCtrl',['$scope','$http','toaster','$rootScope'
                         }
                         else
                         {
-                            $window.location = '/';
+                            $window.location = '/logout';
                         }
                     }).error(function(err){
 
@@ -315,7 +315,7 @@ viberApp.controller('vblikenfollowCtrl',['$scope', '$http','$window','$rootScope
                 }
                 else
                 {
-                    $window.location = '/';
+                    $window.location = '/logout';
                 }
 
             }).error(function(err){
@@ -344,18 +344,24 @@ viberApp.controller('vblikenfollowCtrl',['$scope', '$http','$window','$rootScope
                 "taskid": '53a9526be4b041d6a3190439'
             };
             $http.put('/likefollow', reqbody).success(function (data) {
-                if (angular.isObject(data.completiondata)) {
-                    $scope.identity.currentUser.complete1 += data.completiondata.level;
-                    $scope.taskcomplete3 = true;
-                    task.completed=1;
-                    $scope.identity.currentUser.points += data.completiondata.points;
-                    //$rootScope.level1stagecompletion += data.completiondata.level;
-                    if($scope.identity.currentUser.complete1==100){
-                        $rootScope.style1 = {'font-size':'14px'};
+                if(angular.isObject(data)) {
+                    if (angular.isObject(data.completiondata)) {
+                        $scope.identity.currentUser.complete1 += data.completiondata.level;
+                        $scope.taskcomplete3 = true;
+                        task.completed = 1;
+                        $scope.identity.currentUser.points += data.completiondata.points;
+                        //$rootScope.level1stagecompletion += data.completiondata.level;
+                        if ($scope.identity.currentUser.complete1 == 100) {
+                            $rootScope.style1 = {'font-size': '14px'};
+                        }
+                        $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
                     }
-                    $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+                    toaster.pop('success', "Twitter Follow", "Your Twitter Follow has been saved");
                 }
-                toaster.pop('success', "Twitter Follow", "Your Twitter Follow has been saved");
+                else
+                {
+                    $window.location = '/logout';
+                }
             }).error(function(err){
 
                 console.log(err);
@@ -536,7 +542,7 @@ viberApp.controller('vbInsertLinksCtrl',['$scope','$http','toaster','$rootScope'
                 }
                 else
                 {
-                    $window.location = '/';
+                    $window.location = '/logout';
                 }
             }).error(function(err){
 
@@ -674,7 +680,7 @@ viberApp.controller('vbKnowViberCtrl',['$rootScope', '$scope','toaster', '$http'
             var postObj = {'answers':{'answer1' :$scope.task1que1,'answer2':$scope.task1que2,'answer3':$scope.task1que3,'answer4' :$scope.task1que4,
                                 'answer5':$scope.task1que5,'answer6':$scope.task1que6,'answer7' :$scope.task1que7,'answer8':$scope.task1que8,'answer9':$scope.task1que9,'answer10':$scope.task1que10},'taskid':'53d1e789bb5c82917b3a3a41'};
 
-            $http.post('/knowviber', JSON.stringify(postObj)).success(function(data){
+            $http.put('/knowviber', JSON.stringify(postObj)).success(function(data){
                 if(angular.isObject(data)){
                     if(angular.isObject(data.completiondata)){ // because the service will not return Level inside completiondata if the user is doing the same task again
                         $rootScope.taskcomplete21 = true;
@@ -692,7 +698,7 @@ viberApp.controller('vbKnowViberCtrl',['$rootScope', '$scope','toaster', '$http'
                 }
                 else
                 {
-                    $window.location = '/';
+                    $window.location = '/logout';
                 }
             }).error(function(err){
 
@@ -805,7 +811,7 @@ viberApp.controller('vbActivateCtrl',['$scope', '$upload', '$http', 'toaster','$
             }
             else
             {
-                $window.location = '/';
+                $window.location = '/logout';
             }
         }).error(function(err){
 
@@ -922,7 +928,7 @@ viberApp.controller('vbGoodvibesMindCtrl',['$scope','$upload', '$http','toaster'
             }
             else
             {
-                $window.location = '/';
+                $window.location = '/logout';
             }
         }).error(function(err){
 
@@ -971,7 +977,7 @@ viberApp.controller('vbTaskYuwaCtrl',['$scope','$http','toaster','$rootScope','$
                     }
                     else
                     {
-                        $window.location = '/';
+                        $window.location = '/logout';
                     }
                 }).error(function(err){
 
@@ -1087,7 +1093,7 @@ viberApp.controller('vbSupportYuwaCtrl',['$scope','$upload','$http','toaster','$
             }
             else
             {
-                $window.location = '/';
+                $window.location = '/logout';
             }
         }).error(function(err){
 
