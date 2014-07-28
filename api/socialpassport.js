@@ -45,9 +45,7 @@ module.exports = passport.use(new FacebookStrategy({
                         done(null,student);
                     })
                 }
-
             });
-
         }
         else{
             console.log('not found');

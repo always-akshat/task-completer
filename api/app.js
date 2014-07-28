@@ -33,7 +33,7 @@ var config = require('./config.js');
 var passport  = require('passport');
 
 var session = require('express-session');
-var RedisStore = require('connect-redis')(session);
+//var RedisStore = require('connect-redis')(session);
 
 
 var authroutes = require("./routes/auth");
@@ -58,7 +58,8 @@ app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.cookieParser());    // to read cookies
 app.use(express.bodyParser());      // to get information from html forms.
-app.use(express.session({
+app.use(express.session({secret: '1234567890QWERTY'}));
+/*app.use(express.session({
     store: new RedisStore({
         host: '54.251.103.74',
         port: 6379,
@@ -66,7 +67,7 @@ app.use(express.session({
     }),
     secret: 'manchester_united',
     cookie: { maxAge: 900000 }
-}));
+})); */
 
 app.use(express.urlencoded());
 app.use(passport.initialize());
