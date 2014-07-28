@@ -821,6 +821,9 @@ viberApp.controller('vbUploadPhotosCtrl', [
         } else {
           $window.location = '/';
         }
+      }).error(function (err) {
+        void 0;
+        toaster.pop('failure', 'Task 4', 'There was an error submitting your task, please try again');
       });
     };
   }
@@ -885,6 +888,9 @@ viberApp.controller('vbinviteFrndsCtrl', [
               } else {
                 $window.location = '/';
               }
+            }).error(function (err) {
+              void 0;
+              toaster.pop('failure', 'Task 5', 'There was an error submitting your task, please try again');
             });
           }
         }
@@ -932,6 +938,9 @@ viberApp.controller('vblikenfollowCtrl', [
           } else {
             $window.location = '/';
           }
+        }).error(function (err) {
+          void 0;
+          toaster.pop('failure', 'Task 2', 'There was an error submitting your task, please try again');
         });
       }
     });
@@ -956,6 +965,9 @@ viberApp.controller('vblikenfollowCtrl', [
             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
           }
           toaster.pop('success', 'Twitter Follow', 'Your Twitter Follow has been saved');
+        }).error(function (err) {
+          void 0;
+          toaster.pop('failure', 'Task 2', 'There was an error submitting your task, please try again');
         });
       }
     });
@@ -1121,6 +1133,9 @@ viberApp.controller('vbInsertLinksCtrl', [
           } else {
             $window.location = '/';
           }
+        }).error(function (err) {
+          void 0;
+          toaster.pop('failure', 'Task 3', 'There was an error submitting your task, please try again');
         });
       }
     }  //    var fbsuccess=false, twsuccess=false;
@@ -1385,6 +1400,9 @@ viberApp.controller('vbActivateCtrl', [
         } else {
           $window.location = '/';
         }
+      }).error(function (err) {
+        void 0;
+        toaster.pop('failure', 'Task 2', 'There was an error submitting your task, please try again');
       });
     };
   }
@@ -1486,6 +1504,9 @@ viberApp.controller('vbGoodvibesMindCtrl', [
         } else {
           $window.location = '/';
         }
+      }).error(function (err) {
+        void 0;
+        toaster.pop('failure', 'Task 3', 'There was an error submitting your task, please try again');
       });
     };
   }
@@ -1521,12 +1542,15 @@ viberApp.controller('vbTaskYuwaCtrl', [
               if ($scope.identity.currentUser.complete2 == 100) {
                 $rootScope.style2 = { 'font-size': '14px' };
               }
-              toaster.pop('success', 'Task 3', 'You have successfully finished the third task');
+              toaster.pop('success', 'Task 4', 'You have successfully finished the fourth task');
               $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             }
           } else {
             $window.location = '/';
           }
+        }).error(function (err) {
+          void 0;
+          toaster.pop('failure', 'Task 4', 'There was an error submitting your task, please try again');
         });
       }
     };
@@ -1631,6 +1655,9 @@ viberApp.controller('vbSupportYuwaCtrl', [
         } else {
           $window.location = '/';
         }
+      }).error(function (err) {
+        void 0;
+        toaster.pop('failure', 'Task 5', 'There was an error submitting your task, please try again');
       });
     };
   }

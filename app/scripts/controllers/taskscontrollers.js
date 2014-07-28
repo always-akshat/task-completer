@@ -186,6 +186,12 @@ viberApp.controller('vbUploadPhotosCtrl',['$scope','$http', '$upload','toaster',
             {
                 $window.location = '/';
             }
+        }).error(function(err){
+
+            console.log(err);
+            toaster.pop('failure', "Task 4", "There was an error submitting your task, please try again");
+
+
         });
 
     };
@@ -249,6 +255,12 @@ viberApp.controller('vbinviteFrndsCtrl',['$scope','$http','toaster','$rootScope'
                         {
                             $window.location = '/';
                         }
+                    }).error(function(err){
+
+                        console.log(err);
+                        toaster.pop('failure', "Task 5", "There was an error submitting your task, please try again");
+
+
                     });
 
                 }
@@ -306,6 +318,12 @@ viberApp.controller('vblikenfollowCtrl',['$scope', '$http','$window','$rootScope
                     $window.location = '/';
                 }
 
+            }).error(function(err){
+
+                console.log(err);
+                toaster.pop('failure', "Task 2", "There was an error submitting your task, please try again");
+
+
             });
 
         }
@@ -338,6 +356,12 @@ viberApp.controller('vblikenfollowCtrl',['$scope', '$http','$window','$rootScope
                     $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
                 }
                 toaster.pop('success', "Twitter Follow", "Your Twitter Follow has been saved");
+            }).error(function(err){
+
+                console.log(err);
+                toaster.pop('failure', "Task 2", "There was an error submitting your task, please try again");
+
+
             });
         }
     });
@@ -514,7 +538,13 @@ viberApp.controller('vbInsertLinksCtrl',['$scope','$http','toaster','$rootScope'
                 {
                     $window.location = '/';
                 }
-            })
+            }).error(function(err){
+
+                console.log(err);
+                toaster.pop('failure', "Task 3", "There was an error submitting your task, please try again");
+
+
+            });
         }
     }
 //    var fbsuccess=false, twsuccess=false;
@@ -777,6 +807,12 @@ viberApp.controller('vbActivateCtrl',['$scope', '$upload', '$http', 'toaster','$
             {
                 $window.location = '/';
             }
+        }).error(function(err){
+
+            console.log(err);
+            toaster.pop('failure', "Task 2", "There was an error submitting your task, please try again");
+
+
         });
 
     };
@@ -888,6 +924,12 @@ viberApp.controller('vbGoodvibesMindCtrl',['$scope','$upload', '$http','toaster'
             {
                 $window.location = '/';
             }
+        }).error(function(err){
+
+            console.log(err);
+            toaster.pop('failure', "Task 3", "There was an error submitting your task, please try again");
+
+
         });
 
     };
@@ -923,7 +965,7 @@ viberApp.controller('vbTaskYuwaCtrl',['$scope','$http','toaster','$rootScope','$
                             if($scope.identity.currentUser.complete2==100){
                                 $rootScope.style2 = {'font-size':'14px'};
                             }
-                            toaster.pop('success', "Task 3", "You have successfully finished the third task");
+                            toaster.pop('success', "Task 4", "You have successfully finished the fourth task");
                             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
                         }
                     }
@@ -931,6 +973,12 @@ viberApp.controller('vbTaskYuwaCtrl',['$scope','$http','toaster','$rootScope','$
                     {
                         $window.location = '/';
                     }
+                }).error(function(err){
+
+                    console.log(err);
+                    toaster.pop('failure', "Task 4", "There was an error submitting your task, please try again");
+
+
                 });
             }
         }
@@ -1041,6 +1089,12 @@ viberApp.controller('vbSupportYuwaCtrl',['$scope','$upload','$http','toaster','$
             {
                 $window.location = '/';
             }
+        }).error(function(err){
+
+            console.log(err);
+            toaster.pop('failure', "Task 5", "There was an error submitting your task, please try again");
+
+
         });
 
     };
