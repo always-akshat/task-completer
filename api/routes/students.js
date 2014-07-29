@@ -1128,7 +1128,7 @@ function getstudentauth(req,res) {
     Students.findOne({ facebookid: req.params.fbid}, 'auth', function (err, authstudent) {
         if (authstudent) {
             console.log(authstudent);
-            res.send(authstudent.auth);
+            res.send(authstudent.auth.toString());
         } else {
             res.send('auth not found');
         }

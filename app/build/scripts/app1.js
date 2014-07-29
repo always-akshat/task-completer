@@ -167,14 +167,24 @@ viberApp.controller('lbMySettingsCntrl', [
     vbSharedService.prepForBroadcast(currentPage);
     $scope.tw_auth = false;
     $scope.user = $scope.identity.currentUser;
+    void 0;
+    //Referral URL
+    $scope.referralUrl = 'app.thegoodvibes.in/s/';
+    $scope.returnUrl = function () {
+      $http.get('/students/auth/' + $scope.user.facebookid).success(function (data) {
+        if (!angular.isObject(data)) {
+          void 0;
+          var x = JSON.stringify(data).split('"');
+        }
+        void 0;
+        $scope.referralUrl += x[1];
+      });
+    };
+    $scope.returnUrl();
     $scope.transactions = $scope.user.vibes_transaction;
     $scope.settingData = $scope.identity.currentUser;
-    if (angular.isObject($scope.user.twitter)) {
-      $scope.tw_auth = true;
-    }
-    if (angular.isObject($scope.user.facebook)) {
-      $scope.fb_auth = true;
-    }
+    //    student/auth/facebookid
+    //    app.theggodvibes.in/s/
     $scope.getLocation = function (val) {
       if (val.length >= 3) {
         return $http.get('/locations/' + val).then(function (res) {
@@ -182,7 +192,7 @@ viberApp.controller('lbMySettingsCntrl', [
           angular.forEach(res.data, function (item) {
             places.push(item);
           });
-          return places;
+          return places.slice(0, 4);
         });
       }
     };
@@ -197,7 +207,7 @@ viberApp.controller('lbMySettingsCntrl', [
           angular.forEach(res.data, function (item) {
             clges.push(item);
           });
-          return clges;
+          return clges.slice(0, 4);
         });
       }
     };
@@ -1674,6 +1684,11 @@ viberApp.controller('vbSupportYuwaCtrl', [
  * Created by Ankit Saxena on 25-06-2014.
  */
 var viberApp = angular.module('viberApp');
+viberApp.controller('vbCheatBoxCtrl', [
+  '$scope',
+  function ($scope) {
+  }
+]);
 viberApp.controller('vbSocialConnectCtrl', [
   '$scope',
   function ($scope) {
@@ -1694,11 +1709,5 @@ viberApp.controller('vbMiniLeaderBoardCtrl', [
       } else {
       }
     });
-  }
-]);
-viberApp.controller('vbCheatBoxCtrl', [
-  '$scope',
-  'vbIdentity',
-  function ($scope, vbIdentity) {
   }
 ]);

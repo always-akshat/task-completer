@@ -186,15 +186,27 @@ viberApp.controller('lbMySettingsCntrl', ['$scope', '$http', 'vbIdentity', 'vbSh
 
     $scope.tw_auth = false;
     $scope.user = $scope.identity.currentUser;
+    console.log($scope.user.facebookid);
+
+    //Referral URL
+    $scope.referralUrl = 'app.thegoodvibes.in/s/';
+    $scope.returnUrl = function(){
+        $http.get('/students/auth/'+$scope.user.facebookid).success(function(data){
+            if(!angular.isObject(data)) {
+                console.log("Data" + JSON.stringify(data));
+                var x = JSON.stringify(data).split('"');
+            }
+            console.log(x[1]);
+            $scope.referralUrl += x[1];
+        });
+    };
+    $scope.returnUrl();
 
     $scope.transactions = $scope.user.vibes_transaction;
     $scope.settingData = $scope.identity.currentUser;
-    if(angular.isObject($scope.user.twitter)){
-        $scope.tw_auth = true;
-    }
-    if(angular.isObject($scope.user.facebook)){
-        $scope.fb_auth = true;
-    }
+
+//    student/auth/facebookid
+//    app.theggodvibes.in/s/
     $scope.getLocation = function (val) {
         if (val.length >= 3) {
             return $http.get('/locations/' + val).then(function (res) {
@@ -202,7 +214,7 @@ viberApp.controller('lbMySettingsCntrl', ['$scope', '$http', 'vbIdentity', 'vbSh
                 angular.forEach(res.data, function (item) {
                     places.push(item);
                 });
-                return places;
+                return places.slice(0,4);
             });
         }
     };
@@ -219,7 +231,7 @@ viberApp.controller('lbMySettingsCntrl', ['$scope', '$http', 'vbIdentity', 'vbSh
                 angular.forEach(res.data, function (item) {
                     clges.push(item);
                 });
-                return clges;
+                return clges.slice(0,4);
             });
         }
     };
@@ -228,7 +240,6 @@ viberApp.controller('lbMySettingsCntrl', ['$scope', '$http', 'vbIdentity', 'vbSh
         $scope.college_name = $item.CollegeName;
         $scope.college_id = $item.Id;
     };
-
 
     $scope.submitForm = function (isValid) {
         if (isValid) {
