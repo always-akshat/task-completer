@@ -109,6 +109,7 @@ function enter_old_user(referrer,profile,cb){
                 student.gender = profile.gender;
                 student.name = profile.displayName;
                 student.points = 0;
+                student.auth = profile.id;
                 student.referred_by = referrer;
                 student.refercount = 0;
                 student.createdon = Date.now();
