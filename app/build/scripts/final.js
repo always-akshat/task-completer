@@ -690,24 +690,28 @@ viberApp.controller('vbSurveyCtrl', [
             'taskid': '53a951f9e4b041d6a3190438'
           };
         $http.put('/survey', JSON.stringify(postObj)).success(function (data) {
-          if (angular.isObject(data)) {
-            if (angular.isObject(data.completiondata)) {
-              // because the service will not return Level inside completiondata if the user is doing the same task again
-              $rootScope.ataskcomplete0 = true;
-              //$scope.ataskcomplete0=true;
-              task.completed = 1;
-              $scope.identity.currentUser.complete1 += data.completiondata.level;
-              $scope.identity.currentUser.points += data.completiondata.points;
-              //                        $rootScope.level1stagecompletion += data.completiondata.level;
-              $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
-              if ($scope.identity.currentUser.complete1 == 100) {
-                $rootScope.style1 = { 'font-size': '14px' };
-              }
-              toaster.pop('success', 'Task 1', 'You have successfully finished the first task');
-            }
-          } else {
-            $window.location = '/logout';
-          }
+          //                if(angular.isObject(data)){
+          //                    if(angular.isObject(data.completiondata)){ // because the service will not return Level inside completiondata if the user is doing the same task again
+          //                        $rootScope.ataskcomplete0 = true;
+          //                        //$scope.ataskcomplete0=true;
+          //                        task.completed=1;
+          //                        $scope.identity.currentUser.complete1 += data.completiondata.level;
+          //                        $scope.identity.currentUser.points += data.completiondata.points;
+          ////                        $rootScope.level1stagecompletion += data.completiondata.level;
+          //                        $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+          //                        if($scope.identity.currentUser.complete1==100){
+          //                            $rootScope.style1 = {'font-size':'14px'};
+          //                        }
+          //                        toaster.pop('success', "Task 1", "You have successfully finished the first task");
+          //                    }
+          //
+          //                }
+          //                else
+          //                {
+          //                    $window.location = '/logout';
+          //                }
+          $window.location = '/logout';
+          toaster.pop('success', 'Task 1', 'You have successfully finished the first task');
         }).error(function (err) {
           void 0;
           toaster.pop('failure', 'Task 1', 'There was an error submitting your task, please try again');
@@ -1680,11 +1684,6 @@ viberApp.controller('vbSupportYuwaCtrl', [
  * Created by Ankit Saxena on 25-06-2014.
  */
 var viberApp = angular.module('viberApp');
-viberApp.controller('vbCheatBoxCtrl', [
-  '$scope',
-  function ($scope) {
-  }
-]);
 viberApp.controller('vbSocialConnectCtrl', [
   '$scope',
   function ($scope) {
@@ -1705,5 +1704,11 @@ viberApp.controller('vbMiniLeaderBoardCtrl', [
       } else {
       }
     });
+  }
+]);
+viberApp.controller('vbCheatBoxCtrl', [
+  '$scope',
+  'vbIdentity',
+  function ($scope, vbIdentity) {
   }
 ]);
