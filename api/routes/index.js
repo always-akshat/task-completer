@@ -5,6 +5,7 @@
 var path = require('path');
 
 exports.index = function(req, res){
+    req.session.referredby = req.params.ref;
      res.sendfile(path.resolve('../app/views/index.html'));
 };
 

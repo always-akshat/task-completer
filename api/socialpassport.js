@@ -18,9 +18,15 @@ var async = require('async');
 module.exports = passport.use(new FacebookStrategy({
         clientID: socialauth.facebook.clientID,
         clientSecret: socialauth.facebook.clientSecret,
-        callbackURL: socialauth.facebook.callbackURL
+        callbackURL: socialauth.facebook.callbackURL,
+        passReqToCallback: true
     },
-    function(accessToken, refreshToken, profile, done) {
+    function(req,accessToken, refreshToken, profile, done) {
+        if(req.session.referredby){
+            var referrer = req.session.referredby;
+        }else{
+            var referrer = 0;
+        }
         console.log('reached fb auth callback');
         //console.log('return frm FB ' + JSON.stringify(profile));
         if(profile.emails) {
@@ -33,7 +39,7 @@ module.exports = passport.use(new FacebookStrategy({
 
 //        console.log('checked for mail');
         if (fb_email) {
-            enter_old_user(profile, function(err,data){
+            enter_old_user(referrer,profile, function(err,data){
   //              console.log('data recieved in main function');
                 if(err){
                     console.log(err);
@@ -60,7 +66,7 @@ passport.use(new TwitterStrategy({
         consumerSecret: socialauth.twitter.consumerSecret,
         callbackURL: socialauth.twitter.callbackURL
     },
-    function(accessToken, tokenSecret, profile, done) {
+    function(req,accessToken, tokenSecret, profile, done) {
         process.nextTick(function () {
 
             twit_profile  = new Object();
@@ -83,7 +89,7 @@ passport.deserializeUser(function(obj, done) {
     done(null, obj);
 });
 
-function enter_old_user(profile,cb){
+function enter_old_user(referrer,profile,cb){
 
     console.log('enter old user reg');
     Students.findOne({ email: fb_email}, function (err, student) {
@@ -103,6 +109,22 @@ function enter_old_user(profile,cb){
                 student.gender = profile.gender;
                 student.name = profile.displayName;
                 student.points = 0;
+                student.referred_by = referrer;
+                student.refercount = 0;
+                student.createdon = Date.now();
+                Students.findOne({ auth: referrer}, function (err, refstudent) {
+                    if(refstudent){
+                        if(refstudent.refercount) {
+                            refstudent.refercount += 1;
+                        }else{
+                            refstudent.refercount = 1;
+                        }
+                        refstudent.save();
+                    }else{
+                        console.log('referrral student not found');
+                    }
+
+                });
 
             }
             else if (student != null) {
