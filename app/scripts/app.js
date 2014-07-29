@@ -158,23 +158,6 @@ viberApp.controller('leaderboardCtrl', ['$scope', 'vbSharedService', '$http', '$
 
     };
 
-//    $scope.getCollege = function(val){
-//        if(val.length>=4) {
-//            return $http.get('/colleges/' + val).then(function (res) {
-//                var clges = [];
-//                angular.forEach(res.data, function(item){
-//                    clges.push(item);
-//                });
-//                return clges;
-//            });
-//        }
-//    };
-//
-//    $scope.onSelectCollege = function ($item) {
-//        console.log(JSON.stringify($item));
-//    };
-
-
 }]);
 
 
@@ -189,24 +172,24 @@ viberApp.controller('lbMySettingsCntrl', ['$scope', '$http', 'vbIdentity', 'vbSh
     console.log($scope.user.facebookid);
 
     //Referral URL
-    $scope.referralUrl = 'app.thegoodvibes.in/s/';
     $scope.returnUrl = function(){
         $http.get('/students/auth/'+$scope.user.facebookid).success(function(data){
             if(!angular.isObject(data)) {
-                console.log("Data" + JSON.stringify(data));
                 var x = JSON.stringify(data).split('"');
             }
-            console.log(x[1]);
-            $scope.referralUrl += x[1];
+            vbIdentity.currentUser.referralId += 'app.thegoodvibes.in/s/'+x[1];
         });
     };
-    $scope.returnUrl();
+    if(!(vbIdentity.currentUser.referralId)) {
+        vbIdentity.currentUser.referralId = '';
+    }
+    if(vbIdentity.currentUser.referralId == '') {
+        $scope.returnUrl();
+    }
 
     $scope.transactions = $scope.user.vibes_transaction;
     $scope.settingData = $scope.identity.currentUser;
 
-//    student/auth/facebookid
-//    app.theggodvibes.in/s/
     $scope.getLocation = function (val) {
         if (val.length >= 3) {
             return $http.get('/locations/' + val).then(function (res) {
