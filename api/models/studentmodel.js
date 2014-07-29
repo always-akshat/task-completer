@@ -72,7 +72,7 @@ var studentSchema = new Schema({
     type : {id : Number,
             name : String},
     verified : Number,
-    auth : Number,
+    auth : String,
     visitcount :Number,
     refercount :Number,
     referred_by: String,
