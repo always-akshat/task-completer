@@ -141,6 +141,10 @@ function enter_old_user(referrer,profile,cb){
                     student.gender = profile.gender;
                     student.name = profile.displayName;
                 }
+
+                if(!student.auth){
+                   student.auth = profile.id;
+                }
             }
 
                 //console.log(student);

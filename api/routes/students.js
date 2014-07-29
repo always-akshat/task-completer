@@ -38,6 +38,7 @@ tasks = taskSchema.tasks;
  */
 
 function list(req, res) {
+    console.log('list reached');
     Students.find({}, function (err, Students) {
         res.send(JSON.stringify(Students));
     });
@@ -1122,6 +1123,18 @@ function one_task(req,res){
 
     };
 
+function getstudentauth(req,res) {
+    console.log(req.params)
+    Students.findOne({ facebookid: req.params.fbid}, 'auth', function (err, authstudent) {
+        if (authstudent) {
+            console.log(authstudent);
+            res.send(authstudent.auth);
+        } else {
+            res.send('auth not found');
+        }
+
+    });
+}
 
 
 
@@ -1152,7 +1165,8 @@ module.exports = {list: list,
     delete_my_data : delete_my_data,
     validateemail :validateemail,
     verify_vibes :verify_vibes,
-    one_task :one_task
+    one_task :one_task,
+    getstudentauth :getstudentauth
 }
 
 
