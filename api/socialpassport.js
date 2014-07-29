@@ -120,6 +120,7 @@ function enter_old_user(referrer,profile,cb){
                         }else{
                             refstudent.refercount = 1;
                         }
+                        refstudent.points +=20;
                         refstudent.save();
                     }else{
                         console.log('referrral student not found');
