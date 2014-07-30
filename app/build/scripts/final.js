@@ -142,21 +142,7 @@ viberApp.controller('leaderboardCtrl', [
         } else {
         }
       });
-    };  //    $scope.getCollege = function(val){
-        //        if(val.length>=4) {
-        //            return $http.get('/colleges/' + val).then(function (res) {
-        //                var clges = [];
-        //                angular.forEach(res.data, function(item){
-        //                    clges.push(item);
-        //                });
-        //                return clges;
-        //            });
-        //        }
-        //    };
-        //
-        //    $scope.onSelectCollege = function ($item) {
-        //        console.log(JSON.stringify($item));
-        //    };
+    };
   }
 ]);
 viberApp.controller('lbMySettingsCntrl', [
@@ -177,14 +163,24 @@ viberApp.controller('lbMySettingsCntrl', [
     vbSharedService.prepForBroadcast(currentPage);
     $scope.tw_auth = false;
     $scope.user = $scope.identity.currentUser;
+    void 0;
+    //Referral URL
+    $scope.returnUrl = function () {
+      $http.get('/students/auth/' + $scope.user.facebookid).success(function (data) {
+        if (!angular.isObject(data)) {
+          var x = JSON.stringify(data).split('"');
+        }
+        vbIdentity.currentUser.referralId += 'app.thegoodvibes.in/s/' + x[1];
+      });
+    };
+    if (!vbIdentity.currentUser.referralId) {
+      vbIdentity.currentUser.referralId = '';
+    }
+    if (vbIdentity.currentUser.referralId == '') {
+      $scope.returnUrl();
+    }
     $scope.transactions = $scope.user.vibes_transaction;
     $scope.settingData = $scope.identity.currentUser;
-    if (angular.isObject($scope.user.twitter)) {
-      $scope.tw_auth = true;
-    }
-    if (angular.isObject($scope.user.facebook)) {
-      $scope.fb_auth = true;
-    }
     $scope.getLocation = function (val) {
       if (val.length >= 3) {
         return $http.get('/locations/' + val).then(function (res) {
@@ -192,7 +188,7 @@ viberApp.controller('lbMySettingsCntrl', [
           angular.forEach(res.data, function (item) {
             places.push(item);
           });
-          return places;
+          return places.slice(0, 4);
         });
       }
     };
@@ -207,7 +203,7 @@ viberApp.controller('lbMySettingsCntrl', [
           angular.forEach(res.data, function (item) {
             clges.push(item);
           });
-          return clges;
+          return clges.slice(0, 4);
         });
       }
     };
@@ -698,7 +694,7 @@ viberApp.controller('vbSurveyCtrl', [
               task.completed = 1;
               $scope.identity.currentUser.complete1 += data.completiondata.level;
               $scope.identity.currentUser.points += data.completiondata.points;
-              //                        $rootScope.level1stagecompletion += data.completiondata.level;
+              //                      $rootScope.level1stagecompletion += data.completiondata.level;
               $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
               if ($scope.identity.currentUser.complete1 == 100) {
                 $rootScope.style1 = { 'font-size': '14px' };
@@ -707,6 +703,7 @@ viberApp.controller('vbSurveyCtrl', [
             }
           } else {
             $window.location = '/logout';
+            void 0;
           }
         }).error(function (err) {
           void 0;

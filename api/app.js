@@ -42,6 +42,7 @@ var campaigns = require("./routes/campaigns");
 var stages = require("./routes/stages");
 var tasks = require("./routes/tasks");
 var sharer = require("./routes/sharer");
+var data = require("./routes/data");
 var utility_routes = require("./routes/utilities");
 var config_passport = require("./socialpassport");
 
@@ -116,11 +117,8 @@ app.get('/', routes.index);
 app.get('/register', routes.register);
 
 
-app.get('/auth/facebook',
-    passport.authenticate('facebook',{ scope: ['publish_actions','email','public_profile'] }),
-    function(req, res){
-
-});
+app.get('/auth/facebook',passport.authenticate('facebook',{ scope: ['publish_actions','email','public_profile'] })
+);
 
 app.get('/login', function(req,res){
     //console.log(req.user);
@@ -148,11 +146,15 @@ app.get('/login', function(req,res){
 
 });
 
+
+
 app.get('/auth/facebook/callback',
         passport.authenticate('facebook',
             {failureRedirect: '/auth/facebook',
              successRedirect: '/login'})
     );
+
+
 
 app.get('/auth/twitter',
     passport.authenticate('twitter'),
@@ -175,6 +177,7 @@ app.get('/students', students.list);
 app.post('/students',students.signup);
 app.get('/students/:fbid',students.info);
 app.get('/students/friends/:fbid',students.getfacebookfriends);
+app.get('/students/auth/:fbid',students.getstudentauth);
 app.put('/students/friends/:facebookid',students.putfacebookfriends);
 app.get('/students/type/:usertypeid',students.allusersoftype);
 app.put('/students/:facebookid',students.updateSettings);
@@ -183,6 +186,7 @@ app.put('/students/:fbid/tasks/:taskid',students.updatetask);
 app.put('/students/points/:facebookid',students.addpoints);
 app.get('/students/leaderboard/:type/:id?',students.leaderboard);
 app.get('/logout',students.logout);
+
 
 app.get('/students/backend/add_tasks',students.stage_add_to_all);
 app.get('/students/backend/transaction',students.VibesTransaction);
@@ -225,16 +229,16 @@ app.put('/stickers',IsAuthenticatedService,sharer.stickers);
 app.put('/rating',IsAuthenticatedService,sharer.stickers);
 app.put('/knowviber',sharer.knowviber);
 
+
+
 app.post('/emailvalidate',students.validateemail);
-
-
 app.get('/register',function(req,res){res.send('register')});
-
+app.get('/s/:ref?',routes.index);
 
 app.get('/cron/leaderboard',students.verify_vibes);
 app.get('/cron/one_task',students.one_task);
 
-
+app.get('/data/leaderboard/1',data.leaderboard);
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));

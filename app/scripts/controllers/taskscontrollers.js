@@ -41,7 +41,7 @@ viberApp.controller('vbSurveyCtrl',['$scope','$http','toaster','$rootScope','$wi
                         task.completed=1;
                         $scope.identity.currentUser.complete1 += data.completiondata.level;
                         $scope.identity.currentUser.points += data.completiondata.points;
-//                        $rootScope.level1stagecompletion += data.completiondata.level;
+//                      $rootScope.level1stagecompletion += data.completiondata.level;
                         $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
                         if($scope.identity.currentUser.complete1==100){
                             $rootScope.style1 = {'font-size':'14px'};
