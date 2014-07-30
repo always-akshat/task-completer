@@ -125,8 +125,18 @@ function enter_old_user(referrer,profile,cb){
                             refstudent.refercount = 1;
                         }
                         refstudent.points +=20;
-                        mail_functions.referral(profile.displayName,refstudent.name,refstudent.points+20,refstudent.email);
+
                         refstudent.save();
+                        var transaction = new studentSchema.vibes_transaction;
+                        transaction.vibes = 20;
+                        transaction.type = 'referral';
+                        transaction.sign = 1;
+                        transaction.message = 'Referred ' + ' ' +profile.displayName;
+                        student_functions.VibesTransaction(refstudent.facebookid, transaction, function (v_transaction) {
+                            if(v_transaction !== 0) {
+                                mail_functions.referral(profile.displayName, refstudent.name, refstudent.points + 20, refstudent.email);
+                            }
+                        });
                     }else{
                         console.log('referrral student not found');
                     }
