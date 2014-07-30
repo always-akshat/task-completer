@@ -693,7 +693,6 @@ viberApp.controller('vbSurveyCtrl', [
             }
           } else {
             $window.location = '/logout';
-            void 0;
           }
         }).error(function (err) {
           void 0;
