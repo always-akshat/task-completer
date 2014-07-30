@@ -42,6 +42,7 @@ var campaigns = require("./routes/campaigns");
 var stages = require("./routes/stages");
 var tasks = require("./routes/tasks");
 var sharer = require("./routes/sharer");
+var data = require("./routes/data");
 var utility_routes = require("./routes/utilities");
 var config_passport = require("./socialpassport");
 
@@ -237,7 +238,7 @@ app.get('/s/:ref?',routes.index);
 app.get('/cron/leaderboard',students.verify_vibes);
 app.get('/cron/one_task',students.one_task);
 
-
+app.get('/data/leaderboard/1',data.leaderboard);
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
