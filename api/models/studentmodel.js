@@ -21,6 +21,8 @@ var user_task_schema = new Schema({
     condition :{}
 });
 
+//var manager_schema = new Schema()
+
 var vibes_transaction_schema = new Schema({
     "vibes" : Number,
     "type": String,
@@ -58,6 +60,9 @@ var studentSchema = new Schema({
         name :String,
         secret : String
     },
+    
+    role : Number,
+    manager : { email:String,updatedon:{type: Date, 'default': Date.now},updatedby:String},
     points : Number,
     stages : [{stageid:String,
                 name : String,
@@ -76,6 +81,7 @@ var studentSchema = new Schema({
     visitcount :Number,
     referred_by: Number,
     vcron :Number
+    
 },
     { collection: 'students' })
 
