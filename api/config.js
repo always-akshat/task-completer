@@ -3,48 +3,52 @@
  */
 
 var mongoose = require('mongoose');
-/*var aws = require('aws-sdk');
+var aws = require('aws-sdk');
 
 aws.config.loadFromPath('./aws-config.json');
 
-var ses = new aws.SES();
-//console.log(ses);
+// load AWS SES
+var ses = new aws.SES({apiVersion: '2010-12-01'});
 
 
-function mail(){
+exports.params = {
+    Destination: { // required
+        ToAddresses: [
 
-    var params = {
-        Destination: {
-            ToAddresses: [
-                'always.akshat@gmail.com',
-            ]
-        },
-        Message: {
-            Body: {
-                Html: {
-                    Data: '<p>Hi, Glory Glory Manchester United.</p>' // required
+        ]
+    },
+    Message: { // required
+        Body: { // required
+            Html: {
+                Data: ''//, // required
                     //Charset: 'STRING_VALUE'
-                }
-            },
-            Subject: { // required
-                Data: 'Manchester United' // required
-                //Charset: 'STRING_VALUE'
             }
         },
-        Source: 'hello@thegoodvibes.in', // required
-        ReplyToAddresses: [
-            'hello@thegoodvibes.in',
-            // ... more items ...
-        ]
-        //ReturnPath: 'STRING_VALUE'
-    };
+        Subject: { // required
+            Data: ''//, required
+            //Charset: 'STRING_VALUE'
+        }
+    },
+    Source: 'hello@thegoodvibes.in', // required
+    ReplyToAddresses: [
+        'hello@thegoodvibes.in',
+        // ... more items ...
+    ],
+    //ReturnPath: 'STRING_VALUE'
+};
+
+
+exports.sesmail= function(params){
     ses.sendEmail(params, function(err, data) {
         if (err) console.log(err, err.stack); // an error occurred
         else     console.log(data);           // successful response
     });
 }
 
-*/
+
+
+
+
 
 
 
@@ -52,5 +56,4 @@ function mail(){
 mongoose.connect('mongodb://viber_app:akshat@ds053449.mongolab.com:53449/viber_prod');
 
 exports.utils = require('../api/utils.js');
-
 exports.ObjectId =  mongoose.Types.ObjectId;

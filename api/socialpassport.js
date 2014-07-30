@@ -10,6 +10,7 @@ var TwitterStrategy = require('passport-twitter').Strategy;
 var studentSchema = require('./models/studentmodel');
 var socialauth = require('./socialauth.js');
 var student_functions = require('./routes/students.js');
+var mail_functions = require('./routes/mail.js');
 var stages_functions = require('./routes/stages.js');
 var async = require('async');
 
@@ -113,6 +114,9 @@ function enter_old_user(referrer,profile,cb){
                 student.referred_by = referrer;
                 student.refercount = 0;
                 student.createdon = Date.now();
+
+                mail_functions.singup(profile.displayName, fb_email);
+
                 Students.findOne({ auth: referrer}, function (err, refstudent) {
                     if(refstudent){
                         if(refstudent.refercount) {
@@ -121,6 +125,7 @@ function enter_old_user(referrer,profile,cb){
                             refstudent.refercount = 1;
                         }
                         refstudent.points +=20;
+                        mail_functions.referral(profile.displayName,refstudent.name,refstudent.points+20,refstudent.email);
                         refstudent.save();
                     }else{
                         console.log('referrral student not found');
