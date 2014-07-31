@@ -17,6 +17,7 @@ function leaderboard(req,res){
         {$lte : "2014-07-25"}
             },
         {'name' :1,
+            'facebookid' :1,
             'points' :1,
             'email' :1,
             'location.name' :1,
@@ -26,6 +27,7 @@ function leaderboard(req,res){
            if(students){
                var html ='<table>' +
                    '<tr>' +
+                   '<td>Picture</td>'+
                    '<td>Name</td>'+
                    '<td>Email</td>'+
                    '<td>Location</td>'+
@@ -34,6 +36,7 @@ function leaderboard(req,res){
                    '</tr>';
                students.forEach(function(instance){
                     var myhtml ='<tr>' +
+                        '<td><img src="http://graph.facebook.com/'+instance.facebookid+'/picture?height=80&amp;width=80"/></td>' +
                         '<td>'+instance.name+'</td>' +
                         '<td>'+instance.email+'</td>' +
                         '<td>'+instance.location.name+'</td>' +
