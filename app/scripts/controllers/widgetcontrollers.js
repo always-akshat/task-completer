@@ -37,9 +37,4 @@ viberApp.controller('vbMiniLeaderBoardCtrl',[ '$scope','$http', function($scope,
             }
 
         });
-
-
-
-
-
 }]);

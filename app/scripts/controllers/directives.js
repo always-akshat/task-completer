@@ -18,6 +18,19 @@ viberApp.directive('navBar', function(){
 
 });
 
+viberApp.directive('clusterManager', function(){
+
+    return{
+
+        restrict : 'E',
+        templateUrl : 'views/manage.html',
+        controller : 'vbClusterCtrl'
+
+    }
+
+
+});
+
 viberApp.directive('loginBar', function(){
 
     return{

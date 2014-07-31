@@ -41,6 +41,12 @@ viberApp.config(['$routeProvider', function ($routeProvider) {
                 controller: 'lbMySettingsCntrl'
 
             }).
+            when('/manage', {
+
+                templateUrl: 'views/manage.html',
+                controller: 'vbClusterCtrl'
+
+            }).
             otherwise({
                 redirectTo: '/'
             });
@@ -78,7 +84,7 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
 
 
     $window.scrollTo(0, 0);
-    var currentPage = {home: 1, rewards: 0, lb: 0, mysettings: 0};
+    var currentPage = {home: 1, rewards: 0, lb: 0, mysettings: 0,managecluster: 0};
     vbSharedService.prepForBroadcast(currentPage);
 
     $rootScope.style1 = undefined;
@@ -97,7 +103,7 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
 viberApp.controller('leaderboardCtrl', ['$scope', 'vbSharedService', '$http', '$window', function ($scope, vbSharedService, $http, $window) {
 
     $window.scrollTo(0, 0);
-    var currentPage = {home: 0, rewards: 0, lb: 1, mysettings: 0};
+    var currentPage = {home: 0, rewards: 0, lb: 1, mysettings: 0,managecluster: 0};
     vbSharedService.prepForBroadcast(currentPage);
 
     $http.get('/students/leaderboard/points').success(function (data) {
@@ -164,7 +170,7 @@ viberApp.controller('leaderboardCtrl', ['$scope', 'vbSharedService', '$http', '$
 viberApp.controller('lbMySettingsCntrl', ['$scope', '$http', 'vbIdentity', 'vbSharedService', '$window', 'settingSubmit', function ($scope, $http, vbIdentity, vbSharedService, $window, settingSubmit) {
 
     $window.scrollTo(0, 0);
-    var currentPage = {home: 0, rewards: 0, lb: 0, mysettings: 1};
+    var currentPage = {home: 0, rewards: 0, lb: 0, mysettings: 1,managecluster: 0};
     vbSharedService.prepForBroadcast(currentPage);
 
     $scope.tw_auth = false;
@@ -261,36 +267,24 @@ viberApp.controller('lbMySettingsCntrl', ['$scope', '$http', 'vbIdentity', 'vbSh
 viberApp.controller('lbRewardsCtrl', ['vbSharedService', '$window', function (vbSharedService, $window) {
 
     $window.scrollTo(0, 0);
-    var currentPage = {home: 0, rewards: 1, lb: 0, mysettings: 0};
+    var currentPage = {home: 0, rewards: 1, lb: 0, mysettings: 0,managecluster: 0};
     vbSharedService.prepForBroadcast(currentPage);
 
 
 }]);
 
 
-viberApp.controller('vbLoginBarCtrl', ['$scope', 'vbSharedService', function ($scope, vbSharedService) {
+viberApp.controller('vbClusterCtrl',[ '$scope','$http','vbSharedService','$window', function($scope,$http,vbSharedService, $window){
 
+    $window.scrollTo(0, 0);
+    var currentPage = {home: 0, rewards: 0, lb: 0, mysettings: 0,managecluster: 1};
+    vbSharedService.prepForBroadcast(currentPage);
 
-    $scope.$on('handlePageChange', function () {
-        console.log('event received');
-        $scope.currentPage = vbSharedService.currentPage;
-    });
+    $scope.email_ids = undefined;
 
-//    console.log("Login Bar"+ JSON.stringify($scope.identity));
-//    var stage = $scope.identity.currentUser.stages;
-//    var level1= _.where(stage,{'stageid':'5390521624349ecc0c108c10'});
-//    var level2= _.where(stage,{'stageid':'53d36e0abb5c82917b3a3d94'});
-//
-//
-//    if(level1.completion==100) {
-//        $scope.currentlevel = level2.name;
-//        $scope.currentcompleted = level2.completion;
-//    }
-//    else{
-//        $scope.currentlevel = level1.name;
-//        $scope.currentcompleted = level1.completion;
-//    }
-
+    $scope.addStudent = function(){
+        console.log($scope.email_ids);
+    }
 }]);
 
 viberApp.factory('vbSharedService',
@@ -311,4 +305,24 @@ viberApp.factory('vbSharedService',
 
         return sharedService;
     });
+
+viberApp.controller('vbLoginBarCtrl', ['$scope', 'vbIdentity','vbSharedService', function ($scope,vbIdentity, vbSharedService) {
+
+   //$scope.loginlevelcomplete = false;
+
+    $scope.$on('handlePageChange', function () {
+        console.log('event received');
+        $scope.currentPage = vbSharedService.currentPage;
+    });
+//    console.log("Login Bar"+ JSON.stringify($scope.identity));
+//    var stage = $scope.identity.currentUser.stages;
+//    var level1= _.where(stage,{'stageid':'5390521624349ecc0c108c10'});
+//    var level2= _.where(stage,{'stageid':'53d36e0abb5c82917b3a3d94'});
+//
+//
+//    if(level1.completion==100) {
+//        $scope.loginlevelcomplete = true;
+//    }
+
+}]);
 

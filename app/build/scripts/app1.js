@@ -32,6 +32,9 @@ viberApp.config([
     }).when('/mysettings', {
       templateUrl: 'views/mysettings.html',
       controller: 'lbMySettingsCntrl'
+    }).when('/manage', {
+      templateUrl: 'views/manage.html',
+      controller: 'vbClusterCtrl'
     }).otherwise({ redirectTo: '/' });
   }
 ]);
@@ -68,7 +71,8 @@ viberApp.controller('dashboardCtrl', [
         home: 1,
         rewards: 0,
         lb: 0,
-        mysettings: 0
+        mysettings: 0,
+        managecluster: 0
       };
     vbSharedService.prepForBroadcast(currentPage);
     $rootScope.style1 = undefined;
@@ -92,7 +96,8 @@ viberApp.controller('leaderboardCtrl', [
         home: 0,
         rewards: 0,
         lb: 1,
-        mysettings: 0
+        mysettings: 0,
+        managecluster: 0
       };
     vbSharedService.prepForBroadcast(currentPage);
     $http.get('/students/leaderboard/points').success(function (data) {
@@ -148,7 +153,8 @@ viberApp.controller('lbMySettingsCntrl', [
         home: 0,
         rewards: 0,
         lb: 0,
-        mysettings: 1
+        mysettings: 1,
+        managecluster: 0
       };
     vbSharedService.prepForBroadcast(currentPage);
     $scope.tw_auth = false;
@@ -238,32 +244,31 @@ viberApp.controller('lbRewardsCtrl', [
         home: 0,
         rewards: 1,
         lb: 0,
-        mysettings: 0
+        mysettings: 0,
+        managecluster: 0
       };
     vbSharedService.prepForBroadcast(currentPage);
   }
 ]);
-viberApp.controller('vbLoginBarCtrl', [
+viberApp.controller('vbClusterCtrl', [
   '$scope',
+  '$http',
   'vbSharedService',
-  function ($scope, vbSharedService) {
-    $scope.$on('handlePageChange', function () {
+  '$window',
+  function ($scope, $http, vbSharedService, $window) {
+    $window.scrollTo(0, 0);
+    var currentPage = {
+        home: 0,
+        rewards: 0,
+        lb: 0,
+        mysettings: 0,
+        managecluster: 1
+      };
+    vbSharedService.prepForBroadcast(currentPage);
+    $scope.email_ids = undefined;
+    $scope.addStudent = function () {
       void 0;
-      $scope.currentPage = vbSharedService.currentPage;
-    });  //    console.log("Login Bar"+ JSON.stringify($scope.identity));
-         //    var stage = $scope.identity.currentUser.stages;
-         //    var level1= _.where(stage,{'stageid':'5390521624349ecc0c108c10'});
-         //    var level2= _.where(stage,{'stageid':'53d36e0abb5c82917b3a3d94'});
-         //
-         //
-         //    if(level1.completion==100) {
-         //        $scope.currentlevel = level2.name;
-         //        $scope.currentcompleted = level2.completion;
-         //    }
-         //    else{
-         //        $scope.currentlevel = level1.name;
-         //        $scope.currentcompleted = level1.completion;
-         //    }
+    };
   }
 ]);
 viberApp.factory('vbSharedService', [
@@ -279,6 +284,26 @@ viberApp.factory('vbSharedService', [
       $rootScope.$broadcast('handlePageChange');
     };
     return sharedService;
+  }
+]);
+viberApp.controller('vbLoginBarCtrl', [
+  '$scope',
+  'vbIdentity',
+  'vbSharedService',
+  function ($scope, vbIdentity, vbSharedService) {
+    //$scope.loginlevelcomplete = false;
+    $scope.$on('handlePageChange', function () {
+      void 0;
+      $scope.currentPage = vbSharedService.currentPage;
+    });  //    console.log("Login Bar"+ JSON.stringify($scope.identity));
+         //    var stage = $scope.identity.currentUser.stages;
+         //    var level1= _.where(stage,{'stageid':'5390521624349ecc0c108c10'});
+         //    var level2= _.where(stage,{'stageid':'53d36e0abb5c82917b3a3d94'});
+         //
+         //
+         //    if(level1.completion==100) {
+         //        $scope.loginlevelcomplete = true;
+         //    }
   }
 ]);
 /**
@@ -435,6 +460,13 @@ viberApp.directive('navBar', function () {
     restrict: 'E',
     templateUrl: 'views/navbar.html',
     controller: 'vbNavBarCtrl'
+  };
+});
+viberApp.directive('clusterManager', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'views/manage.html',
+    controller: 'vbClusterCtrl'
   };
 });
 viberApp.directive('loginBar', function () {
@@ -693,7 +725,6 @@ viberApp.controller('vbSurveyCtrl', [
             }
           } else {
             $window.location = '/logout';
-            void 0;
           }
         }).error(function (err) {
           void 0;
