@@ -60,7 +60,6 @@ var studentSchema = new Schema({
         name :String,
         secret : String
     },
-    
     role : Number,
     manager : { email:String,updatedon:{type: Date, 'default': Date.now},updatedby:String},
     points : Number,
@@ -82,7 +81,6 @@ var studentSchema = new Schema({
     refercount :Number,
     referred_by: String,
     vcron :Number
-    
 },
     { collection: 'students' })
 

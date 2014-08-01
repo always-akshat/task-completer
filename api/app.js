@@ -240,6 +240,11 @@ app.get('/cron/one_task',students.one_task);
 
 app.get('/data/leaderboard/1',data.leaderboard);
 
+
+app.get('/students/manage/interns',students.getsubordinates)
+app.put('/students/manage/interns', students.addsubordinates)
+app.put('/students/manage/interns/delete',students.removesubordinate);
+
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });

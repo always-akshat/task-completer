@@ -104,7 +104,8 @@ function getStageInfo  (stageid, callback){
             }
             else
             {
-
+                console.log('this is the stage');
+                console.log(JSON.stringify(stage));
                 return callback(null,stage);
             }
         } else {
