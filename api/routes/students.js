@@ -204,7 +204,7 @@ function add_stage(facebookid,stageid,stagename,cb) {
         //console.log('studnet :' + JSON.stringify(students));
         students.forEach(function (instance) {
             //console.log(instance.facebookid + ' -- ' + instance.name);
-            var stage = {
+            var stage =  {
                 "name" : stagename.toString(),
                 "stageid" : stageid.toString(),
                 "completion" : 0
@@ -1134,6 +1134,67 @@ function getstudentauth(req,res) {
     });
 }
 
+function addsubordinates(req,res){
+    console.log('reached put subordinates');
+    console.log(req.body);
+
+    var myinterns = req.body.interns
+    var role = parseInt(req.body.role) - 1;
+    var manager = {email : req.body.email,
+                    updatedby : req.body.email,
+                    updatedon : Date.now()}
+
+
+    var conditions ={ email: { $in: myinterns } }
+        , update = { $set: { role : role , manager : manager} }
+        , options = { multi: true };
+
+    Students.update(conditions, update, options, function(err,data){
+            if(err){
+                console.log(err);
+            }else{
+                res.send(data)
+            }
+    });
+
+
+}
+
+function getsubordinates(req,res){
+
+    var email = req.session.student.email;
+
+    Students.find({'manager.email' :  email})
+        .sort({points: -1})
+        .limit(10)
+        .select('name email stages college.name mobile points facebookid location.name updatedon')
+        .exec(function (err, students) {
+            res.send(students);
+        });
+}
+
+function removesubordinate(req,res){
+
+    var email = req.session.student.email;
+    var am_email = req.body.email;
+
+    var manager = {email : '',
+        updatedby : req.session.student.email,
+        updatedon : Date.now()}
+
+
+    var conditions ={ email:  am_email ,'manager.email' : email }
+        , update = { $set: {manager : manager}}
+        , options = { multi: true };
+
+    Students.update(conditions, update, options, function(err,data){
+        if(err){
+            console.log(err);
+        }else{
+            res.send(data)
+        }
+    });
+}
 
 
 module.exports = {list: list,
@@ -1164,7 +1225,10 @@ module.exports = {list: list,
     validateemail :validateemail,
     verify_vibes :verify_vibes,
     one_task :one_task,
-    getstudentauth :getstudentauth
+    getstudentauth :getstudentauth,
+    getsubordinates : getsubordinates,
+    addsubordinates : addsubordinates,
+    removesubordinate : removesubordinate
 }
 
 
