@@ -277,7 +277,18 @@ viberApp.controller('vbClusterCtrl', [
     vbSharedService.prepForBroadcast(currentPage);
     $scope.email_ids = undefined;
     $scope.addStudent = function () {
-      void 0;
+      var email_array = $scope.email_ids.split(',');
+      var userrole = 0;
+      if ($scope.identity.currentUser.role && $scope.identity.currentUser.role != 0)
+        userrole = $scope.identity.currentUser.role;
+      var reqObject = {
+          interns: email_array,
+          email: $scope.identity.currentUser.email,
+          role: userrole
+        };
+      $http.put('/students/manage/interns', reqObject).success(function (data) {
+        void 0;
+      });
     };
   }
 ]);

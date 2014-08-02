@@ -283,8 +283,20 @@ viberApp.controller('vbClusterCtrl',[ '$scope','$http','vbSharedService','$windo
     $scope.email_ids = undefined;
 
     $scope.addStudent = function(){
-        console.log($scope.email_ids);
-    }
+        var email_array = $scope.email_ids.split(',');
+        var userrole = 0;
+        if($scope.identity.currentUser.role && ($scope.identity.currentUser.role!=0))
+            userrole = $scope.identity.currentUser.role;
+
+        var reqObject = {
+            interns: email_array,
+            email: $scope.identity.currentUser.email,
+            role: userrole
+        };
+        $http.put('/students/manage/interns',reqObject).success(function(data) {
+            console.log(JSON.stringify(data));
+        })
+    };
 }]);
 
 viberApp.factory('vbSharedService',
