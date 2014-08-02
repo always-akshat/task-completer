@@ -266,7 +266,8 @@ viberApp.controller('vbClusterCtrl', [
   '$http',
   'vbSharedService',
   '$window',
-  function ($scope, $rootScope, $http, vbSharedService, $window) {
+  'toaster',
+  function ($scope, $rootScope, $http, vbSharedService, $window, toaster) {
     $window.scrollTo(0, 0);
     var currentPage = {
         home: 0,
@@ -289,7 +290,14 @@ viberApp.controller('vbClusterCtrl', [
           role: userrole
         };
       $http.put('/students/manage/interns', reqObject).success(function (data) {
-        void 0;
+        if (data != 0) {
+          $scope.getinterns();
+          toaster.pop('success', '', data + ' out of' + email_array.length + ' Ambassadors were added successfully.');
+        } else {
+          toaster.pop('failure', '', 'Something went wrong. Please try again with valid mail id.');
+        }
+      }).error(function (err) {
+        toaster.pop('failure', '', 'Something went wrong. Please try again.');
       });
     };
     $scope.getinterns = function () {
@@ -301,8 +309,15 @@ viberApp.controller('vbClusterCtrl', [
     $scope.deleteintern = function (index) {
       var reqBody = { email: $scope.interndata[index].email };
       $http.put('/students/manage/interns/delete', reqBody).success(function (data) {
-        $scope.interndata = _.without($scope.interndata, $scope.interndata[index]);
-      });  //console.log($scope.interndata[index]);
+        if (data == 1) {
+          $scope.interndata = _.without($scope.interndata, $scope.interndata[index]);
+          toaster.pop('success', '', 'Ambassador was removed successfully.');
+        } else {
+          toaster.pop('failure', '', 'Something went wrong. Please try again.');
+        }
+      }).error(function (error) {
+        toaster.pop('failure', '', 'Something went wrong. Please try again.');
+      });
     };
   }
 ]);

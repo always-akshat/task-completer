@@ -282,7 +282,7 @@ viberApp.controller('lbRewardsCtrl', ['vbSharedService', '$window','$rootScope',
 }]);
 
 
-viberApp.controller('vbClusterCtrl',[ '$scope','$rootScope','$http','vbSharedService','$window', function($scope,$rootScope,$http,vbSharedService, $window){
+viberApp.controller('vbClusterCtrl',[ '$scope','$rootScope','$http','vbSharedService','$window','toaster', function($scope,$rootScope,$http,vbSharedService, $window, toaster){
 
     $window.scrollTo(0, 0);
     var currentPage = {home: 0, rewards: 0, lb: 0, mysettings: 0,managecluster: 1};
@@ -302,8 +302,17 @@ viberApp.controller('vbClusterCtrl',[ '$scope','$rootScope','$http','vbSharedSer
             role: userrole
         };
         $http.put('/students/manage/interns',reqObject).success(function(data) {
-            console.log(JSON.stringify(data));
+            if(data != 0) {
+                $scope.getinterns();
+                toaster.pop('success', "", data+" out of"+email_array.length+" Ambassadors were added successfully.");
+            }
+            else{
+                toaster.pop('failure', "", "Something went wrong. Please try again with valid mail id.");
+            }
         })
+            .error(function(err){
+                    toaster.pop('failure', "", "Something went wrong. Please try again.");
+            });
     };
 
     $scope.getinterns = function(){
@@ -316,9 +325,17 @@ viberApp.controller('vbClusterCtrl',[ '$scope','$rootScope','$http','vbSharedSer
     $scope.deleteintern = function(index){
         var reqBody = {email: $scope.interndata[index].email};
         $http.put('/students/manage/interns/delete',reqBody).success(function(data){
-            $scope.interndata = _.without($scope.interndata,$scope.interndata[index]);
-        });
-        //console.log($scope.interndata[index]);
+            if(data==1) {
+                $scope.interndata = _.without($scope.interndata, $scope.interndata[index]);
+                toaster.pop('success', "", "Ambassador was removed successfully.");
+            }
+            else{
+                toaster.pop('failure', "", "Something went wrong. Please try again.");
+            }
+        })
+            .error(function(error){
+                toaster.pop('failure', "", "Something went wrong. Please try again.");
+            });
     };
 
 }]);
