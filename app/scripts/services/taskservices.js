@@ -5,38 +5,38 @@
 var viberApp=angular.module('viberApp');
 
 
-viberApp.factory('postlink',['$http','$q',function($http,$q){
-
-    return{
-
-        postsharelink: function (identity,link,message,task,fbcheck,twcheck) {
-            var reqObj = {'taskid' :task['task_id'],'answers':{message:message,link:link},'platform':{'facebook':fbcheck, 'twitter':twcheck}};
-            var dfd = $q.defer();
-
-            $http.post('/socialshare',reqObj).success(function(data){
-
-                if(angular.isObject(data)){
-                    task.answers = data.answers;
-                    task.completiondata = data.completiondata;
-                    identity.vibes_transaction.push(task.completiondata.transaction);
-                    console.log(JSON.stringify(identity.vibes_transaction));
-                    //$scope.identity.currentUser.vibes_transaction += task.completiondata.transaction;
-                    dfd.resolve(true);
-                }
-                else{
-                    dfd.resolve(false);
-                }
-
-
-            });
-            return dfd.promise;
-
-        }
-
-    }
-
-
-}]);
+//viberApp.factory('postlink',['$http','$q',function($http,$q){
+//
+//    return{
+//
+//        postsharelink: function (identity,link,message,task,fbcheck,twcheck) {
+//            var reqObj = {'taskid' :task['task_id'],'answers':{message:message,link:link},'platform':{'facebook':fbcheck, 'twitter':twcheck}};
+//            var dfd = $q.defer();
+//
+//            $http.post('/socialshare',reqObj).success(function(data){
+//
+//                if(angular.isObject(data)){
+//                    task.answers = data.answers;
+//                    task.completiondata = data.completiondata;
+//                    identity.vibes_transaction.push(task.completiondata.transaction);
+//                    console.log(JSON.stringify(identity.vibes_transaction));
+//                    //$scope.identity.currentUser.vibes_transaction += task.completiondata.transaction;
+//                    dfd.resolve(true);
+//                }
+//                else{
+//                    dfd.resolve(false);
+//                }
+//
+//
+//            });
+//            return dfd.promise;
+//
+//        }
+//
+//    }
+//
+//
+//}]);
 
 
 

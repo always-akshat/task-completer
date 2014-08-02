@@ -389,41 +389,38 @@ viberApp.factory('vbIdentity', function () {
  * Created by Ankit on 6/26/2014.
  */
 var viberApp = angular.module('viberApp');
-viberApp.factory('postlink', [
-  '$http',
-  '$q',
-  function ($http, $q) {
-    return {
-      postsharelink: function (identity, link, message, task, fbcheck, twcheck) {
-        var reqObj = {
-            'taskid': task['task_id'],
-            'answers': {
-              message: message,
-              link: link
-            },
-            'platform': {
-              'facebook': fbcheck,
-              'twitter': twcheck
-            }
-          };
-        var dfd = $q.defer();
-        $http.post('/socialshare', reqObj).success(function (data) {
-          if (angular.isObject(data)) {
-            task.answers = data.answers;
-            task.completiondata = data.completiondata;
-            identity.vibes_transaction.push(task.completiondata.transaction);
-            void 0;
-            //$scope.identity.currentUser.vibes_transaction += task.completiondata.transaction;
-            dfd.resolve(true);
-          } else {
-            dfd.resolve(false);
-          }
-        });
-        return dfd.promise;
-      }
-    };
-  }
-]);
+//viberApp.factory('postlink',['$http','$q',function($http,$q){
+//
+//    return{
+//
+//        postsharelink: function (identity,link,message,task,fbcheck,twcheck) {
+//            var reqObj = {'taskid' :task['task_id'],'answers':{message:message,link:link},'platform':{'facebook':fbcheck, 'twitter':twcheck}};
+//            var dfd = $q.defer();
+//
+//            $http.post('/socialshare',reqObj).success(function(data){
+//
+//                if(angular.isObject(data)){
+//                    task.answers = data.answers;
+//                    task.completiondata = data.completiondata;
+//                    identity.vibes_transaction.push(task.completiondata.transaction);
+//                    console.log(JSON.stringify(identity.vibes_transaction));
+//                    //$scope.identity.currentUser.vibes_transaction += task.completiondata.transaction;
+//                    dfd.resolve(true);
+//                }
+//                else{
+//                    dfd.resolve(false);
+//                }
+//
+//
+//            });
+//            return dfd.promise;
+//
+//        }
+//
+//    }
+//
+//
+//}]);
 viberApp.factory('getminileaderboard', [
   '$http',
   '$q',
@@ -1133,7 +1130,6 @@ viberApp.controller('vbInsertLinksCtrl', [
   '$rootScope',
   '$window',
   function ($scope, $http, toaster, $rootScope, $window) {
-    $scope.link = 'https://www.youtube.com/watch?v=12n9qipCYno';
     $scope.rate = undefined;
     void 0;
     var user_tasks = $scope.identity.currentUser.user_tasks;
@@ -2132,135 +2128,46 @@ viberApp.controller('vbdaysofGoodvibesCtrl', [
   '$window',
   function ($scope, $http, toaster, $rootScope, $window) {
     $scope.rateviber = undefined;
+    $scope.link = 'https://www.youtube.com/watch?v=qQLhhS0vI8E&list=UUzeiZ7_xnJMepZN8h0kONig';
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks, { 'task_id': '53db790668425b29ecc82f6d' })[0];
     $scope.taskcomplete35 = false;
     if (angular.isObject(task) && task.completed == 1)
       $scope.taskcomplete35 = true;
-    //    var fbsuccess=false, twsuccess=false;
-    //
-    //    var bindCtrl = function () {
-    //        $scope.answers = task.answers;
-    //        $scope.completiondata = task.completiondata;
-    //        $scope.answers.reverse();
-    //        _.each($scope.answers,function(answer){
-    //
-    //            if(angular.isObject(answer.facebook)){
-    //
-    //                if(angular.isObject(answer.twitter)) {
-    //
-    //                    answer['fbsuccess'] = true;
-    //                    answer['twsuccess'] = true;
-    //                }
-    //                else {
-    //                    answer['fbsuccess'] = true;
-    //                    answer['twsuccess'] = false;
-    //                }
-    //
-    //            }
-    //            else{ answer['twsuccess'] = true;
-    //                answer['fbsuccess'] =false;
-    //            }
-    //        });
-    //    };
-    //
-    //    bindCtrl();
-    //
-    //    if (angular.isObject($scope.identity.currentUser.facebook) && $scope.identity.currentUser.facebook.authorized == '1') $scope.checkedfb = true;
-    //    if (angular.isObject($scope.identity.currentUser.twitter) && $scope.identity.currentUser.twitter.authorized == '1') $scope.checkedtw = true;
-    //    console.log(angular.isObject($scope.answers.facebook));
-    //
-    //    $scope.submitForm = function (isValid) {
-    //
-    //            if (isValid) {
-    //
-    //
-    //                postlink.postsharelink($scope.identity.currentUser,$scope.link, $scope.message, task, $scope.checkedfb, $scope.checkedtw).then(function(success) {
-    //                    if($scope.checkedfb && $scope.checkedtw){
-    //                        if (success) {
-    //                            toaster.pop('success', "Twitter Post", "Your Message has been posted successfully");
-    //                            toaster.pop('success', "Facebook Post", "Your Message has been posted successfully to Facebook");
-    //                            twsuccess=true;
-    //                            fbsuccess=true;
-    //                            $scope.identity.currentUser.points += 20;
-    //                            bindCtrl();
-    //                        }
-    //                        else {
-    //
-    //                            toaster.pop('failure', "Twitter Post", "There was an error in publishing your post");
-    //                            toaster.pop('failure', "Facebook Post", "There was an error in publishing your post");
-    //                        }
-    //
-    //                        toaster.pop('success', "Social Post", "Your Message has been posted successfully to Facebook");
-    //                        $scope.taskcomplete4=true;
-    //                    }
-    //                    else if($scope.checkedfb){
-    //                        if (success) {
-    //
-    //                            toaster.pop('success', "Facebook Post", "Your Message has been posted successfully to Facebook");
-    //                            fbsuccess=true;
-    //                            $scope.identity.currentUser.points += 20;
-    //                            bindCtrl();
-    //
-    //                        }
-    //                        else {
-    //
-    //                            toaster.pop('failure', "Facebook Post", "There was an error in publishing your post");
-    //
-    //                        }
-    //
-    //                    }
-    //                    else if($scope.checkedtw){
-    //                        if (success) {
-    //                            toaster.pop('success', "Twitter Post", "Your Message has been posted successfully");
-    //                            twsuccess=true;
-    //                            $scope.identity.currentUser.points += 20;
-    //                            bindCtrl();
-    //                        }
-    //                        else {
-    //
-    //                            toaster.pop('failure', "Twitter Post", "There was an error in publishing your post");
-    //
-    //                        }
-    //                    }
-    //
-    //                    toaster.pop('success', "Social Post", "Your Message has been posted successfully to Facebook");
-    //                    $scope.taskcomplete4=true;
-    //
-    //                });
-    //
-    //            }
-    //
-    //        }
-    $scope.submitvideoForm = function (isValid) {
+    if (angular.isObject($scope.identity.currentUser.facebook) && $scope.identity.currentUser.facebook.authorized == '1')
+      $scope.checkedfb = true;
+    $scope.sharevideo = function (isValid) {
       if (isValid) {
-        var reqbody = {
-            'answers': { 'rate': $scope.rateviber },
-            'taskid': '53db790668425b29ecc82f6d'
+        var reqObj = {
+            answers: {
+              message: $scope.message,
+              link: $scope.link
+            },
+            taskid: '53db790668425b29ecc82f6d'
           };
-        $http.put('/rating', reqbody).success(function (data) {
+        $http.post('/socialshare', reqObj).success(function (data) {
           if (angular.isObject(data)) {
             if (angular.isObject(data.completiondata)) {
-              // because the service will not return Level inside completiondata if the user is doing the same task again
               $scope.identity.currentUser.complete3 += data.completiondata.level;
-              $scope.taskcomplete35 = true;
-              task.completed = 1;
               $scope.identity.currentUser.points += data.completiondata.points;
               //$rootScope.level2stagecompletion += data.completiondata.level;
               if ($scope.identity.currentUser.complete3 == 100) {
                 $rootScope.style3 = { 'font-size': '14px' };
               }
-              toaster.pop('success', 'Task 5', 'You have successfully submitted the rating');
               $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+              $scope.taskcomplete35 = true;
+              task.completed = 1;
             }
+            toaster.pop('success', 'Task 5', 'Your Message has been posted successfully to Facebook');
           } else {
             $window.location = '/logout';
           }
         }).error(function (err) {
           void 0;
-          toaster.pop('failure', 'Task 5', 'There was an error submitting your task, please try again');
+          toaster.pop('failure', 'Facebook Post', 'There was an error in publishing your post');
         });
       }
+      ;
     };
   }
 ]);
