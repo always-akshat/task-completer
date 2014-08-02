@@ -29,7 +29,7 @@ viberApp.factory('vbAuth',['$http','vbIdentity','$q','$rootScope','$window',  fu
                         var stage = vbIdentity.currentUser.stages;
                         var level1 = _.where(stage, {'stageid': '5390521624349ecc0c108c10'})[0];
                         var level2 = _.where(stage, {'stageid': '53d36e0abb5c82917b3a3d94'})[0];
-                        var level3 = _.where(stage, {'stageid': 'randomstageid1234567890'})[0];
+                        var level3 = _.where(stage, {'stageid': '53db74a368425b29ecc82f4d'})[0];
 
 
                         vbIdentity.currentUser.level2 = level2.name;
