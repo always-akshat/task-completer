@@ -1,0 +1,48 @@
+<div class="panel panel-default">
+    <div class="panel-heading collapsed" data-parent="#panel-l3" data-toggle="collapse" data-target="#collapseTwo4">
+        <h4 class="panel-title pull-left">
+            Doodle wars!
+        </h4>
+        <span class="pull-right" ng-show="taskcomplete34"><strong class="icon-tick"></strong></span>
+        <span class="pull-right" ng-hide="taskcomplete34"><strong>1000</strong> vibes </span>
+
+    </div>
+
+    <div id="collapseTwo4" class="panel-collapse collapse">
+        <div class="panel-body">
+            <p><strong>Task description:</strong></p>
+            Play a simple game of Doodle wars with your friends! Challenge them to drawing the best doodle via Viber.
+            Upload your best doodle (it may even be your friend's best doodle :) )
+            <br/><br/>
+        </div>
+        <div class="panel-body">
+            <div class="upload-nav text-right">
+                <!--<span ng-show="s3success31" class="alert-success pull-left">{{added31}} added successfully</span>-->
+                <span class="alert-success pull-right">{{submitted34}} Submitted</span>
+                <!--<ul>-->
+                <!--<li class="active"><a href="#added" target="_self" data-toggle="tab">{{submitted}} Submitted</a></li>-->
+                <!--&lt;!&ndash;<li><a href="#pending" data-toggle="tab">12 Pending Approval</a></li>-->
+                <!--<li><a href="#rejected" data-toggle="tab" class="rejected-photo">6 Rejected</a></li>&ndash;&gt;-->
+                <!--</ul>-->
+            </div>
+            <form name="photoForm" ng-submit="onFileUploadl3task4()" novalidate>
+                <div class="tab-pane fade in active new-upload">
+                    <a ng-model="serSubmitted34" ng-repeat="serSubmit in serSubmitted34" href=""><img ng-src="https://s3-ap-southeast-1.amazonaws.com/viber-uploads/level3task4/{{serSubmit}}" height="78" width="78" alt=""/></a>
+                    <a ng-model="s3added34" ng-repeat="s3add in s3added34" href=""><img ng-src="{{s3add}}" height="78" width="78" alt=""/></a>
+
+
+                    <a ng-hide="taskcomplete34" href="#." onclick="document.getElementById('filel3task4').click(); return false;"class="upload-img">
+                        <span class="icon-plus-circle"></span>
+                        Choose<br>
+                        photos
+                    </a>
+                    <input id="filel3task4" type="file" accept="image/*" style="visibility: hidden;" ng-file-select="onFileSelectl3task4($files)"/>
+                    <p style="margin-left: 18px;">
+                        <button ng-hide="taskcomplete34"type="submit" class="btn btn-success radius-none" ng-disabled="zeroselected34">submit</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

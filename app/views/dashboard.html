@@ -59,6 +59,32 @@
     </div>
 </div>
 
+<div class="level-box">
+    <div class="level-meter clearfix">
+        <div class="level-title">{{identity.currentUser.level3}}</div>
+        <div class="progress-box">
+            <div class="row pull-left progress-row">
+                <div class="col-xs-6"></div>
+                <div class="col-xs-6"></div>
+                <div class="col-xs-6"></div>
+                <div class="col-xs-6" style="border: 0px;"></div>
+                <div class="progress-bar" style="width:{{identity.currentUser.complete3}}%;"></div>
+            </div>
+            <span ng-style="style3" class="progress-txt">{{identity.currentUser.complete3}}%</span>
+        </div>
+    </div>
+    <div class="panel-group panel-infoGroup" id="panel-l3">
+        <div class="panel">
+            <goodvibes-mean></goodvibes-mean>
+            <thinkof-viber></thinkof-viber>
+            <backto-school></backto-school>
+            <doodle-wars></doodle-wars>
+            <daysof-goodvibes></daysof-goodvibes>
+        </div>
+        <!--  <task-insert-mobile></task-insert-mobile> -->
+    </div>
+</div>
+
 <p><strong>*</strong>Vibes rewarded for duplicate transactions will get removed at the end of the day.</p>
 <!--<div class="level-box">-->
     <!--<div class="level-meter clearfix">-->

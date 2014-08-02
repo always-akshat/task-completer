@@ -1,0 +1,58 @@
+<div class="panel panel-default">
+    <div class="panel-heading collapsed" data-parent="#panel-l3" data-toggle="collapse" data-target="#collapseTwo5">
+        <h4 class="panel-title pull-left">
+            #GoodVibes Community Video
+        </h4>
+
+        <span ng-show="taskcomplete35" class="pull-right" ><strong class="icon-tick"></strong></span>
+        <span ng-hide="taskcomplete35" class="pull-right" ><strong>400</strong> vibes </span>
+    </div>
+    <div id="collapseTwo5" class="panel-collapse collapse">
+        <div class="panel-body">
+            <p><strong>Task description:</strong></p>
+            Take a look at the #GoodVibes community that you are all a part of. Feel the excitement! Feel the passion! Feel the #GoodVibes
+            <br/><br/>
+            Rate the video and win 400 vibes.
+            <br/><br/>
+            <iframe width="100%" height="315px" src="//www.youtube.com/embed/EOl4e8wsvHU" frameborder="0" allowfullscreen></iframe>
+            <p ng-show="taskcomplete35">You have already completed this task</p>
+        </div>
+        <div class="panel-body">
+            <div class="tab-content custom-form">
+                <div class="tab-pane fade in active">
+                    <form name="vibervideoForm" ng-hide="taskcomplete35" ng-submit="submitvideoForm(vibervideoForm.$valid)" novalidate>
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <div class="que-box">Q</div>
+                            </div>
+                            <div class="col-lg-22">
+                                <p class="question-txt">Rate this video.
+                                    <small>Please select one</small>
+                                </p>
+                                <div class="form-group">
+                                    <input type="radio" id="viber1" name="vibervideo" class="custom-radio" ng-model="rateviber" value="1" required>
+                                    <label for="viber1">Bad Vibes</label>
+                                    <input type="radio" id="viber2" name="vibervideo" class="custom-radio" ng-model="rateviber" value="2" required>
+                                    <label for="viber2">Can be better?</label>
+                                    <input type="radio" id="viber3" name="vibervideo" class="custom-radio" ng-model="rateviber" value="3" required>
+                                    <label for="viber3">It's nice</label>
+                                    <input type="radio" id="viber4" name="vibervideo" class="custom-radio" ng-model="rateviber" value="4" required>
+                                    <label for="viber4">Good Vibes</label>
+                                    <input type="radio" id="viber5" name="vibervideo" class="custom-radio" ng-model="rateviber" value="5" required>
+                                    <label for="viber5">Epic Vibes</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-success" ng-disabled="vibervideoForm.$invalid">submit</button>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

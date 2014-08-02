@@ -91,6 +91,11 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
         $rootScope.style2 = {'font-size':'14px'};
     }
 
+    $rootScope.style3 = undefined;
+    if($scope.identity.currentUser.complete3==100){
+        $rootScope.style3 = {'font-size':'14px'};
+    }
+
 
 }]);
 
