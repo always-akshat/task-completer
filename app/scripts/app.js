@@ -76,7 +76,8 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
         console.log('redirecting');
         $scope.profilecomplete = false;
     }
-    console.log("dashboard "+ JSON.stringify($scope.identity));
+
+    $rootScope.manageclicked = false;
     var stage = $scope.identity.currentUser.stages;
     var level1= _.where(stage,{'stageid':'5390521624349ecc0c108c10'})[0];
     var level2= _.where(stage,{'stageid':'53d36e0abb5c82917b3a3d94'})[0];
@@ -105,12 +106,13 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
 
 }]);
 
-viberApp.controller('leaderboardCtrl', ['$scope', 'vbSharedService', '$http', '$window', function ($scope, vbSharedService, $http, $window) {
+viberApp.controller('leaderboardCtrl', ['$scope','$rootScope' , 'vbSharedService', '$http', '$window', function ($scope, $rootScope,vbSharedService, $http, $window) {
 
     $window.scrollTo(0, 0);
     var currentPage = {home: 0, rewards: 0, lb: 1, mysettings: 0,managecluster: 0};
     vbSharedService.prepForBroadcast(currentPage);
 
+    $rootScope.manageclicked = false;
     $http.get('/students/leaderboard/points').success(function (data) {
 
 
@@ -172,11 +174,12 @@ viberApp.controller('leaderboardCtrl', ['$scope', 'vbSharedService', '$http', '$
 }]);
 
 
-viberApp.controller('lbMySettingsCntrl', ['$scope', '$http', 'vbIdentity', 'vbSharedService', '$window', 'settingSubmit', function ($scope, $http, vbIdentity, vbSharedService, $window, settingSubmit) {
+viberApp.controller('lbMySettingsCntrl', ['$scope', '$rootScope', '$http', 'vbIdentity', 'vbSharedService', '$window', 'settingSubmit', function ($scope,$rootScope, $http, vbIdentity, vbSharedService, $window, settingSubmit) {
 
     $window.scrollTo(0, 0);
     var currentPage = {home: 0, rewards: 0, lb: 0, mysettings: 1,managecluster: 0};
     vbSharedService.prepForBroadcast(currentPage);
+    $rootScope.manageclicked = false;
 
     $scope.tw_auth = false;
     $scope.user = $scope.identity.currentUser;
@@ -269,24 +272,24 @@ viberApp.controller('lbMySettingsCntrl', ['$scope', '$http', 'vbIdentity', 'vbSh
 }]);
 
 
-viberApp.controller('lbRewardsCtrl', ['vbSharedService', '$window', function (vbSharedService, $window) {
+viberApp.controller('lbRewardsCtrl', ['vbSharedService', '$window','$rootScope', function (vbSharedService, $window, $rootScope) {
 
     $window.scrollTo(0, 0);
     var currentPage = {home: 0, rewards: 1, lb: 0, mysettings: 0,managecluster: 0};
     vbSharedService.prepForBroadcast(currentPage);
 
-
+    $rootScope.manageclicked = false;
 }]);
 
 
-viberApp.controller('vbClusterCtrl',[ '$scope','$http','vbSharedService','$window', function($scope,$http,vbSharedService, $window){
+viberApp.controller('vbClusterCtrl',[ '$scope','$rootScope','$http','vbSharedService','$window', function($scope,$rootScope,$http,vbSharedService, $window){
 
     $window.scrollTo(0, 0);
     var currentPage = {home: 0, rewards: 0, lb: 0, mysettings: 0,managecluster: 1};
     vbSharedService.prepForBroadcast(currentPage);
 
     $scope.email_ids = undefined;
-
+    $rootScope.manageclicked = true;
     $scope.addStudent = function(){
         var email_array = $scope.email_ids.split(',');
         var userrole = 0;
@@ -302,6 +305,22 @@ viberApp.controller('vbClusterCtrl',[ '$scope','$http','vbSharedService','$windo
             console.log(JSON.stringify(data));
         })
     };
+
+    $scope.getinterns = function(){
+        $http.get('/students/manage/interns').success(function(data){
+            $scope.interndata = data;
+        });
+    };
+    $scope.getinterns();
+
+    $scope.deleteintern = function(index){
+
+//        $http.put('/students/manage/interns/delete').success(function(data){
+//            $scope.interndata = data;
+//        });
+        console.log(index);
+    };
+
 }]);
 
 viberApp.factory('vbSharedService',

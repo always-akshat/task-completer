@@ -8,303 +8,53 @@
         <button type="submit" class="btn btn-success" ng-disabled="addStudents.$invalid">Add Students</button>
     </div>
 </form>
-<table class="table leaderboard" width="100%">
+<table class="table leaderboard" ng-repeat="intern in interndata" width="100%">
 <tr>
-    <td width="3%"><span class="big-icon-bookmark">1</span> </td>
-    <td width="10%"><img src="images/avatar.jpg" width="40" class="img-circle img-responsive" alt=""/></td>
-    <td width="25%" class="leader-name"><p>Bob Fisher</p>
-        <small>Dhirubhai Ambani Institute of Information And Communication Technology</small><br>
-        <small>Gandhinagar</small>
+    <td width="3%"><span class="big-icon-bookmark">{{$index+1}}</span> </td>
+    <td width="10%"><img ng-src="http://graph.facebook.com/{{intern.facebookid}}/picture?height=80&width=80" class="img-circle img-responsive" alt=""/></td>
+    <td width="25%" class="leader-name"><p>{{intern.name}}</p>
+        <small>{{intern.college.name}}</small><br>
+        <small>{{intern.location.name}}</small>
     </td>
-    <td width="10%">bob.fisher@gmail.com
-        <br>09988998899</td>
+    <td width="10%">{{intern.email}}
+        <br>{{intern.mobile}}</td>
     <td width="17%">
         <div class="avatar-info">
             <div class="row">
+                {{intern.stages[0].name}}
                 <div class="col-xs-6"></div>
                 <div class="col-xs-6"></div>
                 <div class="col-xs-6" style="border: 0px;"></div>
-                <div class="progress-bar" style="width: 50%;"></div>
+                <div class="progress-bar" style="width: {{intern.stages[0].completion}}%;"></div>
             </div>
         </div>
         <div class="avatar-info">
             <div class="row">
+                {{intern.stages[1].name}}
                 <div class="col-xs-6"></div>
                 <div class="col-xs-6"></div>
                 <div class="col-xs-6" style="border: 0px;"></div>
-                <div class="progress-bar" style="width: 50%;"></div>
+                <div class="progress-bar" style="width: {{intern.stages[1].completion}}%;"></div>
+            </div>
+        </div>
+        <div class="avatar-info">
+            <div class="row">
+                {{intern.stages[2].name}}
+                <div class="col-xs-6"></div>
+                <div class="col-xs-6"></div>
+                <div class="col-xs-6" style="border: 0px;"></div>
+                <div class="progress-bar" style="width: {{intern.stages[2].completion}}%;"></div>
             </div>
         </div>
     </td>
-    <td width="12%">224500 Vibes</td>
-    <td width="10%">27 January,2014</td>
+    <td width="12%">{{intern.points}} Vibes</td>
+    <td width="10%">{{intern.updatedon}}</td>
     <td width="13%">
         <div class="col-sm-offset-4 col-sm-20 text-right">
-            <button type="submit" class="btn btn-success" >Send Reminder</button>
-            <button type="button" class="btn btn-link">Remove Ambassador</button>
+            <button type="submit" class="btn btn-success">Send Reminder</button>
+            <button type="button" class="btn btn-link" ng-click="deleteintern($index)">Remove Ambassador</button>
         </div>
     </td>
 </tr>
-<tr>
-    <td width="3%"><span class="big-icon-bookmark">1</span> </td>
-    <td width="10%"><img src="images/avatar.jpg" width="40" class="img-circle img-responsive" alt=""/></td>
-    <td width="25%" class="leader-name"><p>Bob Fisher</p>
-        <small>Dhirubhai Ambani Institute of Information And Communication Technology</small><br>
-        <small>Gandhinagar</small>
-    </td>
-    <td width="10%">bob.fisher@gmail.com
-        <br>09988998899
-    </td>
-    <td width="17%">
-        <div class="avatar-info">
-            <div class="row">
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6" style="border: 0px;"></div>
-                <div class="progress-bar" style="width: 50%;"></div>
-            </div>
-        </div>
-        <div class="avatar-info">
-            <div class="row">
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6" style="border: 0px;"></div>
-                <div class="progress-bar" style="width: 50%;"></div>
-            </div>
-        </div>
-    </td>
-    <td width="12%">224500 Vibes</td>
-    <td width="10%">27 January,2014</td>
-    <td width="13%">
-        <div class="col-sm-offset-4 col-sm-20 text-right">
-            <button type="submit" class="btn btn-success" >Send Reminder</button>
-            <button type="button" class="btn btn-link">Remove Ambassador</button>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td width="3%"><span class="big-icon-bookmark">1</span> </td>
-    <td width="10%"><img src="images/avatar.jpg" width="40" class="img-circle img-responsive" alt=""/></td>
-    <td width="25%" class="leader-name"><p>Bob Fisher</p>
-        <small>Dhirubhai Ambani Institute of Information And Communication Technology</small><br>
-        <small>Gandhinagar</small>
-    </td>
-    <td width="10%">bob.fisher@gmail.com
-        <br>09988998899</td>
-    <td width="17%">
-        <div class="avatar-info">
-            <div class="row">
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6" style="border: 0px;"></div>
-                <div class="progress-bar" style="width: 50%;"></div>
-            </div>
-        </div>
-        <div class="avatar-info">
-            <div class="row">
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6" style="border: 0px;"></div>
-                <div class="progress-bar" style="width: 50%;"></div>
-            </div>
-        </div>
-    </td>
-    <td width="12%">224500 Vibes</td>
-    <td width="10%">27 January,2014</td>
-    <td width="13%">
-        <div class="col-sm-offset-4 col-sm-20 text-right">
-            <button type="submit" class="btn btn-success" >Send Reminder</button>
-            <button type="button" class="btn btn-link">Remove Ambassador</button>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td width="3%"><span class="big-icon-bookmark">1</span> </td>
-    <td width="10%"><img src="images/avatar.jpg" width="40" class="img-circle img-responsive" alt=""/></td>
-    <td width="25%" class="leader-name"><p>Bob Fisher</p>
-        <small>Dhirubhai Ambani Institute of Information And Communication Technology</small><br>
-        <small>Gandhinagar</small>
-    </td>
-    <td width="10%">bob.fisher@gmail.com
-        <br>09988998899</td>
-    <td width="17%">
-        <div class="avatar-info">
-            <div class="row">
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6" style="border: 0px;"></div>
-                <div class="progress-bar" style="width: 50%;"></div>
-            </div>
-        </div>
-        <div class="avatar-info">
-            <div class="row">
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6" style="border: 0px;"></div>
-                <div class="progress-bar" style="width: 50%;"></div>
-            </div>
-        </div>
-    </td>
-    <td width="12%">224500 Vibes</td>
-    <td width="10%">27 January,2014</td>
-    <td width="13%">
-        <div class="col-sm-offset-4 col-sm-20 text-right">
-            <button type="submit" class="btn btn-success" >Send Reminder</button>
-            <button type="button" class="btn btn-link">Remove Ambassador</button>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td width="3%"><span class="big-icon-bookmark">1</span> </td>
-    <td width="10%"><img src="images/avatar.jpg" width="40" class="img-circle img-responsive" alt=""/></td>
-    <td width="25%" class="leader-name"><p>Bob Fisher</p>
-        <small>Dhirubhai Ambani Institute of Information And Communication Technology</small><br>
-        <small>Gandhinagar</small>
-    </td>
-    <td width="10%">bob.fisher@gmail.com
-        <br>09988998899</td>
-    <td width="17%">
-        <div class="avatar-info">
-            <div class="row">
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6" style="border: 0px;"></div>
-                <div class="progress-bar" style="width: 50%;"></div>
-            </div>
-        </div>
-        <div class="avatar-info">
-            <div class="row">
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6" style="border: 0px;"></div>
-                <div class="progress-bar" style="width: 50%;"></div>
-            </div>
-        </div>
-    </td>
-    <td width="12%">224500 Vibes</td>
-    <td width="10%">27 January,2014</td>
-    <td width="13%">
-        <div class="col-sm-offset-4 col-sm-20 text-right">
-            <button type="submit" class="btn btn-success" >Send Reminder</button>
-            <button type="button" class="btn btn-link">Remove Ambassador</button>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td width="3%"><span class="big-icon-bookmark">1</span> </td>
-    <td width="10%"><img src="images/avatar.jpg" width="40" class="img-circle img-responsive" alt=""/></td>
-    <td width="25%" class="leader-name"><p>Bob Fisher</p>
-        <small>Dhirubhai Ambani Institute of Information And Communication Technology</small><br>
-        <small>Gandhinagar</small>
-    </td>
-    <td width="10%">bob.fisher@gmail.com
-        <br>09988998899</td>
-    <td width="17%">
-        <div class="avatar-info">
-            <div class="row">
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6" style="border: 0px;"></div>
-                <div class="progress-bar" style="width: 50%;"></div>
-            </div>
-        </div>
-        <div class="avatar-info">
-            <div class="row">
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6" style="border: 0px;"></div>
-                <div class="progress-bar" style="width: 50%;"></div>
-            </div>
-        </div>
-    </td>
-    <td width="12%">224500 Vibes</td>
-    <td width="10%">27 January,2014</td>
-    <td width="13%">
-        <div class="col-sm-offset-4 col-sm-20 text-right">
-            <button type="submit" class="btn btn-success" >Send Reminder</button>
-            <button type="button" class="btn btn-link">Remove Ambassador</button>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td width="3%"><span class="big-icon-bookmark">1</span> </td>
-    <td width="10%"><img src="images/avatar.jpg" width="40" class="img-circle img-responsive" alt=""/></td>
-    <td width="25%" class="leader-name"><p>Bob Fisher</p>
-        <small>Dhirubhai Ambani Institute of Information And Communication Technology</small><br>
-        <small>Gandhinagar</small>
-    </td>
-    <td width="10%">bob.fisher@gmail.com
-        <br>09988998899</td>
-    <td width="17%">
-        <div class="avatar-info">
-            <div class="row">
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6" style="border: 0px;"></div>
-                <div class="progress-bar" style="width: 50%;"></div>
-            </div>
-        </div>
-        <div class="avatar-info">
-            <div class="row">
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6" style="border: 0px;"></div>
-                <div class="progress-bar" style="width: 50%;"></div>
-            </div>
-        </div>
-    </td>
-    <td width="12%">224500 Vibes</td>
-    <td width="10%">27 January,2014</td>
-    <td width="13%">
-        <div class="col-sm-offset-4 col-sm-20 text-right">
-            <button type="submit" class="btn btn-success" >Send Reminder</button>
-            <button type="button" class="btn btn-link">Remove Ambassador</button>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td width="3%"><span class="big-icon-bookmark">1</span> </td>
-    <td width="10%"><img src="images/avatar.jpg" width="40" class="img-circle img-responsive" alt=""/></td>
-    <td width="25%" class="leader-name"><p>Bob Fisher</p>
-        <small>Dhirubhai Ambani Institute of Information And Communication Technology</small><br>
-        <small>Gandhinagar</small>
-    </td>
-    <td width="10%">bob.fisher@gmail.com
-        <br>09988998899</td>
-    <td width="17%">
-        <div class="avatar-info">
-            <div class="row">
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6" style="border: 0px;"></div>
-                <div class="progress-bar" style="width: 50%;"></div>
-            </div>
-        </div>
-        <div class="avatar-info">
-            <div class="row">
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6"></div>
-                <div class="col-xs-6" style="border: 0px;"></div>
-                <div class="progress-bar" style="width: 50%;"></div>
-            </div>
-        </div>
-    </td>
-    <td width="12%">224500 Vibes</td>
-    <td width="10%">27 January,2014</td>
-    <td width="13%">
-        <div class="col-sm-offset-4 col-sm-20 text-right">
-            <button type="submit" class="btn btn-success" >Send Reminder</button>
-            <button type="button" class="btn btn-link">Remove Ambassador</button>
-        </div>
-    </td>
-</tr>
-<!--<li>-->
-<!--<img src="images/avatar.jpg" width="40" alt="" class="img-circle img-responsive pull-left"/>-->
-
-<!--<div class="leaderboard-info">-->
-<!--<p>Bob Fisher</p>-->
-<!--<a href="#."><span class="icon-bookmark pull-right">2</span>1995 vibes<br>Pune</a>-->
-<!--</div>-->
-<!--</li>-->
 </table>
 </div>
