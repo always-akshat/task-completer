@@ -218,9 +218,64 @@ viberApp.directive('goodvibesMind', function(){
         controller : 'vbGoodvibesMindCtrl'
 
     }
-
-
 });
+
+viberApp.directive('goodvibesMean', function(){
+
+    return{
+
+        restrict : 'E',
+        templateUrl : 'views/goodvibesmean.html',
+        controller : 'vbGoodvibesMeanCtrl'
+
+    }
+});
+
+viberApp.directive('thinkofViber', function(){
+
+    return{
+
+        restrict : 'E',
+        templateUrl : 'views/thinkofviber.html',
+        controller : 'vbThinkofViberCtrl'
+
+    }
+});
+
+viberApp.directive('backtoSchool', function(){
+
+    return{
+
+        restrict : 'E',
+        templateUrl : 'views/backtoschool.html',
+        controller : 'vbBacktoSchoolCtrl'
+
+    }
+});
+
+viberApp.directive('doodleWars', function(){
+
+    return{
+
+        restrict : 'E',
+        templateUrl : 'views/doodlewars.html',
+        controller : 'vbDoodleWarCtrl'
+
+    }
+});
+
+viberApp.directive('daysofGoodvibes', function(){
+
+    return{
+
+        restrict : 'E',
+        templateUrl : 'views/5daysofgoodvibes.html',
+        controller : 'vbdaysofGoodvibesCtrl'
+
+    }
+});
+
+
 
 
 

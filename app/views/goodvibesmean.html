@@ -1,0 +1,51 @@
+<div class="panel panel-default">
+    <div class="panel-heading collapsed" data-parent="#panel-l3" data-toggle="collapse" data-target="#collapseTwo1">
+        <h4 class="panel-title pull-left">
+            What does #GoodVibes mean to you?
+        </h4>
+        <span class="pull-right" ng-show="taskcomplete31"><strong class="icon-tick"></strong></span>
+        <span class="pull-right" ng-hide="taskcomplete31"><strong>5000</strong> vibes </span>
+
+    </div>
+
+    <div id="collapseTwo1" class="panel-collapse collapse">
+        <div class="panel-body">
+            <p><strong>Task description:</strong></p>
+            What does #GoodVibes mean to you? Ask your friends and family what #GoodVibes mean to them. (These ideas will be received via Viber)
+            <br>Best entries will be announced on Radio- Example- Nitin says that #GoodVibes for Hansraj is tapri ki Chai
+            <br>500 vibes per screenshot. You can upload maximum 10 screenshots.
+            <br/><br/>
+        </div>
+        <div class="panel-body">
+            <div class="upload-nav text-right">
+                <!--<span ng-show="s3success31" class="alert-success pull-left">{{added31}} added successfully</span>-->
+                <span class="alert-success pull-right">{{submitted31}} Submitted</span>
+                <!--<ul>-->
+                <!--<li class="active"><a href="#added" target="_self" data-toggle="tab">{{submitted}} Submitted</a></li>-->
+                <!--&lt;!&ndash;<li><a href="#pending" data-toggle="tab">12 Pending Approval</a></li>-->
+                <!--<li><a href="#rejected" data-toggle="tab" class="rejected-photo">6 Rejected</a></li>&ndash;&gt;-->
+                <!--</ul>-->
+            </div>
+            <form name="photoForm" ng-submit="onFileUploadl3task1()" novalidate>
+                <div class="tab-pane fade in active new-upload">
+                    <a ng-model="serSubmitted31" ng-repeat="serSubmit in serSubmitted31" href=""><img ng-src="https://s3-ap-southeast-1.amazonaws.com/viber-uploads/level3task1/{{serSubmit}}" height="78" width="78" alt=""/></a>
+                    <a ng-model="s3added31" ng-repeat="s3add in s3added31" href=""><img ng-src="{{s3add}}" height="78" width="78" alt=""/></a>
+
+
+                    <a ng-hide="tasklimit31" href="#." onclick="document.getElementById('filel3task1').click(); return false;"class="upload-img">
+                        <span class="icon-plus-circle"></span>
+                        Choose<br>
+                        photos
+                    </a>
+                    <input id="filel3task1" type="file" accept="image/*" style="visibility: hidden;" ng-file-select="onFileSelectl3task1($files)"/>
+                    <p style="margin-left: 18px;">
+                        <button ng-hide="tasklimit31"type="submit" class="btn btn-success radius-none" ng-disabled="zeroselected31">submit</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+</div>

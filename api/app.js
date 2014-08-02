@@ -43,6 +43,7 @@ var stages = require("./routes/stages");
 var tasks = require("./routes/tasks");
 var sharer = require("./routes/sharer");
 var data = require("./routes/data");
+var mail = require("./routes/mail");
 var utility_routes = require("./routes/utilities");
 var config_passport = require("./socialpassport");
 
