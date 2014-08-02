@@ -2200,6 +2200,101 @@ viberApp.controller('vbdaysofGoodvibesCtrl', [
     $scope.taskcomplete35 = false;
     if (angular.isObject(task) && task.completed == 1)
       $scope.taskcomplete35 = true;
+    //    var fbsuccess=false, twsuccess=false;
+    //
+    //    var bindCtrl = function () {
+    //        $scope.answers = task.answers;
+    //        $scope.completiondata = task.completiondata;
+    //        $scope.answers.reverse();
+    //        _.each($scope.answers,function(answer){
+    //
+    //            if(angular.isObject(answer.facebook)){
+    //
+    //                if(angular.isObject(answer.twitter)) {
+    //
+    //                    answer['fbsuccess'] = true;
+    //                    answer['twsuccess'] = true;
+    //                }
+    //                else {
+    //                    answer['fbsuccess'] = true;
+    //                    answer['twsuccess'] = false;
+    //                }
+    //
+    //            }
+    //            else{ answer['twsuccess'] = true;
+    //                answer['fbsuccess'] =false;
+    //            }
+    //        });
+    //    };
+    //
+    //    bindCtrl();
+    //
+    //    if (angular.isObject($scope.identity.currentUser.facebook) && $scope.identity.currentUser.facebook.authorized == '1') $scope.checkedfb = true;
+    //    if (angular.isObject($scope.identity.currentUser.twitter) && $scope.identity.currentUser.twitter.authorized == '1') $scope.checkedtw = true;
+    //    console.log(angular.isObject($scope.answers.facebook));
+    //
+    //    $scope.submitForm = function (isValid) {
+    //
+    //            if (isValid) {
+    //
+    //
+    //                postlink.postsharelink($scope.identity.currentUser,$scope.link, $scope.message, task, $scope.checkedfb, $scope.checkedtw).then(function(success) {
+    //                    if($scope.checkedfb && $scope.checkedtw){
+    //                        if (success) {
+    //                            toaster.pop('success', "Twitter Post", "Your Message has been posted successfully");
+    //                            toaster.pop('success', "Facebook Post", "Your Message has been posted successfully to Facebook");
+    //                            twsuccess=true;
+    //                            fbsuccess=true;
+    //                            $scope.identity.currentUser.points += 20;
+    //                            bindCtrl();
+    //                        }
+    //                        else {
+    //
+    //                            toaster.pop('failure', "Twitter Post", "There was an error in publishing your post");
+    //                            toaster.pop('failure', "Facebook Post", "There was an error in publishing your post");
+    //                        }
+    //
+    //                        toaster.pop('success', "Social Post", "Your Message has been posted successfully to Facebook");
+    //                        $scope.taskcomplete4=true;
+    //                    }
+    //                    else if($scope.checkedfb){
+    //                        if (success) {
+    //
+    //                            toaster.pop('success', "Facebook Post", "Your Message has been posted successfully to Facebook");
+    //                            fbsuccess=true;
+    //                            $scope.identity.currentUser.points += 20;
+    //                            bindCtrl();
+    //
+    //                        }
+    //                        else {
+    //
+    //                            toaster.pop('failure', "Facebook Post", "There was an error in publishing your post");
+    //
+    //                        }
+    //
+    //                    }
+    //                    else if($scope.checkedtw){
+    //                        if (success) {
+    //                            toaster.pop('success', "Twitter Post", "Your Message has been posted successfully");
+    //                            twsuccess=true;
+    //                            $scope.identity.currentUser.points += 20;
+    //                            bindCtrl();
+    //                        }
+    //                        else {
+    //
+    //                            toaster.pop('failure', "Twitter Post", "There was an error in publishing your post");
+    //
+    //                        }
+    //                    }
+    //
+    //                    toaster.pop('success', "Social Post", "Your Message has been posted successfully to Facebook");
+    //                    $scope.taskcomplete4=true;
+    //
+    //                });
+    //
+    //            }
+    //
+    //        }
     $scope.submitvideoForm = function (isValid) {
       if (isValid) {
         var reqbody = {
