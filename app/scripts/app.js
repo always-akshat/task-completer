@@ -314,11 +314,11 @@ viberApp.controller('vbClusterCtrl',[ '$scope','$rootScope','$http','vbSharedSer
     $scope.getinterns();
 
     $scope.deleteintern = function(index){
-
-//        $http.put('/students/manage/interns/delete').success(function(data){
-//            $scope.interndata = data;
-//        });
-        console.log(index);
+        var reqBody = {email: $scope.interndata[index].email};
+        $http.put('/students/manage/interns/delete',reqBody).success(function(data){
+            $scope.interndata = _.without($scope.interndata,$scope.interndata[index]);
+        });
+        //console.log($scope.interndata[index]);
     };
 
 }]);
