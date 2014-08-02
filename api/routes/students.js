@@ -1151,9 +1151,9 @@ function addsubordinates(req,res){
 
     Students.update(conditions, update, options, function(err,data){
             if(err){
-                console.log(err);
+                console.log('0');
             }else{
-                res.send(data)
+                res.send(data.toString());
             }
     });
 
@@ -1190,8 +1190,9 @@ function removesubordinate(req,res){
     Students.update(conditions, update, options, function(err,data){
         if(err){
             console.log(err);
+            res.send('0');
         }else{
-            res.send(data)
+            res.send(data.toString())
         }
     });
 }
