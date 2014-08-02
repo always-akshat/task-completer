@@ -21,7 +21,7 @@ exports.params = {
         Body: { // required
             Html: {
                 Data: ''//, // required
-                //Charset: 'STRING_VALUE'
+                    //Charset: 'STRING_VALUE'
             }
         },
         Subject: { // required
