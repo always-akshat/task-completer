@@ -1540,8 +1540,9 @@ viberApp.controller('vbdaysofGoodvibesCtrl',['$scope','$http','toaster','$rootSc
         if (isValid) {
             var reqObj = {
                 answers: {message: $scope.message,
-                    link: $scope.link
+                        link: $scope.link
                 },
+                platform : {facebook : 1},
                 taskid: '53db790668425b29ecc82f6d'
             };
             $http.post('/socialshare', reqObj).success(function (data) {
