@@ -152,7 +152,7 @@ function enter_old_user(referrer,profile,authcode,cb){
                     console.log('NO facebookid');
                     student.facebookid = profile.id;
                     student.facebook.friends = [];
-                    student.facebook.authcode = accessToken;
+                    student.facebook.authcode = authcode;
                     student.facebook.authorized = 1;
                     student.gender = profile.gender;
                     student.name = profile.displayName;
