@@ -55,8 +55,9 @@ viberApp.controller('vbNavBarCtrl', [
     //    var currentPage = {home:1,rewards:0,lb:0, mysettings:0};
     //    vbSharedService.prepForBroadcast(currentPage);
     $scope.isManager = false;
-    if ($scope.identity.currentUser.role && $scope.identity.currentUser.role > 0)
+    if ($scope.identity.currentUser.role && $scope.identity.currentUser.role > 0) {
       $scope.isManager = true;
+    }
     $scope.logout = function () {
       $window.location = '/logout';
     };

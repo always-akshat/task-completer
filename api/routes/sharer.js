@@ -25,11 +25,12 @@ exports.share = function(req,res){
 
 
 
-    push
+
     if(platform.facebook == 1) {
         asyncTasks.push(function(cb){
             feed_sharelink(auth,answers, function(facebook_post_data){
                 console.log('hii facebook');
+                console.log(facebook_post_data);
                 if(facebook_post_data && facebook_post_data !=0){
                     console.log('facebook returned' + JSON.stringify(facebook_post_data));
                     answers.facebook ={};
