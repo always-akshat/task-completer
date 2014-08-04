@@ -686,7 +686,7 @@ function completeTask(facebookid, taskid,orig_points,cb) {
                             console.log('this is the task id in complete answers :' + taskid);
 
 
-                            if (already_complete != 1 || taskid =='53db790668425b29ecc82f6d') {
+                            if (already_complete != 1 || taskid =='53db763c68425b29ecc82f4e') {
                             addpoints(facebookid, points, function (points_to_add) {
                                 //console.log('points to add :'+ points_to_add);
                                 if (points_to_add == 0) {
