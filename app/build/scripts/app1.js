@@ -41,16 +41,22 @@ viberApp.config([
 viberApp.controller('vbNavBarCtrl', [
   '$scope',
   '$window',
-  function ($scope, $window) {
+  '$http',
+  function ($scope, $window, $http) {
     //    var currentPage = {home:1,rewards:0,lb:0, mysettings:0};
     //    vbSharedService.prepForBroadcast(currentPage);
     $scope.isManager = false;
-    if ($scope.identity.currentUser.role && $scope.identity.currentUser.role > 0) {
-      $scope.isManager = true;
-    }
     $scope.logout = function () {
       $window.location = '/logout';
     };
+    $http.get('/getstudentdata').success(function (data) {
+      if (angular.isObject(data) && data.role) {
+        $scope.user_role = data.role;
+      }
+    });
+    if ($scope.user_role && $scope.user_role > 0) {
+      $scope.isManager = true;
+    }
   }
 ]);
 viberApp.controller('dashboardCtrl', [
@@ -1850,7 +1856,6 @@ viberApp.controller('vbGoodvibesMeanCtrl', [
             if (data.completiondata.level)
               $scope.identity.currentUser.complete3 += data.completiondata.level;
             $scope.identity.currentUser.points += data.completiondata.points;
-            //$rootScope.level2stagecompletion += data.completiondata.level;
             if ($scope.identity.currentUser.complete3 == 100) {
               $rootScope.style3 = { 'font-size': '14px' };
             }

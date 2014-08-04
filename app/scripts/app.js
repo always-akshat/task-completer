@@ -53,21 +53,27 @@ viberApp.config(['$routeProvider', function ($routeProvider) {
     }]);
 
 
-viberApp.controller('vbNavBarCtrl', ['$scope', '$window', function ($scope, $window) {
+viberApp.controller('vbNavBarCtrl', ['$scope', '$window', '$http', function ($scope, $window, $http) {
 
 
 //    var currentPage = {home:1,rewards:0,lb:0, mysettings:0};
 //    vbSharedService.prepForBroadcast(currentPage);
     $scope.isManager = false;
-    if($scope.identity.currentUser.role && ($scope.identity.currentUser.role>0)) {
-        $scope.isManager = true;
-    }
     $scope.logout = function () {
 
         $window.location = "/logout";
 
     }
+    $http.get('/getstudentdata').success(function (data) {
 
+
+        if (angular.isObject(data) && data.role) {
+            $scope.user_role = data.role;
+        }
+    });
+    if ($scope.user_role && ($scope.user_role > 0)) {
+        $scope.isManager = true;
+    }
 
 }]);
 

@@ -1162,7 +1162,6 @@ viberApp.controller('vbGoodvibesMeanCtrl',['$scope','$upload','$http','toaster',
                     if(data.completiondata.level)
                         $scope.identity.currentUser.complete3 += data.completiondata.level;
                     $scope.identity.currentUser.points += data.completiondata.points;
-                    //$rootScope.level2stagecompletion += data.completiondata.level;
                     if($scope.identity.currentUser.complete3==100){
                         $rootScope.style3 = {'font-size':'14px'};
                     }
