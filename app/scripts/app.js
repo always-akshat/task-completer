@@ -66,14 +66,13 @@ viberApp.controller('vbNavBarCtrl', ['$scope', '$window', '$http', function ($sc
     }
     $http.get('/getstudentdata').success(function (data) {
 
-
-        if (angular.isObject(data) && data.role) {
+        if (angular.isObject(data) && angular.isNumber(data.role)) {
             $scope.user_role = data.role;
+            if ($scope.user_role == 0) {
+                $scope.isManager = true;
+            }
         }
     });
-    if ($scope.user_role && ($scope.user_role > 0)) {
-        $scope.isManager = true;
-    }
 
 }]);
 
