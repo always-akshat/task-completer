@@ -672,7 +672,7 @@ function completeTask(facebookid, taskid,orig_points,cb) {
             }
 
             console.log('completion :' + completion);
-            if (completion == 1 && taskid !='53db790668425b29ecc82f6d')  {
+            if (completion == 1)  {
                 var completion_value = {};
                 completion_value.user_task = doc.user_tasks[0];
                 Students.update({'facebookid': facebookid, 'user_tasks.task_id': taskid},    //completion :1, add points, add transaction
@@ -686,7 +686,7 @@ function completeTask(facebookid, taskid,orig_points,cb) {
                             console.log('this is the task id in complete answers :' + taskid);
 
 
-                            if (already_complete != 1) {
+                            if (already_complete != 1 || taskid =='53db790668425b29ecc82f6d') {
                             addpoints(facebookid, points, function (points_to_add) {
                                 //console.log('points to add :'+ points_to_add);
                                 if (points_to_add == 0) {

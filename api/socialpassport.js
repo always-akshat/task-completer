@@ -40,7 +40,7 @@ module.exports = passport.use(new FacebookStrategy({
 
 //        console.log('checked for mail');
         if (fb_email) {
-            enter_old_user(referrer,profile, function(err,data){
+            enter_old_user(referrer,profile,accessToken, function(err,data){
   //              console.log('data recieved in main function');
                 if(err){
                     console.log(err);
@@ -90,7 +90,7 @@ passport.deserializeUser(function(obj, done) {
     done(null, obj);
 });
 
-function enter_old_user(referrer,profile,cb){
+function enter_old_user(referrer,profile,authcode,cb){
 
     console.log('enter old user reg');
     Students.findOne({ email: fb_email}, function (err, student) {
@@ -105,7 +105,7 @@ function enter_old_user(referrer,profile,cb){
                 student.email = fb_email;
                 student.facebookid = profile.id;
                 student.facebook.friends = [];
-                //student.facebook.authcode = accessToken;
+
                 student.facebook.authorized = 1;
                 student.gender = profile.gender;
                 student.name = profile.displayName;
@@ -152,7 +152,7 @@ function enter_old_user(referrer,profile,cb){
                     console.log('NO facebookid');
                     student.facebookid = profile.id;
                     student.facebook.friends = [];
-                    //student.facebook.authcode = accessToken;
+                    student.facebook.authcode = accessToken;
                     student.facebook.authorized = 1;
                     student.gender = profile.gender;
                     student.name = profile.displayName;
@@ -163,6 +163,7 @@ function enter_old_user(referrer,profile,cb){
                 }
             }
 
+            student.facebook.authcode = authcode;
                 //console.log(student);
                 student.save(function(err) {
                     console.log('trying to save student');

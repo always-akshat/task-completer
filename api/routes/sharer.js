@@ -22,7 +22,7 @@ exports.share = function(req,res){
     var taskid = req.body.taskid;
     var platform = req.body.platform;
     var auth = req.session.student.facebook.authcode;
-
+    var asyncTasks = [];
 
 
 
@@ -35,6 +35,7 @@ exports.share = function(req,res){
                     console.log('facebook returned' + JSON.stringify(facebook_post_data));
                     answers.facebook ={};
                     answers.facebook.post_id =facebook_post_data;
+                    console.log(answers);
                 }
                 cb(null,1);
             });
