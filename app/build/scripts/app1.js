@@ -52,7 +52,7 @@ viberApp.controller('vbNavBarCtrl', [
     $http.get('/getstudentdata').success(function (data) {
       if (angular.isObject(data) && angular.isNumber(data.role)) {
         $scope.user_role = data.role;
-        if ($scope.user_role == 0) {
+        if ($scope.user_role > 0) {
           $scope.isManager = true;
         }
       }
@@ -959,7 +959,7 @@ viberApp.controller('vbinviteFrndsCtrl', [
     $scope.sendRequest = function () {
       //var user_id = document.getElementsByName("user_id")[0].value;
       FB.init({
-        appId: '493599764105814',
+        appId: '247429375447674',
         cookie: true,
         status: true,
         xfbml: true
@@ -2213,36 +2213,68 @@ viberApp.controller('vbdaysofGoodvibesCtrl', [
       $scope.taskcomplete35 = true;
     if (angular.isObject($scope.identity.currentUser.facebook) && $scope.identity.currentUser.facebook.authorized == '1')
       $scope.checkedfb = true;
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: '247429375447674',
+        status: true,
+        cookie: true,
+        xfbml: true
+      });
+    };
+    // Load the SDK Asynchronously
+    (function (d) {
+      var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement('script');
+      js.id = id;
+      js.async = true;
+      js.src = '//connect.facebook.net/en_US/all.js';
+      ref.parentNode.insertBefore(js, ref);
+    }(document));
     $scope.sharevideo = function (isValid) {
       if (isValid) {
-        var reqObj = {
-            answers: {
-              message: $scope.message,
-              link: $scope.link
-            },
-            platform: { facebook: 1 },
-            taskid: '53db790668425b29ecc82f6d'
-          };
-        $http.post('/socialshare', reqObj).success(function (data) {
-          if (angular.isObject(data)) {
-            if (angular.isObject(data.completiondata)) {
-              $scope.identity.currentUser.complete3 += data.completiondata.level;
-              $scope.identity.currentUser.points += data.completiondata.points;
-              //$rootScope.level2stagecompletion += data.completiondata.level;
-              if ($scope.identity.currentUser.complete3 == 100) {
-                $rootScope.style3 = { 'font-size': '14px' };
+        FB.ui({
+          method: 'feed',
+          name: '#Goodvibes community video',
+          link: 'https://www.youtube.com/watch?v=qQLhhS0vI8E&list=UUzeiZ7_xnJMepZN8h0kONig',
+          description: 'Take a look at the #GoodVibes community. Feel the excitement! Feel the passion! Feel the #GoodVibes',
+          user_message_prompt: 'Share your thoughts about RELL'
+        }, function (response) {
+          if (response && response.post_id) {
+            var reqObj = {
+                answers: {
+                  message: 'Post was published on facebook',
+                  link: response.post_id
+                },
+                platform: { facebook: 1 },
+                taskid: '53db790668425b29ecc82f6d'
+              };
+            $http.post('/socialshare', reqObj).success(function (data) {
+              if (angular.isObject(data)) {
+                if (angular.isObject(data.completiondata)) {
+                  $scope.identity.currentUser.complete3 += data.completiondata.level;
+                  $scope.identity.currentUser.points += data.completiondata.points;
+                  //$rootScope.level2stagecompletion += data.completiondata.level;
+                  if ($scope.identity.currentUser.complete3 == 100) {
+                    $rootScope.style3 = { 'font-size': '14px' };
+                  }
+                  $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+                  $scope.taskcomplete35 = true;
+                  task.completed = 1;
+                }
+                toaster.pop('success', 'Task 5', 'Your Message has been posted successfully to Facebook');
+              } else {
+                $window.location = '/logout';
               }
-              $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
-              $scope.taskcomplete35 = true;
-              task.completed = 1;
-            }
-            toaster.pop('success', 'Task 5', 'Your Message has been posted successfully to Facebook');
+            }).error(function (err) {
+              void 0;
+              toaster.pop('failure', 'Facebook Post', 'There was an error in publishing your post');
+            });
           } else {
-            $window.location = '/logout';
+            toaster.pop('failure', 'Facebook Post', 'There was an error in publishing your post');
           }
-        }).error(function (err) {
-          void 0;
-          toaster.pop('failure', 'Facebook Post', 'There was an error in publishing your post');
         });
       }
       ;

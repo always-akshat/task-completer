@@ -68,7 +68,7 @@ viberApp.controller('vbNavBarCtrl', ['$scope', '$window', '$http', function ($sc
 
         if (angular.isObject(data) && angular.isNumber(data.role)) {
             $scope.user_role = data.role;
-            if ($scope.user_role == 0) {
+            if ($scope.user_role > 0) {
                 $scope.isManager = true;
             }
         }
