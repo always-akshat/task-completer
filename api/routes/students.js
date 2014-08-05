@@ -969,32 +969,13 @@ function delete_my_data(req,res){
 function validateemail(req,res) {
 
     console.log('reached validate');
+    console.log('req.session.newmail' + req.session.new_email);
     var email = req.body.mail;
-    console.log('validating from backend - ' + email);
-    if (req.session.new_email) {
-    return Students.findOne({ email: email }, function (err, doc) {
-        if (err) {
-            res.send('request could not be completed. please try again');
-        } else if (doc == null) {
-            res.send('Your email was not found in the database.<br>' +
-                'Please click <a href="http://thegoodvibes.in">here </a> to register for batch 2.</a>');
-        } else {
-            doc.email = req.session.new_email;
-            doc.save(function (err) {
-                if (!err) {
-                    req.session.new_email = undefined;
-                    res.redirect('/auth/facebook');
-                } else {
-                    res.send('Oops something went wrong. Please try again')
-                }
 
-            })
+    if (email) {
+        req.session.register_mail = email;
+        res.redirect('/auth/facebook');
         }
-
-    })
-        }
-
-
 }
 
 function verify_vibes(req,res){

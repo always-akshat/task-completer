@@ -127,8 +127,8 @@ app.get('/login', function(req,res){
     req.session.student = null;
     if(req.user) {
         if (req.user == 3) {
-            res.send('There is no email associated with your facebook account. Add an emailid in your facebook settings to login.');
-            //res.redirect('/?error=2');
+           res.send('There is no email associated with your facebook account. Add an emailid in your facebook settings to login.');
+            //res.redirect('/register');
         }
         else if (req.user == 2) {
             console.log('error occured - redirecting to main page');
