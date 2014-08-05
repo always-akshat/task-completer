@@ -200,7 +200,7 @@ viberApp.controller('vbinviteFrndsCtrl',['$scope','$http','toaster','$rootScope'
     $scope.sendRequest = function() {
         //var user_id = document.getElementsByName("user_id")[0].value;
         FB.init({
-            appId: '247429375447674',
+            appId: '493599764105814',
             cookie:true,
             status:true,
             xfbml:true
@@ -1536,7 +1536,7 @@ viberApp.controller('vbdaysofGoodvibesCtrl',['$scope','$http','toaster','$rootSc
 
     window.fbAsyncInit = function() {
         FB.init({
-            appId      : '247429375447674', // App ID
+            appId      : '493599764105814', // App ID
             status     : true, // check login status
             cookie     : true, // enable cookies to allow the server to access the session
             xfbml      : true  // parse XFBML

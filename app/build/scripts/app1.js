@@ -959,7 +959,7 @@ viberApp.controller('vbinviteFrndsCtrl', [
     $scope.sendRequest = function () {
       //var user_id = document.getElementsByName("user_id")[0].value;
       FB.init({
-        appId: '247429375447674',
+        appId: '493599764105814',
         cookie: true,
         status: true,
         xfbml: true
@@ -2215,7 +2215,7 @@ viberApp.controller('vbdaysofGoodvibesCtrl', [
       $scope.checkedfb = true;
     window.fbAsyncInit = function () {
       FB.init({
-        appId: '247429375447674',
+        appId: '493599764105814',
         status: true,
         cookie: true,
         xfbml: true
