@@ -33,7 +33,7 @@
     </div>
 </div>
 
-<div class="level-box">
+<div class="level-box" ng-show="level1completed">
     <div class="level-meter clearfix">
         <div class="level-title">{{identity.currentUser.level2}}</div>
         <div class="progress-box">
@@ -59,7 +59,7 @@
     </div>
 </div>
 
-<div class="level-box">
+<div class="level-box" ng-show="level2completed">
     <div class="level-meter clearfix">
         <div class="level-title">{{identity.currentUser.level3}}</div>
         <div class="progress-box">
@@ -85,14 +85,14 @@
     </div>
 </div>
 
-<div class="level-box">
-    <div class="level-meter clearfix">
-        <div class="level-title">Level 4</div>
-        <div class="progress-box">
-            <span ng-style="style3" class="progress-txt">Coming Soon</span>
-        </div>
-    </div>
-</div>
+<!--<div class="level-box">-->
+    <!--<div class="level-meter clearfix">-->
+        <!--<div class="level-title">Level 4</div>-->
+        <!--<div class="progress-box">-->
+            <!--<span ng-style="style3" class="progress-txt">Coming Soon</span>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
 
 <p><strong>*</strong>Vibes rewarded for duplicate transactions will get removed at the end of the day.</p>
 <!--<div class="level-box">-->

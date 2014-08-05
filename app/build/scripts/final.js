@@ -77,6 +77,8 @@ viberApp.controller('dashboardCtrl', [
   '$window',
   '$location',
   function ($rootScope, $scope, vbSharedService, vbAuth, $window, $location) {
+    $scope.level1iscompleted = false;
+    $scope.level2iscompleted = false;
     $scope.profilecomplete = true;
     if (!angular.isObject($scope.identity.currentUser.college) || !angular.isObject($scope.identity.currentUser.college)) {
       void 0;
@@ -86,6 +88,10 @@ viberApp.controller('dashboardCtrl', [
     var stage = $scope.identity.currentUser.stages;
     var level1 = _.where(stage, { 'stageid': '5390521624349ecc0c108c10' })[0];
     var level2 = _.where(stage, { 'stageid': '53d36e0abb5c82917b3a3d94' })[0];
+    if ($scope.identity.currentUser.complete1 == 100)
+      $scope.level1iscompleted = true;
+    if ($scope.identity.currentUser.complete2 == 100)
+      $scope.level2iscompleted = true;
     $window.scrollTo(0, 0);
     var currentPage = {
         home: 1,
@@ -808,6 +814,7 @@ viberApp.controller('vbSurveyCtrl', [
               'answer2': $scope.old,
               'answer3': $scope.learning
             },
+            c: $scope.identity.currentUser.c,
             'taskid': '53a951f9e4b041d6a3190438'
           };
         $http.put('/survey', JSON.stringify(postObj)).success(function (data) {
@@ -923,6 +930,7 @@ viberApp.controller('vbUploadPhotosCtrl', [
     $scope.onFileUpload = function () {
       var reqbody = {
           'answers': { 'name': $scope.done },
+          c: $scope.identity.currentUser.c,
           'taskid': '53a9526be4b041d6a3190441'
         };
       $scope.serSubmitted.push($scope.done[0]);
@@ -983,6 +991,7 @@ viberApp.controller('vbinviteFrndsCtrl', [
           if (response.to) {
             var reqObj = {
                 'answers': { 'fb_ids': response.to },
+                c: $scope.identity.currentUser.c,
                 'taskid': '53a9526be4b041d6a3190440'
               };
             $http.put('/invites', reqObj).success(function (data) {
@@ -1032,6 +1041,7 @@ viberApp.controller('vblikenfollowCtrl', [
         var reqbody = {
             'answers': { 'link': 'https://www.facebook.com/officialviberindia/' },
             'platform': { 'facebook': true },
+            c: $scope.identity.currentUser.c,
             'taskid': '53a9526be4b041d6a3190439'
           };
         $http.put('/likefollow', reqbody).success(function (data) {
@@ -1063,6 +1073,7 @@ viberApp.controller('vblikenfollowCtrl', [
         var reqbody = {
             'answers': { 'link': 'viber_india' },
             'platform': { 'twitter': true },
+            c: $scope.identity.currentUser.c,
             'taskid': '53a9526be4b041d6a3190439'
           };
         $http.put('/likefollow', reqbody).success(function (data) {
@@ -1229,6 +1240,7 @@ viberApp.controller('vbInsertLinksCtrl', [
       if (isValid) {
         var reqbody = {
             'answers': { 'rate': $scope.rate },
+            c: $scope.identity.currentUser.c,
             'taskid': '53a9526be4b041d6a3190442'
           };
         $http.put('/stickers', reqbody).success(function (data) {
@@ -1391,6 +1403,7 @@ viberApp.controller('vbKnowViberCtrl', [
               'answer9': $scope.task1que9,
               'answer10': $scope.task1que10
             },
+            c: $scope.identity.currentUser.c,
             'taskid': '53d1e789bb5c82917b3a3a41'
           };
         $http.put('/knowviber', JSON.stringify(postObj)).success(function (data) {
@@ -1404,6 +1417,7 @@ viberApp.controller('vbKnowViberCtrl', [
               //$rootScope.level2stagecompletion += data.completiondata.level;
               if ($scope.identity.currentUser.complete2 == 100) {
                 $rootScope.style2 = { 'font-size': '14px' };
+                $scope.level1iscompleted = true;
               }
               $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
               toaster.pop('success', 'Task 1', 'You have successfully finished the first task');
@@ -1491,6 +1505,7 @@ viberApp.controller('vbActivateCtrl', [
     $scope.onFileUploadtask2 = function () {
       var reqbody = {
           'answers': { 'name': $scope.done22 },
+          c: $scope.identity.currentUser.c,
           'taskid': '53d1e85abb5c82917b3a3a42'
         };
       $scope.serSubmitted22.push($scope.done22[0]);
@@ -1504,6 +1519,7 @@ viberApp.controller('vbActivateCtrl', [
             //$rootScope.level2stagecompletion += data.completiondata.level;
             if ($scope.identity.currentUser.complete2 == 100) {
               $rootScope.style2 = { 'font-size': '14px' };
+              $scope.level1iscompleted = true;
             }
             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             $scope.taskcomplete22 = true;
@@ -1595,6 +1611,7 @@ viberApp.controller('vbGoodvibesMindCtrl', [
     $scope.onFileUploadtask3 = function () {
       var reqbody = {
           'answers': { 'name': $scope.done23 },
+          c: $scope.identity.currentUser.c,
           'taskid': '53d1e8c9bb5c82917b3a3a43'
         };
       $scope.serSubmitted23.push($scope.done23[0]);
@@ -1608,6 +1625,7 @@ viberApp.controller('vbGoodvibesMindCtrl', [
             //$rootScope.level2stagecompletion += data.completiondata.level;
             if ($scope.identity.currentUser.complete2 == 100) {
               $rootScope.style2 = { 'font-size': '14px' };
+              $scope.level1iscompleted = true;
             }
             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             $scope.taskcomplete23 = true;
@@ -1644,6 +1662,7 @@ viberApp.controller('vbTaskYuwaCtrl', [
       if (isValid) {
         var reqbody = {
             'answers': { 'rate': $scope.rateyuwa },
+            c: $scope.identity.currentUser.c,
             'taskid': '53d1e90cbb5c82917b3a3a44'
           };
         $http.put('/rating', reqbody).success(function (data) {
@@ -1657,6 +1676,7 @@ viberApp.controller('vbTaskYuwaCtrl', [
               //$rootScope.level2stagecompletion += data.completiondata.level;
               if ($scope.identity.currentUser.complete2 == 100) {
                 $rootScope.style2 = { 'font-size': '14px' };
+                $scope.level1iscompleted = true;
               }
               toaster.pop('success', 'Task 4', 'You have successfully finished the fourth task');
               $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
@@ -1746,6 +1766,7 @@ viberApp.controller('vbSupportYuwaCtrl', [
     $scope.onFileUploadtask5 = function () {
       var reqbody = {
           'answers': { 'name': $scope.done25 },
+          c: $scope.identity.currentUser.c,
           'taskid': '53d1ec3bbb5c82917b3a3a45'
         };
       $scope.serSubmitted25.push($scope.done25[0]);
@@ -1759,6 +1780,7 @@ viberApp.controller('vbSupportYuwaCtrl', [
             //$rootScope.level2stagecompletion += data.completiondata.level;
             if ($scope.identity.currentUser.complete2 == 100) {
               $rootScope.style2 = { 'font-size': '14px' };
+              $scope.level1iscompleted = true;
             }
             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             $scope.taskcomplete25 = true;
@@ -1855,6 +1877,7 @@ viberApp.controller('vbGoodvibesMeanCtrl', [
     $scope.onFileUploadl3task1 = function () {
       var reqbody = {
           'answers': { 'name': $scope.done31 },
+          c: $scope.identity.currentUser.c,
           'taskid': '53db763c68425b29ecc82f4e'
         };
       $scope.serSubmitted31.push($scope.done31[0]);
@@ -1868,6 +1891,7 @@ viberApp.controller('vbGoodvibesMeanCtrl', [
             $scope.identity.currentUser.points += data.completiondata.points;
             if ($scope.identity.currentUser.complete3 == 100) {
               $rootScope.style3 = { 'font-size': '14px' };
+              $scope.level2iscompleted = true;
             }
             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             $scope.taskcomplete31 = true;
@@ -1963,6 +1987,7 @@ viberApp.controller('vbThinkofViberCtrl', [
     $scope.onFileUploadl3task2 = function () {
       var reqbody = {
           'answers': { 'name': $scope.done32 },
+          c: $scope.identity.currentUser.c,
           'taskid': '53db77ab68425b29ecc82f51'
         };
       $scope.serSubmitted32.push($scope.done32[0]);
@@ -1976,6 +2001,7 @@ viberApp.controller('vbThinkofViberCtrl', [
             //$rootScope.level2stagecompletion += data.completiondata.level;
             if ($scope.identity.currentUser.complete3 == 100) {
               $rootScope.style3 = { 'font-size': '14px' };
+              $scope.level2iscompleted = true;
             }
             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             $scope.taskcomplete32 = true;
@@ -2069,6 +2095,7 @@ viberApp.controller('vbBacktoSchoolCtrl', [
     $scope.onFileUploadl3task3 = function () {
       var reqbody = {
           'answers': { 'name': $scope.done33 },
+          c: $scope.identity.currentUser.c,
           'taskid': '53db781e68425b29ecc82f6a'
         };
       $scope.serSubmitted33.push($scope.done33[0]);
@@ -2082,6 +2109,7 @@ viberApp.controller('vbBacktoSchoolCtrl', [
             //$rootScope.level2stagecompletion += data.completiondata.level;
             if ($scope.identity.currentUser.complete3 == 100) {
               $rootScope.style3 = { 'font-size': '14px' };
+              $scope.level2iscompleted = true;
             }
             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             $scope.taskcomplete33 = true;
@@ -2175,6 +2203,7 @@ viberApp.controller('vbDoodleWarCtrl', [
     $scope.onFileUploadl3task4 = function () {
       var reqbody = {
           'answers': { 'name': $scope.done34 },
+          c: $scope.identity.currentUser.c,
           'taskid': '53db787f68425b29ecc82f6b'
         };
       $scope.serSubmitted34.push($scope.done34[0]);
@@ -2188,6 +2217,7 @@ viberApp.controller('vbDoodleWarCtrl', [
             //$rootScope.level2stagecompletion += data.completiondata.level;
             if ($scope.identity.currentUser.complete3 == 100) {
               $rootScope.style3 = { 'font-size': '14px' };
+              $scope.level2iscompleted = true;
             }
             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             $scope.taskcomplete34 = true;
@@ -2259,6 +2289,7 @@ viberApp.controller('vbdaysofGoodvibesCtrl', [
                   link: response.post_id
                 },
                 platform: { facebook: 1 },
+                c: $scope.identity.currentUser.c,
                 taskid: '53db790668425b29ecc82f6d'
               };
             $http.post('/socialshare', reqObj).success(function (data) {
@@ -2269,6 +2300,7 @@ viberApp.controller('vbdaysofGoodvibesCtrl', [
                   //$rootScope.level2stagecompletion += data.completiondata.level;
                   if ($scope.identity.currentUser.complete3 == 100) {
                     $rootScope.style3 = { 'font-size': '14px' };
+                    $scope.level2iscompleted = true;
                   }
                   $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
                   $scope.taskcomplete35 = true;

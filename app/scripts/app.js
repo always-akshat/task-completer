@@ -78,7 +78,8 @@ viberApp.controller('vbNavBarCtrl', ['$scope', '$window', '$http', function ($sc
 
 viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 'vbAuth', '$window','$location', function ($rootScope, $scope, vbSharedService, vbAuth, $window,$location) {
 
-
+    $scope.level1iscompleted = false;
+    $scope.level2iscompleted = false
     $scope.profilecomplete=true;
     if(!angular.isObject($scope.identity.currentUser.college) || !angular.isObject($scope.identity.currentUser.college)) {
         console.log('redirecting');
@@ -90,6 +91,11 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
     var level1= _.where(stage,{'stageid':'5390521624349ecc0c108c10'})[0];
     var level2= _.where(stage,{'stageid':'53d36e0abb5c82917b3a3d94'})[0];
 
+    if($scope.identity.currentUser.complete1 == 100)
+        $scope.level1iscompleted = true;
+
+    if($scope.identity.currentUser.complete2 == 100)
+        $scope.level2iscompleted = true;
 
 
     $window.scrollTo(0, 0);
