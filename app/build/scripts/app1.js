@@ -817,6 +817,7 @@ viberApp.controller('vbSurveyCtrl', [
             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             if ($scope.identity.currentUser.complete1 == 100) {
               $rootScope.style1 = { 'font-size': '14px' };
+              $scope.level1iscompleted = true;
             }
             toaster.pop('success', 'Task 1', 'You have successfully finished the first task');
           } else {
@@ -934,6 +935,7 @@ viberApp.controller('vbUploadPhotosCtrl', [
             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             if ($scope.identity.currentUser.complete1 == 100) {
               $rootScope.style1 = { 'font-size': '14px' };
+              $scope.level1iscompleted = true;
             }
             $scope.taskcomplete1 = true;
             task.completed = 1;
@@ -991,6 +993,7 @@ viberApp.controller('vbinviteFrndsCtrl', [
                   $scope.identity.currentUser.points += data.completiondata.points;
                   if ($scope.identity.currentUser.complete1 == 100) {
                     $rootScope.style1 = { 'font-size': '14px' };
+                    $scope.level1iscompleted = true;
                   }
                   $scope.taskcomplete2 = true;
                   task.completed = 1;
@@ -1044,6 +1047,7 @@ viberApp.controller('vblikenfollowCtrl', [
               // $rootScope.level1stagecompletion += data.completiondata.level;
               if ($scope.identity.currentUser.complete1 == 100) {
                 $rootScope.style1 = { 'font-size': '14px' };
+                $scope.level1iscompleted = true;
               }
               $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             }
@@ -1076,6 +1080,7 @@ viberApp.controller('vblikenfollowCtrl', [
               //$rootScope.level1stagecompletion += data.completiondata.level;
               if ($scope.identity.currentUser.complete1 == 100) {
                 $rootScope.style1 = { 'font-size': '14px' };
+                $scope.level1iscompleted = true;
               }
               $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             }
@@ -1244,6 +1249,7 @@ viberApp.controller('vbInsertLinksCtrl', [
               //$rootScope.level1stagecompletion += data.completiondata.level;
               if ($scope.identity.currentUser.complete1 == 100) {
                 $rootScope.style1 = { 'font-size': '14px' };
+                $scope.level1iscompleted = true;
               }
               toaster.pop('success', 'Task 3', 'You have successfully finished the third task');
               $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
@@ -1407,7 +1413,7 @@ viberApp.controller('vbKnowViberCtrl', [
               //$rootScope.level2stagecompletion += data.completiondata.level;
               if ($scope.identity.currentUser.complete2 == 100) {
                 $rootScope.style2 = { 'font-size': '14px' };
-                $scope.level1iscompleted = true;
+                $scope.level2iscompleted = true;
               }
               $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
               toaster.pop('success', 'Task 1', 'You have successfully finished the first task');
@@ -1509,7 +1515,7 @@ viberApp.controller('vbActivateCtrl', [
             //$rootScope.level2stagecompletion += data.completiondata.level;
             if ($scope.identity.currentUser.complete2 == 100) {
               $rootScope.style2 = { 'font-size': '14px' };
-              $scope.level1iscompleted = true;
+              $scope.level2iscompleted = true;
             }
             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             $scope.taskcomplete22 = true;
@@ -1615,7 +1621,7 @@ viberApp.controller('vbGoodvibesMindCtrl', [
             //$rootScope.level2stagecompletion += data.completiondata.level;
             if ($scope.identity.currentUser.complete2 == 100) {
               $rootScope.style2 = { 'font-size': '14px' };
-              $scope.level1iscompleted = true;
+              $scope.level2iscompleted = true;
             }
             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             $scope.taskcomplete23 = true;
@@ -1666,7 +1672,7 @@ viberApp.controller('vbTaskYuwaCtrl', [
               //$rootScope.level2stagecompletion += data.completiondata.level;
               if ($scope.identity.currentUser.complete2 == 100) {
                 $rootScope.style2 = { 'font-size': '14px' };
-                $scope.level1iscompleted = true;
+                $scope.level2iscompleted = true;
               }
               toaster.pop('success', 'Task 4', 'You have successfully finished the fourth task');
               $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
@@ -1770,7 +1776,7 @@ viberApp.controller('vbSupportYuwaCtrl', [
             //$rootScope.level2stagecompletion += data.completiondata.level;
             if ($scope.identity.currentUser.complete2 == 100) {
               $rootScope.style2 = { 'font-size': '14px' };
-              $scope.level1iscompleted = true;
+              $scope.level2iscompleted = true;
             }
             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             $scope.taskcomplete25 = true;
