@@ -1,38 +1,124 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Welcome to Viber #GoodVibes Community</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
-    <link href="../app/css/viber-default.css" rel="stylesheet" type="text/css">
-    <style>
-        body 		{ padding-top:80px; }
-    </style>
+    <meta name="viewport" content="width=980" />
+    <link rel="stylesheet" type="text/css" href="../app/css/style.css"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script	src="../app/scripts/indexscript.js" type="text/javascript" ></script>
 </head>
 <body>
-<div class="container">
-    <header class="navbar navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="pull-left box-logo-wrap">
-                <a href="#." class="icon-logo"></a>
-            </div>
 
+<section id="header">
+    <div class="nav">
+        <ul>
+            <li><a href="#home">ABOUT GOOD VIBES</a></li>
+            <li><a href="#campaign">REGISTER WITH US</a></li>
+            <li><a href="#world-tour">WORLD TOUR</a></li>
+            <a href="/auth/facebook" onClick="_gaq.push(['_trackEvent', 'LoginAttempt', 'Viber-App', 'Viber app facebook login']);"><li><div class="sign-in">Sign In</div></li></a>
+        </ul>
+    </div>
+</section>
+
+<section id="home">
+
+    <div class="logo"></div>
+    <div class="hash-goodvibes">#GoodVibes</div>
+    <div class="text">
+        <p>College Brand Ambassador Programme.</p>
+        <p>Spread the #GoodVibes. Earn points.</p>
+        <p>Get a chance to win a World Tour, while you intern with us & spread the #GoodVibes..</p>
+    </div>
+    <a href="/auth/facebook"><div class="facebookbtn"></div></a>
+    <div class="h-image"></div>
+</section>
+
+<section id="good-vibes">
+    <div class="vibes-content">
+        <div class="good-vibes-text">
+            <div class="heading">#GoodVibes</div>
+            <p class="text">is every  happy moment in  your life that makes your day better and puts you in a good mood  instantantly. It’s the little things that count like a shared laugh, a high five, or watching a movie you can relate to.</p>
+            <p class="sub-head">#GoodVibes celebrates life.</p>
+            <p class="sub-text">It is doing what you love and sharing it with the world as part of Viber's College Brand Ambassador Program</p>
+            <!--<p class="sub-text">Get a chance to win a World Tour, while you intern with us & spread the #GoodVibes.</p>-->
         </div>
-    </header>
+        <div class="vibe-image"></div>
+    </div>
+</section>
 
-    <div class="jumbotron text-center" style="background-color:#e5dceb;">
-        <h1><span class="fa fa-lock"></span> #GoodVibes </h1>
-        <br/>
-        <p>Log in with your Facebook ID to begin your Viber #GoodVibes Internship. Many rewards await you on the other side.</p>
-        <br/>
-        <a href="/auth/facebook" class="btn-lg btn-primary" onClick="_gaq.push(['_trackEvent', 'LoginAttempt', 'Viber-App', 'Viber app facebook login']);"><span class="fa fa-facebook"></span> Facebook</a>
+<section id="campaign">
+
+    <div class="heading">
+        <p>Join GoodVibes and</p>
+        <p>Lead The Campaign In Your Own Way</p>
+    </div>
+
+    <div class="campaing-slider">
+
+        <div class="nav">
+            <ul>
+                <li class="role">
+                    <div>
+                        <div class="icon"></div>
+                        <div class="text">What's My Role</div>
+                    </div>
+                </li>
+                <li class="share">
+                    <div>
+                        <div class="icon"></div>
+                        <div class="text">Share & Win</div>
+                    </div>
+                </li>
+                <li class="invite">
+                    <div>
+                        <div class="icon"></div>
+                        <div class="text">Invite Friends</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="content">
+
+            <div class="image">
+                <img src="../app/images/camp-img.jpg" />
+            </div>
+            <div class="text">
+                <p>As a #GoodVibes college ambassador you would lead the #GoodVibes campaign in your own way. Share any content - status, pics, music, links, selfies, sports activity, and just hash tag #GoodVibes, across social media platforms of your choice. Your role would be to encourage more people around you to share #GoodVibes. There will be a few more simple tasks to take up on our #GoodVibes messenger Viber. We aim to take this campaign viral and your role would be to make it happen with the rest of us.</p>
+                <p></p>
+            </div>
+        </div>
 
     </div>
 
-</div>
+
+</section>
+
+<section id="world-tour">
+    <div class="content">
+        <div class="world-img"></div>
+        <div class="text">
+            <p>Win A</p>
+            <p>WORLD TOUR</p>
+            <p>The best performer of the VIber #GoodVibes Campus Ambassador Program gets a place in the Viber #GoodVibes World Tour to travel the most happening places on the planet.</p>
+            <p>All you have to do is to complete all the #GoodVibes tasks that are sent to you during the duration of this internship and win performance points.</p>
+            <p>Everyone who participates in the Viber #GoodVibes campaign gets a certificate of participation from Viber.</p>
+            <p>It's a win-win situation for everybody here. It's #goodvibes already</p>
+        </div>
+        <div class="world-img-2"></div>
+    </div>
+    <div class="go-top"></div>
+</section>
+
+<section id="footer">
+    <div class="content">
+        <p><span>INITIATIVE BY</span><img src="../app/images/viber-small.png" /></p>
+        <p><a href="#">Terms and Conditions</a></p>
+    </div>
+</section>
 </body>
 </html>
-
 <script>
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-50871489-1']);

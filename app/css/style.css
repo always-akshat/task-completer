@@ -1,0 +1,567 @@
+@font-face {
+    font-family: 'proximanova-bold';
+    src: url('fonts/proximanova-bold-webfont.eot');
+    src: url('fonts/proximanova-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/proximanova-bold-webfont.woff') format('woff'),
+         url('fonts/proximanova-bold-webfont.ttf') format('truetype'),
+         url('fonts/proximanova-bold-webfont.svg#proximanova-bold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'proximanova-reg';
+    src: url('fonts/ProximaNova-Reg-webfont.eot');
+    src: url('fonts/ProximaNova-Reg-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/ProximaNova-Reg-webfont.woff') format('woff'),
+         url('fonts/ProximaNova-Reg-webfont.ttf') format('truetype'),
+         url('fonts/ProximaNova-Reg-webfont.svg#proximanova-reg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'proximanova-sbold';
+    src: url('fonts/proximanova-semibold-webfont.eot');
+    src: url('fonts/proximanova-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/proximanova-semibold-webfont.woff') format('woff'),
+         url('fonts/proximanova-semibold-webfont.ttf') format('truetype'),
+         url('fonts/proximanova-semibold-webfont.svg#proximanova-sbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+*{
+	padding: 0px;
+	margin: 0px;
+}
+
+#home{
+	background: url("../images/home-bg.jpg") repeat scroll center top rgba(0, 0, 0, 0);
+    height: 902px;
+    width: 100%;
+    position: relative;
+}
+
+#home div.logo{
+	background: url("../images/logo.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    height: 81px;
+    left: 0;
+    margin: 0 auto;
+    position: absolute;
+    right: 0;
+    top: 80px;
+    width: 158px;
+}
+
+#home div.hash-goodvibes{
+	font-family: 'proximanova-bold';
+	font-size: 108px;
+	text-transform:none;
+	color: #ffffff;
+	width: 100%;
+	position: absolute;
+	text-align: center;
+	top: 155px;
+}
+
+#home div.text{
+	color: #ffffff;
+    font-family: 'proximanova-reg';
+    position: absolute;
+    top: 280px;
+    width: 100%;
+}
+
+#home div.text p:first-child{
+	font-size: 39px;
+}
+
+#home div.text p{
+	font-size: 22px;
+	text-align: center;
+}
+
+#home div.facebookbtn{
+	background: url("../images/facebook-bt.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    cursor: pointer;
+    height: 52px;
+    left: 0;
+    margin: 0 auto;
+    position: absolute;
+    right: 0;
+    top: 417px;
+    width: 304px;
+    z-index: 1;
+}
+
+#home div.h-image{
+	background: url("../images/home-image.png") no-repeat scroll center top rgba(0, 0, 0, 0);
+    height: 416px;
+    position: absolute;
+    top: 455px;
+    width: 100%;
+}
+
+#good-vibes{
+	background: url("../images/bottom-shadow.png") no-repeat scroll center bottom rgba(0, 0, 0, 0);
+    height: 595px;
+    position: relative;
+}
+
+#good-vibes div.good-vibes-text{
+	left: 0;
+    position: absolute;
+    right: 0;
+    top: 60px;
+    width: 590px;
+}
+
+#good-vibes div.good-vibes-text div.heading{
+	 color: #fed018;
+    font-family: 'proximanova-bold';
+    font-size: 100px;
+}
+
+#good-vibes div.good-vibes-text .text{
+	color: #414141;
+    /*font-family: 'proximanova-sbold';*/
+	font-family: 'proximanova-reg';
+    font-size: 16px;
+    line-height: 30px;
+}
+
+#good-vibes div.good-vibes-text .sub-head{
+	color: #7b519d;
+    font-family: 'proximanova-bold';
+    font-size: 30px;
+    position: relative;
+    top: 70px;
+}
+
+#good-vibes div.good-vibes-text .sub-text{
+	color: #2d2d2d;
+    /*font-family: 'proximanova-sbold';*/
+	font-family: 'proximanova-reg';
+    font-size: 16px;
+    position: relative;
+    top: 70px;
+}
+
+#good-vibes div.vibe-image{
+	 background: url("../images/vibe-img.png") no-repeat scroll center bottom rgba(0, 0, 0, 0);
+    bottom: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 586px;
+}
+
+#good-vibes div.vibes-content{
+	height: 100%;
+    margin: 0 auto;
+    position: relative;
+    width: 1131px;
+}
+
+#campaign{
+	background: url("../images/campaign-bg.jpg") no-repeat scroll center top / cover rgba(0, 0, 0, 0);
+    height: 705px;
+    position: relative;
+    width: 100%;
+}
+#campaign .content .text p{ text-align:justify;}
+
+#campaign div.heading{
+	position: relative;
+    text-align: center;
+    top: 100px;
+    width: 100%;
+}
+
+#campaign div.heading p{
+	font-family: 'proximanova-bold';
+}
+
+#campaign div.heading p:first-child{
+	color: #000000;
+	font-size: 28px;
+
+}
+
+#campaign div.heading p:last-child{
+	color: #65328f;
+	font-size: 42px;
+}
+
+#campaign div.campaing-slider{
+	left: 0;
+    margin: 0 auto;
+    position: absolute;
+    right: 0;
+    top: 237px;
+    width: 940px;
+}
+
+#campaign div.campaing-slider ul{
+	list-style: none outside none;
+}
+
+#campaign div.campaing-slider ul li{
+	display: inline;
+    float: left;
+    font-family: 'proximanova-sbold';
+    overflow: hidden;
+    width: 313.33px;
+    cursor: pointer;
+}
+
+#campaign div.campaing-slider ul li.role{
+	
+}
+
+#campaign div.campaing-slider ul li.role div.icon{
+	background: url("../images/my-role.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    float: left;
+    height: 37px;
+    width: 65px;
+}
+
+#campaign div.campaing-slider ul li.role div.text{
+	color: #2d2d2d;
+    float: left;
+    font-size: 22px;
+    padding-left: 13px;
+    padding-top: 7px;
+}
+
+#campaign div.campaing-slider ul li.share div.icon{
+	background: url("../images/share.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    float: left;
+    height: 54px;
+    width: 64px;
+}
+
+#campaign div.campaing-slider ul li.share div.text{
+	color: #2d2d2d;
+    float: left;
+    font-size: 22px;
+    padding-left: 13px;
+    padding-top: 18px;
+}
+
+#campaign div.campaing-slider ul li.invite div.icon{
+	background: url("../images/invite.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    float: left;
+    height: 31px;
+    width: 43px;
+    margin-top: 10px;
+}
+
+#campaign div.campaing-slider ul li.invite div.text{
+	color: #2d2d2d;
+    float: left;
+    font-size: 22px;
+    padding-left: 13px;
+    padding-top: 11px;
+}
+
+#campaign div.campaing-slider ul li > div{
+	margin: 0 auto;
+    width: 230px;
+}
+
+#campaign div.campaing-slider div.content{
+	background: url("../images/down-arrow.png") no-repeat scroll center top rgba(0, 0, 0, 0);
+    padding-top: 70px;
+    position: absolute;
+    top: 69px;
+    width: 100%;
+}
+
+#campaign div.campaing-slider div.image{
+	float: left;
+    width: 320px;
+}
+
+
+#campaign div.campaing-slider div.content div.text{
+	float: left;
+    /*font-family: 'proximanova-sbold';*/
+	font-family: 'proximanova-reg';
+    font-size: 16px;
+    margin-left: 30px;
+    width: 590px;
+}
+
+#campaign div.campaing-slider div.text p{
+	line-height: 24px;
+}
+
+#campaign div.campaing-slider div.text p:last-child{
+	 margin-top: 20px;
+}
+
+#world-tour{
+    background-color: #ffffff;
+    height: 984px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+#world-tour div.content{
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+    top: 50px;
+    width: 1143px;
+}
+
+#world-tour div.content div.world-img{
+   background: url("../images/world-img.png") no-repeat scroll center top rgba(0, 0, 0, 0);
+   height: 470px;
+   position: absolute;
+   width: 450px;
+}
+
+#world-tour div.content div.text{
+    position: absolute;
+    right: 0;
+    text-align: right;
+    width: 700px;
+}
+
+#world-tour div.content div.text p{
+}
+
+#world-tour div.content div.text p:nth-child(1){
+    color: #313130;
+    font-family: 'proximanova-bold';
+    font-size: 50px;
+    position: relative;
+    top: 23px;
+}
+
+#world-tour div.content div.text p:nth-child(2){
+    font-family: 'proximanova-bold';
+	/*font-family: 'proximanova-reg';*/
+    font-size: 82px;
+    color: #fed017;
+}
+
+#world-tour div.content div.text p:nth-child(3), #world-tour div.content div.text p:nth-child(4){
+    color: #2d2d2d;
+    /*font-family: 'proximanova-sbold';*/
+	font-family: 'proximanova-reg';
+    font-size: 16px;
+    line-height: 28px;
+}
+
+#world-tour div.content div.text p:nth-child(5){
+    color: #7b519d;
+    /*font-family: 'proximanova-bold';*/
+	font-family: 'proximanova-reg';
+    font-size: 24px;
+    margin-top: 25px;
+}
+
+#world-tour div.content div.text p:nth-child(6){
+    color: #2d2d2d;
+	/*font-family: 'proximanova-sbold';*/
+	font-family: 'proximanova-reg';
+	font-size: 16px;
+	line-height: 28px;
+}
+
+#world-tour div.content div.world-img-2{
+    background: url("../images/world-img-2.png") no-repeat scroll center center rgba(0, 0, 0, 0);
+    bottom: 0;
+    height: 487px;
+    position: absolute;
+    width: 100%;
+}
+
+#world-tour div.go-top{
+    background: url("../images/go-top.png") no-repeat scroll center center rgba(0, 0, 0, 0);
+    bottom: -15px;
+    height: 56px;
+    position: absolute;
+    right: 50px;
+    width: 56px;
+    cursor: pointer;
+}
+
+#world-tour div.go-top:hover{
+    bottom: -8px;
+}
+
+#footer{
+    height: 64px;
+    width: 100%;
+    background-color: #2e2e2e;
+}
+
+#footer div.content{
+    color: #ffffff;
+    font-family: 'proximanova-bold';
+    font-size: 14px;
+    margin: 0 auto;
+    width: 980px;
+}
+
+#footer div.content p span{
+    float: left;
+    margin-right: 16px;
+    margin-top: 7px;
+}
+
+#footer div.content p:nth-child(1){
+    float: left;
+    margin-top: 18px;
+}
+
+#footer div.content p:nth-child(2){
+    float: right;
+    margin-top: 24px;
+}
+
+a{
+    text-decoration: none;
+    color: #ffffff;
+}
+
+#header{
+    background: none repeat scroll 0 0 #fff;
+    height: 52px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    box-shadow: 0 -8px 20px -6px #000000;
+}
+
+#header div.nav{
+    height: 100%;
+    margin: 0 auto;
+    width: 980px;
+}
+
+#header div.nav ul{
+    height: 100%;
+    width: 100%;
+    list-style: none;
+}
+
+#header div.nav ul li {
+    border-left: 1px solid #d7cae1;
+    border-right: 1px solid #d7cae1;
+    color: #414141;
+    display: inline;
+    float: left;
+    font-family: 'proximanova-bold';
+    font-size: 16px;
+    height: 100%;
+    text-align: center;
+    width: 241px;
+    line-height: 47px;
+}
+
+#header div.nav ul li:last-child {
+    border-right: 0px;
+}
+
+#header div.nav ul li a{
+    color: #414141;
+}
+
+#header div.nav ul li div.sign-in{
+    background: none repeat scroll 0 0 #fed018;
+    border-radius: 9px;
+    cursor: pointer;
+    height: 40px;
+    line-height: 41px;
+    margin: 5px auto 0;
+    width: 80px;
+}
+
+#campaign div.campaing-slider ul li.role:hover div.icon{
+    background: url("../images/my-role-on.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+
+#campaign div.campaing-slider ul li.role:hover div.text{
+   color: #65328f;
+}
+
+#campaign div.campaing-slider ul li.share:hover div.icon{
+    background: url("../images/share-on.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+
+#campaign div.campaing-slider ul li.share:hover div.text{
+   color: #65328f;
+}
+
+#campaign div.campaing-slider ul li.invite:hover div.icon{
+    background: url("../images/invite-on.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+
+#campaign div.campaing-slider ul li.invite:hover div.text{
+   color: #65328f;
+}
+
+@media only screen and (max-width:1150px  ){
+    
+    #good-vibes div.vibes-content{
+        width: 900px;
+    }
+
+    #good-vibes div.vibe-image{
+        background-size: contain;
+        background-position: bottom;
+        width: 479px;
+    }
+
+    #good-vibes div.good-vibes-text .text{
+        font-size: 13px;
+        line-height: 21px;
+    }
+    
+    #good-vibes div.good-vibes-text .sub-text{
+        font-size: 13px;
+        width: 85%;
+    }
+
+    #good-vibes div.good-vibes-text div.heading{
+        font-size: 80px;
+    }
+
+    #world-tour{
+        height: 884px;  
+    }
+    
+    #world-tour div.content{
+        width: 920px;
+    }
+
+    #world-tour div.content div.world-img{
+        background-size: contain;
+        width: 317px;
+    }
+
+    #world-tour div.content div.world-img-2{
+        background-size: contain;
+        height: 443px;
+    }
+
+    #world-tour div.content div.text p:nth-child(3), #world-tour div.content div.text p:nth-child(4){
+        font-size: 14px;
+        line-height: 23px;
+    }
+
+    #footer div.content{
+        width: 880px;
+    }
+}
