@@ -1198,6 +1198,7 @@ function removesubordinate(req,res){
 }
 
 
+
 module.exports = {list: list,
     stage_add_to_all: stage_add_to_all,
     add_stage1 :add_stage1,

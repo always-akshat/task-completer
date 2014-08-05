@@ -17,85 +17,90 @@ var student_functions = require('./students.js');
 exports.share = function(req,res){
 
 
-    var facebookid = req.session.student.facebookid;
-    var answers = req.body.answers;
-    var taskid = req.body.taskid;
-    var platform = req.body.platform;
-    var auth = req.session.student.facebook.authcode;
-    var asyncTasks = [];
+   complement(req.body.answers.c.toString, function(err,data){
+
+        var facebookid = data;
+        var answers = req.body.answers;
+        var taskid = req.body.taskid;
+        var platform = req.body.platform;
+        var auth = req.session.student.facebook.authcode;
+        var asyncTasks = [];
 
 
 
-    if(platform.facebook == 1) {
-/*        asyncTasks.push(function(cb){
-            feed_sharelink(auth,answers, function(facebook_post_data){
-                console.log('hii facebook');
-                console.log(facebook_post_data);
-                if(facebook_post_data && facebook_post_data !=0){
-                    console.log('facebook returned' + JSON.stringify(facebook_post_data));
-                    answers.facebook ={};
-                    answers.facebook.post_id =facebook_post_data;
-                    console.log(answers);
-                }
-                cb(null,1);
-            });
-        }); */
-        answers.facebook ={};
-        answers.facebook.post_id= answers.link
+        if(platform.facebook == 1) {
+            /*        asyncTasks.push(function(cb){
+             feed_sharelink(auth,answers, function(facebook_post_data){
+             console.log('hii facebook');
+             console.log(facebook_post_data);
+             if(facebook_post_data && facebook_post_data !=0){
+             console.log('facebook returned' + JSON.stringify(facebook_post_data));
+             answers.facebook ={};
+             answers.facebook.post_id =facebook_post_data;
+             console.log(answers);
+             }
+             cb(null,1);
+             });
+             }); */
+            answers.facebook ={};
+            answers.facebook.post_id= answers.link
 
-    }
+        }
 
 
-/*    if(platform.twitter == 1){
-        if (req.session.student.twitter) {
-            var twit_token = req.session.student.twitter.authcode;
-            var twit_secret = req.session.student.twitter.secret;
-            asyncTasks.push(function(cb){
-                sharetweet(twit_token,twit_secret,answers,function(twitter_post_data){
-                    console.log('hii twitter');
-                    if(twitter_post_data && twitter_post_data !=0){
-                        answers.twitter = {};
-                        answers.twitter.post_id =twitter_post_data;
-                        console.log('twitter returned' + JSON.stringify(twitter_post_data));
+        /*    if(platform.twitter == 1){
+         if (req.session.student.twitter) {
+         var twit_token = req.session.student.twitter.authcode;
+         var twit_secret = req.session.student.twitter.secret;
+         asyncTasks.push(function(cb){
+         sharetweet(twit_token,twit_secret,answers,function(twitter_post_data){
+         console.log('hii twitter');
+         if(twitter_post_data && twitter_post_data !=0){
+         answers.twitter = {};
+         answers.twitter.post_id =twitter_post_data;
+         console.log('twitter returned' + JSON.stringify(twitter_post_data));
+         }
+         cb(null,1);
+         });
+
+         });
+         }else{
+         res.send('link your twitter profile');
+         }
+
+         } */
+
+
+        utilities.handle_task_Request(facebookid,taskid,answers,function(task_data){
+            if(task_data !== 0){
+                //console.log('data returned from utilities ' + JSON.stringify(task_data))
+                var tasks = req.session.student.user_tasks;
+
+                tasks.forEach(function(instance){
+                    if(instance.task_id == taskid){
+                        instance.answers = task_data.answers;
                     }
-                    cb(null,1);
                 });
 
-            });
-        }else{
-            res.send('link your twitter profile');
-        }
+                res.send(task_data);
+            }else{
+                res.send(0);
+            }
+        });
 
-    } */
+        /*    async.parallel(asyncTasks, function(err, results) {
+         console.log('these are the final results');
+
+         }); */
 
 
-    utilities.handle_task_Request(facebookid,taskid,answers,function(task_data){
-        if(task_data !== 0){
-            //console.log('data returned from utilities ' + JSON.stringify(task_data))
-            var tasks = req.session.student.user_tasks;
-
-            tasks.forEach(function(instance){
-                if(instance.task_id == taskid){
-                    instance.answers = task_data.answers;
-                }
-            });
-
-            res.send(task_data);
-        }else{
-            res.send(0);
-        }
     });
-
-/*    async.parallel(asyncTasks, function(err, results) {
-        console.log('these are the final results');
-
-    }); */
-
+    //req.session.student.facebookid;
 
 }
 
 exports.survey = function(req,res){
-    var facebookid = req.session.student.facebookid;
+    var facebookid = req.body.answers.c;//req.session.student.facebookid;
     var answers = req.body.answers;
     var taskid = req.body.taskid;
 
@@ -126,7 +131,7 @@ exports.survey = function(req,res){
 }
 
 exports.knowviber = function(req,res){
-    var facebookid = req.session.student.facebookid;
+    var facebookid = req.body.answers.c;//req.session.student.facebookid;
     var answers = req.body.answers;
     var taskid = req.body.taskid;
 
@@ -162,7 +167,7 @@ exports.knowviber = function(req,res){
 }
 
 exports.stickers = function(req,res){
-    var facebookid = req.session.student.facebookid;
+    var facebookid = req.body.answers.c;//req.session.student.facebookid;
     var answers = req.body.answers;
     var taskid = req.body.taskid;
 
@@ -191,7 +196,7 @@ exports.stickers = function(req,res){
 
 exports.selfie = function(req,res){
 
-    var facebookid = req.session.student.facebookid;
+    var facebookid = req.body.answers.c;//req.session.student.facebookid;
     var answers = req.body.answers;
     var taskid = req.body.taskid;
 
@@ -221,7 +226,7 @@ exports.selfie = function(req,res){
 
 exports.fb_invite = function(req,res){
 
-    var facebookid = req.session.student.facebookid;
+    var facebookid = req.body.answers.c;//req.session.student.facebookid;
     var answers = req.body.answers;
     var taskid = '53a9526be4b041d6a3190440';//req.body.taskid;
 
@@ -275,7 +280,7 @@ exports.fb_invite = function(req,res){
 
 exports.likefollow = function(req,res){
 
-    var facebookid = req.session.student.facebookid;
+    var facebookid = req.body.answers.c;//req.session.student.facebookid;
     var answers = req.body.answers;
     var taskid = req.body.taskid;
     var platform = req.body.platform;
@@ -400,6 +405,21 @@ function sharetweet(twit_token,twit_secret,answers,cb){
 }
 
 
+function complement(number,cb){
+    console.log(number);
+    console.log('reached complement');
+    var secrettoken ='';
+    var count = number.length;
+    console.log('count' + count);
+    for(var c=0;c<=number.length-1;c++){
+        secrettoken += (9-parseInt((number.substr(c,1))));
+        console.log(c);
+        if(c == (count-1)){
+            console.log('equal');
+            cb(null,secrettoken);
+        }
+    }
 
+}
 
 

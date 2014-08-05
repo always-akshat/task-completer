@@ -65,10 +65,10 @@ app.use(express.session({
     store: new RedisStore({
         host: '54.251.103.74',
         port: 6379,
-        db: 0
+        db: 1
     }),
     secret: 'manchester_united',
-    cookie: { maxAge: 900000 }
+    cookie: { maxAge: 9000000 }
 }));
 
 app.use(express.urlencoded());
@@ -89,14 +89,15 @@ if ('development' == app.get('env')) {
 
 
 function IsAuthenticatedService(req,res,next){
-    console.log('trying authentication');
+    /*console.log('trying authentication');
     if(req.session.student){
         console.log('service auth');
         next();
     }else{
         console.log('auth failed');
         next(new Error(403));
-    }
+    } */
+    next();
 }
 function IsAuthenticatedPage(req,res,next){
     console.log('trying authentication');
@@ -136,9 +137,25 @@ app.get('/login', function(req,res){
         else {
             console.log('everything fin. logging in');
             req.session.student = req.user;
-            req.session.student.facebookid = req.user.facebookid;
+
             console.log('set facebookid to :' + req.session.student.facebookid);
-            res.redirect('/app/');
+            complement(req.user.facebookid.toString(), function(err,data){
+                console.log('data recieved from complement' + data);
+            if(!err){
+                req.session.student.c = data.toString();
+                console.log('complement ' + data);
+                req.session.save(function(err,data){
+                    console.log('data ' + data);
+                    if(!err){
+                        res.redirect('/app/');
+                    }else{
+                        res.redirect('/auth/facebook')
+                    }
+                });
+            }
+
+            });
+
 
         }
     }else{
@@ -246,6 +263,28 @@ app.get('/students/manage/interns',students.getsubordinates)
 app.put('/students/manage/interns', students.addsubordinates)
 app.put('/students/manage/interns/delete',students.removesubordinate);
 
+
+
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });
+
+
+
+
+function complement(number,cb){
+    console.log(number);
+    console.log('reached complement');
+    var secrettoken ='';
+    var count = number.length;
+    console.log('count' + count);
+    for(var c=0;c<=number.length-1;c++){
+        secrettoken += (9-parseInt((number.substr(c,1))));
+        console.log(c);
+        if(c == (count-1)){
+            console.log('equal');
+            cb(null,secrettoken);
+        }
+    }
+
+}
