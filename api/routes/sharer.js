@@ -27,7 +27,7 @@ exports.share = function(req,res){
 
 
     if(platform.facebook == 1) {
-        asyncTasks.push(function(cb){
+/*        asyncTasks.push(function(cb){
             feed_sharelink(auth,answers, function(facebook_post_data){
                 console.log('hii facebook');
                 console.log(facebook_post_data);
@@ -39,11 +39,14 @@ exports.share = function(req,res){
                 }
                 cb(null,1);
             });
-        });
+        }); */
+        answers.facebook ={};
+        answers.facebook.post_id= answers.link
+
     }
 
 
-    if(platform.twitter == 1){
+/*    if(platform.twitter == 1){
         if (req.session.student.twitter) {
             var twit_token = req.session.student.twitter.authcode;
             var twit_secret = req.session.student.twitter.secret;
@@ -63,30 +66,31 @@ exports.share = function(req,res){
             res.send('link your twitter profile');
         }
 
-    }
+    } */
 
 
-    async.parallel(asyncTasks, function(err, results) {
+    utilities.handle_task_Request(facebookid,taskid,answers,function(task_data){
+        if(task_data !== 0){
+            //console.log('data returned from utilities ' + JSON.stringify(task_data))
+            var tasks = req.session.student.user_tasks;
+
+            tasks.forEach(function(instance){
+                if(instance.task_id == taskid){
+                    instance.answers = task_data.answers;
+                }
+            });
+
+            res.send(task_data);
+        }else{
+            res.send(0);
+        }
+    });
+
+/*    async.parallel(asyncTasks, function(err, results) {
         console.log('these are the final results');
 
-        utilities.handle_task_Request(facebookid,taskid,answers,function(task_data){
-            if(task_data !== 0){
-                //console.log('data returned from utilities ' + JSON.stringify(task_data))
-                var tasks = req.session.student.user_tasks;
+    }); */
 
-                tasks.forEach(function(instance){
-                   if(instance.task_id == taskid){
-                       instance.answers = task_data.answers;
-                   }
-                });
-
-                res.send(task_data);
-            }else{
-                res.send(0);
-            }
-        });
-
-    });
 
 }
 
