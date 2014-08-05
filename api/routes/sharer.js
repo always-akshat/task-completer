@@ -17,7 +17,7 @@ var student_functions = require('./students.js');
 exports.share = function(req,res){
 
 
-   complement(req.body.answers.c.toString, function(err,data){
+   complement(req.body.c.toString, function(err,data){
 
         var facebookid = data;
         var answers = req.body.answers;
@@ -100,225 +100,266 @@ exports.share = function(req,res){
 }
 
 exports.survey = function(req,res){
-    var facebookid = req.body.answers.c;//req.session.student.facebookid;
-    var answers = req.body.answers;
-    var taskid = req.body.taskid;
+    complement(req.body.c.toString(), function(err,data){
 
-    if(!answers.answer4 || !answers.answer5){
-        answers.answer4 = 'dummy';
-        answers.answer5 = 'dummy';
-    }
-    if(answers){
-        utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
-            if (task_data !== 0) {
-                //console.log('data returned from utilities ' + JSON.stringify(task_data))
-                var tasks = req.session.student.user_tasks;
+        if(!err && data) {
+            var facebookid = data;
+            var answers = req.body.answers;
+            var taskid = req.body.taskid;
 
-                tasks.forEach(function (instance) {
-                    if (instance.task_id == taskid) {
-                        instance.answers = task_data.answers;
+            if (!answers.answer4 || !answers.answer5) {
+                answers.answer4 = 'dummy';
+                answers.answer5 = 'dummy';
+            }
+            if (answers) {
+                utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
+                    if (task_data !== 0) {
+                        //console.log('data returned from utilities ' + JSON.stringify(task_data))
+                        var tasks = req.session.student.user_tasks;
+
+                        tasks.forEach(function (instance) {
+                            if (instance.task_id == taskid) {
+                                instance.answers = task_data.answers;
+                            }
+                        });
+
+                        res.send(task_data);
+                    } else {
+                        res.send(0);
                     }
                 });
-
-                res.send(task_data);
             } else {
-                res.send(0);
+                res.send('invalid answers');
             }
-        });
-    }else{
-        res.send('invalid answers');
-    }
+        }else{
+            res.send(0);
+        }
+
+    })
+
 }
 
 exports.knowviber = function(req,res){
-    var facebookid = req.body.answers.c;//req.session.student.facebookid;
-    var answers = req.body.answers;
-    var taskid = req.body.taskid;
+    complement(req.body.c.toString(), function(err,data){
+        if(!err && data) {
+            var facebookid = data;//req.body.answers.c;//req.session.student.facebookid;
+            var answers = req.body.answers;
+            var taskid = req.body.taskid;
 
-    var points = 0;
-    for(key in answers){
-        if(answers[key]=='1'){
-            points +=100;
-        }
-    }
-    console.log('points :' + points);
-    answers.points = points;
+            var points = 0;
+            for (key in answers) {
+                if (answers[key] == '1') {
+                    points += 100;
+                }
+            }
+            console.log('points :' + points);
+            answers.points = points;
+            {
+            }
+            if (answers) {
+                utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
+                    if (task_data !== 0) {
+                        //console.log('data returned from utilities ' + JSON.stringify(task_data))
+                        var tasks = req.session.student.user_tasks;
 
-    if(answers){
-        utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
-            if (task_data !== 0) {
-                //console.log('data returned from utilities ' + JSON.stringify(task_data))
-                var tasks = req.session.student.user_tasks;
+                        tasks.forEach(function (instance) {
+                            if (instance.task_id == taskid) {
+                                instance.answers = task_data.answers;
+                            }
+                        });
 
-                tasks.forEach(function (instance) {
-                    if (instance.task_id == taskid) {
-                        instance.answers = task_data.answers;
+                        res.send(task_data);
+                    } else {
+                        res.send(0);
                     }
                 });
-
-                res.send(task_data);
             } else {
-                res.send(0);
+                res.send('invalid answers');
             }
-        });
-    }else{
-        res.send('invalid answers');
-    }
+        }else{
+            res.send(0);
+        }
+    });
+
 }
 
 exports.stickers = function(req,res){
-    var facebookid = req.body.answers.c;//req.session.student.facebookid;
-    var answers = req.body.answers;
-    var taskid = req.body.taskid;
+    complement(req.body.c.toString(), function(err,data) {
 
-    if(answers.rate && parseInt(answers.rate) >0 && parseInt(answers.rate) <6) {
-        answers.rating = 1;
-        utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
-            if (task_data !== 0) {
-                //console.log('data returned from utilities ' + JSON.stringify(task_data))
-                var tasks = req.session.student.user_tasks;
+        if (!err && data) {
 
-                tasks.forEach(function (instance) {
-                    if (instance.task_id == taskid) {
-                        instance.answers = task_data.answers;
-                    }
-                });
+        var facebookid = data;//req.body.answers.c;//req.session.student.facebookid;
+        var answers = req.body.answers;
+        var taskid = req.body.taskid;
 
-                res.send(task_data);
-            } else {
-                res.send(0);
-            }
-        });
-    }else{
-        res.send('error');
-    }
+        if (answers.rate && parseInt(answers.rate) > 0 && parseInt(answers.rate) < 6) {
+            answers.rating = 1;
+            utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
+                if (task_data !== 0) {
+                    //console.log('data returned from utilities ' + JSON.stringify(task_data))
+                    var tasks = req.session.student.user_tasks;
+
+                    tasks.forEach(function (instance) {
+                        if (instance.task_id == taskid) {
+                            instance.answers = task_data.answers;
+                        }
+                    });
+
+                    res.send(task_data);
+                } else {
+                    res.send(0);
+                }
+            });
+        } else {
+            res.send('error');
+        }
+    }else{res.send(0);
+        }
+    });
+
 }
 
 exports.selfie = function(req,res){
+    complement(req.body.c.toString(), function(err,data) {
 
-    var facebookid = req.body.answers.c;//req.session.student.facebookid;
-    var answers = req.body.answers;
-    var taskid = req.body.taskid;
+        if (!err && data) {
 
-    if(answers.name.length >0){
-        answers.upload = 1;
-        utilities.handle_task_Request(facebookid,taskid,answers,function(task_data){
-            if(task_data !== 0){
-                //console.log('data returned from utilities ' + JSON.stringify(task_data))
-                var tasks = req.session.student.user_tasks;
+        var facebookid = data;//req.body.answers.c;//req.session.student.facebookid;
+        var answers = req.body.answers;
+        var taskid = req.body.taskid;
 
-                tasks.forEach(function(instance){
-                    if(instance.task_id == taskid){
-                        instance.answers = task_data.answers;
-                    }
-                });
+        if (answers.name.length > 0) {
+            answers.upload = 1;
+            utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
+                if (task_data !== 0) {
+                    //console.log('data returned from utilities ' + JSON.stringify(task_data))
+                    var tasks = req.session.student.user_tasks;
 
-                res.send(task_data);
-            }else{
-                res.send(0);
-            }
-        });
+                    tasks.forEach(function (instance) {
+                        if (instance.task_id == taskid) {
+                            instance.answers = task_data.answers;
+                        }
+                    });
+
+                    res.send(task_data);
+                } else {
+                    res.send(0);
+                }
+            });
+        } else {
+            res.send(0);
+        }
     }else{
-        res.send(0);
-    }
+            res.send(0);
+        }
+    });
 
 }
 
 exports.fb_invite = function(req,res){
+    complement(req.body.c.toString(), function(err,data) {
+        if (!err && data) {
 
-    var facebookid = req.body.answers.c;//req.session.student.facebookid;
-    var answers = req.body.answers;
-    var taskid = '53a9526be4b041d6a3190440';//req.body.taskid;
+        var facebookid = data; //req.body.answers.c;//req.session.student.facebookid;
+        var answers = req.body.answers;
+        var taskid = '53a9526be4b041d6a3190440';//req.body.taskid;
 
-    if(answers.fb_ids && answers.fb_ids.length >1) {
-        answers.invite_2 = 1;
-        utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
-            if (task_data !== 0) {
-                //console.log('data returned from utilities ' + JSON.stringify(task_data))
-                var tasks = req.session.student.user_tasks;
+        if (answers.fb_ids && answers.fb_ids.length > 1) {
+            answers.invite_2 = 1;
+            utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
+                if (task_data !== 0) {
+                    //console.log('data returned from utilities ' + JSON.stringify(task_data))
+                    var tasks = req.session.student.user_tasks;
 
-                tasks.forEach(function (instance) {
-                    if (instance.task_id == taskid) {
-                        instance.answers = task_data.answers;
+                    tasks.forEach(function (instance) {
+                        if (instance.task_id == taskid) {
+                            instance.answers = task_data.answers;
+                        }
+                    });
+
+                    res.send(task_data);
+                } else {
+                    res.send(0);
+                }
+            });
+
+            var points = (answers.fb_ids.length ) * 50
+            console.log('total points :' + points);
+            if (points > 0) {
+                student_functions.addpoints(facebookid, points, function (points_to_add) {
+                    //console.log('points to add :'+ points_to_add);
+                    if (points_to_add == 0) {
+
+                    } else {
+                        var transaction = new studentSchema.vibes_transaction;
+                        transaction.vibes = points;
+                        transaction.type = 'task';
+                        transaction.sign = 1;
+                        transaction.message = 'Task completion - Invite facebook friends';
+                        console.log('added points');
+                        student_functions.VibesTransaction(facebookid, transaction, function (v_transaction) {
+                            console.log(v_transaction);
+                            if (v_transaction !== 0) {
+                                console.log('added transactiontion');
+                            }
+                        });
                     }
                 });
-
-                res.send(task_data);
-            } else {
-                res.send(0);
             }
-        });
-
-        var points = (answers.fb_ids.length ) * 50
-        console.log('total points :' + points);
-        if (points > 0) {
-        student_functions.addpoints(facebookid, points, function (points_to_add) {
-            //console.log('points to add :'+ points_to_add);
-            if (points_to_add == 0) {
-
-            } else {
-                var transaction = new studentSchema.vibes_transaction;
-                transaction.vibes = points;
-                transaction.type = 'task';
-                transaction.sign = 1;
-                transaction.message = 'Task completion - Invite facebook friends' ;
-                console.log('added points');
-                student_functions.VibesTransaction(facebookid, transaction, function (v_transaction) {
-                    console.log(v_transaction);
-                    if (v_transaction !== 0) {
-                        console.log('added transactiontion');
-                    }
-                });
-            }
-        });
-    }
-    }else{
-        res.send('minimum 2 friends needed');
-    }
+        } else {
+            res.send('minimum 2 friends needed');
+        }
+    }else{res.send(0);}
+    });
 
 }
 
 exports.likefollow = function(req,res){
+    complement(req.body.c.toString(), function(err,data){
 
-    var facebookid = req.body.answers.c;//req.session.student.facebookid;
-    var answers = req.body.answers;
-    var taskid = req.body.taskid;
-    var platform = req.body.platform;
+        if(!err && data) {
+            var facebookid = data;//req.body.answers.c;//req.session.student.facebookid;
+            var answers = req.body.answers;
+            var taskid = req.body.taskid;
+            var platform = req.body.platform;
 
-    var size =0;
-    for(key in platform ){
-        size++;
-    }
-    if(size >0) {
-        if (platform.facebook == true) {
-            answers.facebook = 1;
-            answers.twitter = 1;
-        }
-        if (platform.twitter == true) {
-            answers.twitter = 1;
-            answers.facebook = 1;
-        }
+            var size = 0;
+            for (key in platform) {
+                size++;
+            }
+            if (size > 0) {
+                if (platform.facebook == true) {
+                    answers.facebook = 1;
+                    answers.twitter = 1;
+                }
+                if (platform.twitter == true) {
+                    answers.twitter = 1;
+                    answers.facebook = 1;
+                }
 
-        utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
-            if (task_data !== 0) {
-                var tasks = req.session.student.user_tasks;
-                tasks.forEach(function (instance) {
-                    if (instance.task_id == taskid) {
-                        instance.answers = task_data.answers;
+                utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
+                    if (task_data !== 0) {
+                        var tasks = req.session.student.user_tasks;
+                        tasks.forEach(function (instance) {
+                            if (instance.task_id == taskid) {
+                                instance.answers = task_data.answers;
+                            }
+                        });
+
+                        res.send(task_data);
+                    } else {
+                        res.send(0);
                     }
                 });
-
-                res.send(task_data);
             } else {
                 res.send(0);
             }
-        });
-    }else{
-        res.send(0);
-    }
+        }else{
+            res.send(0);
+        }
 
 
-
+    });
 
 
 }

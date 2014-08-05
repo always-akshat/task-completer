@@ -164,6 +164,7 @@ function enter_old_user(referrer,profile,authcode,cb){
             }
 
             student.facebook.authcode = authcode;
+            student.updatedon = Date.now();
                 //console.log(student);
                 student.save(function(err) {
                     console.log('trying to save student');
