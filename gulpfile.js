@@ -60,4 +60,4 @@ gulp.task('watch', function() {
 });
 
 // Default Task
-gulp.task('default', ['app','app1','mix', 'styles']);
+gulp.task('default', ['app','app1','mix', 'styles','watch']);
