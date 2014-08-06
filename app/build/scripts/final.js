@@ -92,7 +92,7 @@ viberApp.controller('dashboardCtrl', [
     var level2 = _.where(stage, { 'stageid': '53d36e0abb5c82917b3a3d94' })[0];
     if ($scope.identity.currentUser.complete1 == 100)
       $scope.level1iscompleted = true;
-    if ($scope.identity.currentUser.complete2 == 100)
+    if ($scope.identity.currentUser.complete1 == 100 && $scope.identity.currentUser.complete2 == 100)
       $scope.level2iscompleted = true;
     $window.scrollTo(0, 0);
     var currentPage = {
