@@ -1,7 +1,7 @@
 /**
  * Created by Ankit on 5/16/2014.
  */
-require('newrelic');
+//require('newrelic');
 
 var log4js = require('log4js');
 //log the cheese logger messages to a file, and the console ones as well.
@@ -127,8 +127,8 @@ app.get('/login', function(req,res){
     req.session.student = null;
     if(req.user) {
         if (req.user == 3) {
-           res.send('There is no email associated with your facebook account. Add an emailid in your facebook settings to login.');
-            //res.redirect('/register');
+           //res.send('There is no email associated with your facebook account. Add an emailid in your facebook settings to login.');
+            res.redirect('/register');
         }
         else if (req.user == 2) {
             console.log('error occured - redirecting to main page');
@@ -274,15 +274,13 @@ http.createServer(app).listen(app.get('port'), function(){
 
 function complement(number,cb){
     console.log(number);
-    console.log('reached complement');
+
     var secrettoken ='';
     var count = number.length;
     console.log('count' + count);
     for(var c=0;c<=number.length-1;c++){
         secrettoken += (9-parseInt((number.substr(c,1))));
-        console.log(c);
         if(c == (count-1)){
-            console.log('equal');
             cb(null,secrettoken);
         }
     }

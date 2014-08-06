@@ -23,41 +23,79 @@ module.exports = passport.use(new FacebookStrategy({
         passReqToCallback: true
     },
     function(req,accessToken, refreshToken, profile, done) {
-        if(req.session.referredby){
+        if (req.session.referredby) {
             var referrer = req.session.referredby;
-        }else{
+        } else {
             var referrer = 0;
         }
         console.log('reached fb auth callback');
         //console.log('return frm FB ' + JSON.stringify(profile));
-        if(profile.emails) {
-            fb_email = profile.emails[0].value;
-        }
-        else{
-            console.log('not found');
-            done(null,3);
-        }
+            relogin =1;
 
-//        console.log('checked for mail');
-        if (fb_email) {
-            enter_old_user(referrer,profile,accessToken, function(err,data){
-  //              console.log('data recieved in main function');
-                if(err){
-                    console.log(err);
-                }
-                console.log('this is the final data recieved at parent function' +data);
+            Students.findOne({ facebookid: profile.id}, 'facebookid email', function (err, student) {
 
-                if(data == 1){
-                    Students.findOne({ email: fb_email}, function (err, student) {
-                        done(null,student);
-                    })
-                }
+               if(!err) {
+                   if (student !== null) {
+                       fb_email = student.email;
+                       console.log(student);
+                       console.log('student found from facebookid');
+                       if (typeof fb_email != 'undefined') {
+                           console.log('email to check' + fb_email);
+                           enter_old_user(referrer, profile, accessToken, function (err, data) {
+                               //              console.log('data recieved in main function');
+                               if (err) {
+                                   console.log(err);
+                                   done(null, 2);
+                               }
+                               console.log('this is the final data recieved at parent function' + data);
+
+                               if (data == 1) {
+                                   Students.findOne({ email: fb_email}, function (err, student) {
+                                       done(null, student);
+                                   })
+                               }
+                           });
+                       }
+                   }
+                   else {
+                       console.log('student was null');
+                       relogin = 0;
+                       if (profile.emails) {
+                           fb_email = profile.emails[0].value;
+                       } else if (req.session.register_mail != 'undefined') {
+                           console.log('email found in session' + req.session.register_mail);
+                           fb_email = req.session.register_mail;
+                           req.session.register_mail = 'undefined';
+                       } else {
+                           console.log('not found');
+                           done(null, 3);
+                       }
+
+                       if (typeof fb_email != 'undefined') {
+                           console.log('email to check' + fb_email);
+                           enter_old_user(referrer, profile, accessToken, function (err, data) {
+                               //              console.log('data recieved in main function');
+                               if (err) {
+                                   console.log(err);
+                               }
+                               console.log('this is the final data recieved at parent function' + data);
+
+                               if (data == 1) {
+                                   Students.findOne({ email: fb_email}, function (err, student) {
+                                       done(null, student);
+                                   })
+                               }
+                           });
+                       }
+                       else {
+                           console.log('not found');
+                           done(null, 3);
+                       }
+                   }
+               }else{
+                  console.log(err);
+               }
             });
-        }
-        else{
-            console.log('not found');
-            done(null,3);
-        }
 
     }
 ));
@@ -270,9 +308,7 @@ function add_stage_to_student(student,stageid,stagename,cb) {
                             }
                             cb(null, 0);
                         });
-
                     }
-
                 })
             }
         });

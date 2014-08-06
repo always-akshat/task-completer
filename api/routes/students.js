@@ -198,11 +198,10 @@ function add_stage2(facebookid,cb) {
 
 
 function add_stage(facebookid,stageid,stagename,cb) {
-    console.log('adding stage to new user')
-    console.log('stagename :' +stagename);
+    console.log('adding'+stagename+ ' now...');
     Students.find({'facebookid' :facebookid}).exec(function (err, students) {
         //console.log('studnet :' + JSON.stringify(students));
-        students.forEach(function (instance) {
+        students.forEach(function (instance){
             //console.log(instance.facebookid + ' -- ' + instance.name);
             var stage =  {
                 "name" : stagename.toString(),
@@ -222,7 +221,7 @@ function add_stage(facebookid,stageid,stagename,cb) {
                                 //console.log('stages :'  + stage.tasks);
                                 if (stage && stage.tasks) {
                                     var user_tasks = stage.tasks;
-                                    console.log(user_tasks);
+
                                     var total_tasks = user_tasks.length;
                                     var added =0;
 
@@ -246,7 +245,6 @@ function add_stage(facebookid,stageid,stagename,cb) {
 
 
     });
-
 }
 
 
