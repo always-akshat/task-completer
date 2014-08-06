@@ -81,6 +81,9 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
     $scope.level1iscompleted = false;
     $scope.level2iscompleted = false
     $scope.profilecomplete=true;
+
+    if(!$scope.identity.currentUser.c)
+        $window.location = '/auth/facebook';
     if(!angular.isObject($scope.identity.currentUser.college) || !angular.isObject($scope.identity.currentUser.college)) {
         console.log('redirecting');
         $scope.profilecomplete = false;
@@ -96,7 +99,6 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
 
     if($scope.identity.currentUser.complete2 == 100)
         $scope.level2iscompleted = true;
-
 
     $window.scrollTo(0, 0);
     var currentPage = {home: 1, rewards: 0, lb: 0, mysettings: 0,managecluster: 0};

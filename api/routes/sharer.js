@@ -17,7 +17,7 @@ var student_functions = require('./students.js');
 exports.share = function(req,res){
 
 
-   complement(req.body.c.toString, function(err,data){
+   complement(req.body.c.toString(), function(err,data){
 
         var facebookid = data;
         var answers = req.body.answers;

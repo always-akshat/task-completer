@@ -80,6 +80,8 @@ viberApp.controller('dashboardCtrl', [
     $scope.level1iscompleted = false;
     $scope.level2iscompleted = false;
     $scope.profilecomplete = true;
+    if (!$scope.identity.currentUser.c)
+      $window.location = '/auth/facebook';
     if (!angular.isObject($scope.identity.currentUser.college) || !angular.isObject($scope.identity.currentUser.college)) {
       void 0;
       $scope.profilecomplete = false;
