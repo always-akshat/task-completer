@@ -117,8 +117,9 @@ viberApp.controller('vbWinnersCtrl', ['$scope', '$window', 'week1winners', funct
 
 viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 'vbAuth', '$window','$location', function ($rootScope, $scope, vbSharedService, vbAuth, $window,$location) {
 
-    $scope.level1iscompleted = false;
-    $scope.level2iscompleted = false
+    $rootScope.level1iscompleted = false;
+    $rootScope.level2iscompleted = false;
+    $rootScope.level3iscompleted = false;
     $scope.profilecomplete=true;
 
     if(!$scope.identity.currentUser.c)
@@ -129,18 +130,15 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
     }
 
     $rootScope.manageclicked = false;
-    var stage = $scope.identity.currentUser.stages;
-    var level1= _.where(stage,{'stageid':'5390521624349ecc0c108c10'})[0];
-    var level2= _.where(stage,{'stageid':'53d36e0abb5c82917b3a3d94'})[0];
 
     if($scope.identity.currentUser.complete1 == 100)
-        $scope.level1iscompleted = true;
+        $rootScope.level1iscompleted = true;
 
     if($scope.identity.currentUser.complete1 == 100 && $scope.identity.currentUser.complete2 == 100)
-        $scope.level2iscompleted = true;
+        $rootScope.level2iscompleted = true;
 
     if($scope.identity.currentUser.complete1 == 100 && $scope.identity.currentUser.complete2 == 100 && $scope.identity.currentUser.complete3 == 100)
-        $scope.level3iscompleted = true;
+        $rootScope.level3iscompleted = true;
 
     $window.scrollTo(0, 0);
     var currentPage = {home: 1, rewards: 0, lb: 0, mysettings: 0,managecluster: 0};
@@ -160,8 +158,6 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
     if($scope.identity.currentUser.complete3==100){
         $rootScope.style3 = {'font-size':'14px'};
     }
-
-
 }]);
 
 viberApp.controller('leaderboardCtrl', ['$scope','$rootScope' , 'vbSharedService', '$http', '$window', function ($scope, $rootScope,vbSharedService, $http, $window) {
