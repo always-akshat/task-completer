@@ -1,6 +1,6 @@
 <div class="col-sm-13 col-sm-offset-1">
 <h1>Complete Tasks. Unlock Levels. Win Big!</h1>
-<p ng-show="!profilecomplete">Please complete your profile first from <a href="#mysettings"> My Settings</a></p>
+<p ng-if="!profilecomplete">Please complete your profile first from <a href="#mysettings"> My Settings</a></p>
 <div class="level-box">
     <div class="level-meter clearfix">
         <div class="level-title">{{identity.currentUser.level1}}</div>
@@ -15,7 +15,7 @@
             <span ng-style="style1" class="progress-txt">{{identity.currentUser.complete1}}%</span>
         </div>
     </div>
-    <div class="panel-group panel-infoGroup" id="panel-l1">
+    <div ng-if="!level1iscompleted" class="panel-group panel-infoGroup" id="panel-l1">
         <div class="panel">
         <task-survey></task-survey>
         <liken-follow></liken-follow>
@@ -23,17 +23,12 @@
         <task-upload-photos></task-upload-photos>
         <invite-fb-friends></invite-fb-friends>
         </div>
-
-
-      <!--  <task-insert-mobile></task-insert-mobile> -->
-
-
-
-
+        <!--  <task-insert-mobile></task-insert-mobile> -->
     </div>
 </div>
 
-<div class="level-box" ng-show="level1iscompleted">
+<span ng-if="level1iscompleted">
+<div class="level-box">
     <div class="level-meter clearfix">
         <div class="level-title">{{identity.currentUser.level2}}</div>
         <div class="progress-box">
@@ -47,7 +42,7 @@
             <span ng-style="style2" class="progress-txt">{{identity.currentUser.complete2}}%</span>
         </div>
     </div>
-    <div class="panel-group panel-infoGroup" id="panel-l2">
+    <div ng-if="!level2iscompleted" class="panel-group panel-infoGroup" id="panel-l2">
         <div class="panel">
             <task-knowviber></task-knowviber>
             <activate-friends></activate-friends>
@@ -58,8 +53,24 @@
         <!--  <task-insert-mobile></task-insert-mobile> -->
     </div>
 </div>
+</span>
 
-<div class="level-box" ng-show="level2iscompleted">
+<span ng-if="!level1iscompleted">
+<div class="level-box">
+    <div class="level-meter clearfix">
+        <div class="level-title">{{identity.currentUser.level2}}</div>
+        <div class="progress-box">
+            <div class="row pull-left">
+                <p>                    Complete Level 1 to unlock this Level</p>
+            </div>
+            <span class="progress-txt"><strong class="icon-lock"></strong></span>
+        </div>
+    </div>
+</div>
+</span>
+
+<span ng-if="level2iscompleted">
+<div class="level-box">
     <div class="level-meter clearfix">
         <div class="level-title">{{identity.currentUser.level3}}</div>
         <div class="progress-box">
@@ -84,7 +95,26 @@
         <!--  <task-insert-mobile></task-insert-mobile> -->
     </div>
 </div>
+</span>
 
+<span ng-if="!level2iscompleted">
+<div class="level-box">
+    <div class="level-meter clearfix">
+        <div class="level-title">{{identity.currentUser.level3}}</div>
+        <div class="progress-box">
+            <div class="row pull-left">
+                <p>                    Complete Level 2 to unlock this Level</p>
+                <!--<div class="col-xs-6"></div>-->
+                <!--<div class="col-xs-6"></div>-->
+                <!--<div class="col-xs-6"></div>-->
+                <!--<div class="col-xs-6" style="border: 0px;"></div>-->
+                <!--<div class="progress-bar" style="width:{{identity.currentUser.complete2}}%;"></div>-->
+            </div>
+            <span class="progress-txt"><strong class="icon-lock"></strong></span>
+        </div>
+    </div>
+</div>
+</span>
 <!--<div class="level-box">-->
     <!--<div class="level-meter clearfix">-->
         <!--<div class="level-title">Level 4</div>-->

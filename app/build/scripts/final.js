@@ -92,8 +92,10 @@ viberApp.controller('dashboardCtrl', [
     var level2 = _.where(stage, { 'stageid': '53d36e0abb5c82917b3a3d94' })[0];
     if ($scope.identity.currentUser.complete1 == 100)
       $scope.level1iscompleted = true;
-    if ($scope.identity.currentUser.complete2 == 100)
+    if ($scope.identity.currentUser.complete1 == 100 && $scope.identity.currentUser.complete2 == 100)
       $scope.level2iscompleted = true;
+    if ($scope.identity.currentUser.complete1 == 100 && $scope.identity.currentUser.complete2 == 100 && $scope.identity.currentUser.complete3 == 100)
+      $scope.level3iscompleted = true;
     $window.scrollTo(0, 0);
     var currentPage = {
         home: 1,
@@ -978,14 +980,28 @@ viberApp.controller('vbinviteFrndsCtrl', [
     $scope.taskcomplete2 = false;
     if (task.completed == 1)
       $scope.taskcomplete2 = true;
-    $scope.sendRequest = function () {
-      //var user_id = document.getElementsByName("user_id")[0].value;
+    window.fbAsyncInit = function () {
       FB.init({
         appId: '493599764105814',
-        cookie: true,
         status: true,
+        cookie: true,
         xfbml: true
       });
+    };
+    // Load the SDK Asynchronously
+    (function (d) {
+      var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement('script');
+      js.id = id;
+      js.async = true;
+      js.src = '//connect.facebook.net/en_US/all.js';
+      ref.parentNode.insertBefore(js, ref);
+    }(document));
+    $scope.sendRequest = function () {
+      //var user_id = document.getElementsByName("user_id")[0].value;
       FB.ui({
         method: 'apprequests',
         message: 'Request App!!',
@@ -1899,7 +1915,7 @@ viberApp.controller('vbGoodvibesMeanCtrl', [
             $scope.identity.currentUser.points += data.completiondata.points;
             if ($scope.identity.currentUser.complete3 == 100) {
               $rootScope.style3 = { 'font-size': '14px' };
-              $scope.level2iscompleted = true;
+              $scope.level3iscompleted = true;
             }
             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             $scope.taskcomplete31 = true;
@@ -2009,7 +2025,7 @@ viberApp.controller('vbThinkofViberCtrl', [
             //$rootScope.level2stagecompletion += data.completiondata.level;
             if ($scope.identity.currentUser.complete3 == 100) {
               $rootScope.style3 = { 'font-size': '14px' };
-              $scope.level2iscompleted = true;
+              $scope.level3iscompleted = true;
             }
             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             $scope.taskcomplete32 = true;
@@ -2117,7 +2133,7 @@ viberApp.controller('vbBacktoSchoolCtrl', [
             //$rootScope.level2stagecompletion += data.completiondata.level;
             if ($scope.identity.currentUser.complete3 == 100) {
               $rootScope.style3 = { 'font-size': '14px' };
-              $scope.level2iscompleted = true;
+              $scope.level3iscompleted = true;
             }
             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             $scope.taskcomplete33 = true;
@@ -2225,7 +2241,7 @@ viberApp.controller('vbDoodleWarCtrl', [
             //$rootScope.level2stagecompletion += data.completiondata.level;
             if ($scope.identity.currentUser.complete3 == 100) {
               $rootScope.style3 = { 'font-size': '14px' };
-              $scope.level2iscompleted = true;
+              $scope.level3iscompleted = true;
             }
             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             $scope.taskcomplete34 = true;
@@ -2308,7 +2324,7 @@ viberApp.controller('vbdaysofGoodvibesCtrl', [
                   //$rootScope.level2stagecompletion += data.completiondata.level;
                   if ($scope.identity.currentUser.complete3 == 100) {
                     $rootScope.style3 = { 'font-size': '14px' };
-                    $scope.level2iscompleted = true;
+                    $scope.level3iscompleted = true;
                   }
                   $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
                   $scope.taskcomplete35 = true;
