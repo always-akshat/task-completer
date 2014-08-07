@@ -204,8 +204,8 @@ viberApp.controller('vbinviteFrndsCtrl',['$scope','$http','toaster','$rootScope'
 
     window.fbAsyncInit = function() {
         FB.init({
-            //appId: '493599764105814',
-            appId : '247429375447674', // App ID
+            appId: '493599764105814',
+            //appId : '247429375447674', // App ID
             status     : true, // check login status
             cookie     : true, // enable cookies to allow the server to access the session
             xfbml      : true  // parse XFBML
