@@ -1,0 +1,16 @@
+
+<div class="col-sm-13 col-sm-offset-1">
+    <h1>Level 1 Winners</h1>
+
+    <table class="table leaderboard" width="100%">
+        <tr ng-repeat="winner in winners">
+            <td width="5%"><span class="big-icon-bookmark">{{$index + 1}}</span> </td>
+            <td width="10%"><img ng-src="http://graph.facebook.com/{{winner.facebookid}}/picture?height=80&width=80" width="40" class="img-circle img-responsive" alt=""/></td>
+            <td width="42%" class="leader-name"><p>{{winner.name}}</p>
+                <small>{{winner.item}}</small>
+            </td>
+            <td width="43%">{{winner.location.name}}</td>
+        </tr>
+
+    </table>
+</div>
