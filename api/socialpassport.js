@@ -49,11 +49,13 @@ module.exports = passport.use(new FacebookStrategy({
                                }
                                console.log('this is the final data recieved at parent function' + data);
 
-                               if (data == 1) {
-                                   Students.findOne({ email: fb_email}, function (err, student) {
+                               if (data !== 0) {
+                                   Students.findOne({ email: data.toString()}, function (err, student) {
                                        console.log('final student to send : ' + student.email);
                                        done(null, student);
                                    })
+                               }else{
+                                   done(null,2);
                                }
                            });
                        }
@@ -81,10 +83,12 @@ module.exports = passport.use(new FacebookStrategy({
                                }
                                console.log('this is the final data recieved at parent function' + data);
 
-                               if (data == 1) {
+                               if (data !== 0) {
                                    Students.findOne({ email: fb_email}, function (err, student) {
                                        done(null, student);
                                    })
+                               }else {
+                                   done(null,2);
                                }
                            });
                        }
@@ -260,12 +264,12 @@ function tasks_in_registration(student,stages,cb){
         initial = Object.keys(stages).length;
         for(var key in stages) {
             add_stage_to_student(student,key,stages[key],function(err,data){
-               console.log('data recieved from last function to second last function :' + data);
+               console.log('data recieved from last function to second last function : ' + data);
                     final++;
                 console.log('final :' + final);
                 if(initial == final){
                     console.log('final level');
-                    cb(null,1);
+                    cb(null,data);
                 }
 
             });
@@ -297,7 +301,7 @@ function add_stage_to_student(student,stageid,stagename,cb) {
                 Students.findOne({ email: student.email}, function (err, final_student) {
                     if (final_student.stages.length && final_student.user_tasks.length) {
                         console.log('everything fine');
-                        cb(null, 1);
+                        cb(null, student.email);
                     }else{
                         console.log('incorrect number of tasks or stages found. err');
                         final_student.user_tasks = undefined;
@@ -314,6 +318,6 @@ function add_stage_to_student(student,stageid,stagename,cb) {
         });
         }else{
         console.log('stagename was null');
-        cb(null,1)
+        cb(null,student.email)
     }
 };
