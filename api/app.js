@@ -136,6 +136,7 @@ app.get('/login', function(req,res){
         }
         else {
             console.log('everything fin. logging in');
+            console.log('student returned' + JSON.stringify(req.user))
             req.session.student = req.user;
 
             console.log('set facebookid to :' + req.session.student.facebookid);

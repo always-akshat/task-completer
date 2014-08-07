@@ -51,6 +51,7 @@ module.exports = passport.use(new FacebookStrategy({
 
                                if (data == 1) {
                                    Students.findOne({ email: fb_email}, function (err, student) {
+                                       console.log('final student to send : ' + student.email);
                                        done(null, student);
                                    })
                                }
