@@ -1,7 +1,7 @@
 /**
  * Created by Ankit on 5/16/2014.
  */
-require('newrelic');
+//require('newrelic');
 
 //var log4js = require('log4js');
 //log the cheese logger messages to a file, and the console ones as well.
@@ -138,8 +138,7 @@ app.get('/login', function(req,res){
             //console.log('everything fin. logging in');
             //console.log('student returned' + JSON.stringify(req.user))
             req.session.student = req.user;
-
-            console.log('set facebookid to :' + req.session.student.facebookid);
+             console.log('set facebookid to :' + req.session.student.facebookid);
             complement(req.user.facebookid.toString(), function(err,data){
                 console.log('data recieved from complement' + data);
             if(!err){
@@ -268,6 +267,7 @@ app.put('/students/manage/interns/delete',students.removesubordinate);
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
+    //console.log('Hello from Worker ' + cluster.worker.id);
 });
 
 
