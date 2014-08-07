@@ -23,14 +23,14 @@ $(document).ready( function() {
     });
 
     $("#campaign div.campaing-slider ul li.share").click(function(){
-        $("#campaign div.campaing-slider div.content div.text").html("<p>Other than the free talk-time you win when your friends join, and the #GoodVibes you will get back, we want to make sure there is more for you ;)</p><p>Your good vibes circle back to you, and so we are giving away a whole lot of freebies, gift vouchers, some of the best smart-phones and gadgets, all-paid trips to Leh-Ladakh, Pondicherry & Goa, and to the one who shares the most #GoodVibes - a WORLD TOUR! </p><p>Students who successfully participate in the campaign will also get a certificate of participation by Viber.</p>");
+        $("#campaign div.campaing-slider div.content div.text").html("<p>Your good vibes circle back to you, and so we are giving away a whole lot of freebies, gift vouchers, some of the best smart-phones and gadgets, all-paid trips to Leh-Ladakh, Pondicherry & Goa, and to the one who shares the most #GoodVibes - a WORLD TOUR! </p><p>Students who successfully participate in the campaign will also get a certificate of participation by Viber.</p>");
 
         $("#campaign div.campaing-slider ul li").removeClass("active");
         $("#campaign div.campaing-slider ul li.share").addClass("active");
     });
 
     $("#campaign div.campaing-slider ul li.invite").click(function(){
-        $("#campaign div.campaing-slider div.content div.text").html("<p>#GoodVibes are meant to be shared :)</p><p>As a Good Vibes Ambassador, that's all that you need to do. Spread the good vibes!</p><p>Invite your friends today & spark off an epic movement out of India. And, to make it sweet for you, we will send some good vibes back to you!</p><p>So basically when some one clicks on these two, the text should change to the above text provided for each section respectively.</p>");
+        $("#campaign div.campaing-slider div.content div.text").html("<p>#GoodVibes are meant to be shared :)</p><p>As a Good Vibes Ambassador, that's all that you need to do. Spread the good vibes!</p><p>Invite your friends today & spark off an epic movement out of India. And, to make it sweet for you, we will send some good vibes back to you!</p>");
 
         $("#campaign div.campaing-slider ul li").removeClass("active");
         $("#campaign div.campaing-slider ul li.invite").addClass("active");

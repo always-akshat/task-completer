@@ -1,6 +1,24 @@
 <div class="col-sm-13 col-sm-offset-1">
 <h1>Complete Tasks. Unlock Levels. Win Big!</h1>
-<p ng-if="!profilecomplete">Please complete your profile first from <a href="#mysettings"> My Settings</a></p>
+<span ng-if="!profilecomplete">
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">I'm a modal!</h3>
+        </div>
+        <div class="modal-body">
+            <ul>
+                <li ng-repeat="item in items">
+                    <a ng-click="selected.item = item">{{ item }}</a>
+                </li>
+            </ul>
+            Selected: <b>{{ selected.item }}</b>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+</span>
 <div class="level-box">
     <div class="level-meter clearfix">
         <div class="level-title">{{identity.currentUser.level1}}</div>
