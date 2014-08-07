@@ -205,7 +205,7 @@ function enter_old_user(referrer,profile,authcode,cb){
             student.updatedon = Date.now();
                 //console.log(student);
                 student.save(function(err) {
-                    console.log('trying to save student');
+                    console.log('trying to save student' + student.email);
                     if (!err) {
                             var all_stages = {};
                             stages_functions.list(function(stages_data){
@@ -222,8 +222,8 @@ function enter_old_user(referrer,profile,authcode,cb){
                                         console.log('stageid :' + mystages_data.stageid);
                                         all_stages[mystages_data.stageid] = null;
                                     });
-                                    console.log('final stages to be added');
-                                    console.log(all_stages);
+                                    //console.log('final stages to be added');
+                                    //console.log(all_stages);
                                     tasks_in_registration(student,all_stages,function(err,data){
                                         cb(null,data);
                                     });
@@ -251,9 +251,8 @@ function enter_old_user(referrer,profile,authcode,cb){
 
 
 function tasks_in_registration(student,stages,cb){
-    asyncTasks = [];
-  console.log('entering new tasks');
-    console.log(stages);
+  console.log('entering new tasks for' + student.name);
+    //console.log(stages);
     var initial = 0;
     var final =0;
     if(stages){
@@ -271,13 +270,13 @@ function tasks_in_registration(student,stages,cb){
             });
 
         }
-
-    }
+ }
 }
 
 
 
 function add_stage_to_student(student,stageid,stagename,cb) {
+    console.log('add stage to student for ' + student.name);
     if (stagename !== null){
         console.log('adding stage :' + stagename);
             student_functions.add_stage(student.facebookid, stageid, stagename, function (err, data) {
