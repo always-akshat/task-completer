@@ -1,9 +1,9 @@
 /**
  * Created by Ankit on 5/16/2014.
  */
-//require('newrelic');
+require('newrelic');
 
-var log4js = require('log4js');
+//var log4js = require('log4js');
 //log the cheese logger messages to a file, and the console ones as well.
 /*log4js.configure({
     appenders: [
@@ -135,8 +135,8 @@ app.get('/login', function(req,res){
             res.redirect('/?error=1');
         }
         else {
-            console.log('everything fin. logging in');
-            console.log('student returned' + JSON.stringify(req.user))
+            //console.log('everything fin. logging in');
+            //console.log('student returned' + JSON.stringify(req.user))
             req.session.student = req.user;
 
             console.log('set facebookid to :' + req.session.student.facebookid);
