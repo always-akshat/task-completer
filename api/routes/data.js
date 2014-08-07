@@ -25,32 +25,7 @@ function leaderboard(req,res){
         .sort({'points' : -1})
         .limit(100).exec(function(err,students){
            if(students){
-               var html ='<table>' +
-                   '<tr>' +
-                   '<td>Picture</td>'+
-                   '<td>Name</td>'+
-                   '<td>Email</td>'+
-                   '<td>Location</td>'+
-                   '<td>College</td>'+
-                   '<td>Points</td>'+
-                   '</tr>';
-               students.forEach(function(instance){
-                    var myhtml ='<tr>' +
-                        '<td><img src="http://graph.facebook.com/'+instance.facebookid+'/picture?height=80&amp;width=80"/></td>' +
-                        '<td>'+instance.name+'</td>' +
-                        '<td>'+instance.email+'</td>' +
-                        '<td>'+instance.location.name+'</td>' +
-                        '<td>'+instance.college.name+'</td>' +
-                        '<td>'+instance.points+'</td>' +
-                        '</tr>';
-
-                    html += myhtml;
-
-               });
-
-               html+= '</table>';
-                   res.send(html);
-               console.log(JSON.stringify(students))
+              res.send(JSON.stringify(students));
            }
 
     });
