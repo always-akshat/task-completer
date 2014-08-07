@@ -37,8 +37,9 @@
 
 <div ng-view></div>
 
-<div ng-hide="manageclicked" class="col-sm-4 col-sm-offset-1">
+<div ng-if="!manageclicked" class="col-sm-4 col-sm-offset-1">
     <cheat-box></cheat-box>
+    <a href="#winners-week1"><div class="leaderboard-title">Week 1 winners</div></a>
     <!--<social-connect></social-connect>-->
     <mini-leaderboard></mini-leaderboard>
 </div>

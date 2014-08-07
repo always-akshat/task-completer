@@ -47,6 +47,18 @@ viberApp.config(['$routeProvider', function ($routeProvider) {
                 controller: 'vbClusterCtrl'
 
             }).
+            when('/winners-week1', {
+
+                templateUrl: 'views/winners-week1.html',
+                controller: 'vbWinnersCtrl',
+                resolve: {week1winners: function (getwinners) {
+
+
+                        return getwinners.week1();
+                }
+                }
+
+            }).
             otherwise({
                 redirectTo: '/'
             });
@@ -73,6 +85,33 @@ viberApp.controller('vbNavBarCtrl', ['$scope', '$window', '$http', function ($sc
             }
         }
     });
+
+}]);
+
+
+viberApp.controller('vbWinnersCtrl', ['$scope', '$window', 'week1winners', function ($scope, $window,week1winners) {
+
+    $window.scrollTo(0,0);
+
+    $scope.winners = week1winners;
+    console.log($scope.winners);
+    var index = 0;
+    _.each(week1winners,function(winner){
+        index = index + 1;
+        if(index == 1){
+            winner.item = 'iPad Mini';
+        }
+        else if(index>=2 && index <=50){
+            winner.item = 'BookMyShow voucher';
+        }
+        else if(index>=51 && index <=75){
+            winner.item = 'Viber pendrive';
+        }
+        else if(index>=76){
+            winner.item = 'Viber T-shirt';
+        }
+    });
+
 
 }]);
 
