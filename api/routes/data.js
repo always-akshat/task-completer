@@ -10,10 +10,11 @@ var ObjectId = Schema.ObjectId;
 var studentSchema = require('../models/studentmodel');
 var student_functions = require('../routes/students.js');
 var stages_functions = require('../routes/stages.js');
+var leaderboard_data_functions = require('../data/leaderboard.js');
 var async = require('async');
 
 function leaderboard(req,res){
-   Students.find({'createdon' :
+   /*Students.find({'createdon' :
         {$lte : "2014-07-25"}
             },
         {'name' :1,
@@ -28,9 +29,9 @@ function leaderboard(req,res){
               res.send(JSON.stringify(students));
            }
 
-    });
+    });*/
 
-//require('../data/level1_leaderboard.json');
+leaderboard_data_functions.leaderboard1(req,res);
 }
 
 
