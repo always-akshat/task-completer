@@ -23,7 +23,7 @@
         <!--<iframe width="100%" height="315px" src="//www.youtube.com/embed/EOl4e8wsvHU" frameborder="0" allowfullscreen></iframe>-->
     </div>
 
-    <form ng-hide="taskcomplete21" name="knowviberForm" role="form" ng-controller="vbKnowViberCtrl"  ng-submit="submitquestions(knowviberForm.$valid)" novalidate>
+    <form ng-if="!taskcomplete21" name="knowviberForm" role="form" ng-controller="vbKnowViberCtrl"  ng-submit="submitquestions(knowviberForm.$valid)" novalidate>
 
         <div class="panel-body">
             <p class="alert-formnote">All questions are mandatory</p>

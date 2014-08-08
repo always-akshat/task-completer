@@ -69,7 +69,7 @@
        <br/><br/> <p ng-show="ataskcomplete0">You have already completed this task</p>
     </div>
 
-    <form ng-hide="ataskcomplete0" name="surveyForm" role="form" ng-submit="submitsurvey(surveyForm.$valid)" ng-controller="vbSurveyCtrl"  novalidate>
+    <form ng-if="!ataskcomplete0" name="surveyForm" role="form" ng-submit="submitsurvey(surveyForm.$valid)" ng-controller="vbSurveyCtrl"  novalidate>
 
     <div class="panel-body">
         <p class="alert-formnote">All questions are mandatory</p>

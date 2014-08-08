@@ -31,14 +31,14 @@
                     <a ng-model="s3added34" ng-repeat="s3add in s3added34" href=""><img ng-src="{{s3add}}" height="78" width="78" alt=""/></a>
 
 
-                    <a ng-hide="taskcomplete34" href="#." onclick="document.getElementById('filel3task4').click(); return false;"class="upload-img">
+                    <a ng-if="!taskcomplete34" href="#." onclick="document.getElementById('filel3task4').click(); return false;"class="upload-img">
                         <span class="icon-plus-circle"></span>
                         Choose<br>
                         photos
                     </a>
                     <input id="filel3task4" type="file" accept="image/*" style="visibility: hidden;" ng-file-select="onFileSelectl3task4($files)"/>
                     <p style="margin-left: 18px;">
-                        <button ng-hide="taskcomplete34"type="submit" class="btn btn-success radius-none" ng-disabled="zeroselected34">submit</button>
+                        <button ng-if="!taskcomplete34"type="submit" class="btn btn-success radius-none" ng-disabled="zeroselected34">submit</button>
                     </p>
                 </div>
             </form>

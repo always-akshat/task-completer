@@ -27,7 +27,7 @@
                 <!--<li><a href="#rejected" data-toggle="tab" class="rejected-photo">6 Rejected</a></li>&ndash;&gt;-->
                 <!--</ul>-->
             </div>
-            <form ng-hide="taskcomplete23" name="photoForm" ng-submit="onFileUploadtask3()" novalidate>
+            <form ng-if="!taskcomplete23" name="photoForm" ng-submit="onFileUploadtask3()" novalidate>
                 <div class="tab-pane fade in active new-upload">
                     <a ng-model="serSubmitted23" ng-repeat="serSubmit in serSubmitted23" href=""><img ng-src="https://s3-ap-southeast-1.amazonaws.com/viber-uploads/level2task3/{{serSubmit}}" height="78" width="78" alt=""/></a>
                     <a ng-model="s3added23" ng-repeat="s3add in s3added23" href=""><img ng-src="{{s3add}}" height="78" width="78" alt=""/></a>

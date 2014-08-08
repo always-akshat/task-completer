@@ -17,7 +17,7 @@
 
         <div id="fb-root"></div>
         <div class="panel-body">
-            <button ng-hide="taskcomplete2" class="btn btn-success" ng-click="sendRequest();">invite now</button>
+            <button ng-if="!taskcomplete2" class="btn btn-success" ng-click="sendRequest();">invite now</button>
         </div>
         <p ng-show="taskcomplete2" style="margin-left: 5px">You have completed this task.</p>
         <p style="margin-left: 5px"><strong>*</strong>Vibes awarded for duplicate invites will be deducted.</p>
