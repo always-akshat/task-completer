@@ -2,7 +2,7 @@
 <h1>Complete Tasks. Unlock Levels. Win Big!</h1>
 <script type="text/ng-template" id="completeProfile.html">
     <div class="modal-header">
-        <h1 class="modal-title">Please, Complete your profile!</h1>
+        <h1 class="modal-title">Please complete your profile!</h1>
     </div>
     <div class="modal-body">
         <form class="form-horizontal form-profile" role="form" name="settingsForm" ng-submit="ok(settingsForm.$valid)" novalidate>
@@ -32,7 +32,7 @@
             <div class="form-group">
                 <label for="inputM" class="col-sm-4 control-label">Mobile</label>
                 <div class="col-sm-20">
-                    <input type="text" name="mobile" ng-model="identity.currentUser.mobile" ng-minlength="10" ng-maxlength="10" class="form-control" id="inputM" placeholder="Mobile" required>
+                    <input type="number" name="mobile" ng-model="identity.currentUser.mobile" ng-minlength="10" ng-maxlength="10" class="form-control" id="inputM" placeholder="Mobile" required>
                 </div>
             </div>
             <div class="form-group">
