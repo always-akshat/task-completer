@@ -7,10 +7,9 @@ if (cluster.isMaster) {
     var os =require('os');
     // Count the machine's CPUs
     var cpuCount = os.cpus().length;
-   for (var i = 0; i < cpuCount; i += 1) {
+   for (var i = 0; i < 1; i += 1) {
         cluster.fork();
     }
-
 
 }else{
     require('./app.js');

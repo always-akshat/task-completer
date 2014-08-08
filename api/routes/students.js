@@ -253,6 +253,22 @@ function getstudentdata(req, res) {
     console.log('reached get student data');
     if (req.session.student !== null) // check if the user is logged in
     {
+
+        /*return Students.findOne({ 'facebookid': req.session.student.facebookid}, function (err, student) {
+            if (!err) {
+
+                if (student === null) {
+                    console.log('not found');
+                    res.send('no record found');
+                }
+                else {
+                    req.session.student =student;
+                    res.send(req.session.student);
+                }
+            } else {
+                res.send(err);
+            }
+        }) */
         res.send(req.session.student);
     }
     else {
@@ -683,7 +699,6 @@ function completeTask(facebookid, taskid,orig_points,cb) {
                             //var singular = false;
                             console.log('this is the task id in complete answers :' + taskid);
 
-
                             if (already_complete != 1 || taskid =='53db763c68425b29ecc82f4e') {
                             addpoints(facebookid, points, function (points_to_add) {
                                 //console.log('points to add :'+ points_to_add);
@@ -703,15 +718,18 @@ function completeTask(facebookid, taskid,orig_points,cb) {
                                         if (v_transaction !== 0) {
                                             completion_value.transaction = v_transaction;
                                                 console.log('calling stage completion');
-                                                complete_user_stage(facebookid, stageid, c_pc, function (completed_percentage) {
-                                                    if (completed_percentage == 0) {
-                                                        cb(completion_value);
-                                                    } else {
-                                                        completion_value.level = completed_percentage;
-                                                        cb(completion_value);
-                                                    }
-                                                })
-
+                                                if(already_complete != 1) {
+                                                    complete_user_stage(facebookid, stageid, c_pc, function (completed_percentage) {
+                                                        if (completed_percentage == 0) {
+                                                            cb(completion_value);
+                                                        } else {
+                                                            completion_value.level = completed_percentage;
+                                                            cb(completion_value);
+                                                        }
+                                                    })
+                                                }else{
+                                                    cb(completion_value);
+                                                }
                                             console.log('added transactiontion');
                                         } else {
                                             console.log('cb error');
@@ -929,9 +947,6 @@ function complete_user_stage(facebookid,stageid,completion_value,cb) {
                     cb(20);
                 })
         });
-
-
-
 
 }
 

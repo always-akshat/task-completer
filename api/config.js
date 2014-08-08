@@ -57,3 +57,17 @@ mongoose.connect('mongodb://viber_app:akshat@ds053449.mongolab.com:53449/viber_p
 
 exports.utils = require('../api/utils.js');
 exports.ObjectId =  mongoose.Types.ObjectId;
+exports.complement = function(number,cb){
+    console.log(number);
+
+    var secrettoken ='';
+    var count = number.length;
+    console.log('count' + count);
+    for(var c=0;c<=number.length-1;c++){
+        secrettoken += (9-parseInt((number.substr(c,1))));
+        if(c == (count-1)){
+            cb(null,secrettoken);
+        }
+    }
+
+}
