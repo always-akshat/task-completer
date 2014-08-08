@@ -253,8 +253,8 @@ function getstudentdata(req, res) {
     console.log('reached get student data');
     if (req.session.student !== null) // check if the user is logged in
     {
-
-        /*return Students.findOne({ 'facebookid': req.session.student.facebookid}, function (err, student) {
+        console.log('studnet session found in session');
+        return Students.findOne({ 'facebookid': req.session.student.facebookid}, function (err, student) {
             if (!err) {
 
                 if (student === null) {
@@ -262,16 +262,22 @@ function getstudentdata(req, res) {
                     res.send('no record found');
                 }
                 else {
-                    req.session.student =student;
-                    res.send(req.session.student);
+
+                    config.complement(student.facebookid, function(err,data){
+                        req.session.student = student;
+                        req.session.student.c = data.toString();
+                        res.send(req.session.student);
+                    });
+
                 }
             } else {
                 res.send(err);
             }
-        }) */
-        res.send(req.session.student);
+        })
+
     }
     else {
+        console.log('unauthorized');
         res.send('Unauthorized');
     }
 

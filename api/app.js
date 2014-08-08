@@ -1,7 +1,7 @@
 /**
  * Created by Ankit on 5/16/2014.
  */
-//require('newrelic');
+require('newrelic');
 
 //var log4js = require('log4js');
 //log the cheese logger messages to a file, and the console ones as well.

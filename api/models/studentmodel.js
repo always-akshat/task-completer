@@ -80,7 +80,8 @@ var studentSchema = new Schema({
     visitcount :Number,
     refercount :Number,
     referred_by: String,
-    vcron :Number
+    vcron :Number,
+        c :String
 },
     { collection: 'students' })
 
