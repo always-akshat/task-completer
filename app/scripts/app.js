@@ -226,7 +226,7 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
 
     if (!$scope.profilecomplete)
         $scope.open();
-    if ($scope.identity.currentUser.complete1 == 0 && (!$rootScope.tour_seen || ($rootScope.tour_seen == false))) {
+    if ($scope.identity.currentUser.complete1 == 0 && $scope.profilecomplete && (!$rootScope.tour_seen || ($rootScope.tour_seen == false))) {
         $(document).ready(function () {
             $(this).ekkoLightbox({
                 remote: 'images/tour-gv.png'
