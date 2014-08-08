@@ -1796,7 +1796,7 @@ viberApp.controller('vbTaskYuwaCtrl', [
     $scope.taskcomplete24 = false;
     if (angular.isObject(task) && task.completed == 1)
       $scope.taskcomplete24 = true;
-    $scope.submitForm = function (isValid) {
+    $scope.submitForml2t4 = function (isValid) {
       if (isValid) {
         var reqbody = {
             'answers': { 'rate': $scope.rateyuwa },
@@ -2382,7 +2382,6 @@ viberApp.controller('vbdaysofGoodvibesCtrl', [
   '$rootScope',
   '$window',
   function ($scope, $http, toaster, $rootScope, $window) {
-    $scope.rateviber = undefined;
     $scope.link = 'https://www.youtube.com/watch?v=qQLhhS0vI8E&list=UUzeiZ7_xnJMepZN8h0kONig';
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks, { 'task_id': '53db790668425b29ecc82f6d' })[0];
