@@ -97,7 +97,11 @@ viberApp.controller('dashboardCtrl', [
   'vbAuth',
   '$window',
   '$location',
-  function ($rootScope, $scope, vbSharedService, vbAuth, $window, $location) {
+  '$modal',
+  '$http',
+  'settingSubmit',
+  'toaster',
+  function ($rootScope, $scope, vbSharedService, vbAuth, $window, $location, $modal, $http, settingSubmit, toaster) {
     $rootScope.level1iscompleted = false;
     $rootScope.level2iscompleted = false;
     $rootScope.level3iscompleted = false;
@@ -135,6 +139,74 @@ viberApp.controller('dashboardCtrl', [
     $rootScope.style3 = undefined;
     if ($scope.identity.currentUser.complete3 == 100) {
       $rootScope.style3 = { 'font-size': '14px' };
+    }
+    $scope.open = function (size) {
+      var modalInstance = $modal.open({
+          templateUrl: 'completeProfile.html',
+          controller: completeProfileCtrl,
+          size: size
+        });
+      modalInstance.result.then(function () {
+        void 0;
+      }, function () {
+        void 0;
+      });
+    };
+    var completeProfileCtrl = function ($scope, $modalInstance) {
+      $scope.getLocation = function (val) {
+        if (val.length >= 3) {
+          return $http.get('/locations/' + val).then(function (res) {
+            var places = [];
+            angular.forEach(res.data, function (item) {
+              places.push(item);
+            });
+            return places.slice(0, 4);
+          });
+        }
+      };
+      $scope.onSelectLocation = function ($item) {
+        $scope.city_name = $item.CityName;
+        $scope.city_id = $item.Id;
+      };
+      $scope.getCollege = function (val) {
+        if (val.length >= 4) {
+          return $http.get('/colleges/' + val).then(function (res) {
+            var clges = [];
+            angular.forEach(res.data, function (item) {
+              clges.push(item);
+            });
+            return clges.slice(0, 4);
+          });
+        }
+      };
+      $scope.onSelectCollege = function ($item) {
+        $scope.college_name = $item.CollegeName;
+        $scope.college_id = $item.Id;
+      };
+      $scope.ok = function (isValid) {
+        if (isValid) {
+          if ($scope.college_name != undefined) {
+            $scope.identity.currentUser.college.id = $scope.college_id;
+            $scope.identity.currentUser.college.name = $scope.college_name;
+          }
+          if ($scope.city_name != undefined) {
+            $scope.identity.currentUser.location.id = $scope.city_id;
+            $scope.identity.currentUser.location.name = $scope.city_name;
+          }
+          settingSubmit.settingSubmitbutton($scope.identity.currentUser, $scope.identity.currentUser.facebookid).then(function (success) {
+            $modalInstance.close();
+            toaster.pop('success', '', 'Your profile has been saved successfully.');
+          });
+        }
+      };
+    };
+    if (!$scope.profilecomplete)
+      $scope.open();
+    if ($scope.identity.currentUser.complete1 == 0 && (!$rootScope.tour_seen || $rootScope.tour_seen == false)) {
+      $(document).ready(function () {
+        $(this).ekkoLightbox({ remote: 'images/tour-gv.png' });
+      });
+      $rootScope.tour_seen = true;
     }
   }
 ]);
