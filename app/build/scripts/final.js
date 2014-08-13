@@ -453,7 +453,7 @@ viberApp.controller('vbClusterCtrl', [
       });
     };
     $scope.getinterns = function () {
-      if (cmambassadors)
+      if (cmambassadors != 'x')
         $scope.interndata = cmambassadors;
       else
         $scope.interndata = [];
@@ -508,7 +508,7 @@ viberApp.controller('vbProjectCtrl', [
       });
     };
     $scope.getClusterManagers = function () {
-      if (clustermanagers)
+      if (clustermanagers != 'x')
         $scope.ProjectManagerdata = clustermanagers;
       else
         $scope.ProjectManagerdata = [];
@@ -563,7 +563,7 @@ viberApp.controller('vbZonalCtrl', [
       });
     };
     $scope.getProjectManagers = function () {
-      if (projectmanagers)
+      if (projectmanagers != 'x')
         $scope.ZonalManagerdata = projectmanagers;
       else
         $scope.ZonalManagerdata = [];

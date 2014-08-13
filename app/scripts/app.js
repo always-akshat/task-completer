@@ -486,7 +486,7 @@ viberApp.controller('vbClusterCtrl',[ '$scope','$rootScope','$http','$window','t
     };
 
     $scope.getinterns = function(){
-        if(cmambassadors)
+        if(cmambassadors != 'x')
             $scope.interndata = cmambassadors;
         else
             $scope.interndata = [];
@@ -543,13 +543,12 @@ viberApp.controller('vbProjectCtrl',[ '$scope','$rootScope','$http','$window','t
     };
 
     $scope.getClusterManagers = function(){
-        if(clustermanagers)
+        if(clustermanagers != 'x')
             $scope.ProjectManagerdata = clustermanagers;
         else
             $scope.ProjectManagerdata = [];
     };
     $scope.getClusterManagers();
-
     $scope.deleteClusterManager = function(index){
         var reqBody = {email: $scope.ProjectManagerdata[index].email};
         $http.put('/students/manage/interns/delete',reqBody).success(function(data){
@@ -601,7 +600,7 @@ viberApp.controller('vbZonalCtrl',[ '$scope','$rootScope','$http','$window','toa
     };
 
     $scope.getProjectManagers = function(){
-        if(projectmanagers)
+        if(projectmanagers != 'x')
             $scope.ZonalManagerdata = projectmanagers;
         else
             $scope.ZonalManagerdata = [];
