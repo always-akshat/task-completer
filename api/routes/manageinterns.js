@@ -72,8 +72,8 @@ function add_grandchildren(role,email){
 
 function getsubordinates(req,res){
 
-    var email = 'ankit.saxena21@gmail.com'//req.session.student.email;
-    var role =  3;//req.session.student.role;
+    var email = req.session.student.email;
+    var role =  req.session.student.role;
     var returndata = {};
     console.log('role' + role);
     Students.find({'manager.email' :  email})
