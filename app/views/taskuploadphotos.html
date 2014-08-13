@@ -24,7 +24,7 @@
     </div>
     <div class="panel-body">
         <div class="upload-nav text-right">
-            <span ng-show="s3success" class="alert-success pull-left">{{added}} added successfully</span>
+            <!--<span ng-show="s3success" class="alert-success pull-left">{{added}} added successfully</span>-->
             <span class="alert-success pull-right">{{submitted}} Submitted</span>
             <!--<ul>-->
                 <!--<li class="active"><a href="#added" target="_self" data-toggle="tab">{{submitted}} Submitted</a></li>-->
@@ -38,14 +38,14 @@
                 <a ng-model="s3added" ng-repeat="s3add in s3added" href=""><img ng-src="{{s3add}}" height="78" width="78" alt=""/></a>
 
 
-                <a href="#." onclick="document.getElementById('fileID').click(); return false;"class="upload-img">
+                <a ng-if="!taskcomplete1" href="#." onclick="document.getElementById('fileID').click(); return false;"class="upload-img">
                     <span class="icon-plus-circle"></span>
                     Choose<br>
                     photos
                 </a>
                 <input type="file" accept="image/*" id="fileID" style="visibility: hidden;" ng-file-select="onFileSelect($files)"/>
                 <p style="margin-left: 18px;">
-                    <button type="submit" class="btn btn-success radius-none" ng-disabled="zeroselected">submit</button>
+                    <button ng-if="!taskcomplete1" type="submit" class="btn btn-success radius-none" ng-disabled="zeroselected">submit</button>
                 </p>
             </div>
             </form>

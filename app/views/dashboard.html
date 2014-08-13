@@ -1,6 +1,62 @@
 <div class="col-sm-13 col-sm-offset-1">
 <h1>Complete Tasks. Unlock Levels. Win Big!</h1>
-<p ng-if="!profilecomplete">Please complete your profile first from <a href="#mysettings"> My Settings</a></p>
+<script type="text/ng-template" id="completeProfile.html">
+    <div class="modal-header">
+        <h1 class="modal-title">Please complete your profile!</h1>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal form-profile" role="form" name="settingsForm" ng-submit="ok(settingsForm.$valid)" novalidate>
+            <!--   <div class="form-group">
+                   <label for="inputFN" class="col-sm-4 control-label">First Name</label>
+                   <div class="col-sm-20">
+                       <input type="email" class="form-control" id="inputFN" placeholder="First Name">
+                   </div>
+               </div>-->
+            <div class="form-group">
+                <label for="inputLN" class="col-sm-4 control-label">Name</label>
+                <div class="col-sm-20">
+                    <input type="text" name="name" class="form-control" id="inputLN" placeholder="Name" ng-model="identity.currentUser.name" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Sex</label>
+                <div class="col-sm-20">
+                    <input type="radio" name="gender" id="male" value="male" class="custom" ng-model="identity.currentUser.gender">
+                    <label for="male">Male</label>
+                    <input type="radio" name="gender" id="female" value="female" class="custom" ng-model="identity.currentUser.gender">
+                    <label for="female">
+                        Female
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputM" class="col-sm-4 control-label">Mobile</label>
+                <div class="col-sm-20">
+                    <input type="text" name="mobile" ng-model="identity.currentUser.mobile" ng-minlength="10" ng-maxlength="10" class="form-control" id="inputM" placeholder="Mobile" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">City</label>
+                <div class="col-sm-20">
+                    <input type="text" ng-model="identity.currentUser.location.name" typeahead="place.CityName for place in getLocation($viewValue) " placeholder="City" typeahead-on-select='onSelectLocation($item)' class="form-control" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">College</label>
+                <div class="col-sm-20">
+                    <input type="text" ng-model="identity.currentUser.college.name" typeahead="clg.CollegeName for clg in getCollege($viewValue)" typeahead-items='5' placeholder="College" typeahead-on-select='onSelectCollege($item)'class="form-control" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-20 text-right">
+                    <button type="submit" class="btn btn-success" ng-disabled="settingsForm.$invalid">save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</script>
+
+<!--<p ng-if="!profilecomplete">Please complete your profile first from <a href="#mysettings"> My Settings</a></p>-->
 <div class="level-box">
     <div class="level-meter clearfix">
         <div class="level-title">{{identity.currentUser.level1}}</div>
