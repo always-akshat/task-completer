@@ -443,10 +443,12 @@ viberApp.controller('vbClusterCtrl', [
       });
     };
     $scope.getinterns = function () {
-      if (cmambassadors != 'x')
-        $scope.interndata = cmambassadors;
-      else
-        $scope.interndata = [];
+      $http.get('/manage/view/s').success(function (data) {
+        if (data != 'x')
+          $scope.interndata = data;
+        else
+          $scope.interndata = [];
+      });
     };
     $scope.getinterns();
     $scope.deleteintern = function (index) {
@@ -498,10 +500,12 @@ viberApp.controller('vbProjectCtrl', [
       });
     };
     $scope.getClusterManagers = function () {
-      if (clustermanagers != 'x')
-        $scope.ProjectManagerdata = clustermanagers;
-      else
-        $scope.ProjectManagerdata = [];
+      $http.get('/manage/view/s').success(function (data) {
+        if (data != 'x')
+          $scope.ProjectManagerdata = data;
+        else
+          $scope.ProjectManagerdata = [];
+      });
     };
     $scope.getClusterManagers();
     $scope.deleteClusterManager = function (index) {
@@ -553,11 +557,13 @@ viberApp.controller('vbZonalCtrl', [
       });
     };
     $scope.getProjectManagers = function () {
-      if (projectmanagers != 'x') {
-        $scope.ZonalManagerdata = projectmanagers;
-      } else {
-        $scope.ZonalManagerdata = [];
-      }
+      $http.get('/manage/view/s').success(function (data) {
+        if (data != 'x') {
+          $scope.ZonalManagerdata = data;
+        } else {
+          $scope.ZonalManagerdata = [];
+        }
+      });
     };
     $scope.getProjectManagers();
     $scope.deleteProjectManager = function (index) {

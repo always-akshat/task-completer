@@ -484,12 +484,13 @@ viberApp.controller('vbClusterCtrl',[ '$scope','$rootScope','$http','$window','t
                     toaster.pop('failure', "", "Something went wrong. Please try again.");
             });
     };
-
     $scope.getinterns = function(){
-        if(cmambassadors != 'x')
-            $scope.interndata = cmambassadors;
-        else
-            $scope.interndata = [];
+        $http.get('/manage/view/s').success(function(data) {
+            if (data != 'x')
+                $scope.interndata = data;
+            else
+                $scope.interndata = [];
+        });
     };
     $scope.getinterns();
 
@@ -543,10 +544,12 @@ viberApp.controller('vbProjectCtrl',[ '$scope','$rootScope','$http','$window','t
     };
 
     $scope.getClusterManagers = function(){
-        if(clustermanagers != 'x')
-            $scope.ProjectManagerdata = clustermanagers;
-        else
-            $scope.ProjectManagerdata = [];
+        $http.get('/manage/view/s').success(function(data) {
+            if (data != 'x')
+                $scope.ProjectManagerdata = data;
+            else
+                $scope.ProjectManagerdata = [];
+        });
     };
     $scope.getClusterManagers();
     $scope.deleteClusterManager = function(index){
@@ -600,12 +603,14 @@ viberApp.controller('vbZonalCtrl',[ '$scope','$rootScope','$http','$window','toa
     };
 
     $scope.getProjectManagers = function(){
-        if(projectmanagers != 'x') {
-            $scope.ZonalManagerdata = projectmanagers;
-        }
-        else {
-            $scope.ZonalManagerdata = [];
-        }
+        $http.get('/manage/view/s').success(function(data) {
+            if (data != 'x') {
+                $scope.ZonalManagerdata = data;
+            }
+            else {
+                $scope.ZonalManagerdata = [];
+            }
+        });
     };
     $scope.getProjectManagers();
 
