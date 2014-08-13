@@ -3,12 +3,12 @@
  */
 
 var mongoose = require('mongoose');
-var aws = require('aws-sdk');
-
-aws.config.loadFromPath('./aws-config.json');
-
-// load AWS SES
-var ses = new aws.SES({apiVersion: '2010-12-01'});
+//var aws = require('aws-sdk');
+//
+//aws.config.loadFromPath('./aws-config.json');
+//
+//// load AWS SES
+//var ses = new aws.SES({apiVersion: '2010-12-01'});
 
 
 exports.params = {
