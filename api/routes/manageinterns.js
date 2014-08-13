@@ -104,7 +104,7 @@ function getsubordinates(req,res){
                                 })
                             });
                         }else{
-                            res.send(0);
+                            res.send('x');
                         }
                     ;break;
                 }
@@ -127,7 +127,7 @@ function getsubordinates(req,res){
                             });
                         })
                     }else{
-                        res.send(0);
+                        res.send('x');
                     }
                     ;break;}
             }
