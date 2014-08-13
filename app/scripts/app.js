@@ -528,7 +528,7 @@ viberApp.controller('vbProjectCtrl',[ '$scope','$rootScope','$http','$window','t
         $http.put('/students/manage/interns',reqObject).success(function(data) {
             if(data != 0) {
                 $scope.getClusterManagers();
-                toaster.pop('success', "", data+" out of"+email_array.length+" Ambassadors were added successfully.");
+                toaster.pop('success', "", data+" out of"+email_array.length+" Cluster Managers were added successfully.");
             }
             else{
                 toaster.pop('failure', "", "Something went wrong. Please try again with valid mail id.");
@@ -549,7 +549,7 @@ viberApp.controller('vbProjectCtrl',[ '$scope','$rootScope','$http','$window','t
         $http.put('/students/manage/interns/delete',reqBody).success(function(data){
             if(data==1) {
                 $scope.ProjectManagerdata = _.without($scope.ProjectManagerdata, $scope.ProjectManagerdata[index]);
-                toaster.pop('success', "", "Ambassador was removed successfully.");
+                toaster.pop('success', "", "Cluster Manager was removed successfully.");
             }
             else{
                 toaster.pop('failure', "", "Something went wrong. Please try again.");
@@ -583,7 +583,7 @@ viberApp.controller('vbZonalCtrl',[ '$scope','$rootScope','$http','$window','toa
         $http.put('/students/manage/interns',reqObject).success(function(data) {
             if(data != 0) {
                 $scope.getProjectManagers();
-                toaster.pop('success', "", data+" out of"+email_array.length+" Ambassadors were added successfully.");
+                toaster.pop('success', "", data+" out of"+email_array.length+" Project Managers were added successfully.");
             }
             else{
                 toaster.pop('failure', "", "Something went wrong. Please try again with valid mail id.");
@@ -604,7 +604,7 @@ viberApp.controller('vbZonalCtrl',[ '$scope','$rootScope','$http','$window','toa
         $http.put('/students/manage/interns/delete',reqBody).success(function(data){
             if(data==1) {
                 $scope.ZonalManagerdata = _.without($scope.ZonalManagerdata, $scope.ZonalManagerdata[index]);
-                toaster.pop('success', "", "Ambassador was removed successfully.");
+                toaster.pop('success', "", "Project Manager was removed successfully.");
             }
             else{
                 toaster.pop('failure', "", "Something went wrong. Please try again.");
