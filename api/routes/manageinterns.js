@@ -90,18 +90,22 @@ function getsubordinates(req,res){
                             var totalstudents = students.length;
                             var initial =0;
                     console.log('cluster managers below me' + students.length);
-                        students.forEach(function(instance,index,students){
-                           getcmperformance(instance.email,function(err,reportees){
-                               instance = instance.toObject();
-                               initial++;
-                               instance.reporteedata = reportees;
-                               students[index] = instance
-                               //console.log(instance);
-                               if(initial == totalstudents){
-                                res.send(students);
-                               }
-                           })
-                        });
+                        if(Student.length >0) {
+                            students.forEach(function (instance, index, students) {
+                                getcmperformance(instance.email, function (err, reportees) {
+                                    instance = instance.toObject();
+                                    initial++;
+                                    instance.reporteedata = reportees;
+                                    students[index] = instance
+                                    //console.log(instance);
+                                    if (initial == totalstudents) {
+                                        res.send(students);
+                                    }
+                                })
+                            });
+                        }else{
+                            res.send(0);
+                        }
                     ;break;
                 }
                 case 3 :{           // zonal manager
@@ -109,19 +113,22 @@ function getsubordinates(req,res){
                         var totalstudents = students.length;
                         var initial =0;
                     console.log(totalstudents);
-
-                    students.forEach(function(instance, index, students){
-                        getpmperformace(instance.email, function(err,projectmanager_data){
-                            instance = instance.toObject();
-                            initial++;
-                            instance.reporteedata = projectmanager_data;
-                            students[index] = instance;
-                            //console.log(instance);
-                            if(initial == totalstudents){
-                                res.send(students);
-                            }
-                        });
-                    })
+                    if(students.length>0) {
+                        students.forEach(function (instance, index, students) {
+                            getpmperformace(instance.email, function (err, projectmanager_data) {
+                                instance = instance.toObject();
+                                initial++;
+                                instance.reporteedata = projectmanager_data;
+                                students[index] = instance;
+                                //console.log(instance);
+                                if (initial == totalstudents) {
+                                    res.send(students);
+                                }
+                            });
+                        })
+                    }else{
+                        res.send(0);
+                    }
                     ;break;}
             }
         });
