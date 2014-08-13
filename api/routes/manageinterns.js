@@ -90,7 +90,7 @@ function getsubordinates(req,res){
                             var totalstudents = students.length;
                             var initial =0;
                     console.log('cluster managers below me' + students.length);
-                        if(Student.length >0) {
+                        if(students.length >0) {
                             students.forEach(function (instance, index, students) {
                                 getcmperformance(instance.email, function (err, reportees) {
                                     instance = instance.toObject();
