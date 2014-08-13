@@ -73,7 +73,7 @@ function add_grandchildren(role,email){
 function getsubordinates(req,res){
 
     var email = 'ankit.saxena21@gmail.com'//req.session.student.email;
-    var role = 3;//req.session.student.role;
+    var role =  3;//req.session.student.role;
     var returndata = {};
     console.log('role' + role);
     Students.find({'manager.email' :  email})
@@ -144,12 +144,13 @@ function getcmperformance(email,cb){  // cluster manager (1) performance for pro
                  reportees.forEach(function(reportee_instance){
 
                      reportee_instance.stages.forEach(function(stage_instance){
+                         var new_name = stage_instance.name.replace(' ','_');
                          if(parseInt(stage_instance.completion) == 100){
-                             if(returndata.stagedata[stage_instance.name]){
-                                 returndata.stagedata[stage_instance.name].count++
+                             if(returndata.stagedata[new_name]){
+                                 returndata.stagedata[new_name].count++
                              }else{
-                                 returndata.stagedata[stage_instance.name] = {};
-                                 returndata.stagedata[stage_instance.name].count = 1;
+                                 returndata.stagedata[new_name] = {};
+                                 returndata.stagedata[new_name].count = 1;
                              }
                          }
                      });
@@ -197,14 +198,14 @@ console.log('reached pm performance');
                             //console.log(clustermanager_instance.email)
                             getcmperformance(clustermanager_instance.email,function(err,reportees){
                                 initial++;
+                                //console.log(JSON.stringify(reportees));
+
                                 //console.log('reportees '+reportees.reportees);
                                 reporteecount += parseInt(reportees.reportees);
                                // console.log('total '+returndata.clustermanagers);
                                 var my_levels = Object.keys(reportees.stagedata);
                                my_levels.forEach(function(stages_instance){
-
-
-                                   if(returndata.stagedata[stages_instance]){
+                                  if(returndata.stagedata[stages_instance]){
                                        returndata.stagedata[stages_instance].count += reportees.stagedata[stages_instance].count;
                                    }else{
                                        returndata.stagedata[stages_instance] ={}
@@ -212,7 +213,7 @@ console.log('reached pm performance');
                                    }
                                })
                                 if(initial == total_cm){
-                                    //console.log('final return data' + JSON.stringify(returndata));
+                                    console.log('final return data' + JSON.stringify(returndata));
                                     var sub_stages = Object.keys(returndata.stagedata);
                                     sub_stages.forEach(function(substage){
                                         returndata.stagedata[substage].percentage = parseInt((returndata.stagedata[substage].count/reporteecount)*100);

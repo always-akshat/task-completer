@@ -1140,13 +1140,20 @@ function addsubordinates(req,res){
 
     var myinterns = req.body.interns
     var role = parseInt(req.body.role) - 1;
-    var manager = {email : req.body.email,
-                    updatedby : req.body.email,
+    var manager =  {name: req.body.name,
+                    email : req.body.email,
+                    updatedby : Date.now(),
                     updatedon : Date.now()}
-
+    var rolename =''
+    switch (role) {
+        case (0) : {rolename ='Intern';break;}
+        case (1) : {rolename ='Cluster Manager';break;}
+        case (1) : {rolename ='Project Manager';break;}
+        case (1) : {rolename ='Zonal Manager';break;}
+    }
 
     var conditions ={ email: { $in: myinterns } }
-        , update = { $set: { role : role , manager : manager} }
+        , update = { $set: { role : role , rolename : rolename,manager : manager} }
         , options = { multi: true };
 
     Students.update(conditions, update, options, function(err,data){
@@ -1166,7 +1173,6 @@ function getsubordinates(req,res){
 
     Students.find({'manager.email' :  email})
         .sort({points: -1})
-        .limit(10)
         .select('name email stages college.name mobile points facebookid location.name updatedon')
         .exec(function (err, students) {
             res.send(students);

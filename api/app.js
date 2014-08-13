@@ -263,7 +263,7 @@ app.get('/data/leaderboard/1',data.leaderboard);
 
 app.get('/manage/child/1',manage.test_addrandomroles);
 app.get('/manage/grandchild/1',manage.add_grandchild);
-app.get('/manage/view/x',manage.getsubordinates);
+app.get('/manage/view/s',manage.getsubordinates);
 
 app.get('/students/manage/interns',students.getsubordinates)
 app.put('/students/manage/interns', students.addsubordinates)
