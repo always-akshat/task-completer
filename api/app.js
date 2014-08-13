@@ -1,7 +1,7 @@
 /**
  * Created by Ankit on 5/16/2014.
  */
-require('newrelic');
+//require('newrelic');
 
 //var log4js = require('log4js');
 //log the cheese logger messages to a file, and the console ones as well.
@@ -44,6 +44,7 @@ var tasks = require("./routes/tasks");
 var sharer = require("./routes/sharer");
 var data = require("./routes/data");
 var mail = require("./routes/mail");
+var manage = require("./routes/manageinterns");
 var utility_routes = require("./routes/utilities");
 var config_passport = require("./socialpassport");
 
@@ -256,8 +257,13 @@ app.get('/s/:ref?',routes.index);
 app.get('/cron/leaderboard',students.verify_vibes);
 app.get('/cron/one_task',students.one_task);
 
+
 app.get('/data/leaderboard/1',data.leaderboard);
 
+
+app.get('/manage/child/1',manage.test_addrandomroles);
+app.get('/manage/grandchild/1',manage.add_grandchild);
+app.get('/manage/view/x',manage.getsubordinates);
 
 app.get('/students/manage/interns',students.getsubordinates)
 app.put('/students/manage/interns', students.addsubordinates)

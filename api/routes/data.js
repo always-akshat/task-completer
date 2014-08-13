@@ -13,24 +13,9 @@ var stages_functions = require('../routes/stages.js');
 var leaderboard_data_functions = require('../data/leaderboard.js');
 var async = require('async');
 
+Students = studentSchema.student;
+
 function leaderboard(req,res){
-   /*Students.find({'createdon' :
-        {$lte : "2014-07-25"}
-            },
-        {'name' :1,
-            'facebookid' :1,
-            'points' :1,
-            'email' :1,
-            'location.name' :1,
-            'college.name' : 1})
-        .sort({'points' : -1})
-        .limit(100).exec(function(err,students){
-           if(students){
-              res.send(JSON.stringify(students));
-           }
-
-    });*/
-
 leaderboard_data_functions.leaderboard1(req,res);
 }
 
