@@ -69,7 +69,7 @@ viberApp.config(['$routeProvider', function ($routeProvider) {
 
                 templateUrl: 'views/manageprojectmanager.html',
                 controller: 'vbZonalCtrl',
-                resolve: {projectmanager: function (getambassadors) {
+                resolve: {projectmanagers: function (getambassadors) {
 
 
                     return getambassadors.studentambassadors();
@@ -600,10 +600,12 @@ viberApp.controller('vbZonalCtrl',[ '$scope','$rootScope','$http','$window','toa
     };
 
     $scope.getProjectManagers = function(){
-        if(projectmanagers != 'x')
+        if(projectmanagers != 'x') {
             $scope.ZonalManagerdata = projectmanagers;
-        else
+        }
+        else {
             $scope.ZonalManagerdata = [];
+        }
     };
     $scope.getProjectManagers();
 

@@ -52,7 +52,7 @@ viberApp.config([
       templateUrl: 'views/manageprojectmanager.html',
       controller: 'vbZonalCtrl',
       resolve: {
-        projectmanager: function (getambassadors) {
+        projectmanagers: function (getambassadors) {
           return getambassadors.studentambassadors();
         }
       }
@@ -553,10 +553,11 @@ viberApp.controller('vbZonalCtrl', [
       });
     };
     $scope.getProjectManagers = function () {
-      if (projectmanagers != 'x')
+      if (projectmanagers != 'x') {
         $scope.ZonalManagerdata = projectmanagers;
-      else
+      } else {
         $scope.ZonalManagerdata = [];
+      }
     };
     $scope.getProjectManagers();
     $scope.deleteProjectManager = function (index) {
