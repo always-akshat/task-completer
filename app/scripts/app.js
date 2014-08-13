@@ -44,7 +44,37 @@ viberApp.config(['$routeProvider', function ($routeProvider) {
             when('/manage', {
 
                 templateUrl: 'views/manage.html',
-                controller: 'vbClusterCtrl'
+                controller: 'vbClusterCtrl',
+                resolve: {cmambassadors: function (getambassadors) {
+
+
+                    return getambassadors.studentambassadors();
+                }
+                }
+
+            }).
+            when('/manageCMs', {
+
+                templateUrl: 'views/manageclustermanagers.html',
+                controller: 'vbProjectCtrl',
+                resolve: {clustermanagers: function (getambassadors) {
+
+
+                    return getambassadors.studentambassadors();
+                }
+                }
+
+            }).
+            when('/managePMs', {
+
+                templateUrl: 'views/manageprojectmanager.html',
+                controller: 'vbZonalCtrl',
+                resolve: {projectmanager: function (getambassadors) {
+
+
+                    return getambassadors.studentambassadors();
+                }
+                }
 
             }).
             when('/winners-week1', {
@@ -54,7 +84,7 @@ viberApp.config(['$routeProvider', function ($routeProvider) {
                 resolve: {week1winners: function (getwinners) {
 
 
-                        return getwinners.week1();
+                    return getwinners.week1();
                 }
                 }
 
@@ -68,9 +98,11 @@ viberApp.config(['$routeProvider', function ($routeProvider) {
 viberApp.controller('vbNavBarCtrl', ['$scope', '$window', '$http', function ($scope, $window, $http) {
 
 
-//    var currentPage = {home:1,rewards:0,lb:0, mysettings:0};
-//    vbSharedService.prepForBroadcast(currentPage);
+    //var currentPage = {home:1,rewards:0,lb:0, mysettings:0};
+    //vbSharedService.prepForBroadcast(currentPage);
     $scope.isManager = false;
+    $scope.isProjectManager = false;
+    $scope.isZonalManager = false;
     $scope.logout = function () {
 
         $window.location = "/logout";
@@ -80,8 +112,16 @@ viberApp.controller('vbNavBarCtrl', ['$scope', '$window', '$http', function ($sc
 
         if (angular.isObject(data) && angular.isNumber(data.role)) {
             $scope.user_role = data.role;
-            if ($scope.user_role > 0) {
-                $scope.isManager = true;
+            switch($scope.user_role){
+                case 1:
+                    $scope.isManager = true;
+                    break;
+                case 2:
+                    $scope.isProjectManager = true;
+                    break;
+                case 3:
+                    $scope.isZonalManager = true;
+                    break;
             }
         }
     });
@@ -141,7 +181,7 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
         $rootScope.level3iscompleted = true;
 
     $window.scrollTo(0, 0);
-    var currentPage = {home: 1, rewards: 0, lb: 0, mysettings: 0, managecluster: 0};
+    var currentPage = {home: 1, rewards: 0, lb: 0, mysettings: 0};
     vbSharedService.prepForBroadcast(currentPage);
 
     $rootScope.style1 = undefined;
@@ -239,7 +279,7 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
 viberApp.controller('leaderboardCtrl', ['$scope','$rootScope' , 'vbSharedService', '$http', '$window', function ($scope, $rootScope,vbSharedService, $http, $window) {
 
     $window.scrollTo(0, 0);
-    var currentPage = {home: 0, rewards: 0, lb: 1, mysettings: 0,managecluster: 0};
+    var currentPage = {home: 0, rewards: 0, lb: 1, mysettings: 0};
     vbSharedService.prepForBroadcast(currentPage);
 
     $rootScope.manageclicked = false;
@@ -307,7 +347,7 @@ viberApp.controller('leaderboardCtrl', ['$scope','$rootScope' , 'vbSharedService
 viberApp.controller('lbMySettingsCntrl', ['$scope', '$rootScope', '$http', 'vbIdentity', 'vbSharedService', '$window', 'settingSubmit', function ($scope,$rootScope, $http, vbIdentity, vbSharedService, $window, settingSubmit) {
 
     $window.scrollTo(0, 0);
-    var currentPage = {home: 0, rewards: 0, lb: 0, mysettings: 1,managecluster: 0};
+    var currentPage = {home: 0, rewards: 0, lb: 0, mysettings: 1};
     vbSharedService.prepForBroadcast(currentPage);
     $rootScope.manageclicked = false;
 
@@ -405,18 +445,18 @@ viberApp.controller('lbMySettingsCntrl', ['$scope', '$rootScope', '$http', 'vbId
 viberApp.controller('lbRewardsCtrl', ['vbSharedService', '$window','$rootScope', function (vbSharedService, $window, $rootScope) {
 
     $window.scrollTo(0, 0);
-    var currentPage = {home: 0, rewards: 1, lb: 0, mysettings: 0,managecluster: 0};
+    var currentPage = {home: 0, rewards: 1, lb: 0, mysettings: 0};
     vbSharedService.prepForBroadcast(currentPage);
 
     $rootScope.manageclicked = false;
 }]);
 
 
-viberApp.controller('vbClusterCtrl',[ '$scope','$rootScope','$http','vbSharedService','$window','toaster', function($scope,$rootScope,$http,vbSharedService, $window, toaster){
+viberApp.controller('vbClusterCtrl',[ '$scope','$rootScope','$http','$window','toaster','cmambassadors', function($scope,$rootScope,$http, $window, toaster, cmambassadors){
 
     $window.scrollTo(0, 0);
-    var currentPage = {home: 0, rewards: 0, lb: 0, mysettings: 0,managecluster: 1};
-    vbSharedService.prepForBroadcast(currentPage);
+//    var currentPage = {home: 0, rewards: 0, lb: 0, mysettings: 0,managecluster: 1};
+//    vbSharedService.prepForBroadcast(currentPage);
 
     $scope.email_ids = undefined;
     $rootScope.manageclicked = true;
@@ -446,9 +486,7 @@ viberApp.controller('vbClusterCtrl',[ '$scope','$rootScope','$http','vbSharedSer
     };
 
     $scope.getinterns = function(){
-        $http.get('/students/manage/interns').success(function(data){
-            $scope.interndata = data;
-        });
+            $scope.interndata = cmambassadors;
     };
     $scope.getinterns();
 
@@ -457,6 +495,115 @@ viberApp.controller('vbClusterCtrl',[ '$scope','$rootScope','$http','vbSharedSer
         $http.put('/students/manage/interns/delete',reqBody).success(function(data){
             if(data==1) {
                 $scope.interndata = _.without($scope.interndata, $scope.interndata[index]);
+                toaster.pop('success', "", "Ambassador was removed successfully.");
+            }
+            else{
+                toaster.pop('failure', "", "Something went wrong. Please try again.");
+            }
+        })
+            .error(function(error){
+                toaster.pop('failure', "", "Something went wrong. Please try again.");
+            });
+    };
+
+}]);
+
+viberApp.controller('vbProjectCtrl',[ '$scope','$rootScope','$http','$window','toaster','clustermanagers', function($scope,$rootScope,$http, $window, toaster, clustermanagers){
+
+    $window.scrollTo(0, 0);
+    $scope.email_cluster = undefined;
+    $rootScope.manageclicked = true;
+    $scope.addClusterManager = function(){
+        var email_array = $scope.email_cluster.split(',');
+        var userrole = 0;
+        if($scope.identity.currentUser.role && ($scope.identity.currentUser.role!=0) && ($scope.identity.currentUser.role==2))
+            userrole = $scope.identity.currentUser.role;
+
+        var reqObject = {
+            interns: email_array,
+            email: $scope.identity.currentUser.email,
+            name: $scope.identity.currentUser.name,
+            role: userrole
+        };
+        $http.put('/students/manage/interns',reqObject).success(function(data) {
+            if(data != 0) {
+                $scope.getClusterManagers();
+                toaster.pop('success', "", data+" out of"+email_array.length+" Ambassadors were added successfully.");
+            }
+            else{
+                toaster.pop('failure', "", "Something went wrong. Please try again with valid mail id.");
+            }
+        })
+            .error(function(err){
+                toaster.pop('failure', "", "Something went wrong. Please try again.");
+            });
+    };
+
+    $scope.getClusterManagers = function(){
+        $scope.ProjectManagerdata = clustermanagers;
+    };
+    $scope.getClusterManagers();
+
+    $scope.deleteClusterManager = function(index){
+        var reqBody = {email: $scope.ProjectManagerdata[index].email};
+        $http.put('/students/manage/interns/delete',reqBody).success(function(data){
+            if(data==1) {
+                $scope.ProjectManagerdata = _.without($scope.ProjectManagerdata, $scope.ProjectManagerdata[index]);
+                toaster.pop('success', "", "Ambassador was removed successfully.");
+            }
+            else{
+                toaster.pop('failure', "", "Something went wrong. Please try again.");
+            }
+        })
+            .error(function(error){
+                toaster.pop('failure', "", "Something went wrong. Please try again.");
+            });
+    };
+
+}]);
+
+viberApp.controller('vbZonalCtrl',[ '$scope','$rootScope','$http','$window','toaster','projectmanagers', function($scope,$rootScope,$http, $window, toaster, projectmanagers){
+
+    $window.scrollTo(0, 0);
+    $scope.email_project = undefined;
+    $rootScope.manageclicked = true;
+    $scope.addProjectManager = function(){
+        var email_array = $scope.email_project.split(',');
+        var userrole = 0;
+        if($scope.identity.currentUser.role && ($scope.identity.currentUser.role!=0) && ($scope.identity.currentUser.role==3))
+            userrole = $scope.identity.currentUser.role;
+
+        var reqObject = {
+            interns: email_array,
+            email: $scope.identity.currentUser.email,
+            name: $scope.identity.currentUser.name,
+            role: userrole
+        };
+
+        $http.put('/students/manage/interns',reqObject).success(function(data) {
+            if(data != 0) {
+                $scope.getProjectManagers();
+                toaster.pop('success', "", data+" out of"+email_array.length+" Ambassadors were added successfully.");
+            }
+            else{
+                toaster.pop('failure', "", "Something went wrong. Please try again with valid mail id.");
+            }
+        })
+            .error(function(err){
+                toaster.pop('failure', "", "Something went wrong. Please try again.");
+            });
+    };
+
+    $scope.getProjectManagers = function(){
+        $scope.ZonalManagerdata = projectmanagers;
+    };
+    $scope.getProjectManagers();
+
+    $scope.deleteProjectManager = function(index){
+        var reqBody = {email: $scope.ZonalManagerdata[index].email};
+        $http.put('/students/manage/interns/delete',reqBody).success(function(data){
+            if(data==1) {
+                $scope.ZonalManagerdata = _.without($scope.ZonalManagerdata, $scope.ZonalManagerdata[index]);
                 toaster.pop('success', "", "Ambassador was removed successfully.");
             }
             else{

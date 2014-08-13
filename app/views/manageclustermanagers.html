@@ -1,0 +1,59 @@
+<div class="col-sm-18 col-sm-offset-6">
+    <h1>Viber Cluster Managers</h1>
+    <form name="addClusterManager" role="form" ng-submit="addClusterManager(addClusterManager.$valid)"novalidate>
+        <div class="form-group">
+            <textarea ng-model="email_cluster" type="text" name="" cols="20" rows="3" class="form-control" placeholder="Enter comma separated e-mail ids." required></textarea>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success" ng-disabled="addClusterManager.$invalid">Add Cluster Manager</button>
+        </div>
+    </form>
+    <table class="table leaderboard" ng-repeat="clusterManager in ProjectManagerdata" width="100%">
+        <tr>
+            <td width="3%"><span class="big-icon-bookmark">{{$index+1}}</span> </td>
+            <td width="17%"><img ng-src="http://graph.facebook.com/{{clusterManager.facebookid}}/picture?height=80&width=80" class="img-circle img-responsive" alt=""/></td>
+            <td width="25%" class="leader-name"><p>{{clusterManager.name}}</p>
+                <small>{{clusterManager.college.name}}</small><br>
+                <small>{{clusterManager.location.name}}</small>
+            </td>
+            <td width="10%">{{clusterManager.email}}
+                <br>{{clusterManager.mobile}}</td>
+            <td width="17%">
+                <div class="avatar-info">
+                    <div class="row">
+                        Level 1
+                        <div class="col-xs-6"></div>
+                        <div class="col-xs-6"></div>
+                        <div class="col-xs-6" style="border: 0px;"></div>
+                        <div class="progress-bar" style="width: {{clusterManager.reporteedata.stagedata.Level 1.percentage}}%;"></div>
+                    </div>
+                </div>
+                <div class="avatar-info">
+                    <div class="row">
+                        Level 2
+                        <div class="col-xs-6"></div>
+                        <div class="col-xs-6"></div>
+                        <div class="col-xs-6" style="border: 0px;"></div>
+                        <div class="progress-bar" style="width: {{clusterManager.reporteedata.stagedata.Level 2.percentage}}%;"></div>
+                    </div>
+                </div>
+                <div class="avatar-info">
+                    <div class="row">
+                        Level 3
+                        <div class="col-xs-6"></div>
+                        <div class="col-xs-6"></div>
+                        <div class="col-xs-6" style="border: 0px;"></div>
+                        <div class="progress-bar" style="width: {{clusterManager.reporteedata.stagedata.Level 3.percentage}}%;"></div>
+                    </div>
+                </div>
+            </td>
+            <td width="15%">{{clusterManager.reporteedata.reportees}} Project Managers</td>
+            <td width="13%">
+                <div class="col-sm-offset-4 col-sm-20 text-right">
+                    <button type="button" class="btn btn-link" >Remove Cluster Manager</button>
+                    <!--ng-click="deleteClusterManager($index)"-->
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
