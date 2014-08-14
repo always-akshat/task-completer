@@ -4,10 +4,10 @@
 
 var mongoose = require('mongoose');
 var aws = require('aws-sdk');
-
+//
 aws.config.loadFromPath('./aws-config.json');
-
-// load AWS SES
+//
+//// load AWS SES
 var ses = new aws.SES({apiVersion: '2010-12-01'});
 
 
@@ -44,13 +44,6 @@ exports.sesmail= function(params){
         else     console.log(data);           // successful response
     });
 }
-
-
-
-
-
-
-
 
 
 //mongoose.connect('mongodb://viber_app:akshat@ds033069.mongolab.com:33069/viber_backup_12_aug_12_18_pm');

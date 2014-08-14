@@ -55,8 +55,49 @@ exports.referral = function(reffered,referrer,count,email){
     config.sesmail(params);
 
 }
+exports.cm_to_ambassador = function(cm,ambassador_mail){
+    console.log('sending referral email');
+    var params =  config.params;
+    params.Destination.ToAddresses[0] =ambassador_mail;
+    //console.log('these are the addesses' + params.Destination.ToAddresses);
+    params.Message.Body.Html.Data ="I am "+cm+" and will be your Reporting Manager for the #GoodVibes Campaign.<br><br>" +
+        " Log in to www.thegoodvibes.in to start your internship. Feel free to contact me.<br><br>"+
 
+        "Best,<br>"+
+        "#Goodvibes Angels";
+    params.Message.Subject.Data ="CM to Ambassador";
+    config.sesmail(params);
 
+}
+exports.pm_to_cm = function(ambassador_mail){
+    console.log('sending referral email');
+    var params =  config.params;
+    params.Destination.ToAddresses[0] =ambassador_mail;
+    //console.log('these are the addesses' + params.Destination.ToAddresses);
+    params.Message.Body.Html.Data ="Congratulations once again on earning the valuable position of a Community Manager on the team.<br>" +
+        " Hope you have already started discovering the fantastic app and are spreading GoodVibes by having richer conversations " +
+        "with your friends through features like stickers and doodles.<br><br>"+
+
+        "Best,<br>"+
+        "#Goodvibes Angels";
+    params.Message.Subject.Data ="CM to Ambassador";
+    config.sesmail(params);
+
+}
+exports.zm_to_pm = function(ambassador_mail){
+    console.log('sending referral email');
+    var params =  config.params;
+    params.Destination.ToAddresses[0] =ambassador_mail;
+    //console.log('these are the addesses' + params.Destination.ToAddresses);
+    params.Message.Body.Html.Data ="As a Community Manager, your key role will be to lead a set of 100 GoodVibes Cluster Managers; " +
+        "ensure that you put in your best efforts - keep them motivated & engaged; interact with them on a regular basis; take up their queries and provide solutions.<br><br>"+
+
+        "Best,<br>"+
+        "#Goodvibes Angels";
+    params.Message.Subject.Data ="CM to Ambassador";
+    config.sesmail(params);
+
+}
 
 
 
