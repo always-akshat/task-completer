@@ -8,7 +8,7 @@ var studentSchema = require('../models/studentmodel');
 var taskSchema = require('../models/tasksmodel');
 var task_functions = require('../routes/tasks.js');
 var stages_function = require('../routes/stages.js');
-
+var mail_function = require('../routes/mail.js');
 
 Students = studentSchema.student;
 student_task = studentSchema.student_task;
@@ -1138,7 +1138,7 @@ function addsubordinates(req,res){
     console.log('reached put subordinates');
     console.log(req.body);
 
-    var myinterns = req.body.interns
+    var myinterns = req.body.interns;
     var role = parseInt(req.body.role) - 1;
     var manager =  {name: req.body.name,
                     email : req.body.email,
@@ -1161,6 +1161,16 @@ function addsubordinates(req,res){
                 console.log('0');
             }else{
                 res.send(data.toString());
+
+                /*myinterns.forEach(function(intern_email){
+                    if(role ==0){
+                        mail_function.cm_to_ambassador(req.body.name,intern_email);
+                    }else if(role ==1){
+
+                    }else if(role ==2){
+
+                    }
+                }) */
             }
     });
 

@@ -46,13 +46,6 @@ exports.sesmail= function(params){
 }
 
 
-
-
-
-
-
-
-
 //mongoose.connect('mongodb://viber_app:akshat@ds033069.mongolab.com:33069/viber_backup_12_aug_12_18_pm');
 mongoose.connect('mongodb://viber_app:akshat@ds053449.mongolab.com:53449/viber_prod');
 

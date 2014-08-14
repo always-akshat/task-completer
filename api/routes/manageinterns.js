@@ -170,7 +170,7 @@ function getcmperformance(email,cb){  // cluster manager (1) performance for pro
                          sub_stages.forEach(function(substage){
                              returndata.stagedata[substage].percentage = parseInt((returndata.stagedata[substage].count/returndata.reportees)*100);
                          });
-
+                        console.log(JSON.stringify(returndata));
                          cb(null,returndata);
 
                      }
