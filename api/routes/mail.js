@@ -18,6 +18,7 @@ var async = require('async');
 
 exports.singup = function(name,email){
     var params = config.params;
+    params.Destination.ToAddresses =[];
     params.Destination.ToAddresses[0]= email;
     params.Message.Body.Html.Data ="Hey "+name +","+
         "<br/><br/>" +
@@ -41,6 +42,7 @@ exports.singup = function(name,email){
 exports.referral = function(reffered,referrer,count,email){
     console.log('sending referral email');
     var params =  config.params;
+    params.Destination.ToAddresses =[];
     params.Destination.ToAddresses[0] =email;
     console.log('these are the addesses' + params.Destination.ToAddresses);
     params.Message.Body.Html.Data ="Hi "+ referrer+",<br><br>"+
@@ -56,8 +58,9 @@ exports.referral = function(reffered,referrer,count,email){
 
 }
 exports.cm_to_ambassador = function(cm,ambassador_mail){
-    console.log('sending referral email');
+    console.log('cm_to_ambassador');
     var params =  config.params;
+    params.Destination.ToAddresses =[];
     params.Destination.ToAddresses[0] =ambassador_mail;
     //console.log('these are the addesses' + params.Destination.ToAddresses);
     params.Message.Body.Html.Data ="I am "+cm+" and will be your Reporting Manager for the #GoodVibes Campaign.<br><br>" +
@@ -70,8 +73,9 @@ exports.cm_to_ambassador = function(cm,ambassador_mail){
 
 }
 exports.pm_to_cm = function(ambassador_mail){
-    console.log('sending referral email');
+    console.log('pm_to_cm');
     var params =  config.params;
+    params.Destination.ToAddresses =[];
     params.Destination.ToAddresses[0] =ambassador_mail;
     //console.log('these are the addesses' + params.Destination.ToAddresses);
     params.Message.Body.Html.Data ="Congratulations once again on earning the valuable position of a Community Manager on the team.<br>" +
@@ -85,11 +89,12 @@ exports.pm_to_cm = function(ambassador_mail){
 
 }
 exports.zm_to_pm = function(ambassador_mail){
-    console.log('sending referral email');
+    console.log('zm_to_pm');
     var params =  config.params;
+    params.Destination.ToAddresses =[];
     params.Destination.ToAddresses[0] =ambassador_mail;
     //console.log('these are the addesses' + params.Destination.ToAddresses);
-    params.Message.Body.Html.Data ="As a Community Manager, your key role will be to lead a set of 100 GoodVibes Cluster Managers; " +
+    params.Message.Body.Html.Data ="As a Project0 Manager, your key role will be to lead a set of 100 GoodVibes Cluster Managers; " +
         "ensure that you put in your best efforts - keep them motivated & engaged; interact with them on a regular basis; take up their queries and provide solutions.<br><br>"+
 
         "Best,<br>"+
@@ -98,6 +103,21 @@ exports.zm_to_pm = function(ambassador_mail){
     config.sesmail(params);
 
 }
-
+exports.changemanager = function(emails,intern,old_m,new_m){
+    console.log('change manager');
+    var params =  config.params;
+    params.Destination.ToAddresses =[];
+    params.Destination.ToAddresses =emails;
+    params.Message.Body.Html.Data =" The manager for "
+        +intern+
+        " was changed from "
+        +old_m+
+        " to "
+        +new_m+
+        ".<br>Best,<br>"+
+        "#Goodvibes Angels";
+    params.Message.Subject.Data ="CM to Ambassador";
+    config.sesmail(params);
+}
 
 

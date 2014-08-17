@@ -1152,26 +1152,55 @@ function addsubordinates(req,res){
         case (1) : {rolename ='Zonal Manager';break;}
     }
 
-    var conditions ={ email: { $in: myinterns } }
-        , update = { $set: { role : role , rolename : rolename,manager : manager} }
-        , options = { multi: true };
 
-    Students.update(conditions, update, options, function(err,data){
-            if(err){
-                console.log('0');
-            }else{
-                res.send(data.toString());
+        var total_interns = myinterns.length;
+        var start =0;
+        var updated =0;
+    console.log('total interns' + total_interns);
+    myinterns.forEach(function(subordinate_email){
+        Students.findOne({'email':subordinate_email},function(err,subordinate) {
 
-                /*myinterns.forEach(function(intern_email){
-                    if(role ==0){
-                        mail_function.cm_to_ambassador(req.body.name,intern_email);
-                    }else if(role ==1){
+            if (subordinate != null && typeof subordinate != 'undefined'){
+                console.log(subordinate);
+                if (subordinate.email && (subordinate.manager.email != manager.email) && subordinate.manager.email) {
+                    var concerned_emails = [subordinate_email, manager.email, subordinate.manager.email];
+                    console.log(concerned_emails);
+                    mail_function.changemanager(concerned_emails, subordinate.name, subordinate.manager.name, manager.name);
+                }
 
-                    }else if(role ==2){
+            subordinate.manager = manager;
+            subordinate.role = role;
+            subordinate.rolename = rolename;
 
+            subordinate.save(function (err) {
+                if (!err) {
+                    start++;
+                    updated++;
+                    if (role == 0) {
+                        mail_function.cm_to_ambassador(req.body.name, subordinate_email);
                     }
-                }) */
+                    else if (role == 1) {
+                        mail_function.pm_to_cm(subordinate_email);
+                    }
+                    else if (role == 2) {
+                        mail_function.zm_to_pm(subordinate_email);
+                    }
+
+                    console.log('initial :' + start);
+                    if (start == total_interns) {
+                        console.log('equal');
+                        console.log('updated :' + updated);
+                        res.send(updated.toString());
+                    }
+                }
+            })
+        }else if(err){
+                res.send('error');
+            }else{
+                start++;
+                console.log('not found');
             }
+        });
     });
 
 
