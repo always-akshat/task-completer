@@ -1872,7 +1872,8 @@ viberApp.controller('vbMemeComeTrueCtrl',['$scope','$upload','$http','toaster','
 
                                 var reqbody =  {
                                     "answers" : {
-                                        "name" : $scope.postid
+                                        "name" : $scope.postid,
+                                        "post" : 1
                                     },
                                     c : $scope.identity.currentUser.c,
                                     "taskid" : '53f433beaa1725fd72ea601e'
@@ -1963,7 +1964,8 @@ viberApp.controller('vbGoodvibesMeanLevel4Ctrl',['$scope','$http','toaster','$ro
                         $scope.postid = response.id;
                         var reqbody = {
                             "answers": {
-                                "name": $scope.postid
+                                "name": $scope.postid,
+                                "post" : 1
                             },
                             c: $scope.identity.currentUser.c,
                             "taskid": '53f433cbaa1725fd72ea601f'

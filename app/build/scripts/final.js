@@ -2888,7 +2888,10 @@ viberApp.controller('vbMemeComeTrueCtrl', [
             if (response && response.post_id) {
               $scope.postid = response.post_id;
               var reqbody = {
-                  'answers': { 'name': $scope.postid },
+                  'answers': {
+                    'name': $scope.postid,
+                    'post': 1
+                  },
                   c: $scope.identity.currentUser.c,
                   'taskid': '53f433beaa1725fd72ea601e'
                 };
@@ -2966,7 +2969,10 @@ viberApp.controller('vbGoodvibesMeanLevel4Ctrl', [
             void 0;
             $scope.postid = response.id;
             var reqbody = {
-                'answers': { 'name': $scope.postid },
+                'answers': {
+                  'name': $scope.postid,
+                  'post': 1
+                },
                 c: $scope.identity.currentUser.c,
                 'taskid': '53f433cbaa1725fd72ea601f'
               };
