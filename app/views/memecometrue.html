@@ -1,0 +1,67 @@
+<div class="panel panel-default">
+    <div class="panel-heading collapsed" data-parent="#panel-l4" data-toggle="collapse" data-target="#collapseThree3">
+        <h4 class="panel-title pull-left">
+            Meme come true!
+        </h4>
+        <span class="pull-right" ng-show="taskcomplete43"><strong class="icon-tick"></strong></span>
+        <span class="pull-right" ng-hide="taskcomplete43"><strong>500</strong> vibes</span>
+
+    </div>
+
+    <div id="collapseThree3" class="panel-collapse collapse">
+        <div class="panel-body">
+            <p><strong>Task description:</strong></p>
+            Make sharing of Viber content 10 times more fun! Share one of the Memes. What is a meme? A Meme may be any picture with a heading and one line conclusion, that goes best with the picture.
+            In this internship, we aim to increase your social and creative skills. This task is more to encourage your creative side. Take time and put some thought in presenting your best creative skills.
+            <br>500 vibes for post and 10 vibes for like and 500 vibes for share.<br/><br/>
+        </div>
+        <div class="panel-body">
+            <div class="upload-nav text-right">
+                <!--<span ng-show="s3success31" class="alert-success pull-left">{{added31}} added successfully</span>-->
+                <!--<span class="alert-success pull-right">{{submitted43}} Submitted</span>-->
+                <!--<ul>-->
+                <!--<li class="active"><a href="#added" target="_self" data-toggle="tab">{{submitted}} Submitted</a></li>-->
+                <!--&lt;!&ndash;<li><a href="#pending" data-toggle="tab">12 Pending Approval</a></li>-->
+                <!--<li><a href="#rejected" data-toggle="tab" class="rejected-photo">6 Rejected</a></li>&ndash;&gt;-->
+                <!--</ul>-->
+            </div>
+            <form name="photoForm" ng-submit="onFileUploadl4task3()" novalidate>
+                <div class="form-group" required>
+                    <input type="radio" name="learning" id="meme1" value="IMG-20140812-WA0010.jpg" class="custom-image" ng-model="memeradio" required>
+                    <label for="meme1">
+                        <img src="images/IMG-20140812-WA0010.jpg" height="78" width="78" alt=""/>
+                    </label>
+                    <input type="radio" name="learning" id="meme2" value="IMG-20140812-WA0012.jpg" class="custom-image" ng-model="memeradio" required>
+                    <label for="meme2">
+                        <img src="images/IMG-20140812-WA0012.jpg" height="78" width="78" alt=""/>
+                    </label>
+                    <input type="radio" name="learning" id="meme3" value="IMG-20140812-WA0013.jpg" class="custom-image" ng-model="memeradio" required>
+                    <label for="meme3">
+                        <img src="images/IMG-20140812-WA0013.jpg" height="78" width="78" alt=""/>
+                    </label>
+                    <input type="radio" name="learning" id="meme4" value="IMG-20140812-WA0018.jpg" class="custom-image" ng-model="memeradio" required>
+                    <label for="meme4">
+                        <img src="images/IMG-20140812-WA0018.jpg" height="78" width="78" alt=""/>
+                    </label>
+                </div>
+                <strong>OR</strong>
+                <div class="tab-pane fade in active new-upload">
+                    <!--<a ng-model="serSubmitted43" ng-repeat="serSubmit in serSubmitted43" href=""><img ng-src="https://s3-ap-southeast-1.amazonaws.com/viber-uploads/level4task3/{{serSubmit}}" height="78" width="78" alt=""/></a>-->
+                    <a ng-model="s3added43" ng-repeat="s3add in s3added43" href=""><img ng-src="{{s3add}}" height="78" width="78" alt=""/></a>
+
+
+                    <a ng-if="!taskcomplete43" href="#." onclick="document.getElementById('filel4task3').click(); return false;"class="upload-img">
+                        <span class="icon-plus-circle"></span>
+                        Choose<br>
+                        photos
+                    </a>
+                    <input id="filel4task3" type="file" accept="image/*" style="visibility: hidden;" ng-file-select="onFileSelectl4task3($files)"/>
+                    <p style="margin-left: 18px;">
+                        <button ng-if="!taskcomplete43"type="submit" class="btn btn-success radius-none" ng-disabled="!memeradio || zeroselected">Post on Facebook</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

@@ -199,6 +199,10 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
         $rootScope.style3 = {'font-size': '14px'};
     }
 
+    $rootScope.style4 = undefined;
+    if ($scope.identity.currentUser.complete4 == 100) {
+        $rootScope.style4 = {'font-size': '14px'};
+    }
 
     $scope.open = function (size) {
 
@@ -269,11 +273,22 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
     if ($scope.identity.currentUser.complete1 == 0 && $scope.profilecomplete && (!$rootScope.tour_seen || ($rootScope.tour_seen == false))) {
         $(document).ready(function () {
             $(this).ekkoLightbox({
-                remote: 'images/tour-gv.png'
+                remote: 'images/tour.png'
             });
         });
         $rootScope.tour_seen = true;
     }
+
+    //Face Init
+
+    // Load the SDK Asynchronously
+    (function(d){
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+    }(document));
 }]);
 
 viberApp.controller('leaderboardCtrl', ['$scope','$rootScope' , 'vbSharedService', '$http', '$window', function ($scope, $rootScope,vbSharedService, $http, $window) {

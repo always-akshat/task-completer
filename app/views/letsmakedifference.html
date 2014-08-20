@@ -1,0 +1,47 @@
+<div class="panel panel-default">
+    <div class="panel-heading collapsed" data-parent="#panel-l4" data-toggle="collapse" data-target="#collapseThree1">
+        <h4 class="panel-title pull-left">
+            Let's make a difference
+        </h4>
+        <span class="pull-right" ng-show="taskcomplete41"><strong class="icon-tick"></strong></span>
+        <span class="pull-right" ng-hide="taskcomplete41"><strong>2500</strong> vibes </span>
+
+    </div>
+
+    <div id="collapseThree1" class="panel-collapse collapse">
+        <div class="panel-body">
+            <p><strong>Task description:</strong></p>
+            “Let’s Make a Difference”  – Now your daily routine can make difference in someone's life - Every conversation you do on Viber contributes toward the education of a child. So don't refrain from getting in touch with all your friends (New and Old) Upload screenshots of some of those best conversations!
+            <br/><br/>
+        </div>
+        <div class="panel-body">
+            <div class="upload-nav text-right">
+                <!--<span ng-show="s3success31" class="alert-success pull-left">{{added31}} added successfully</span>-->
+                <span class="alert-success pull-right">{{submitted41}} Submitted</span>
+                <!--<ul>-->
+                <!--<li class="active"><a href="#added" target="_self" data-toggle="tab">{{submitted}} Submitted</a></li>-->
+                <!--&lt;!&ndash;<li><a href="#pending" data-toggle="tab">12 Pending Approval</a></li>-->
+                <!--<li><a href="#rejected" data-toggle="tab" class="rejected-photo">6 Rejected</a></li>&ndash;&gt;-->
+                <!--</ul>-->
+            </div>
+            <form name="photoForm" ng-submit="onFileUploadl4task1()" novalidate>
+                <div class="tab-pane fade in active new-upload">
+                    <a ng-model="serSubmitted41" ng-repeat="serSubmit in serSubmitted41" href=""><img ng-src="https://s3-ap-southeast-1.amazonaws.com/viber-uploads/level4task1/{{serSubmit}}" height="78" width="78" alt=""/></a>
+                    <a ng-model="s3added41" ng-repeat="s3add in s3added41" href=""><img ng-src="{{s3add}}" height="78" width="78" alt=""/></a>
+
+
+                    <a ng-if="!taskcomplete41" href="#." onclick="document.getElementById('filel4task1').click(); return false;"class="upload-img">
+                        <span class="icon-plus-circle"></span>
+                        Choose<br>
+                        photos
+                    </a>
+                    <input id="filel4task1" type="file" accept="image/*" style="visibility: hidden;" ng-file-select="onFileSelectl4task1($files)"/>
+                    <p style="margin-left: 18px;">
+                        <button ng-if="!taskcomplete41"type="submit" class="btn btn-success radius-none" ng-disabled="zeroselected41">submit</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

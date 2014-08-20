@@ -1,0 +1,37 @@
+<div class="panel panel-default">
+    <div class="panel-heading collapsed" data-parent="#panel-l4" data-toggle="collapse" data-target="#collapseThree4">
+        <h4 class="panel-title pull-left">
+            What does #GoodVibes mean to you?
+        </h4>
+        <span class="pull-right" ng-show="taskcomplete44"><strong class="icon-tick"></strong></span>
+        <span class="pull-right" ng-hide="taskcomplete44"><strong>500</strong> vibes</span>
+
+    </div>
+
+    <div id="collapseThree4" class="panel-collapse collapse">
+        <div class="panel-body">
+            <p><strong>Task description:</strong></p>
+            Spread #GoodVibes by updating your Facebook profile  and describe #GoodVibes means to you. Share posts directly from the link given below.
+            <br>500 vibes for post and 10 vibes for like and 500 vibes for share.<br/><br/>
+        </div>
+     <div class="panel-body">
+        <div class="tab-content custom-form">
+        <div class="tab-pane fade in active" id="add-social-link">
+        <form name="taskForm" ng-submit="sharePost(taskForm.$valid)" novalidate>
+        <div class="form-group">
+        <textarea class="form-control" name="message" cols="30" rows="5" placeholder="#goodvibes your message"
+                  ng-model="postmessage" ng-maxlength="120" required></textarea>
+        </div>
+        <p ng-show="taskForm.message.$invalid && !taskForm.message.$pristine" class="help-block">Your message can only be 120 characters long</p>
+        <div class="form-group">
+        <div class="pull-right">
+        <button type="submit" class="btn btn-success" ng-disabled="taskForm.$invalid">Share Post</button>
+        </div>
+        </div>
+        </form>
+        </div>
+        </div>
+    </div>
+    <div ng-if="taskcomplete44">You have already completed this task.</div>
+</div>
+</div>
