@@ -1309,7 +1309,7 @@ viberApp.controller('vbinviteFrndsCtrl', [
       $scope.taskcomplete2 = true;
     window.fbAsyncInit = function () {
       FB.init({
-        appId: '247429375447674',
+        appId: '493599764105814',
         status: true,
         cookie: true,
         xfbml: true
@@ -2510,7 +2510,7 @@ viberApp.controller('vbdaysofGoodvibesCtrl', [
       $scope.checkedfb = true;
     window.fbAsyncInit = function () {
       FB.init({
-        appId: '247429375447674',
+        appId: '493599764105814',
         status: true,
         cookie: true,
         xfbml: true
@@ -2865,7 +2865,7 @@ viberApp.controller('vbMemeComeTrueCtrl', [
       window.fbAsyncInit = function () {
         void 0;
         FB.init({
-          appId: '247429375447674',
+          appId: '493599764105814',
           status: true,
           cookie: true,
           xfbml: true
@@ -2943,7 +2943,7 @@ viberApp.controller('vbGoodvibesMeanLevel4Ctrl', [
       if (isValid) {
         window.fbAsyncInit = function () {
           FB.init({
-            appId: '247429375447674',
+            appId: '493599764105814',
             status: true,
             cookie: true,
             xfbml: true
