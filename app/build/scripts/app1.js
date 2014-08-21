@@ -2800,6 +2800,15 @@ viberApp.controller('vbMemeComeTrueCtrl', [
     $scope.taskcomplete43 = false;
     $scope.zeroselected43 = true;
     $scope.memeradio = undefined;
+    window.fbAsyncInit = function () {
+      void 0;
+      FB.init({
+        appId: '493599764105814',
+        status: true,
+        cookie: true,
+        xfbml: true
+      });
+    };
     if (angular.isObject(task.answers)) {
       _.each(task.answers, function (answer) {
         $scope.submitted43 += answer.name.length;
@@ -2860,17 +2869,7 @@ viberApp.controller('vbMemeComeTrueCtrl', [
         $scope.linktoshare = 'https://viber-uploads.s3-ap-southeast-1.amazonaws.com/level4task3/' + $scope.done43;
       else
         $scope.linktoshare = 'https://s3-ap-southeast-1.amazonaws.com/viber-uploads/' + $scope.memeradio;
-      void 0;
       //https://viber-uploads.s3-ap-southeast-1.amazonaws.com/level4task3/$scope.done43
-      window.fbAsyncInit = function () {
-        void 0;
-        FB.init({
-          appId: '493599764105814',
-          status: true,
-          cookie: true,
-          xfbml: true
-        });
-      };
       FB.getLoginStatus(function (response) {
         void 0;
         if (response.status === 'connected') {
@@ -2940,53 +2939,58 @@ viberApp.controller('vbGoodvibesMeanLevel4Ctrl', [
     var task = _.where(user_tasks, { 'task_id': '53f433cbaa1725fd72ea601f' })[0];
     $scope.taskcomplete44 = false;
     //$scope.postmessage = undefined;
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: '493599764105814',
+        status: true,
+        cookie: true,
+        xfbml: true
+      });
+    };
     if (angular.isObject(task) && task.completed == 1)
       $scope.taskcomplete44 = true;
     $scope.sharePost = function (isValid) {
       if (isValid) {
-        window.fbAsyncInit = function () {
-          FB.init({
-            appId: '493599764105814',
-            status: true,
-            cookie: true,
-            xfbml: true
-          });
-        };
-        void 0;
-        FB.api('/me/feed', 'POST', { 'message': $scope.postmessage }, function (response) {
+        FB.getLoginStatus(function (response) {
           void 0;
-          if (response && !response.error) {
-            void 0;
-            $scope.postid = response.id;
-            var reqbody = {
-                'answers': {
-                  'name': $scope.postid,
-                  'post': 1
-                },
-                c: $scope.identity.currentUser.c,
-                'taskid': '53f433cbaa1725fd72ea601f'
-              };
-            $http.put('/fbsharepost', reqbody).success(function (data) {
-              if (angular.isObject(data)) {
-                if (angular.isObject(data.completiondata)) {
-                  $scope.identity.currentUser.complete4 += data.completiondata.level;
-                  $scope.identity.currentUser.points += data.completiondata.points;
-                  //$rootScope.level2stagecompletion += data.completiondata.level;
-                  if ($scope.identity.currentUser.complete4 == 100) {
-                    $rootScope.style4 = { 'font-size': '14px' };
-                    $rootScope.level4iscompleted = true;
-                  }
-                  $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
-                  $scope.taskcomplete44 = true;
-                  task.completed = 1;
-                }
-                toaster.pop('success', 'Task 4', 'Your status is posted successfully.');
-              } else {
-                $window.location = '/logout';
-              }
-            }).error(function (err) {
+          if (response.status === 'connected') {
+            FB.api('/me/feed', 'POST', { 'message': $scope.postmessage }, function (response) {
               void 0;
-              toaster.pop('failure', 'Task 4', 'There was an error submitting your task, please try again');
+              if (response && !response.error) {
+                void 0;
+                void 0;
+                $scope.postid = response.id;
+                var reqbody = {
+                    'answers': {
+                      'name': $scope.postid,
+                      'post': 1
+                    },
+                    c: $scope.identity.currentUser.c,
+                    'taskid': '53f433cbaa1725fd72ea601f'
+                  };
+                $http.put('/fbsharepost', reqbody).success(function (data) {
+                  if (angular.isObject(data)) {
+                    if (angular.isObject(data.completiondata)) {
+                      $scope.identity.currentUser.complete4 += data.completiondata.level;
+                      $scope.identity.currentUser.points += data.completiondata.points;
+                      //$rootScope.level2stagecompletion += data.completiondata.level;
+                      if ($scope.identity.currentUser.complete4 == 100) {
+                        $rootScope.style4 = { 'font-size': '14px' };
+                        $rootScope.level4iscompleted = true;
+                      }
+                      $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
+                      $scope.taskcomplete44 = true;
+                      task.completed = 1;
+                    }
+                    toaster.pop('success', 'Task 4', 'Your status is posted successfully.');
+                  } else {
+                    $window.location = '/logout';
+                  }
+                }).error(function (err) {
+                  void 0;
+                  toaster.pop('failure', 'Task 4', 'There was an error submitting your task, please try again');
+                });
+              }
             });
           }
         });
