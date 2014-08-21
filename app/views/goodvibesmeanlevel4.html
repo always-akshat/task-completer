@@ -14,7 +14,7 @@
             Spread #GoodVibes by updating your Facebook profile  and describe #GoodVibes means to you. Share posts directly from the link given below.
             <br>500 vibes for post and 10 vibes for like and 500 vibes for share.<br/><br/>
         </div>
-     <div class="panel-body">
+     <div ng-if="!taskcomplete44" class="panel-body">
         <div class="tab-content custom-form">
         <div class="tab-pane fade in active" id="add-social-link">
         <form name="taskForm" ng-submit="sharePost(taskForm.$valid)" novalidate>
@@ -32,6 +32,6 @@
         </div>
         </div>
     </div>
-    <div ng-if="taskcomplete44">You have already completed this task.</div>
+    <div ng-if="taskcomplete44">*You have already completed this task.</div>
 </div>
 </div>

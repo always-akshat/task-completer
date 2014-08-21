@@ -25,23 +25,24 @@
                 <!--<li><a href="#rejected" data-toggle="tab" class="rejected-photo">6 Rejected</a></li>&ndash;&gt;-->
                 <!--</ul>-->
             </div>
-            <form name="photoForm" ng-submit="onFileUploadl4task3()" novalidate>
+            <form ng-if="!taskcomplete43" name="photoForm" ng-submit="onFileUploadl4task3()" novalidate>
+
                 <div class="form-group" required>
                     <input type="radio" name="learning" id="meme1" value="IMG-20140812-WA0010.jpg" class="custom-image" ng-model="memeradio" required>
                     <label for="meme1">
-                        <img src="images/IMG-20140812-WA0010.jpg" height="78" width="78" alt=""/>
+                        <img src="images/IMG-20140812-WA0010.jpg" height="200" width="200" alt=""/>
                     </label>
                     <input type="radio" name="learning" id="meme2" value="IMG-20140812-WA0012.jpg" class="custom-image" ng-model="memeradio" required>
                     <label for="meme2">
-                        <img src="images/IMG-20140812-WA0012.jpg" height="78" width="78" alt=""/>
+                        <img src="images/IMG-20140812-WA0012.jpg" height="200" width="200" alt=""/>
                     </label>
                     <input type="radio" name="learning" id="meme3" value="IMG-20140812-WA0013.jpg" class="custom-image" ng-model="memeradio" required>
                     <label for="meme3">
-                        <img src="images/IMG-20140812-WA0013.jpg" height="78" width="78" alt=""/>
+                        <img src="images/IMG-20140812-WA0013.jpg" height="200" width="200" alt=""/>
                     </label>
                     <input type="radio" name="learning" id="meme4" value="IMG-20140812-WA0018.jpg" class="custom-image" ng-model="memeradio" required>
                     <label for="meme4">
-                        <img src="images/IMG-20140812-WA0018.jpg" height="78" width="78" alt=""/>
+                        <img src="images/IMG-20140812-WA0018.jpg" height="200" width="200" alt=""/>
                     </label>
                 </div>
                 <strong>OR</strong>
@@ -50,7 +51,7 @@
                     <a ng-model="s3added43" ng-repeat="s3add in s3added43" href=""><img ng-src="{{s3add}}" height="78" width="78" alt=""/></a>
 
 
-                    <a ng-if="!taskcomplete43" href="#." onclick="document.getElementById('filel4task3').click(); return false;"class="upload-img">
+                    <a href="#." onclick="document.getElementById('filel4task3').click(); return false;"class="upload-img">
                         <span class="icon-plus-circle"></span>
                         Choose<br>
                         photos
@@ -62,6 +63,7 @@
                 </div>
             </form>
         </div>
+        <div ng-if="taskcomplete43">*You have already completed this task.</div>
     </div>
 </div>
 </div>
