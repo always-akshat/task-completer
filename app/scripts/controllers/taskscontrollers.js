@@ -1488,6 +1488,13 @@ viberApp.controller('vbdaysofGoodvibesCtrl',['$scope','$http','toaster','$rootSc
             xfbml      : true  // parse XFBML
         });
     };
+    (function(d){
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+    }(document));
 
     $scope.sharevideo = function (isValid) {
 
@@ -1794,6 +1801,13 @@ viberApp.controller('vbMemeComeTrueCtrl',['$scope','$upload','$http','toaster','
             xfbml: true  // parse XFBML
         });
     };
+    (function(d){
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+    }(document));
 
     if(angular.isObject(task.answers)) {
         _.each(task.answers, function (answer) {
@@ -1944,6 +1958,13 @@ viberApp.controller('vbGoodvibesMeanLevel4Ctrl',['$scope','$http','toaster','$ro
             xfbml: true  // parse XFBML
         });
     };
+    (function(d){
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+    }(document));
 
     if(angular.isObject(task) && task.completed==1)
         $scope.taskcomplete44=true;

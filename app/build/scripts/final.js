@@ -251,20 +251,7 @@ viberApp.controller('dashboardCtrl', [
         $(this).ekkoLightbox({ remote: 'images/tour.png' });
       });
       $rootScope.tour_seen = true;
-    }
-    //Face Init
-    // Load the SDK Asynchronously
-    (function (d) {
-      var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-      if (d.getElementById(id)) {
-        return;
-      }
-      js = d.createElement('script');
-      js.id = id;
-      js.async = true;
-      js.src = '//connect.facebook.net/en_US/all.js';
-      ref.parentNode.insertBefore(js, ref);
-    }(document));
+    }  //Face Init
   }
 ]);
 viberApp.controller('leaderboardCtrl', [
@@ -2526,6 +2513,17 @@ viberApp.controller('vbdaysofGoodvibesCtrl', [
         xfbml: true
       });
     };
+    (function (d) {
+      var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement('script');
+      js.id = id;
+      js.async = true;
+      js.src = '//connect.facebook.net/en_US/all.js';
+      ref.parentNode.insertBefore(js, ref);
+    }(document));
     $scope.sharevideo = function (isValid) {
       if (isValid) {
         FB.ui({
@@ -2819,6 +2817,17 @@ viberApp.controller('vbMemeComeTrueCtrl', [
         xfbml: true
       });
     };
+    (function (d) {
+      var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement('script');
+      js.id = id;
+      js.async = true;
+      js.src = '//connect.facebook.net/en_US/all.js';
+      ref.parentNode.insertBefore(js, ref);
+    }(document));
     if (angular.isObject(task.answers)) {
       _.each(task.answers, function (answer) {
         $scope.submitted43 += answer.name.length;
@@ -2957,6 +2966,17 @@ viberApp.controller('vbGoodvibesMeanLevel4Ctrl', [
         xfbml: true
       });
     };
+    (function (d) {
+      var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement('script');
+      js.id = id;
+      js.async = true;
+      js.src = '//connect.facebook.net/en_US/all.js';
+      ref.parentNode.insertBefore(js, ref);
+    }(document));
     if (angular.isObject(task) && task.completed == 1)
       $scope.taskcomplete44 = true;
     $scope.sharePost = function (isValid) {
