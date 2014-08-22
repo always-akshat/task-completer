@@ -2140,8 +2140,7 @@ viberApp.controller('vbGoodvibesMeanCtrl', [
             $scope.identity.currentUser.points += data.completiondata.points;
             if ($scope.identity.currentUser.complete3 == 100) {
               $rootScope.style3 = { 'font-size': '14px' };
-              if ($rootScope.tasklimit31 == true)
-                $rootScope.level3iscompleted = true;
+              $rootScope.level3iscompleted = true;
             }
             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             $scope.taskcomplete31 = true;
@@ -2974,7 +2973,6 @@ viberApp.controller('vbGoodvibesMeanLevel4Ctrl', [
     $scope.sharePost = function (isValid) {
       if (isValid) {
         FB.getLoginStatus(function (response) {
-          void 0;
           if (response.status === 'connected') {
             FB.api('/me/feed', 'POST', { 'message': $scope.postmessage }, function (response) {
               void 0;

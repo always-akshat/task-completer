@@ -18,7 +18,7 @@
         </div>
         <div class="panel-body">
 
-            <form ng-if="!taskcomplete43" name="photoForm" ng-submit="onFileUploadl4task3()" novalidate>
+            <form ng-hide="taskcomplete43" name="photoForm" ng-submit="onFileUploadl4task3()" novalidate>
 
                 <div class="form-group" required>
                     <input type="radio" name="learning" id="meme1" value="IMG-20140812-WA0010.jpg" class="custom-image" ng-model="memeradio" required>
@@ -39,7 +39,7 @@
                     </label>
                 </div>
                 <strong>OR</strong>
-                <div class="tab-pane fade in active new-upload">
+                <div ng-if="!taskcomplete43"class="tab-pane fade in active new-upload">
                     <!--<a ng-model="serSubmitted43" ng-repeat="serSubmit in serSubmitted43" href=""><img ng-src="https://s3-ap-southeast-1.amazonaws.com/viber-uploads/level4task3/{{serSubmit}}" height="78" width="78" alt=""/></a>-->
                     <a ng-model="s3added43" ng-repeat="s3add in s3added43" href=""><img ng-src="{{s3add}}" height="78" width="78" alt=""/></a>
 

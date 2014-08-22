@@ -1111,8 +1111,7 @@ viberApp.controller('vbGoodvibesMeanCtrl',['$scope','$upload','$http','toaster',
                     $scope.identity.currentUser.points += data.completiondata.points;
                     if($scope.identity.currentUser.complete3==100){
                         $rootScope.style3 = {'font-size':'14px'};
-                        if($rootScope.tasklimit31 == true)
-                            $rootScope.level3iscompleted = true;
+                        $rootScope.level3iscompleted = true;
                     }
                     $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
                     $scope.taskcomplete31=true;
@@ -1977,7 +1976,6 @@ viberApp.controller('vbGoodvibesMeanLevel4Ctrl',['$scope','$http','toaster','$ro
         if(isValid){
 
             FB.getLoginStatus(function(response) {
-                console.log(response);
                 if (response.status === 'connected') {
                     FB.api(
                         "/me/feed",
