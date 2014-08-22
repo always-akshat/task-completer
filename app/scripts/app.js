@@ -177,7 +177,7 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
     if ($scope.identity.currentUser.complete1 == 100 && $scope.identity.currentUser.complete2 == 100)
         $rootScope.level2iscompleted = true;
 
-    if ($scope.identity.currentUser.complete1 == 100 && $scope.identity.currentUser.complete2 == 100 && $scope.identity.currentUser.complete3 == 100)
+    if ($scope.identity.currentUser.complete1 == 100 && $scope.identity.currentUser.complete2 == 100 && $scope.identity.currentUser.complete3 == 100 && $rootScope.tasklimit31 == true)
         $rootScope.level3iscompleted = true;
 
     $window.scrollTo(0, 0);

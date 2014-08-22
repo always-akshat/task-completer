@@ -158,7 +158,7 @@ viberApp.controller('dashboardCtrl', [
       $rootScope.level1iscompleted = true;
     if ($scope.identity.currentUser.complete1 == 100 && $scope.identity.currentUser.complete2 == 100)
       $rootScope.level2iscompleted = true;
-    if ($scope.identity.currentUser.complete1 == 100 && $scope.identity.currentUser.complete2 == 100 && $scope.identity.currentUser.complete3 == 100)
+    if ($scope.identity.currentUser.complete1 == 100 && $scope.identity.currentUser.complete2 == 100 && $scope.identity.currentUser.complete3 == 100 && $rootScope.tasklimit31 == true)
       $rootScope.level3iscompleted = true;
     $window.scrollTo(0, 0);
     var currentPage = {
@@ -2070,7 +2070,7 @@ viberApp.controller('vbGoodvibesMeanCtrl', [
     $scope.done31 = [];
     $scope.taskcomplete31 = false;
     $scope.zeroselected31 = true;
-    $scope.tasklimit31 = false;
+    $rootScope.tasklimit31 = false;
     if (angular.isObject(task.answers)) {
       _.each(task.answers, function (answer) {
         $scope.submitted31 += answer.name.length;
@@ -2080,7 +2080,7 @@ viberApp.controller('vbGoodvibesMeanCtrl', [
       });
     }
     if ($scope.submitted31 >= 10)
-      $scope.tasklimit31 = true;
+      $rootScope.tasklimit31 = true;
     if (angular.isObject(task) && task.completed == 1)
       $scope.taskcomplete31 = true;
     $scope.onFileSelectl3task1 = function ($files) {
@@ -2138,23 +2138,25 @@ viberApp.controller('vbGoodvibesMeanCtrl', [
       $scope.zeroselected31 = true;
       $http.put('/uploadphoto', reqbody).success(function (data) {
         if (angular.isObject(data)) {
+          $scope.submitted31 += $scope.done31.length;
+          $scope.added31 = 0;
+          $scope.s3success31 = false;
+          if ($scope.submitted31 >= 10)
+            $rootScope.tasklimit31 = true;
+          //If get completion data then update level 3 completion
           if (angular.isObject(data.completiondata)) {
             if (data.completiondata.level)
               $scope.identity.currentUser.complete3 += data.completiondata.level;
             $scope.identity.currentUser.points += data.completiondata.points;
             if ($scope.identity.currentUser.complete3 == 100) {
               $rootScope.style3 = { 'font-size': '14px' };
-              $rootScope.level3iscompleted = true;
+              if ($rootScope.tasklimit31 == true)
+                $rootScope.level3iscompleted = true;
             }
             $scope.identity.currentUser.vibes_transaction.push(data.completiondata.transaction);
             $scope.taskcomplete31 = true;
             task.completed = 1;
           }
-          $scope.submitted31 += $scope.done31.length;
-          $scope.added31 = 0;
-          $scope.s3success31 = false;
-          if ($scope.submitted31 >= 10)
-            $scope.tasklimit31 = true;
           toaster.pop('success', 'Task 1', 'Your photo was uploaded successfully.');
         } else {
           $window.location = '/logout';
