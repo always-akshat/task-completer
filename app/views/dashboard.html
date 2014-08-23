@@ -134,7 +134,7 @@
             <span ng-style="style3" class="progress-txt">{{identity.currentUser.complete3}}%</span>
         </div>
     </div>
-    <div ng-if="!level3iscompleted" class="panel-group panel-infoGroup" id="panel-l3">
+    <div ng-if="!(level3iscompleted && tasklimit31)" class="panel-group panel-infoGroup" id="panel-l3">
         <div class="panel">
             <goodvibes-mean></goodvibes-mean>
             <thinkof-viber></thinkof-viber>
