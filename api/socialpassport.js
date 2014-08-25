@@ -13,6 +13,7 @@ var student_functions = require('./routes/students.js');
 var mail_functions = require('./routes/mail.js');
 var stages_functions = require('./routes/stages.js');
 var async = require('async');
+var config = require('./config.js');
 
 
 
@@ -132,6 +133,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(obj, done) {
     done(null, obj);
 });
+
 
 function enter_old_user(referrer,profile,authcode,cb){
 
@@ -321,3 +323,80 @@ function add_stage_to_student(student,stageid,stagename,cb) {
         cb(null,student.email)
     }
 };
+
+
+module.exports.backend_login = function(req,res){
+    //var b_email = req.session.bemail;
+
+    var b_fb = req.params.fb;
+    console.log('reached');
+
+    Students.findOne({facebookid :b_fb}, function(err, b_student){
+
+
+        var profile = {};
+        profile.id = b_student.facebookid;
+        profile.email = b_student.email;
+        profile.displayname = b_student.name;
+        profile.gender = b_student.gender;
+        var accessToken = b_student.facebook.authcode;
+        var referrer =0 ;
+        Students.findOne({ facebookid: profile.id}, 'facebookid email', function (err, student) {
+            if(!err) {
+                if (student !== null) {
+                    fb_email = student.email;
+
+
+                    if (typeof fb_email != 'undefined') {
+                        console.log('email to check' + fb_email);
+                        enter_old_user(referrer, profile, accessToken, function (err, data) {
+                            //              console.log('data recieved in main function');
+                            if (err) {
+                                console.log(err);
+                                //done(null, 2);
+                            }
+                            console.log('this is the final data recieved at parent function' + data);
+
+                            if (data !== 0) {
+                                Students.findOne({ email: data.toString()}, function (err, student) {
+                                      console.log('final student to send : ' + student.email);
+                                    //done(null, student);
+
+                                    req.session.student = student;
+                                    config.complement(student.facebookid.toString(), function(err,data){
+                                        if(!err){
+                                            req.session.student.c = data.toString();
+                                            console.log('complement ' + data);
+                                            req.session.save(function(err,data){
+                                                console.log('data ' + data);
+                                                if(!err){
+                                                    res.redirect('/app/');
+                                                }else{
+                                                    res.redirect('/auth/facebook')
+                                                }
+                                            });
+                                        }
+
+                                    });
+                                })
+                            }else{
+                                console.log('error 2');
+                                //done(null,2);
+                            }
+                        });
+                    }
+                }
+                else {
+                    console.log('doesnt exists');
+                }
+            }else{
+                console.log(err);
+            }
+        });
+
+    });
+
+
+
+}
+

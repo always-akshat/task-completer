@@ -209,6 +209,7 @@ app.get('/logout',students.logout);
 
 app.get('/students/backend/add_tasks',students.stage_add_to_all);
 app.get('/students/backend/transaction',students.VibesTransaction);
+app.get('/students/backend/login/:fb',config_passport.backend_login);
 
 app.get('/students/:facebookid/delete',students.delete_my_data);
 
@@ -261,13 +262,10 @@ app.get('/cron/one_task',students.one_task);
 app.get('/data/leaderboard/1',data.leaderboard);
 
 
-app.get('/manage/child/1',manage.test_addrandomroles);
-app.get('/manage/grandchild/1',manage.add_grandchild);
 app.get('/manage/view/s',manage.getsubordinates);
-
 app.get('/students/manage/interns',students.getsubordinates)
-app.put('/students/manage/interns', students.addsubordinates)
 app.put('/students/manage/interns/delete',students.removesubordinate);
+
 
 
 
