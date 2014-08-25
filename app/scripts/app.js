@@ -164,7 +164,7 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
     if (!$scope.identity.currentUser.c)
         $window.location = '/auth/facebook';
 
-    if (!angular.isObject($scope.identity.currentUser.college) || !angular.isObject($scope.identity.currentUser.college)) {
+    if (!angular.isObject($scope.identity.currentUser.college) || !$scope.identity.currentUser.mobile) {
         console.log('redirecting');
         $scope.profilecomplete = false;
     }
