@@ -1793,6 +1793,7 @@ viberApp.controller('vbMemeComeTrueCtrl',['$scope','$upload','$http','toaster','
     $scope.taskcomplete43=false;
     $scope.zeroselected43 = true;
     $scope.memeradio = undefined;
+    $scope.postpermission43 = false;
 
     window.fbAsyncInit = function() {
         console.log('initiating facebook');
@@ -1884,7 +1885,7 @@ viberApp.controller('vbMemeComeTrueCtrl',['$scope','$upload','$http','toaster','
                         {"url": $scope.linktoshare }
                     , function (response) {
 
-                            if(response && response.post_id) {
+                            if(response && response.post_id && !response.error) {
                                 $scope.postid = response.post_id
 
                                 var reqbody =  {
@@ -1927,6 +1928,9 @@ viberApp.controller('vbMemeComeTrueCtrl',['$scope','$upload','$http','toaster','
                                     toaster.pop('failure', "Task 3", "There was an error submitting your task, please try again");
                                 });
                             }
+                            else{
+                                $scope.postpermission43 = true;
+                            }
                     });
 //                FB.api( "/690783934290236_711288332239796/likes"
 //                    , function (response) {
@@ -1950,6 +1954,7 @@ viberApp.controller('vbGoodvibesMeanLevel4Ctrl',['$scope','$http','toaster','$ro
     var user_tasks = $scope.identity.currentUser.user_tasks;
     var task = _.where(user_tasks,{'task_id':'53f7378ce37edbac1f6dec1a'})[0];
     $scope.taskcomplete44=false;
+    $scope.postpermission = false;
     //$scope.postmessage = undefined;
 
     window.fbAsyncInit = function() {
@@ -1974,7 +1979,7 @@ viberApp.controller('vbGoodvibesMeanLevel4Ctrl',['$scope','$http','toaster','$ro
 
     $scope.sharePost = function(isValid){
         if(isValid){
-
+            console.log("Post "+$scope.postpermission);
             FB.getLoginStatus(function(response) {
                 if (response.status === 'connected') {
                     FB.api(
@@ -2018,10 +2023,14 @@ viberApp.controller('vbGoodvibesMeanLevel4Ctrl',['$scope','$http','toaster','$ro
                                         $window.location = '/logout';
                                     }
                                 }).error(function (err) {
-
                                     console.log(err);
                                     toaster.pop('failure', "Task 4", "There was an error submitting your task, please try again");
                                 });
+                            }
+                            else{
+                                $scope.postpermission = true;
+                                console.log(response.error.message);
+                                console.log("Post "+$scope.postpermission);
                             }
                         }
                     );

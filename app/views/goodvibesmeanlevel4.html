@@ -12,11 +12,11 @@
         <div class="panel-body">
             <p><strong>Task description:</strong></p>
             Spread #GoodVibes by updating your Facebook profile and describing what #GoodVibes means to you. Share posts directly from the link given below and jazz up your profile!
-            <br>500 vibes for every post, 10 vibes for every like and 500 vibes for every share.<br/><br/>
+            <br>500 vibes for every post, 30 vibes for every like.<br/><br/>
             <p><strong>What do you learn:</strong></p>
             Its all about spreading GoodVibes and when you're doing it through multiple times on social media, you will come across a very interesting pattern of social media usage. Yes, there is a right time and logical reasoning behind the right time for a Facebook post and you will know it when done with this task.<br/><br/>
         </div>
-     <div ng-hide="taskcomplete44" class="panel-body">
+        <div ng-hide="taskcomplete44" class="panel-body">
         <div class="tab-content custom-form">
         <div class="tab-pane fade in active" id="add-social-link">
         <form name="taskForm" ng-submit="sharePost(taskForm.$valid)" novalidate>
@@ -34,6 +34,7 @@
         </div>
         </div>
     </div>
-    <div ng-if="taskcomplete44">*You have already completed this task.</div>
+        <div class="panel-body" ng-if="postpermission" style="color: red">*You haven't authorized the application to perform this action. Please refer to <a href="http://thegoodvibes.uservoice.com/knowledgebase" target="_blank">FAQs</a>.</div>
+        <div class="panel-body" ng-if="taskcomplete44">*You have already completed this task.</div>
 </div>
 </div>
