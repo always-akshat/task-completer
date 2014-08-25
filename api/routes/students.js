@@ -1148,8 +1148,8 @@ function addsubordinates(req,res){
     switch (role) {
         case (0) : {rolename ='Intern';break;}
         case (1) : {rolename ='Cluster Manager';break;}
-        case (1) : {rolename ='Project Manager';break;}
-        case (1) : {rolename ='Zonal Manager';break;}
+        case (2) : {rolename ='Project Manager';break;}
+        case (3) : {rolename ='Zonal Manager';break;}
     }
 
 
