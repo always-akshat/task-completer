@@ -49,6 +49,7 @@
                 <label class="col-sm-4 control-label">College</label>
                 <div class="col-sm-20">
                     <input type="text" ng-model="user.college.name" typeahead="clg.CollegeName for clg in getCollege($viewValue)" typeahead-items='5' typeahead-on-select='onSelectCollege($item)'class="form-control" required>
+                    <div style="color: #7c529d">If your college name is not in the list, then select <strong>Others</strong>.</div>
                 </div>
             </div>
             <div class="form-group">
@@ -56,7 +57,7 @@
                     <button type="submit" class="btn btn-success" ng-disabled="settingsForm.$invalid">save</button>
                 </div>
             </div>
-            <div class="panel-body" style="color: #7c529d">If your college name is not in the list, then select <strong>Others</strong> and select college from the list.</div>
+
         </form>
     </div>
 

@@ -209,9 +209,10 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
         var modalInstance = $modal.open({
             templateUrl: 'completeProfile.html',
             controller: completeProfileCtrl,
+            backdrop: 'static',
+            keyboard: false,
             size: size
         });
-
         modalInstance.result.then(function () {
             console.log("Item selected");
         }, function () {

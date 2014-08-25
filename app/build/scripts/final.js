@@ -188,6 +188,8 @@ viberApp.controller('dashboardCtrl', [
       var modalInstance = $modal.open({
           templateUrl: 'completeProfile.html',
           controller: completeProfileCtrl,
+          backdrop: 'static',
+          keyboard: false,
           size: size
         });
       modalInstance.result.then(function () {
