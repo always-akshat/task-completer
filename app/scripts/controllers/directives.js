@@ -267,10 +267,63 @@ viberApp.directive('doodleWars', function(){
 viberApp.directive('daysofGoodvibes', function(){
 
     return{
-
         restrict : 'E',
         templateUrl : 'views/5daysofgoodvibes.html',
         controller : 'vbdaysofGoodvibesCtrl'
+    }
+});
+
+viberApp.directive('letsMakeDifference', function(){
+
+    return{
+
+        restrict : 'E',
+        templateUrl : 'views/letsmakedifference.html',
+        controller : 'vbLetsMakeDifferenceCtrl'
+
+    }
+});
+
+viberApp.directive('weekendToGoa', function(){
+
+    return{
+
+        restrict : 'E',
+        templateUrl : 'views/weekendtogoa.html',
+        controller : 'vbWeekendGoaCtrl'
+
+    }
+});
+
+viberApp.directive('memeComeTrue', function(){
+
+    return{
+
+        restrict : 'E',
+        templateUrl : 'views/memecometrue.html',
+        controller : 'vbMemeComeTrueCtrl'
+
+    }
+});
+
+viberApp.directive('goodvibesMeanLevel4', function(){
+
+    return{
+
+        restrict : 'E',
+        templateUrl : 'views/goodvibesmeanlevel4.html',
+        controller : 'vbGoodvibesMeanLevel4Ctrl'
+
+    }
+});
+
+viberApp.directive('goodVibesDesktop', function(){
+
+    return{
+
+        restrict : 'E',
+        templateUrl : 'views/goodvibesdesktop.html',
+        controller : 'vbGoodvibesDesktopCtrl'
 
     }
 });

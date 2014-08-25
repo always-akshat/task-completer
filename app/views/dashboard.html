@@ -39,11 +39,12 @@
                 <label class="col-sm-4 control-label">College</label>
                 <div class="col-sm-20">
                     <input type="text" ng-model="identity.currentUser.college.name" typeahead="clg.CollegeName for clg in getCollege($viewValue)" typeahead-items='5' placeholder="College" typeahead-on-select='onSelectCollege($item)'class="form-control" required>
+                    <div style="color: #7c529d">If your college name is not in the list, then select <strong>Others</strong>.</div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-20 text-right">
-                    <button type="submit" class="btn btn-success" ng-disabled="settingsForm.$invalid">save</button>
+                    <button type="submit" class="btn btn-success" ng-disabled="settingsForm.$invalid">Save</button>
                 </div>
             </div>
         </form>
@@ -134,7 +135,7 @@
             <span ng-style="style3" class="progress-txt">{{identity.currentUser.complete3}}%</span>
         </div>
     </div>
-    <div class="panel-group panel-infoGroup" id="panel-l3">
+    <div ng-if="!(level3iscompleted && tasklimit31)" class="panel-group panel-infoGroup" id="panel-l3">
         <div class="panel">
             <goodvibes-mean></goodvibes-mean>
             <thinkof-viber></thinkof-viber>
@@ -154,11 +155,48 @@
         <div class="progress-box">
             <div class="row pull-left">
                 <p>                    Complete Level 2 to unlock this Level</p>
-                <!--<div class="col-xs-6"></div>-->
-                <!--<div class="col-xs-6"></div>-->
-                <!--<div class="col-xs-6"></div>-->
-                <!--<div class="col-xs-6" style="border: 0px;"></div>-->
-                <!--<div class="progress-bar" style="width:{{identity.currentUser.complete2}}%;"></div>-->
+            </div>
+            <span class="progress-txt"><strong class="icon-lock"></strong></span>
+        </div>
+    </div>
+</div>
+</span>
+
+<span ng-if="level3iscompleted">
+<div class="level-box">
+    <div class="level-meter clearfix">
+        <div class="level-title">{{identity.currentUser.level4}}</div>
+        <div class="progress-box">
+            <div class="row pull-left progress-row">
+                <div class="col-xs-6"></div>
+                <div class="col-xs-6"></div>
+                <div class="col-xs-6"></div>
+                <div class="col-xs-6" style="border: 0px;"></div>
+                <div class="progress-bar" style="width:{{identity.currentUser.complete4}}%;"></div>
+            </div>
+            <span ng-style="style2" class="progress-txt">{{identity.currentUser.complete4}}%</span>
+        </div>
+    </div>
+    <div ng-if="!level4iscompleted" class="panel-group panel-infoGroup" id="panel-l4">
+        <div class="panel">
+            <lets-make-difference></lets-make-difference>
+            <weekend-to-goa></weekend-to-goa>
+            <meme-come-true></meme-come-true>
+            <goodvibes-mean-level4></goodvibes-mean-level4>
+            <good-vibes-desktop></good-vibes-desktop>
+        </div>
+        <!--  <task-insert-mobile></task-insert-mobile> -->
+    </div>
+</div>
+</span>
+
+<span ng-if="!level3iscompleted">
+<div class="level-box">
+    <div class="level-meter clearfix">
+        <div class="level-title">{{identity.currentUser.level4}}</div>
+        <div class="progress-box">
+            <div class="row pull-left">
+                <p>                    Complete Level 3 to unlock this Level</p>
             </div>
             <span class="progress-txt"><strong class="icon-lock"></strong></span>
         </div>
@@ -175,6 +213,7 @@
 <!--</div>-->
 
 <p><strong>*</strong>Vibes rewarded for duplicate transactions will get removed at the end of the day.</p>
+<p><strong>*</strong>Vibes for facebook post likes will be awarded at the end of the day.</p>
 <!--<div class="level-box">-->
     <!--<div class="level-meter clearfix">-->
         <!--<div class="level-title">Level 2</div>-->

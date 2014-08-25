@@ -1,0 +1,63 @@
+<div class="panel panel-default">
+    <div class="panel-heading collapsed" data-parent="#panel-l4" data-toggle="collapse" data-target="#collapseThree3">
+        <h4 class="panel-title pull-left">
+            Meme come true!
+        </h4>
+        <span class="pull-right" ng-show="taskcomplete43"><strong class="icon-tick"></strong></span>
+        <span class="pull-right" ng-hide="taskcomplete43"><strong>500</strong> vibes</span>
+
+    </div>
+
+    <div id="collapseThree3" class="panel-collapse collapse">
+        <div class="panel-body">
+            <p><strong>Task description:</strong></p>
+            Sharing Viber content now becomes 10 times more fun! Share any meme and increase your vibes! What is a meme? A meme may be any picture with a heading and one line funny conclusion, that goes best with the picture. Take time and put some thought in presenting your best creative skills. Make your own meme- <a href="http://memegenerator.net/" target="_blank"></a> or share one of the below<br>500 vibes for the post, 30 vibes for every like.<br/><br/>
+
+            <p><strong>What do you learn:</strong></p>
+            In this internship, we aim to increase your social and creative skills. This task is given to encourage your creative side. Take time and put some thought in presenting your best creative skills.<br/><br/>
+        </div>
+        <div class="panel-body">
+
+            <form ng-hide="taskcomplete43" name="photoForm" ng-submit="onFileUploadl4task3()" novalidate>
+
+                <div class="form-group" required>
+                    <input type="radio" name="learning" id="meme1" value="IMG-20140812-WA0010.jpg" class="custom-image" ng-model="memeradio" required>
+                    <label for="meme1">
+                        <img src="images/IMG-20140812-WA0010.jpg" height="200" width="200" alt=""/>
+                    </label>
+                    <input type="radio" name="learning" id="meme2" value="IMG-20140812-WA0012.jpg" class="custom-image" ng-model="memeradio" required>
+                    <label for="meme2">
+                        <img src="images/IMG-20140812-WA0012.jpg" height="200" width="200" alt=""/>
+                    </label>
+                    <input type="radio" name="learning" id="meme3" value="IMG-20140812-WA0013.jpg" class="custom-image" ng-model="memeradio" required>
+                    <label for="meme3">
+                        <img src="images/IMG-20140812-WA0013.jpg" height="200" width="200" alt=""/>
+                    </label>
+                    <input type="radio" name="learning" id="meme4" value="IMG-20140812-WA0018.jpg" class="custom-image" ng-model="memeradio" required>
+                    <label for="meme4">
+                        <img src="images/IMG-20140812-WA0018.jpg" height="200" width="200" alt=""/>
+                    </label>
+                </div>
+                <strong>OR</strong>
+                <div ng-if="!taskcomplete43"class="tab-pane fade in active new-upload">
+                    <!--<a ng-model="serSubmitted43" ng-repeat="serSubmit in serSubmitted43" href=""><img ng-src="https://s3-ap-southeast-1.amazonaws.com/viber-uploads/level4task3/{{serSubmit}}" height="78" width="78" alt=""/></a>-->
+                    <a ng-model="s3added43" ng-repeat="s3add in s3added43" href=""><img ng-src="{{s3add}}" height="78" width="78" alt=""/></a>
+
+
+                    <a href="#." onclick="document.getElementById('filel4task3').click(); return false;"class="upload-img">
+                        <span class="icon-plus-circle"></span>
+                        Choose<br>
+                        photos
+                    </a>
+                    <input id="filel4task3" type="file" accept="image/*" style="visibility: hidden;" ng-file-select="onFileSelectl4task3($files)"/>
+                    <p style="margin-left: 18px;">
+                        <button ng-if="!taskcomplete43"type="submit" class="btn btn-success radius-none" ng-disabled="!memeradio || zeroselected">Post on Facebook</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+        <div class="panel-body" ng-if="postpermission43" style="color: red">*You haven't authorized the application to perform this action. Please refer to <a href="http://thegoodvibes.uservoice.com/knowledgebase" target="_blank">FAQs</a>.</div>
+        <div ng-if="taskcomplete43">*You have already completed this task.</div>
+    </div>
+</div>
+</div>

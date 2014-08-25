@@ -1,0 +1,40 @@
+<div class="panel panel-default">
+    <div class="panel-heading collapsed" data-parent="#panel-l4" data-toggle="collapse" data-target="#collapseThree4">
+        <h4 class="panel-title pull-left">
+            What does #GoodVibes mean to you?
+        </h4>
+        <span class="pull-right" ng-show="taskcomplete44"><strong class="icon-tick"></strong></span>
+        <span class="pull-right" ng-hide="taskcomplete44"><strong>500</strong> vibes</span>
+
+    </div>
+
+    <div id="collapseThree4" class="panel-collapse collapse">
+        <div class="panel-body">
+            <p><strong>Task description:</strong></p>
+            Spread #GoodVibes by updating your Facebook profile and describing what #GoodVibes means to you. Share posts directly from the link given below and jazz up your profile!
+            <br>500 vibes for every post, 30 vibes for every like.<br/><br/>
+            <p><strong>What do you learn:</strong></p>
+            Its all about spreading GoodVibes and when you're doing it through multiple times on social media, you will come across a very interesting pattern of social media usage. Yes, there is a right time and logical reasoning behind the right time for a Facebook post and you will know it when done with this task.<br/><br/>
+        </div>
+        <div ng-hide="taskcomplete44" class="panel-body">
+        <div class="tab-content custom-form">
+        <div class="tab-pane fade in active" id="add-social-link">
+        <form name="taskForm" ng-submit="sharePost(taskForm.$valid)" novalidate>
+        <div class="form-group">
+        <textarea class="form-control" name="message" cols="30" rows="5" placeholder="#goodvibes your message"
+                  ng-model="postmessage" ng-maxlength="120" required></textarea>
+        </div>
+        <p ng-show="taskForm.message.$invalid && !taskForm.message.$pristine" class="help-block">Your message can only be 120 characters long</p>
+        <div class="form-group">
+        <div class="pull-right">
+        <button ng-if="!taskcomplete44" type="submit" class="btn btn-success" ng-disabled="taskForm.$invalid">Share Post</button>
+        </div>
+        </div>
+        </form>
+        </div>
+        </div>
+    </div>
+        <div class="panel-body" ng-if="postpermission" style="color: red">*You haven't authorized the application to perform this action. Please refer to <a href="http://thegoodvibes.uservoice.com/knowledgebase" target="_blank">FAQs</a>.</div>
+        <div class="panel-body" ng-if="taskcomplete44">*You have already completed this task.</div>
+</div>
+</div>

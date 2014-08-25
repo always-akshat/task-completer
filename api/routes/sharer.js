@@ -256,6 +256,53 @@ exports.selfie = function(req,res){
 
 }
 
+
+// fbs hare post
+
+exports.fbsharepost = function(req,res){
+    complement(req.body.c.toString(), function(err,data) {
+
+        if (!err && data) {
+
+            var facebookid = data;//req.body.answers.c;//req.session.student.facebookid;
+            var answers = req.body.answers;
+            var taskid = req.body.taskid;
+
+            if (answers.name.length > 0) {
+                answers.upload = 1;
+                utilities.handle_task_Request(facebookid, taskid, answers, function (task_data) {
+                    if (task_data !== 0) {
+                        //console.log('data returned from utilities ' + JSON.stringify(task_data))
+                        var tasks = req.session.student.user_tasks;
+
+                        tasks.forEach(function (instance) {
+                            if (instance.task_id == taskid) {
+                                instance.answers = task_data.answers;
+                            }
+                        });
+
+                        res.send(task_data);
+                    } else {
+                        res.send(0);
+                    }
+                });
+            } else {
+                res.send(0);
+            }
+        }else{
+            res.send(0);
+        }
+    });
+
+}
+
+
+// end fb share post
+
+
+
+
+
 exports.fb_invite = function(req,res){
     complement(req.body.c.toString(), function(err,data) {
         if (!err && data) {

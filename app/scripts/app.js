@@ -164,7 +164,7 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
     if (!$scope.identity.currentUser.c)
         $window.location = '/auth/facebook';
 
-    if (!angular.isObject($scope.identity.currentUser.college) || !angular.isObject($scope.identity.currentUser.college)) {
+    if (!angular.isObject($scope.identity.currentUser.college) || !$scope.identity.currentUser.mobile) {
         console.log('redirecting');
         $scope.profilecomplete = false;
     }
@@ -199,15 +199,20 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
         $rootScope.style3 = {'font-size': '14px'};
     }
 
+    $rootScope.style4 = undefined;
+    if ($scope.identity.currentUser.complete4 == 100) {
+        $rootScope.style4 = {'font-size': '14px'};
+    }
 
     $scope.open = function (size) {
 
         var modalInstance = $modal.open({
             templateUrl: 'completeProfile.html',
             controller: completeProfileCtrl,
+            backdrop: 'static',
+            keyboard: false,
             size: size
         });
-
         modalInstance.result.then(function () {
             console.log("Item selected");
         }, function () {
@@ -269,11 +274,13 @@ viberApp.controller('dashboardCtrl', ['$rootScope','$scope', 'vbSharedService', 
     if ($scope.identity.currentUser.complete1 == 0 && $scope.profilecomplete && (!$rootScope.tour_seen || ($rootScope.tour_seen == false))) {
         $(document).ready(function () {
             $(this).ekkoLightbox({
-                remote: 'images/tour-gv.png'
+                remote: 'images/tour.png'
             });
         });
         $rootScope.tour_seen = true;
     }
+
+    //Face Init
 }]);
 
 viberApp.controller('leaderboardCtrl', ['$scope','$rootScope' , 'vbSharedService', '$http', '$window', function ($scope, $rootScope,vbSharedService, $http, $window) {

@@ -30,7 +30,7 @@ viberApp.factory('vbAuth',['$http','vbIdentity','$q','$rootScope','$window',  fu
                         var level1 = _.where(stage, {'stageid': '5390521624349ecc0c108c10'})[0];
                         var level2 = _.where(stage, {'stageid': '53d36e0abb5c82917b3a3d94'})[0];
                         var level3 = _.where(stage, {'stageid': '53db74a368425b29ecc82f4d'})[0];
-
+                        var level4 = _.where(stage, {'stageid': '53f736ece37edbac1f6dec15'})[0];
 
                         vbIdentity.currentUser.level2 = level2.name;
                         vbIdentity.currentUser.complete2 = level2.completion;
@@ -40,6 +40,9 @@ viberApp.factory('vbAuth',['$http','vbIdentity','$q','$rootScope','$window',  fu
 
                         vbIdentity.currentUser.level3 = level3.name;
                         vbIdentity.currentUser.complete3 = level3.completion;
+
+                        vbIdentity.currentUser.level4 = level4.name;
+                        vbIdentity.currentUser.complete4 = level4.completion;
 
                         //vbIdentity.currentUser.complete = vbIdentity.currentUser.stages[0].completion;
 //                    var level_com = 0;
