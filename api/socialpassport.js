@@ -34,7 +34,6 @@ module.exports = passport.use(new FacebookStrategy({
             relogin =1;
 
             Students.findOne({ facebookid: profile.id}, 'facebookid email', function (err, student) {
-
                if(!err) {
                    if (student !== null) {
                        fb_email = student.email;
@@ -51,10 +50,14 @@ module.exports = passport.use(new FacebookStrategy({
                                console.log('this is the final data recieved at parent function' + data);
 
                                if (data !== 0) {
-                                   Students.findOne({ email: data.toString()}, function (err, student) {
-                                     //  console.log('final student to send : ' + student.email);
-                                       done(null, student);
-                                   })
+                                   if(data ==4) {
+                                       done(null,4);
+                                   }else {
+                                       Students.findOne({ email: data.toString()}, function (err, student) {
+                                           //  console.log('final student to send : ' + student.email);
+                                           done(null, student);
+                                       });
+                                   }
                                }else{
                                    done(null,2);
                                }
@@ -85,9 +88,13 @@ module.exports = passport.use(new FacebookStrategy({
                                console.log('this is the final data recieved at parent function' + data);
 
                                if (data !== 0) {
+                                   if(data ==4){
+                                       done(null,4);
+                                   }else{
                                    Students.findOne({ email: fb_email}, function (err, student) {
                                        done(null, student);
                                    })
+                                   }
                                }else {
                                    done(null,2);
                                }
@@ -144,50 +151,54 @@ function enter_old_user(referrer,profile,authcode,cb){
             cb(err,2);
         }
         else {
-            if(student == null) {
-                console.log('student null. created new student schema.registering new user');
-                student = new studentSchema.student;
-                student.email = fb_email;
-                student.facebookid = profile.id;
-                student.facebook.friends = [];
+            if (student == null) {
+                cb(null, 4);
+                var further = 0;
+                /*
 
-                student.facebook.authorized = 1;
-                student.gender = profile.gender;
-                student.name = profile.displayName;
-                student.points = 0;
-                student.auth = profile.id;
-                student.referred_by = referrer;
-                student.refercount = 0;
-                student.createdon = Date.now();
+                 student = new studentSchema.student;
+                 student.email = fb_email;
+                 student.facebookid = profile.id;
+                 student.facebook.friends = [];
 
-                mail_functions.singup(profile.displayName, fb_email);
+                 student.facebook.authorized = 1;
+                 student.gender = profile.gender;
+                 student.name = profile.displayName;
+                 student.points = 0;
+                 student.auth = profile.id;
+                 student.referred_by = referrer;
+                 student.refercount = 0;
+                 student.createdon = Date.now();
 
-                Students.findOne({ auth: referrer}, function (err, refstudent) {
-                    if(refstudent){
-                        if(refstudent.refercount) {
-                            refstudent.refercount += 1;
-                        }else{
-                            refstudent.refercount = 1;
-                        }
-                        refstudent.points +=20;
+                 mail_functions.singup(profile.displayName, fb_email);
 
-                        refstudent.save();
-                        var transaction = new studentSchema.vibes_transaction;
-                        transaction.vibes = 20;
-                        transaction.type = 'referral';
-                        transaction.sign = 1;
-                        transaction.message = 'Referred ' + ' ' +profile.displayName;
-                        student_functions.VibesTransaction(refstudent.facebookid, transaction, function (v_transaction) {
-                            if(v_transaction !== 0) {
-                                mail_functions.referral(profile.displayName, refstudent.name, refstudent.points + 20, refstudent.email);
-                            }
-                        });
-                    }else{
-                        console.log('referrral student not found');
-                    }
+                 Students.findOne({ auth: referrer}, function (err, refstudent) {
+                 if(refstudent){
+                 if(refstudent.refercount) {
+                 refstudent.refercount += 1;
+                 }else{
+                 refstudent.refercount = 1;
+                 }
+                 refstudent.points +=20;
 
-                });
+                 refstudent.save();
+                 var transaction = new studentSchema.vibes_transaction;
+                 transaction.vibes = 20;
+                 transaction.type = 'referral';
+                 transaction.sign = 1;
+                 transaction.message = 'Referred ' + ' ' +profile.displayName;
+                 student_functions.VibesTransaction(refstudent.facebookid, transaction, function (v_transaction) {
+                 if(v_transaction !== 0) {
+                 mail_functions.referral(profile.displayName, refstudent.name, refstudent.points + 20, refstudent.email);
+                 }
+                 });
+                 }else{
+                 console.log('referrral student not found');
+                 }
 
+                 });
+
+                 */
             }
             else if (student != null) {
 
@@ -203,51 +214,51 @@ function enter_old_user(referrer,profile,authcode,cb){
                     student.name = profile.displayName;
                 }
 
-                if(!student.auth){
-                   student.auth = profile.id;
+                if (!student.auth) {
+                    student.auth = profile.id;
                 }
-            }
+
 
             student.facebook.authcode = authcode;
             student.updatedon = Date.now();
-                //console.log(student);
-                student.save(function(err) {
-                    console.log('trying to save student' + student.email);
-                    if (!err) {
-                            var all_stages = {};
-                            stages_functions.list(function(stages_data){
-                                stages_data.forEach(function(db_stage){
-                                    all_stages[db_stage._id] = db_stage.name;
-                                });
-                                //console.log('all stages');
-                                //console.log(all_stages);
-                                //console.log('reached after stages');
+            //console.log(student);
+            student.save(function (err) {
+                console.log('trying to save student' + student.email);
+                if (!err) {
+                    var all_stages = {};
+                    stages_functions.list(function (stages_data) {
+                        stages_data.forEach(function (db_stage) {
+                            all_stages[db_stage._id] = db_stage.name;
+                        });
+                        //console.log('all stages');
+                        //console.log(all_stages);
+                        //console.log('reached after stages');
 
-                                if(student.stages.length >0){
-                                    console.log('stages found');
-                                    student.stages.forEach(function(mystages_data){
-                                        console.log('stageid :' + mystages_data.stageid);
-                                        all_stages[mystages_data.stageid] = null;
-                                    });
-                                    //console.log('final stages to be added');
-                                    //console.log(all_stages);
-                                    tasks_in_registration(student,all_stages,function(err,data){
-                                        cb(null,data);
-                                    });
-                                }else{
-                                    console.log('no stages');
-                                    tasks_in_registration(student,all_stages,function(err,data){
-                                        console.log('data recieved by add old_user' + data);
-                                    cb(null,data);
-                                    });
-                                }
+                        if (student.stages.length > 0) {
+                            console.log('stages found');
+                            student.stages.forEach(function (mystages_data) {
+                                console.log('stageid :' + mystages_data.stageid);
+                                all_stages[mystages_data.stageid] = null;
                             });
-                    } else {
-                        console.log('error' + err);
-                        cb(err,2);
-                    }
-                });
-
+                            //console.log('final stages to be added');
+                            //console.log(all_stages);
+                            tasks_in_registration(student, all_stages, function (err, data) {
+                                cb(null, data);
+                            });
+                        } else {
+                            console.log('no stages');
+                            tasks_in_registration(student, all_stages, function (err, data) {
+                                console.log('data recieved by add old_user' + data);
+                                cb(null, data);
+                            });
+                        }
+                    });
+                } else {
+                    console.log('error' + err);
+                    cb(err, 2);
+                }
+            });
+        }
         }
 
     });

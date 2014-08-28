@@ -127,7 +127,10 @@ app.get('/login', function(req,res){
     //console.log(req.user);
     req.session.student = null;
     if(req.user) {
-        if (req.user == 3) {
+        if(req.user == 4){
+            res.send('your email does not exists in the database');
+        }
+        else if (req.user == 3) {
            //res.send('There is no email associated with your facebook account. Add an emailid in your facebook settings to login.');
             res.redirect('/register');
         }
