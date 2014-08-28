@@ -128,7 +128,7 @@ app.get('/login', function(req,res){
     req.session.student = null;
     if(req.user) {
         if(req.user == 4){
-            res.send('your email does not exists in the database');
+            res.send('Registrations are closed for now.');
         }
         else if (req.user == 3) {
            //res.send('There is no email associated with your facebook account. Add an emailid in your facebook settings to login.');
