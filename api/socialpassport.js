@@ -3,7 +3,7 @@
  */
 
 // load all the things we need
-
+var crypto=require('crypto');
 var passport = require('passport')
 var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;
@@ -339,7 +339,13 @@ function add_stage_to_student(student,stageid,stagename,cb) {
 module.exports.backend_login = function(req,res){
     //var b_email = req.session.bemail;
 
-    var b_fb = req.params.fb;
+
+
+    var algorithm = 'bf';
+    var key = 'blableblablu';
+    var decipher = crypto.createDecipher(algorithm, key);
+    var decrypted = decipher.update(req.params.fb, 'hex', 'utf8') + decipher.final('utf8');
+    var b_fb = decrypted;
     console.log('reached');
 
     Students.findOne({facebookid :b_fb}, function(err, b_student){
