@@ -64,8 +64,8 @@ app.use(express.bodyParser());      // to get information from html forms.
 //app.use(express.session({secret: '1234567890QWERTY'}));
 app.use(express.session({
     store: new RedisStore({
-        host: '54.251.103.74',
-        port: 6379,
+        host: 'xxx',
+        port: xxxxx,
         db: 1
     }),
     secret: 'manchester_united',
